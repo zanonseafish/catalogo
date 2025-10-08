@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catalogo Prodotti ZANON SEAFISH</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#fbfbf8;
+      --ink:#111;
+      --line:#e7e4dc;
+      --brand:#0b5;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--ink);
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+    }
+
+    header{
+      background:linear-gradient(180deg,#0b1620 0%, #0e1f2a 60%, #0e1f2a00 100%);
+      color:#fff;
+      padding:24px 12px 20px;
+      text-align:center;
+    }
+    header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
+    header img.logo{height:60px;width:auto;display:block;margin:0 auto}
+    header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:6px 0 2px 0;font-size:24px;line-height:1.2}
+    header .sub{opacity:.85;font-size:11.5px}
+
+    main{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:40px 10px;
+    }
+
+    .catalog-container{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:30px;
+      margin-top:20px;
+    }
+
+    .catalog-button{
+      background:linear-gradient(145deg,#0b5,#094);
+      color:#fff;
+      border:none;
+      border-radius:14px;
+      padding:25px 50px;
+      font-size:1.2em;
+      cursor:pointer;
+      transition:transform 0.25s ease, box-shadow 0.25s ease;
+      text-transform:uppercase;
+      font-weight:600;
+      box-shadow:0 4px 10px rgba(0,0,0,0.15);
+    }
+    .catalog-button:hover,
+    .catalog-button:active{
+      transform:scale(1.08);
+      box-shadow:0 8px 18px rgba(0,0,0,0.25);
+    }
+
+    footer{
+      max-width:1100px;
+      margin:18px auto 24px;
+      padding:0 10px;
+      color:#444;
+      font-size:12px;
+    }
+    .site-rule{border:none;height:1px;background:#e5e2da;margin:6px 0 10px}
+    .site-footer-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .footer-logo{height:20px;width:auto}
+    .foot-text{flex:1;min-width:240px}
+    .foot-mail{font-size:12px;color:#0b5;text-decoration:none}
+
+    @media (max-width:600px){
+      .catalog-button{width:80%;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top">
+      <img class="logo" src="images/logo.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
+      <h1>Catalogo Prodotti ZANON SEAFISH</h1>
+      <div class="sub">Seleziona il catalogo da visualizzare</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="catalog-container">
+      <button class="catalog-button" onclick="location.href='https://zanonseafish.github.io/catalogo/prodotti.html'">
+        Prodotti Conservati
+      </button>
+      <button class="catalog-button" onclick="location.href='https://zanonseafish.github.io/catalogo/prodotti-fritti.html'">
+        Prodotti Fritti
+      </button>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <hr class="site-rule">
+    <div class="site-footer-inner">
+      <img src="images/logo.png" alt="Zanon Seafish Ingros SRL" class="footer-logo" onerror="this.style.display='none'">
+      <div class="foot-text">
+        <strong>Zanon Seafish Ingros SRL</strong> · P.IVA IT01654690278 ·
+        Sede legale: S. Croce 491, 30135 Venezia (VE) ·
+        Sede amm. e magazzini: Via Colombara 115/A, 30176 Marghera (VE) ·
+        Tel: 041 5382830 · 041 3963095 ·
+        <a href="https://www.zanonseafish.it/" target="_blank" rel="noopener">www.zanonseafish.it</a> ·
+        <a href="mailto:info@zanonseafish.it">info@zanonseafish.it</a>
+      </div>
+      <a class="foot-mail" href="mailto:info@zanonseafish.it" title="Scrivi a info@zanonseafish.it">✉️ Contattaci</a>
+    </div>
+  </footer>
+</body>
+</html>
