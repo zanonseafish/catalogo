@@ -360,7 +360,7 @@
     mFullDesc.textContent=p.fullDesc||"";
     mPrice.textContent=fmt.format(p.price)+(p.unit||"");
     const imgs=(p.images||[]).slice(0,2);
-    mGallery.innerHTML=imgs.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default.png';">`).join("");
+    mGallery.innerHTML=imgs.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.png';">`).join("");
     shareBtn.onclick=()=>shareProduct(currentId);
     modal.classList.add("open"); document.body.style.overflow="hidden"; closeBtn.focus();
     if(location.hash!=="#"+id) history.pushState({modal:true,id},"","#"+id);
