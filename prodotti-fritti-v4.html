@@ -904,6 +904,62 @@
     syncUI();
   });
 })();
+  <!-- === Zanon: Sidebar Cart + Prompt + Pulsanti verticali (+/–) === -->
+<style>
+  /* sidebar e prompt */
+  .zanon-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:10000;display:none}
+  .zanon-sidebar{position:fixed;top:0;right:0;height:100vh;width:min(92vw,420px);max-width:420px;background:#fff;
+    box-shadow:-8px 0 24px rgba(0,0,0,.25);z-index:10001;transform:translateX(100%);transition:transform .25s ease;
+    display:flex;flex-direction:column}
+  .zanon-sidebar.open{transform:translateX(0)}
+  .zanon-head{padding:14px 16px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
+  .zanon-body{padding:12px 16px;overflow:auto;flex:1}
+  .zanon-foot{padding:12px 16px;border-top:1px solid #eee;display:flex;gap:8px;justify-content:flex-end}
+  .zanon-btn{border:none;border-radius:8px;padding:8px 12px;cursor:pointer;font-weight:600}
+  .zanon-btn-primary{background:#0b5;color:#fff}
+  .zanon-btn-ghost{background:#eee;color:#111}
+  .zanon-line{font-size:14px;margin:4px 0}
+  .zanon-floating{position:fixed;bottom:16px;right:16px;z-index:10002;background:#0b5;color:#fff;border:none;
+    border-radius:999px;padding:10px 14px;font-weight:700;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+  .zanon-prompt{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:10003;background:rgba(0,0,0,.45)}
+  .zanon-card{background:#fff;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,.25);max-width:520px;width:min(92vw,520px);padding:16px 18px}
+  .zanon-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
+  .zanon-input{width:100%;padding:8px;border:1px solid #ddd;border-radius:8px;margin:4px 0 10px 0}
+
+  /* pulsanti verticali in riga prodotto */
+  .qty-col{display:flex;flex-direction:column;align-items:center;gap:6px}
+  .qty-btn{border:1px solid #ccc;border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:700;line-height:1;background:#fff}
+  .qty-val{min-width:26px;text-align:center;font-weight:700}
+  .price{display:flex;flex-direction:row;gap:10px;align-items:center;justify-content:space-between}
+  .price-amount{white-space:nowrap}
+</style>
+
+<!-- Bottone flottante -->
+<button id="zanonFloatCart" class="zanon-floating" type="button">🛒 Carrello (0 articoli)</button>
+
+<!-- Sidebar carrello -->
+<div id="zanonSidebar" class="zanon-sidebar" aria-hidden="true">
+  <div class="zanon-head">
+    <strong>Riepilogo Preordine</strong>
+    <button id="zanonCloseSide" class="zanon-btn zanon-btn-ghost" type="button">Chiudi</button>
+  </div>
+  <div class="zanon-body">
+    <div id="zanonCartList"></div>
+    <label>Nome</label><input id="zanonNome" class="zanon-input" />
+    <label>Cognome</label><input id="zanonCognome" class="zanon-input" />
+    <label>Email</label><input id="zanonEmail" type="email" class="zanon-input" />
+  </div>
+  <div class="zanon-foot">
+    <button id="zanonSendWA" class="zanon-btn zanon-btn-ghost" type="button">💬 Invia via WhatsApp</button>
+    <button id="zanonSendMail" class="zanon-btn zanon-btn-primary" type="button">📧 Invia via Email</button>
+  </div>
+</div>
+
+<!-- Prompt “altro catalogo?” -->
+<div id="zanonPrompt" class="zanon-prompt" role="dialog" aria-modal="true">
+  <div class="zanon-card">
+    <h3 style="margin:0 0 6px 0">Vuoi consultare anche l’altro catalogo?</h3>
+    <p style="margin:0 0 8px 0">Puoi visitarlo ora mantenendo il carrello, oppure procedere direttamente al riepilogo.</p>
 </script>
 </body>
 </html>
