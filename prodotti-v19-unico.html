@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zanon Seafish – v19 · Catalogo unico</title>
+  <style>
+    :root{--brand:#0a7a4b;--bg:#f7f7f8;--text:#111;--muted:#666;--card:#fff;--accent:#e8f5ef;--line:#e6e6ea}
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial}
+    a{color:var(--brand);text-decoration:none}
+    header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,#fff 0%,#ffffffd0 60%,#ffffff00 100%);backdrop-filter:saturate(1.2) blur(6px);border-bottom:1px solid var(--line)}
+    .wrap{max-width:1100px;margin:0 auto;padding:12px 16px}
+    .topbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .brand{font-weight:800;letter-spacing:.2px}
+    .tabs{display:flex;gap:8px}
+    .spacer{flex:1}
+    .btn{appearance:none;border:1px solid #d8d8dc;background:#fff;color:#111;padding:8px 12px;border-radius:10px;font-weight:600;cursor:pointer}
+    .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+    .btn.ghost{background:transparent}
+    .btn.icon{display:inline-flex;align-items:center;gap:8px}
+    .grid{display:grid;gap:12px;padding:16px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-height:260px}
+    .card figure{margin:0;aspect-ratio:4/3;display:grid;place-items:center;background:#fafafa;cursor:pointer}
+    .card img{max-width:100%;max-height:100%;object-fit:cover;width:100%;height:100%}
+    .card .body{padding:10px 12px;display:grid;gap:6px}
+    .title{font-weight:700;line-height:1.2}
+    .muted{color:var(--muted);font-size:.9rem}
+    .price{margin-top:4px;text-align:right;font-weight:800}
+    .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+    .tag{font-size:.75rem;padding:3px 8px;border-radius:999px;background:var(--accent);border:1px solid #cfeadc}
+    .actions{display:flex;gap:8px;margin-top:6px;justify-content:flex-end}
+    .btn.small{padding:6px 8px;font-size:.9rem;border-radius:8px}
+    .dock{position:sticky;bottom:0;z-index:12;background:#fff;border-top:1px solid var(--line)}
+    .dock .row{max-width:1100px;margin:0 auto;display:flex;gap:8px;align-items:center;padding:10px 16px}
+    .pill{padding:10px 12px;border:1px solid #d8d8dc;border-radius:999px;background:#fff}
+    .search{flex:1;display:flex;gap:8px;align-items:center}
+    .search input{width:100%;border:0;outline:none;font-size:1rem;background:transparent}
+    .count{font-size:.9rem;color:var(--muted)}
+    dialog::backdrop{background:rgba(0,0,0,.6)}
+    dialog{border:0;border-radius:14px;padding:0;max-width:90vw}
+    .modal-body{padding:0;margin:0}
+    .modal-img-wrap{display:grid;place-items:center;max-height:80vh;max-width:80vw}
+    .modal-img-wrap img{max-width:80vw;max-height:80vh;width:auto;height:auto;object-fit:contain}
+    .modal-head{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid #eee;background:#fff;border-radius:14px 14px 0 0}
+    .close{border:0;background:transparent;font-size:20px;cursor:pointer;padding:6px 8px}
+    .drawer{position:fixed;right:0;top:0;height:100vh;width:min(420px,95vw);background:#fff;border-left:1px solid var(--line);box-shadow:-4px 0 24px rgba(0,0,0,.08);transform:translateX(100%);transition:transform .25s ease;z-index:20;display:flex;flex-direction:column}
+    .drawer.open{transform:translateX(0)}
+    .drawer header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line)}
+    .drawer .content{padding:12px;display:grid;gap:10px;overflow:auto;flex:1}
+    .cart-item{display:grid;grid-template-columns:64px 1fr auto;gap:8px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px}
+    .qty{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:4px 8px}
+    .cart-footer{border-top:1px solid var(--line);padding:12px;display:grid;gap:8px}
+    .right{text-align:right}
+    .badge{display:inline-block;min-width:20px;padding:2px 6px;border-radius:999px;background:var(--brand);color:#fff;font-weight:700;font-size:.8rem}
+    @media print{
+      header,.dock,.drawer{display:none !important}
+      .grid{grid-template-columns:repeat(3,1fr);gap:10px;padding:0}
+      .card{break-inside:avoid;border:1px solid #ddd}
+      .card figure{aspect-ratio:4/3}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap topbar">
+      <div class="brand">Zanon Seafish · Catalogo</div>
+      <div class="tabs">
+        <button class="btn" id="tabGenerale">Generale</button>
+        <button class="btn" id="tabFritti">Fritti</button>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn ghost" id="btnMenu" title="Torna al menu">⬅️ Menu</button>
+      <button class="btn icon" id="btnCart"><span>🧺 Carrello</span> <span id="cartBadge" class="badge" style="display:none">0</span></button>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="count" id="resultCount">0 articoli · generale</div>
+    </div>
+    <section class="grid" id="grid"></section>
+  </main>
+
+  <footer class="dock">
+    <div class="row">
+      <div class="search pill">🔎 <input id="q" type="search" placeholder="Cerca prodotti…" autocomplete="off" /></div>
+      <button class="btn icon" id="btnShare" title="Condividi questa vista">📤 Condividi</button>
+    </div>
+  </footer>
+
+  <dialog id="modal">
+    <div class="modal-head">
+      <strong id="modalTitle">Immagine</strong>
+      <button class="close" id="modalClose" aria-label="Chiudi">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-img-wrap"><img id="modalImg" alt=""/></div>
+    </div>
+  </dialog>
+
+  <aside class="drawer" id="cartDrawer" aria-hidden="true">
+    <header class="wrap topbar">
+      <div class="brand">Carrello</div>
+      <div class="spacer"></div>
+      <button class="btn" id="btnPrintCart">Stampa</button>
+      <button class="btn" id="btnCloseCart">Chiudi ✕</button>
+    </header>
+    <div class="content" id="cartContent"></div>
+    <div class="cart-footer">
+      <div class="right"><strong>Totale: <span id="cartTotal">€ 0,00</span></strong></div>
+      <button class="btn primary" id="btnCheckout">Procedi</button>
+    </div>
+  </aside>
+
+  <script>
+    const PRODUCTS = [\n      {id:"36-tonno-corallo-busta", name:"Tonno Corallo in busta", price:"€ 7,50", desc:"Tonno Corallo all'olio di semi di girasole, confezione da 1 kg", img:"images/tonno-corallo.jpg", collezioni:["generale"]},\n      {id:"31-tonno-affumicato-trancio", name:"Tonno affumicato in trancio", price:"€ 27,50/kg", desc:"Tonno affumicato in trancio da 1 kg circa", img:"images/tonno-affumicato.jpg", collezioni:["generale"]},\n      {id:"32-spada-affumicato", name:"Pesce spada affumicato", price:"€ 36,50/kg", desc:"Pesce spada affumicato in trancio da 1 kg circa", img:"images/spada-affumicato.jpg", collezioni:["generale"]},\n      {id:"05-bocconcini-alici-arrotolate", name:"Bocconcini di alici e olive spinate arrotolate", price:"€ 13,70", desc:"Alici e olive spinate ed arrotolate, confezione da 1 kg", img:"images/alici-bocconcini.jpg", collezioni:["generale"]},\n      {id:"01-acciughe-filetti-riunione", name:"Filetti di alici del Cantabrico", price:"€ 2,80", desc:"Filetti di alici del Cantabrico in olio d'oliva, confezione da 48 gr", img:"images/acciughe-filetti-riunione.jpg", collezioni:["generale"]},\n      {id:"04-alici-filetti-acciughe", name:"Filetti di alici Corallo", price:"€ 11,60", desc:"Alici in filetto in olio di girasole, confezione da 720 gr", img:"images/acciughe-filetti.jpg", collezioni:["generale"]},\n      {id:"02-alici-colatura", name:"Alici Colatura", price:"€ 6,20", desc:"Alici colatura, confezione da 100 ml", img:"images/alici-colatura.jpg", collezioni:["generale"]},\n      {id:"03-alici-filetti", name:"Filetti di alici Albatros", price:"€ 12,50", desc:"Alici in filetto in olio di girasole, confezione da 720 gr", img:"images/alici-filetti.jpg", collezioni:["generale"]},\n      {id:"07-alici-filetto", name:"Filetto di alici marinate", price:"€ 12,20", desc:"Filetto di alici al pepe rosa in olio di semi di girasole, confezione da 1 kg", img:"images/alici-filetto.jpg", collezioni:["generale"]},\n      {id:"06-alici-pezzi", name:"Alici Pezzi", price:"€ 9,50", desc:"Alici in pezzi in olio di girasole, confezione da 720 gr", img:"images/alici-pezzi.jpg", collezioni:["generale"]},\n      {id:"08-sgombro-filetto-affumicato", name:"Filetto Sgombro aff.to al pepe", price:"€ 5,40", desc:"Filetto di sgombro, confezione da 200 gr", img:"images/aringa-affumicata.jpg", collezioni:["generale"]},\n      {id:"09-aringa-affumicata", name:"Filetto aringa aff.ta", price:"€ 1,80", desc:"Filetto di aringa, confezione da 100 gr", img:"images/aringa-affumicata1.jpg", collezioni:["generale"]},\n      {id:"14-baccala-mantecato-200", name:"Baccalà mantecato 200g", price:"€ 3,80", desc:"Baccalà mantecato, confezione da 200 gr", img:"images/baccala-mantecato-35-200.jpg", collezioni:["generale"]},\n      {id:"15-baccala-mantecato-35", name:"Baccalà mantecato 35%", price:"€ 17,50", desc:"Baccalà mantecato 35%, confezione da 1 kg", img:"images/baccala-mantecato-35-front.jpg", collezioni:["generale"]},\n      {id:"16-baccala-senza-aglio", name:"Baccalà mantecato 45%", price:"€ 19,80", desc:"Baccalà mantecato 45%, confezione da 1 kg", img:"images/baccala-senza-front.jpg", collezioni:["generale"]},\n      {id:"12-baccala-condito-200", name:"Baccalà Condito 200g", price:"€ 6,50", desc:"Baccalà condito, confezione da 200 gr", img:"images/baccala-condito-200.jpg", collezioni:["generale"]},\n      {id:"13-baccala-condito-k1", name:"Baccalà Condito da 1 kg", price:"€ 27,50", desc:"Baccalà condito, confezione da 1 kg", img:"images/baccala-condito-200.jpg", collezioni:["generale"]},\n      {id:"17-baccala-umido-150", name:"Baccalà Umido 150g", price:"€ 5,50", desc:"Baccalà in umido, confezione da 150 gr", img:"images/baccala-umido-150.jpg", collezioni:["generale"]},\n      {id:"18-baccala-umido-k1", name:"Baccalà Umido 1kg", price:"€ 27,00", desc:"Baccalà in umido, confezione da 1 kg", img:"images/baccala-umido-1.jpg", collezioni:["generale"]},\n      {id:"20-baccala-vicentina", name:"Baccalà alla Vicentina", price:"€ 25,50", desc:"Baccalà alla vicentina, confezione da 1 kg", img:"images/baccala-vicentina-1.jpg", collezioni:["generale"]},\n      {id:"19-baccala-vicentina-200", name:"Baccalà alla Vicentina 200g", price:"€ 6,50", desc:"Baccalà alla vicentina, confezione da 200 gr", img:"images/baccala-vicentina-200.jpg", collezioni:["generale"]},\n      {id:"29-saor-gamberi", name:"Gamberi in saor", price:"€ 23,50", desc:"Gamberi in saor, confezione da 1 kg", img:"images/saor-gamberi.png", collezioni:["generale"]},\n      {id:"30-saor-sarde", name:"Sarde in saor", price:"€ 11,00", desc:"Sarde in saor, confezione da 800 gr", img:"images/saor-sarde.png", collezioni:["generale"]},\n      {id:"22-bottarga-muggine", name:"Bottarga di Muggine", price:"€ 72,00/kg", desc:"Bottarga di muggine confezione da 50/70 gr", img:"images/bottarga-muggine.jpg", collezioni:["generale"]},\n      {id:"21-bottarga-tonno", name:"Bottarga di Tonno", price:"€ 79,00/kg", desc:"Bottarga di tonno confezione da 50/100 gr", img:"images/bottarga-tonno.jpg", collezioni:["generale"]},\n      {id:"44-uova-caviale-classic-select", name:"Caviale Classic Select", price:"€ 98,00", desc:"Caviale Iran Darya, Acipenser Baerii confezione da 100 gr", img:"images/caviale-iran-darya.jpg", collezioni:["generale"]},\n      {id:"45-uova-caviale-royalpop", name:"Caviale Royalpop", price:"€ 11,50", desc:"Acipenser Trasmontanus, confezione da 10 gr", img:"images/caviale-royalpop.jpg", collezioni:["generale"]},\n      {id:"10-bac-dentice-crema-200", name:"Dentice Crema 200 gr", price:"€ 7,50", desc:"Dentice crema, confezione da 200 gr", img:"images/dentice-crema-200.jpg", collezioni:["generale"]},\n      {id:"11-bac-dentice-crema-500", name:"Dentice Crema 500 gr", price:"€ 15,80", desc:"Dentice crema, confezione da 500 gr", img:"images/dentice-crema-500.jpg", collezioni:["generale"]},\n      {id:"23-nero-seppia", name:"Nero di Seppia", price:"€ 11,20", desc:"Nero di seppia, confezione da 500 gr", img:"images/nero-seppia.jpg", collezioni:["generale"]},\n      {id:"24-polpa-granchio", name:"Polpa di Granchio Smeralda", price:"€ 8,00", desc:"Polpa di granchio Smeralda, confezione da 170 gr", img:"images/polpa-granchio.jpg", collezioni:["generale"]},\n      {id:"25-polpa-riccio-riunione", name:"Polpa di Riccio Riunione", price:"€ 8,50", desc:"Polpa di riccio Riunione, confezione da 90 gr", img:"images/polpa-riccio-riunione.jpg", collezioni:["generale"]},\n      {id:"26-polpa-riccio", name:"Polpa di Riccio Smeralda", price:"€ 11,00", desc:"Polpa di riccio Smeralda, confezione da 70 gr", img:"images/polpa-riccio.jpg", collezioni:["generale"]},\n      {id:"27-salmone-intero-norv", name:"Salmone aff.to preaffettato Norvegese", price:"€ 22,50/kg", desc:"Salmone affumicato preaffettato norvegese, confezione da circa 1 kg", img:"images/salmone-intero-norv.jpg", collezioni:["generale"]},\n      {id:"28-salmone-preaff-norv", name:"Salmone aff.to preaffettato Norvegese", price:"€ 6,50", desc:"Salmone affumicato preaffettato norvegese, confezione da 200 gr", img:"images/salmone-preaff-norv.jpg", collezioni:["generale"]},\n      {id:"33-stoccafisso-salato", name:"Filetto di ling salinato", price:"€ 10,80/kg", desc:"Stoccafisso salato da 1 kg circa", img:"images/stoccafisso-salato.jpg", collezioni:["generale"]},\n      {id:"34-stoccafisso-secco", name:"Stoccafisso Secco", price:"€ 49,50/kg", desc:"Stoccafisso essiccato", img:"images/stoccafisso-secco.jpg", collezioni:["generale"]},\n      {id:"35-tonno-corallo", name:"Tonno Corallo in latta", price:"€ 10,60", desc:"Tonno Corallo, all'olio di semi di girasole, confezione da 1730 gr", img:"images/tonno-corallo2.jpg", collezioni:["generale"]},\n      {id:"37-tonno-filetti-acantilado", name:"Tonno Filetti Acantilado", price:"€ 18,00", desc:"Filetti di tonno Acantilado in olio d'oliva, confezione da 850 gr", img:"images/tonno-filetti-acantilado.jpg", collezioni:["generale"]},\n      {id:"38-tonno-filetti-albatros", name:"Tonno Filetti Albatros", price:"€ 4,10", desc:"Filetti di tonno Albatros in olio d'oliva, confezione da 190 gr", img:"images/tonno-filetto-albatros.jpg", collezioni:["generale"]},\n      {id:"39-tonno-filone", name:"Tonno Filone sottovuoto", price:"€ 18,80/kg", desc:"Tonno filone sottovuoto, prodotto decongelato", img:"images/tonno-filone-albaladejo.jpg", collezioni:["generale"]},\n      {id:"40-tonno-filone-atm", name:"Tonno Filone ATM", price:"€ 20,50/kg", desc:"Tonno filone ATM, prodotto decongelato", img:"images/tonno-filone-atm.jpg", collezioni:["generale"]},\n      {id:"41-uova-aringa", name:"Uova di Aringa", price:"€ 10,50", desc:"Uova di aringa, confezione da 55 gr", img:"images/uova-aringa.jpg", collezioni:["generale"]},\n      {id:"42-uova-lompo", name:"Uova di Lompo", price:"€ 2,80", desc:"Uova di lompo, confezione da 50 gr", img:"images/uova-lompo.jpg", collezioni:["generale"]},\n      {id:"43-uova-salmone", name:"Uova di Salmone", price:"€ 10,30", desc:"Uova di salmone, confezione da 50 gr", img:"images/uova-salmone.jpg", collezioni:["generale"]},\n      {id:"polpette-brasato", name:"Polpette di Brasato", price:"€ 14,00", desc:"Conf. 2kg – Polpette di brasato surgelate (40 pz da 50g)", img:"img2/polpette-brasato.jpg", collezioni:["fritti"]},\n      {id:"polpette-baccala", name:"Polpette di Baccalà", price:"€ 14,00", desc:"Conf. 2kg – Polpette di baccalà surgelate (40 pz da 50g)", img:"img2/polpette-baccala.jpg", collezioni:["fritti"]},\n      {id:"polpette-tonno-cipolla", name:"Polpette di Tonno e Cipolla", price:"€ 14,00", desc:"Conf. 2kg – Polpette di tonno e cipolla (40 pz da 50g)", img:"img2/polpette-tonno-cipolla.jpg", collezioni:["fritti"]},\n      {id:"polpette-pollo-speck", name:"Polpette di Pollo e Speck", price:"€ 12,00", desc:"Conf. 2kg – Polpette di pollo e speck (40 pz da 50g)", img:"img2/polpette-pollo-speck.jpg", collezioni:["fritti"]},\n      {id:"polpette-verdure", name:"Polpette di Verdure", price:"€ 12,00", desc:"Conf. 2kg – Polpette di verdure miste (40 pz da 50g)", img:"img2/polpette-verdure.png", collezioni:["fritti"]},\n      {id:"arancini-mozzarella-prosciutto", name:"Arancini con Mozzarella e Prosciutto Prefritti", price:"€ 5,50", desc:"Conf. 3kg – Arancini con mozzarella e prosciutto prefritti", img:"img2/arancini-prosciutto.png", collezioni:["fritti"]},\n      {id:"arancini-spinaci", name:"Arancini agli Spinaci Prefritti", price:"€ 5,50", desc:"Conf. 3kg – Arancini agli spinaci prefritti", img:"img2/arancini-spinaci.png", collezioni:["fritti"]},\n      {id:"arrosticini-mare", name:"Arrosticini di Mare Panati (Totano Gigas)", price:"€ 8,30", desc:"Conf. 4kg – Arrosticini di mare panati", img:"img2/arrosticini-pesce-panati.png", collezioni:["fritti"]},\n      {id:"alici-panato", name:"Alici Panate Croccanti", price:"€ 8,90", desc:"Conf. 1kg – Alici panate croccanti", img:"img2/alici-panati-croccanti.png", collezioni:["fritti"]},\n      {id:"filetto-baccala-prezzemolo", name:"Filetto di Baccalà Pastellato con Prezzemolo", price:"€ 11,90", desc:"Conf. 5x1kg – Filetti di baccalà pastellati con prezzemolo", img:"img2/filetti-baccala-pastellati.png", collezioni:["fritti"]},\n      {id:"chele-granchio", name:"Chele di Granchio Panate", price:"€ 5,50", desc:"Conf. 4x1kg – Chele di granchio panate", img:"img2/chele-granchio-panate.jpg", collezioni:["fritti"]},\n      {id:"fiori-zucca-mozzarella-alici", name:"Fiori di Zucca con Mozzarella e Alici Prefritti", price:"€ 9,30", desc:"Conf. 5x1kg – Fiori di zucca con mozzarella e alici", img:"img2/fiori-zucca-mozz-alici.png", collezioni:["fritti"]},\n      {id:"fiori-zucca-prosciutto-mozzarella", name:"Fiori di Zucca con Prosciutto e Mozzarella Prefritti", price:"€ 8,10", desc:"Conf. 5x1kg – Fiori di zucca con prosciutto e mozzarella", img:"img2/fiori-zucca-mozz-prosciutto.png", collezioni:["fritti"]},\n      {id:"frittelle-gamberi-zucchine", name:"Frittelle di Gamberi e Zucchine", price:"€ 11,50", desc:"Conf. 4x1kg – Frittelle di gamberi e zucchine", img:"img2/frittelle-gamberi-zucchine.png", collezioni:["fritti"]},\n      {id:"gamberi-patata", name:"Gamberi Avvolti in Filo di Patata", price:"€ 14,00", desc:"Conf. 5x1kg – Gamberi avvolti in filo di patata", img:"img2/gamberi-patata.jpg", collezioni:["fritti"]},\n      {id:"mozzarelline-tartufo", name:"Mozzarelline Panate con Tartufo Prefritte", price:"€ 7,80", desc:"Conf. 5x1kg – Mozzarelline con tartufo prefritte", img:"img2/mozzarelline-tartufo.png", collezioni:["fritti"]},\n      {id:"olive-ascolane", name:"Olive Ascolane", price:"€ 5,40", desc:"Conf. 4x2,500kg – Olive ascolane ripiene di carne", img:"img2/olive-ripiene-ascolana.png", collezioni:["fritti"]},\n      {id:"olive-ascolane-prefritte", name:"Olive Ascolane Prefritte", price:"€ 5,90", desc:"Conf. 5x1kg – Olive ascolane prefritte", img:"img2/olive-ripiene-ascolana.png", collezioni:["fritti"]},\n      {id:"panzerotti-mozzarella", name:"Panzerotti Mozzarella e Pomodoro Prefritti", price:"€ 5,40", desc:"Conf. 5x1kg – Panzerotti con mozzarella e pomodoro", img:"img2/panzerotti-mozzarella.png", collezioni:["fritti"]},\n      {id:"polpette-melanzane", name:"Polpette di Melanzane, Mozzarella e Provola Affumicata", price:"€ 5,50", desc:"Conf. 5x1kg – Polpette di melanzane con mozzarella e provola affumicata", img:"img2/polpette-melanzane.png", collezioni:["fritti"]},\n      {id:"salvia-pastellata", name:"Salvia Pastellata Prefritta", price:"€ 11,50", desc:"Conf. 4x1kg – Foglie di salvia pastellate prefritte", img:"img2/salvia-pastellata.png", collezioni:["fritti"]},\n      {id:"tris-verdure", name:"Tris di Verdure Pastellate Prefritte", price:"€ 5,20", desc:"Conf. 5x1kg – Tris di verdure pastellate prefritte", img:"img2/tris-verdure.png", collezioni:["fritti"]}\n    ];
+
+    const state = { query:"", filtro:"generale" };
+
+    const grid = document.getElementById("grid");
+    const q = document.getElementById("q");
+    const resultCount = document.getElementById("resultCount");
+    const tabG = document.getElementById("tabGenerale");
+    const tabF = document.getElementById("tabFritti");
+
+    function render(){
+      const list = PRODUCTS
+        .filter(p => p.collezioni.includes(state.filtro))
+        .filter(p => {
+          if(!state.query) return true;
+          const s = (p.id+" "+p.name+" "+(p.desc||"")).toLowerCase();
+          return s.includes(state.query.toLowerCase());
+        })
+        .sort((a,b)=>a.name.localeCompare(b.name,"it"));
+
+      resultCount.textContent = `${list.length} articoli · ${state.filtro}`;
+      grid.innerHTML = "";
+      for(const p of list){
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <figure data-id="${p.id}" data-title="${p.name}" data-img="${p.img}">
+            <img src="${p.img}" alt="${p.name}" onerror="this.src='data:image/svg+xml,${encodeURIComponent('<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 400 300\\'><rect width=\\'100%\\' height=\\'100%\\' fill=\\'#eee\\'/><text x=\\'50%\\' y=\\'50%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' fill=\\'#999\\' font-family=\\'Arial\\' font-size=\\'14\\'>Nessuna immagine</text></svg>')}'">
+          </figure>
+          <div class="body">
+            <div class="title">${p.name}</div>
+            <div class="muted">${p.desc || ""}</div>
+            <div class="tags">${p.collezioni.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+            <div class="price">${p.price || ""}</div>
+            <div class="actions">
+              <button class="btn small" data-add="${p.id}">Aggiungi</button>
+            </div>
+          </div>`;
+        grid.appendChild(card);
+      }
+      bindFigures();
+      bindAddButtons();
+      highlightTabs();
+    }
+
+    tabG.onclick = () => { state.filtro="generale"; render(); };
+    tabF.onclick = () => { state.filtro="fritti"; render(); };
+    function highlightTabs(){
+      tabG.classList.toggle("primary", state.filtro==="generale");
+      tabF.classList.toggle("primary", state.filtro==="fritti");
+    }
+
+    const modal = document.getElementById("modal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalImg = document.getElementById("modalImg");
+    const modalClose = document.getElementById("modalClose");
+    function openModal(title, src){
+      modalTitle.textContent = title;
+      modalImg.src = src;
+      if(typeof modal.showModal === "function"){ modal.showModal(); }
+      else { modal.setAttribute("open",""); }
+    }
+    function bindFigures(){
+      document.querySelectorAll("figure[data-id]").forEach(el=> el.onclick = () => openModal(el.dataset.title, el.dataset.img));
+    }
+    modalClose.onclick = () => modal.close();
+    modal.addEventListener("click", (e)=>{
+      const rect = modal.querySelector(".modal-body").getBoundingClientRect();
+      if(e.clientY < rect.top || e.clientY > rect.bottom || e.clientX < rect.left || e.clientX > rect.right) modal.close();
+    });
+
+    q.oninput = () => { state.query = q.value.trim(); render(); };
+
+    document.getElementById("btnShare").onclick = async ()=>{
+      const shareData = { title: document.title, text: `Catalogo Zanon – vista: ${state.filtro}`, url: location.href };
+      try{ if(navigator.share){ await navigator.share(shareData); } else { await navigator.clipboard.writeText(shareData.url); alert("Link copiato negli appunti"); } }catch(e){}
+    };
+
+    document.getElementById("btnMenu").onclick = ()=>{ location.href = "./index.html"; };
+
+    const drawer = document.getElementById("cartDrawer");
+    const btnCart = document.getElementById("btnCart");
+    const btnCloseCart = document.getElementById("btnCloseCart");
+    const btnPrintCart = document.getElementById("btnPrintCart");
+    const cartContent = document.getElementById("cartContent");
+    const cartTotalEl = document.getElementById("cartTotal");
+    const cartBadge = document.getElementById("cartBadge");
+    const CART_KEY = "zanon_cart_v19_unico";
+    const cart = loadCart();
+
+    function loadCart(){ try{ return JSON.parse(localStorage.getItem(CART_KEY)) || {}; }catch{ return {}; } }
+    function saveCart(){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); updateBadge(); }
+
+    function updateBadge(){ 
+      const n = Object.values(cart).reduce((s,it)=> s + it.qty, 0);
+      cartBadge.textContent = n;
+      cartBadge.style.display = n>0 ? "inline-block" : "none";
+    }
+
+    function parseEuro(val){ const m = (val||"").match(/[0-9]+(?:[\\.,][0-9]{1,2})?/); if(!m) return 0; return parseFloat(m[0].replace(',', '.')); }
+
+    function addToCart(id){ 
+      const p = PRODUCTS.find(x=>x.id===id);
+      if(!p) return;
+      if(!cart[id]) cart[id] = { id:p.id, name:p.name, price:p.price, img:p.img, qty:0 };
+      cart[id].qty += 1;
+      saveCart(); renderCart();
+    }
+    function removeFromCart(id){ delete cart[id]; saveCart(); renderCart(); }
+    function changeQty(id, delta){ if(!cart[id]) return; cart[id].qty = Math.max(1, cart[id].qty + delta); saveCart(); renderCart(); }
+
+    function renderCart(){ 
+      cartContent.innerHTML = "";
+      const ids = Object.keys(cart);
+      if(ids.length===0){ cartContent.innerHTML = "<div class='muted'>Carrello vuoto</div>"; cartTotalEl.textContent = "€ 0,00"; return; }
+      let total = 0;
+      for(const id of ids){ 
+        const it = cart[id];
+        const priceNum = parseEuro(it.price);
+        total += priceNum * it.qty;
+        const row = document.createElement("div");
+        row.className = "cart-item";
+        row.innerHTML = `
+          <img src="${it.img}" alt="" width="64" height="48" onerror="this.src='data:image/svg+xml,${encodeURIComponent('<svg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 160 120\\'><rect width=\\'100%\\' height=\\'100%\\' fill=\\'#eee\\'/></svg>')}'">
+          <div>
+            <div style="font-weight:700">${it.name}</div>
+            <div class="muted">${it.price || ""}</div>
+            <div class="qty">
+              <button class="btn small" onclick="changeQty('${id}',-1)">−</button>
+              <span>${it.qty}</span>
+              <button class="btn small" onclick="changeQty('${id}',1)">+</button>
+            </div>
+          </div>
+          <div class="right">
+            <div><strong>€ ${(priceNum*it.qty).toFixed(2)}</strong></div>
+            <button class="btn small" onclick="removeFromCart('${id}')">Rimuovi</button>
+          </div>
+        `;
+        cartContent.appendChild(row);
+      }
+      cartTotalEl.textContent = "€ " + total.toFixed(2);
+    }
+
+    function bindAddButtons(){ 
+      document.querySelectorAll("[data-add]").forEach(b=> b.onclick = () => addToCart(b.getAttribute("data-add")));
+    }
+
+    btnCart.onclick = () => { drawer.classList.add("open"); drawer.setAttribute("aria-hidden","false"); renderCart(); };
+    btnCloseCart.onclick = () => { drawer.classList.remove("open"); drawer.setAttribute("aria-hidden","true"); };
+    btnPrintCart.onclick = () => { window.print(); };
+
+    updateBadge();
+    render();
+  </script>
+</body>
+</html>

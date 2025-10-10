@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zanon Seafish – v19 · Catalogo fritti</title>
+  <style>
+    :root{--brand:#0a7a4b;--bg:#f6f7f9;--text:#111;--muted:#666;--card:#fff;--accent:#e8f5ef;--line:#e6e6ea}
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial}
+    a{color:var(--brand);text-decoration:none}
+    header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,#fff 0%,#ffffffd0 60%,#ffffff00 100%);backdrop-filter:saturate(1.2) blur(6px);border-bottom:1px solid var(--line)}
+    .wrap{max-width:1100px;margin:0 auto;padding:12px 16px}
+    .topbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .brand{font-weight:800;letter-spacing:.2px}
+    .spacer{flex:1}
+    .btn{appearance:none;border:1px solid #d8d8dc;background:#fff;color:#111;padding:8px 12px;border-radius:10px;font-weight:600;cursor:pointer}
+    .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+    .btn.ghost{background:transparent}
+    .btn.icon{display:inline-flex;align-items:center;gap:8px}
+    .grid{display:grid;gap:12px;padding:16px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-height:260px}
+    .card figure{margin:0;aspect-ratio:4/3;display:grid;place-items:center;background:#fafafa;cursor:pointer}
+    .card img{max-width:100%;max-height:100%;object-fit:cover;width:100%;height:100%}
+    .card .body{padding:10px 12px;display:grid;gap:6px}
+    .title{font-weight:700;line-height:1.2}
+    .muted{color:var(--muted);font-size:.9rem}
+    .price{margin-top:4px;text-align:right;font-weight:800}
+    .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+    .tag{font-size:.75rem;padding:3px 8px;border-radius:999px;background:var(--accent);border:1px solid #cfeadc}
+    .actions{display:flex;gap:8px;margin-top:6px;justify-content:flex-end}
+    .btn.small{padding:6px 8px;font-size:.9rem;border-radius:8px}
+    .dock{position:sticky;bottom:0;z-index:12;background:#fff;border-top:1px solid var(--line)}
+    .dock .row{max-width:1100px;margin:0 auto;display:flex;gap:8px;align-items:center;padding:10px 16px}
+    .pill{padding:10px 12px;border:1px solid #d8d8dc;border-radius:999px;background:#fff}
+    .search{flex:1;display:flex;gap:8px;align-items:center}
+    .search input{width:100%;border:0;outline:none;font-size:1rem;background:transparent}
+    .count{font-size:.9rem;color:var(--muted)}
+    dialog::backdrop{background:rgba(0,0,0,.6)}
+    dialog{border:0;border-radius:14px;padding:0;max-width:90vw}
+    .modal-body{padding:0;margin:0}
+    .modal-img-wrap{display:grid;place-items:center;max-height:80vh;max-width:80vw}
+    .modal-img-wrap img{max-width:80vw;max-height:80vh;width:auto;height:auto;object-fit:contain}
+    .modal-head{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid #eee;background:#fff;border-radius:14px 14px 0 0}
+    .close{border:0;background:transparent;font-size:20px;cursor:pointer;padding:6px 8px}
+
+    /* Carrello drawer */
+    .drawer{position:fixed;right:0;top:0;height:100vh;width:min(420px,95vw);background:#fff;border-left:1px solid var(--line);box-shadow:-4px 0 24px rgba(0,0,0,.08);transform:translateX(100%);transition:transform .25s ease;z-index:20;display:flex;flex-direction:column}
+    .drawer.open{transform:translateX(0)}
+    .drawer header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line)}
+    .drawer .content{padding:12px;display:grid;gap:10px;overflow:auto;flex:1}
+    .cart-item{display:grid;grid-template-columns:64px 1fr auto;gap:8px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px}
+    .qty{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:4px 8px}
+    .cart-footer{border-top:1px solid var(--line);padding:12px;display:grid;gap:8px}
+    .right{text-align:right}
+    .badge{display:inline-block;min-width:20px;padding:2px 6px;border-radius:999px;background:var(--brand);color:#fff;font-weight:700;font-size:.8rem}
+
+    @media print{
+      header,.dock,.drawer{display:none !important}
+      body{background:#fff}
+      .grid{grid-template-columns:repeat(3,1fr);gap:10px;padding:0}
+      .card{break-inside:avoid;border:1px solid #ddd}
+      .card figure{aspect-ratio:4/3}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap topbar">
+      <div class="brand">Zanon Seafish · Catalogo</div>
+      <div class="spacer"></div>
+      <button class="btn ghost" id="btnMenu" title="Torna al menu">⬅️ Menu</button>
+      <a class="btn" id="btnGenerale" href="./prodotti-v19.html">Catalogo generale</a>
+      <a class="btn" id="btnFritti" href="./prodotti-fritti-v19.html">Catalogo fritti</a>
+      <button class="btn icon" id="btnCart"><span>🧺 Carrello</span> <span id="cartBadge" class="badge" style="display:none">0</span></button>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="count" id="resultCount">0 articoli · generale</div>
+    </div>
+    <section class="grid" id="grid"></section>
+  </main>
+
+  <footer class="dock">
+    <div class="row">
+      <div class="search pill">🔎 <input id="q" type="search" placeholder="Cerca prodotti…" autocomplete="off" /></div>
+      <button class="btn icon" id="btnShare" title="Condividi questa vista">📤 Condividi</button>
+    </div>
+  </footer>
+
+  <!-- Modal immagine -->
+  <dialog id="modal">
+    <div class="modal-head">
+      <strong id="modalTitle">Immagine</strong>
+      <button class="close" id="modalClose" aria-label="Chiudi">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-img-wrap"><img id="modalImg" alt=""/></div>
+    </div>
+  </dialog>
+
+  <!-- Drawer carrello -->
+  <aside class="drawer" id="cartDrawer" aria-hidden="true">
+    <header class="wrap topbar">
+      <div class="brand">Carrello</div>
+      <div class="spacer"></div>
+      <button class="btn" id="btnPrintCart">Stampa</button>
+      <button class="btn" id="btnCloseCart">Chiudi ✕</button>
+    </header>
+    <div class="content" id="cartContent"></div>
+    <div class="cart-footer">
+      <div class="right"><strong>Totale: <span id="cartTotal">€ 0,00</span></strong></div>
+      <button class="btn primary" id="btnCheckout" title="Segnaposto, nessuna navigazione">Procedi</button>
+    </div>
+  </aside>
+
+  <script>
+    // Filtro predefinito per questa pagina
+    const DEFAULT_FILTER = "fritti";
+
+    // Sostituisci questo array con il tuo elenco v19 completo. Non cambiare chiavi.
+    // price può contenere formati misti: "€ 7,50", "€ 7,50/kg", "€/kg".
+    const PRODUCTS = [
+      {id:"fritto-misto", name:"Fritto misto", price:"€ 8,90", desc:"Selezione fritti mare", img:"images/fritto-misto.jpg", collezioni:["fritti","generale"]},
+      {id:"anelli-totano", name:"Anelli di totano", price:"€ 7,50", desc:"Pronti da friggere", img:"images/anelli-totano.jpg", collezioni:["fritti","generale"]},
+      {id:"crocchette-merluzzo", name:"Crocchette di merluzzo", price:"€ 6,40", desc:"Snack croccanti", img:"images/crocchette-merluzzo.jpg", collezioni:["fritti"]},
+      {id:"tonno-corallo-busta", name:"Tonno Corallo in busta", price:"€ 7,50/kg", desc:"Olio di semi · 1 kg", img:"images/tonno-corallo.jpg", collezioni:["generale"]},
+      {id:"baccala-secco", name:"Baccalà secco", price:"€/kg", desc:"Stoccafisso selezione", img:"images/baccala-secco.jpg", collezioni:["generale"]},
+      {id:"spada-affumicato", name:"Spada affumicato", price:"€/kg", desc:"Trancio selezionato", img:"images/spada-affumicato.jpg", collezioni:["generale"]},
+      {id:"salmone-aff-intero", name:"Salmone affumicato intero", price:"€/kg", desc:"Formato professionale", img:"images/salmone-aff-intero.jpg", collezioni:["generale"]},
+      {id:"bottarga-tonno", name:"Bottarga di tonno", price:"€/kg", desc:"Stagionata", img:"images/bottarga-tonno.jpg", collezioni:["generale"]}
+    ];
+
+    const state = { query:"", filtro: DEFAULT_FILTER };
+
+    // --- Render prodotti ---
+    const grid = document.getElementById("grid");
+    const q = document.getElementById("q");
+    const resultCount = document.getElementById("resultCount");
+    function render(){
+      const list = PRODUCTS
+        .filter(p => p.collezioni.includes(state.filtro))
+        .filter(p => {
+          if(!state.query) return true;
+          const s = (p.id+" "+p.name+" "+(p.desc||"")).toLowerCase();
+          return s.includes(state.query.toLowerCase());
+        })
+        .sort((a,b)=>a.name.localeCompare(b.name,"it"));
+
+      resultCount.textContent = `${list.length} articoli · ${state.filtro}`;
+      grid.innerHTML = "";
+      for(const p of list){
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <figure data-id="${p.id}" data-title="${p.name}" data-img="${p.img}">
+            <img src="${p.img}" alt="${p.name}" onerror="this.src='data:image/svg+xml,${encodeURIComponent('<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 300\'><rect width=\'100%\' height=\'100%\' fill=\'#eee\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'#999\' font-family=\'Arial\' font-size=\'14\'>Nessuna immagine</text></svg>')}'">
+          </figure>
+          <div class="body">
+            <div class="title">${p.name}</div>
+            <div class="muted">${p.desc || ""}</div>
+            <div class="tags">${p.collezioni.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+            <div class="price">${p.price || ""}</div>
+            <div class="actions">
+              <button class="btn small" data-add="${p.id}">Aggiungi</button>
+            </div>
+          </div>`;
+        grid.appendChild(card);
+      }
+      bindFigures();
+      bindAddButtons();
+      highlightActive();
+    }
+
+    // modal immagini
+    const modal = document.getElementById("modal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalImg = document.getElementById("modalImg");
+    const modalClose = document.getElementById("modalClose");
+    function openModal(title, src){
+      modalTitle.textContent = title;
+      modalImg.src = src;
+      if(typeof modal.showModal === "function") modal.showModal();
+      else modal.setAttribute("open","");
+    }
+    function bindFigures(){
+      document.querySelectorAll("figure[data-id]").forEach(el=>{
+        el.onclick = () => openModal(el.dataset.title, el.dataset.img);
+      });
+    }
+    modalClose.onclick = () => modal.close();
+    modal.addEventListener("click", (e)=>{
+      const rect = modal.querySelector(".modal-body").getBoundingClientRect();
+      if(e.clientY < rect.top || e.clientY > rect.bottom || e.clientX < rect.left || e.clientX > rect.right) modal.close();
+    });
+
+    // ricerca
+    q.oninput = () => { state.query = q.value.trim(); render(); };
+
+    // nav evidenza
+    function highlightActive(){
+      const btnG = document.getElementById("btnGenerale");
+      const btnF = document.getElementById("btnFritti");
+      btnG.classList.toggle("primary", state.filtro==="generale");
+      btnF.classList.toggle("primary", state.filtro==="fritti");
+    }
+    document.getElementById("btnMenu").onclick = ()=>{ location.href = "./index.html"; };
+
+    // share
+    document.getElementById("btnShare").onclick = async ()=>{
+      const shareData = { title: document.title, text: `Catalogo Zanon – vista: ${state.filtro}`, url: location.href };
+      try{ if(navigator.share) await navigator.share(shareData); else { await navigator.clipboard.writeText(shareData.url); alert("Link copiato negli appunti"); } }catch(e){}
+    };
+
+    // --- Carrello ---
+    const drawer = document.getElementById("cartDrawer");
+    const btnCart = document.getElementById("btnCart");
+    const btnCloseCart = document.getElementById("btnCloseCart");
+    const btnPrintCart = document.getElementById("btnPrintCart");
+    const cartContent = document.getElementById("cartContent");
+    const cartTotalEl = document.getElementById("cartTotal");
+    const cartBadge = document.getElementById("cartBadge");
+
+    const CART_KEY = "zanon_cart_v19";
+    const cart = loadCart();
+
+    function loadCart(){ try{ return JSON.parse(localStorage.getItem(CART_KEY)) || {}; }catch{ return {}; } }
+    function saveCart(){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); updateBadge(); }
+
+    function updateBadge(){ 
+      const n = Object.values(cart).reduce((s,it)=> s + it.qty, 0);
+      cartBadge.textContent = n;
+      cartBadge.style.display = n>0 ? "inline-block" : "none";
+    }
+
+    function parseEuro(val){ 
+      // Estrae numero decimale dall'eventuale "€ 7,50" o "€ 7,50/kg". Se assente, 0.
+      const m = (val||"").match(/[0-9]+(?:[\.,][0-9]{1,2})?/);
+      if(!m) return 0;
+      return parseFloat(m[0].replace(',', '.'));
+    }
+
+    function addToCart(id){ 
+      const p = PRODUCTS.find(x=>x.id===id);
+      if(!p) return;
+      if(!cart[id]) cart[id] = { id:p.id, name:p.name, price:p.price, img:p.img, qty:0 };
+      cart[id].qty += 1;
+      saveCart();
+      renderCart();
+    }
+
+    function removeFromCart(id){ delete cart[id]; saveCart(); renderCart(); }
+
+    function changeQty(id, delta){ 
+      if(!cart[id]) return;
+      cart[id].qty = Math.max(1, cart[id].qty + delta);
+      saveCart(); renderCart();
+    }
+
+    function renderCart(){ 
+      cartContent.innerHTML = "";
+      const ids = Object.keys(cart);
+      if(ids.length===0){ cartContent.innerHTML = "<div class='muted'>Carrello vuoto</div>"; cartTotalEl.textContent = "€ 0,00"; return; }
+      let total = 0;
+      for(const id of ids){ 
+        const it = cart[id];
+        const priceNum = parseEuro(it.price);
+        total += priceNum * it.qty;
+        const row = document.createElement("div");
+        row.className = "cart-item";
+        row.innerHTML = `
+          <img src="${it.img}" alt="" width="64" height="48" onerror="this.src='data:image/svg+xml,${encodeURIComponent('<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 160 120\'><rect width=\'100%\' height=\'100%\' fill=\'#eee\'/></svg>')}'">
+          <div>
+            <div style="font-weight:700">${it.name}</div>
+            <div class="muted">${it.price || ""}</div>
+            <div class="qty">
+              <button class="btn small" onclick="changeQty('${id}',-1)">−</button>
+              <span>${it.qty}</span>
+              <button class="btn small" onclick="changeQty('${id}',1)">+</button>
+            </div>
+          </div>
+          <div class="right">
+            <div><strong>€ ${(priceNum*it.qty).toFixed(2)}</strong></div>
+            <button class="btn small" onclick="removeFromCart('${id}')">Rimuovi</button>
+          </div>
+        `;
+        cartContent.appendChild(row);
+      }
+      cartTotalEl.textContent = "€ " + total.toFixed(2);
+    }
+
+    function bindAddButtons(){ 
+      document.querySelectorAll("[data-add]").forEach(b=>{
+        b.onclick = () => addToCart(b.getAttribute("data-add"));
+      });
+    }
+
+    btnCart.onclick = () => { drawer.classList.add("open"); drawer.setAttribute("aria-hidden","false"); renderCart(); };
+    btnCloseCart.onclick = () => { drawer.classList.remove("open"); drawer.setAttribute("aria-hidden","true"); };
+    btnPrintCart.onclick = () => { window.print(); };
+
+    // Avvio
+    updateBadge();
+    render();
+  </script>
+</body>
+</html>
