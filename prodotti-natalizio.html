@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catalogo Prodotti ZANON SEAFISH - Natale</title>
+  <meta property="og:title" content="Catalogo Prodotti ZANON SEAFISH - Natale">
+  <meta property="og:description" content="Sfoglia il catalogo prodotti Zanon Seafish Ingros SRL - versione natalizia">
+  <meta property="og:url" content="https://zanonseafish.github.io/catalogo/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://zanonseafish.github.io/catalogo/images/og-cover1.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:#fbfbf8;
+      --ink:#111;
+      --muted:#606060;
+      --line:#e7e4dc;
+      --brand:#0b5;
+      --price:#0a6a2b;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink)}
+
+    /* Decorazione natalizia sinistra */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: min(14vw, 140px);
+      background: url("images/pesci-natalizi-colonna.png") left center no-repeat;
+      background-size: contain;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @media print {
+      body::before {
+        position: absolute !important;
+        width: 140px !important;
+        background-size: contain !important;
+      }
+    }
+
+    header{background:linear-gradient(180deg,#0b1620 0%, #0e1f2a 60%, #0e1f2a00 100%);color:#fff;padding:20px 12px 18px;text-align:center;position:relative}
+    header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
+    header img.logo{height:60px;width:auto;display:block;margin:0 auto}
+    header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:0 0 2px 0;font-size:24px;line-height:1.15}
+    header .sub{opacity:.85;font-size:11.5px;margin-top:0}
+    .container{max-width:1100px;margin:6px auto 14px;padding:0 10px}
+    .list{display:flex;flex-direction:column;gap:10px}
+    .item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
+    .item:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.06)}
+    .thumb{width:84px;height:84px;border-radius:12px;overflow:hidden;background:#f1f1ed;border:1px solid var(--line)}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .info{min-width:0;padding-left:8px}
+    .title{font-family:"Playfair Display",serif;font-weight:700;font-size:18px;letter-spacing:.02em;margin:0 0 3px 0;text-transform:uppercase}
+    .desc{color:var(--muted);font-size:12px;line-height:1.3;margin:0 0 4px 0}
+    .divider{height:1px;background:var(--line);margin:3px 0}
+    .price{justify-self:end;align-self:end;color:var(--price);font-weight:700;font-size:16px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top">
+      <img class="logo" src="images/logo.png" alt="Zanon Seafish Ingros SRL">
+      <h1>Catalogo Prodotti ZANON SEAFISH</h1>
+      <div class="sub">Versione Natalizia 2025</div>
+    </div>
+  </header>
+
+  <div class="container">
+    <p>Catalogo dimostrativo. I prodotti saranno caricati automaticamente.</p>
+  </div>
+</body>
+</html>
