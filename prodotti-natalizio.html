@@ -29,26 +29,28 @@
     html,body{height:100%}
     body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink)}
 
-    /* Decorazione natalizia sinistra */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      width: min(14vw, 140px);
-      background: url("images/pesci-natalizi-colonna.png") left center no-repeat;
-      background-size: contain;
-      pointer-events: none;
-      z-index: 0;
-    }
-    @media print {
-      body::before {
-        position: absolute !important;
-        width: 140px !important;
-        background-size: contain !important;
-      }
-    }
+/* Decorazione natalizia sinistra */
+body::before{
+  content:"";
+  position:fixed;
+  top:0; left:0; bottom:0;
+  width:min(14vw,140px);
+  background:url("images/pesci-natalizi-colonna.png") left top no-repeat;
+  background-size:auto 100%;   /* altezza = viewport, scala in proporzione */
+  pointer-events:none;
+  z-index:0;
+}
+
+/* Stampa */
+@media print{
+  body::before{
+    position:absolute !important;
+    width:140px !important;
+    background-position:left top !important;
+    background-size:auto 100% !important;  /* altezza piena pagina */
+  }
+}
+
 
     header{background:linear-gradient(180deg,#0b1620 0%, #0e1f2a 60%, #0e1f2a00 100%);color:#fff;padding:20px 12px 18px;text-align:center;position:relative}
     header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
