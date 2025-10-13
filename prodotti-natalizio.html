@@ -61,6 +61,28 @@ body::before{
 @media (max-width:600px){
   :root{ --decor-w: 130px; --decor-pad: 8px; }
 }
+:root{
+  --decor-w: 160px;   /* larghezza colonna grafica */
+  --decor-pad: 10px;  /* rientro immagine */
+  --decor-gap: 14px;  /* distanza contenuti dalla decorazione */
+}
+
+/* offset contenuti per non sovrapporsi ai pesci */
+header, .container, .site-footer, .print-footer{
+  padding-left: calc(min(16vw, var(--decor-w)) + var(--decor-gap));
+}
+
+/* mobile: colonna più stretta e offset ridotto */
+@media (max-width:600px){
+  :root{ --decor-w: 130px; --decor-gap: 10px; }
+}
+
+/* stampa: mantieni offset fisso */
+@media print{
+  header, .container, .site-footer, .print-footer{
+    padding-left: calc(var(--decor-w) + var(--decor-gap)) !important;
+  }
+}
 
 
 
