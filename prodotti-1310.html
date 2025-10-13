@@ -184,6 +184,64 @@
   }
 }
 
+
+/* Decorazione natalizia sinistra */
+:root{
+  --decor-w: 160px;   /* larghezza colonna */
+  --decor-pad: 10px;  /* rientro dall'orlo sinistro */
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  top:0; left:0; bottom:0;
+  width:min(16vw, var(--decor-w));
+  background:url("images/pesci-natalizi-colonna.png") no-repeat;
+  background-size: calc(min(16vw, var(--decor-w)) - 2*var(--decor-pad)) 100%;
+  background-position: var(--decor-pad) top;   /* sposta verso destra i pesci */
+  pointer-events:none;
+  z-index:0;
+}
+
+/* Stampa */
+@media print{
+  body::before{
+    position:absolute !important;
+    width: var(--decor-w) !important;
+    background-size: calc(var(--decor-w) - 2*var(--decor-pad)) 100% !important;
+    background-position: var(--decor-pad) top !important;
+  }
+}
+
+/* Mobile più stretto */
+@media (max-width:600px){
+  :root{ --decor-w: 130px; --decor-pad: 8px; }
+}
+:root{
+  --decor-w: 160px;   /* larghezza colonna grafica */
+  --decor-pad: 10px;  /* rientro immagine */
+  --decor-gap: 14px;  /* distanza contenuti dalla decorazione */
+}
+
+/* offset contenuti per non sovrapporsi ai pesci */
+header, .container, .site-footer, .print-footer{
+  padding-left: calc(min(16vw, var(--decor-w)) + var(--decor-gap));
+}
+
+/* mobile: colonna più stretta e offset ridotto */
+@media (max-width:600px){
+  :root{ --decor-w: 130px; --decor-gap: 10px; }
+}
+
+/* stampa: mantieni offset fisso */
+@media print{
+  header, .container, .site-footer, .print-footer{
+    padding-left: calc(var(--decor-w) + var(--decor-gap)) !important;
+  }
+}
+
+/* --------------------------------------------------------------------- */
+    
 </style>
 </head>
 <body>
