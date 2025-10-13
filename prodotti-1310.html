@@ -5,14 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Catalogo Prodotti ZANON SEAFISH — Natale</title>
 
-<!-- Open Graph -->
 <meta property="og:title" content="Catalogo Prodotti ZANON SEAFISH — Natale">
 <meta property="og:description" content="Catalogo prodotti Zanon Seafish — versione natalizia con decorazione laterale.">
 <meta property="og:url" content="https://zanonseafish.github.io/catalogo/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://zanonseafish.github.io/catalogo/images/og-cover1.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<!-- /OG -->
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
@@ -29,11 +27,11 @@
 html,body{height:100%}
 body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink)}
 
-/* ===== Decorazione laterale: pesci in loop, non altera layout ===== */
+/* Decorazione laterale natalizia */
 :root{
-  --decor-w:110px;      /* larghezza colonna visiva */
-  --decor-pad:8px;      /* rientro dall’orlo */
-  --decor-img-w:84px;   /* larghezza effettiva immagine pesci */
+  --decor-w:110px;
+  --decor-pad:8px;
+  --decor-img-w:84px;
 }
 body::before{
   content:"";
@@ -41,30 +39,28 @@ body::before{
   top:0; left:0; bottom:0;
   width:min(10vw,var(--decor-w));
   background:url("images/pesci-natalizi-colonna.png") left top repeat-y;
-  background-position: var(--decor-pad) top;
-  background-size: var(--decor-img-w) auto; /* mantieni proporzioni */
+  background-position:var(--decor-pad) top;
+  background-size:var(--decor-img-w) auto;
   pointer-events:none;
   z-index:0;
   opacity:.9;
 }
-/* contenuti sempre sopra */
-header, .container, .site-footer, .print-footer{ position:relative; z-index:1; }
-
+header,.container,.site-footer,.print-footer{position:relative;z-index:1}
 @media (max-width:600px){
-  :root{ --decor-w:86px; --decor-pad:6px; --decor-img-w:68px; }
+  :root{--decor-w:86px;--decor-pad:6px;--decor-img-w:68px;}
 }
 @media print{
   body::before{
-    position:absolute !important;
-    width: var(--decor-w) !important;
-    background-position: var(--decor-pad) top !important;
-    background-size: var(--decor-img-w) auto !important;
-    background-repeat: repeat-y !important;
+    position:absolute!important;
+    width:var(--decor-w)!important;
+    background-position:var(--decor-pad) top!important;
+    background-size:var(--decor-img-w) auto!important;
+    background-repeat:repeat-y!important;
   }
 }
 
-/* ===== Header ===== */
-header{background:linear-gradient(180deg,#0b1620 0%, #0e1f2a 60%, #0e1f2a00 100%);color:#fff;padding:20px 12px 18px;text-align:center}
+/* Header */
+header{background:linear-gradient(180deg,#0b1620 0%,#0e1f2a 60%,#0e1f2a00 100%);color:#fff;padding:20px 12px 18px;text-align:center}
 header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
 header img.logo{height:60px;width:auto;display:block;margin:0 auto}
 header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:0 0 2px 0;font-size:24px;line-height:1.15}
@@ -74,20 +70,21 @@ header .sub{opacity:.85;font-size:11.5px;margin-top:0}
 .search input{width:100%;padding:10px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;color:var(--brand);outline:none}
 .count{color:var(--brand);margin-top:8px;font-size:12px}
 
-/* ===== Lista prodotti ===== */
+/* Lista prodotti */
 .container{max-width:1100px;margin:6px auto 14px;padding:0 10px}
 .list{display:flex;flex-direction:column;gap:10px}
+
+/* Card rossa semi-trasparente */
 .item{
   display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;
-  /* card natalizia semi-trasparente */
-  background:linear-gradient(to right,rgba(186,24,27,0.08),rgba(255,255,255,0.72));
-  border:1px solid rgba(231,228,220,0.75);
+  background:rgba(186,24,27,0.18)!important;
+  border:1px solid rgba(186,24,27,0.28)!important;
   border-radius:10px;padding:8px 10px;
   box-shadow:0 1px 6px rgba(0,0,0,.05);
-  cursor:pointer;transition:transform .12s ease, box-shadow .12s ease
+  cursor:pointer;transition:transform .12s ease,box-shadow .12s ease;
 }
 .item:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.06)}
-.thumb{width:84px;height:84px;border-radius:12px;overflow:hidden;background:rgba(241,241,237,.75);border:1px solid var(--line)}
+.thumb{width:84px;height:84px;border-radius:12px;overflow:hidden;background:rgba(241,241,237,0.55)!important;border:1px solid var(--line)}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .info{min-width:0;padding-left:8px}
 .title{font-family:"Playfair Display",serif;font-weight:700;font-size:18px;letter-spacing:.02em;margin:0 0 3px 0;text-transform:uppercase}
@@ -95,14 +92,10 @@ header .sub{opacity:.85;font-size:11.5px;margin-top:0}
 .divider{height:1px;background:var(--line);margin:3px 0}
 .price{justify-self:end;align-self:end;color:var(--price);font-weight:700;font-size:16px}
 
-/* ===== Modal immagini ===== */
+/* Modal immagini */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
 .modal.open{display:flex}
-.modal-content{
-  background:#fff;border-radius:12px;max-width:860px;width:min(96vw,860px);
-  padding:20px;position:relative;max-height:90vh;overflow:hidden;
-  box-shadow:0 10px 24px rgba(0,0,0,.35);display:flex;flex-direction:column;
-}
+.modal-content{background:#fff;border-radius:12px;max-width:860px;width:min(96vw,860px);padding:20px;position:relative;max-height:90vh;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);display:flex;flex-direction:column;}
 .m-title{font-family:"Playfair Display",serif;margin:0 0 10px 0}
 .modal-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px;flex:0 0 auto}
 .share-small{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer;background:#111;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.3)}
@@ -111,7 +104,7 @@ header .sub{opacity:.85;font-size:11.5px;margin-top:0}
 #mGallery:has(img:nth-child(2)){grid-template-columns:1fr 1fr}
 #mGallery img{max-width:100%;height:auto;display:block;object-fit:contain}
 
-/* ===== Responsive ===== */
+/* Responsive */
 @media (max-width:820px){
   header{padding:16px 10px 16px}
   header h1{font-size:22px}
@@ -127,7 +120,7 @@ header .sub{opacity:.85;font-size:11.5px;margin-top:0}
   .price{grid-column:2;justify-self:end}
 }
 
-/* ===== Stampa ===== */
+/* Stampa */
 @media print{
   @page{size:A4;margin:14mm 12mm}
   body{background:#fff}
@@ -153,171 +146,22 @@ header .sub{opacity:.85;font-size:11.5px;margin-top:0}
   <div id="list" class="list"></div>
 </div>
 
-<!-- Modal -->
-<div id="modal" class="modal" role="dialog" aria-modal="true">
-  <div class="modal-content" aria-labelledby="mTitle">
-    <h2 id="mTitle" class="m-title"></h2>
-    <div id="mGallery"></div>
-    <p id="mDesc" class="desc"></p>
-    <p id="mFullDesc"></p>
-    <p id="mPrice" class="price" style="margin-top:0"></p>
-    <div class="modal-footer">
-      <button id="shareBtn" class="share-small" title="Condividi" aria-label="Condividi">📤 Condividi</button>
-      <button id="closeBtn" class="close-btn" aria-label="Chiudi">Chiudi</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===== SCRIPT ===== -->
 <script>
-/* === INCOLLA QUI LA LISTA PRODOTTI ================================
-Sostituisci questo array con il tuo `const PRODUCTS=[...]` completo.
-Mantieni il nome costante: PRODUCTS.
-------------------------------------------------------------------- */
-const PRODUCTS = [
-  // Esempio minimo per non rompere la pagina:
-  // {id:"demo-tonno", name:"Tonno demo", price:7.50, shortDesc:"Esempio", images:["images/default1.jpg"]}
-];
-/* === FINE AREA INCOLLA ========================================== */
-
-// Ordina alfabeticamente per id
-PRODUCTS.sort((a,b)=>a.id.localeCompare(b.id));
-
-const listEl=document.getElementById("list");
-const fmt=new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"});
-const countEl=document.getElementById("count");
-const q=document.getElementById("searchBox");
-const modal=document.getElementById("modal");
-const mTitle=document.getElementById("mTitle");
-const mDesc=document.getElementById("mDesc");
-const mFullDesc=document.getElementById("mFullDesc");
-const mPrice=document.getElementById("mPrice");
-const mGallery=document.getElementById("mGallery");
-const shareBtn=document.getElementById("shareBtn");
-const closeBtn=document.getElementById("closeBtn");
-let currentId=null;
-
-function rowTemplate(p){
-  return \`
-  <div class="item" onclick="openModal('\${p.id}')">
-    <div class="thumb"><img loading="lazy" src="\${(p.images&&p.images[0])||'images/default1.jpg'}" alt="\${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
-    <div class="info">
-      <h3 class="title">\${p.name}</h3>
-      <p class="desc">\${p.shortDesc||""}</p>
-      <div class="divider"></div>
-    </div>
-    <div class="price">\${fmt.format(p.price)}\${p.unit||""}</div>
-  </div>\`;
-}
-
-function render(list=PRODUCTS){
-  listEl.innerHTML = list.length ? list.map(rowTemplate).join("") : '<div class="item">Nessun risultato</div>';
-  countEl.textContent = list.length===PRODUCTS.length ? \`\${list.length} prodotti\` : \`\${list.length} risultati\`;
-}
-
-function productAnchorUrl(id){
-  const base=location.origin+location.pathname;
-  return \`\${base}#\${encodeURIComponent(id)}\`;
-}
-
-async function shareProduct(id){
-  const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
-  const imgUrl=new URL((p.images&&p.images[0])||"", location.href).href;
-  const text=\`\${p.name} – \${fmt.format(p.price)}\n\${p.shortDesc||""}\n\${productAnchorUrl(p.id)}\`;
-  try{
-    if(navigator.canShare && window.File && window.Blob && p.images && p.images[0]){
-      const resp=await fetch(imgUrl,{mode:"cors"});
-      const blob=await resp.blob();
-      const file=new File([blob], \`\${p.id}.jpg\`, {type: blob.type || "image/jpeg"});
-      const data={title:p.name,text,files:[file]};
-      if(navigator.canShare(data)){ await navigator.share(data); return; }
-    }
-    if(navigator.share){ await navigator.share({title:p.name,text:\`\${p.name} – \${fmt.format(p.price)}\n\${p.shortDesc||""}\`,url:imgUrl}); return; }
-  }catch(e){}
-  try{ await navigator.clipboard.writeText(productAnchorUrl(p.id)); }catch(e){}
-}
-
-function adjustModalImages(){
-  const content = document.querySelector('.modal-content');
-  const gallery = document.getElementById('mGallery');
-  if(!content || !gallery) return;
-  const titleH = document.getElementById('mTitle')?.offsetHeight || 0;
-  const descH  = document.getElementById('mDesc')?.offsetHeight || 0;
-  const fullH  = document.getElementById('mFullDesc')?.offsetHeight || 0;
-  const priceH = document.getElementById('mPrice')?.offsetHeight || 0;
-  const footerH= document.querySelector('.modal-footer')?.offsetHeight || 0;
-  const paddings = 40;
-  const max = content.clientHeight - (titleH + descH + fullH + priceH + footerH + paddings);
-  const imgs = gallery.querySelectorAll('img');
-  imgs.forEach(img => { img.style.maxHeight = Math.max(120, max) + 'px'; });
-}
-
-window.openModal = function(id){
-  const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
-  currentId=id;
-  mTitle.textContent=p.name;
-  mDesc.textContent=p.shortDesc||"";
-  mFullDesc.textContent=p.fullDesc||"";
-  mPrice.textContent=fmt.format(p.price)+(p.unit||"");
-  const imgs=(p.images||[]).slice(0,2);
-  mGallery.innerHTML=imgs.map(src=>\`<img loading="lazy" src="\${src||'images/default1.jpg'}" alt="\${p.name}" onerror="this.onerror=null;this.src='images/default1.png';">\`).join("");
-  shareBtn.onclick=()=>shareProduct(currentId);
-  modal.classList.add("open"); document.body.style.overflow="hidden"; closeBtn.focus();
-  if(location.hash!=="#"+id) history.pushState({modal:true,id},"","#"+id);
-  setTimeout(adjustModalImages, 0);
-}
-
-function closeModal(){
-  if(!modal.classList.contains("open")) return;
-  modal.classList.remove("open"); document.body.style.overflow="";
-  currentId=null;
-  if(location.hash) history.pushState("",document.title,location.pathname+location.search);
-}
-
-closeBtn.onclick=closeModal;
-modal.addEventListener("click",e=>{ if(e.target===modal) closeModal(); });
-window.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
-window.addEventListener("popstate",()=>{
-  if(location.hash){
-    const id=decodeURIComponent(location.hash.slice(1));
-    if(!modal.classList.contains("open")) openModal(id);
-  }else{
-    if(modal.classList.contains("open")) modal.classList.remove("open"); document.body.style.overflow="";
-  }
-});
-
-const q=document.getElementById("searchBox");
-q.addEventListener("input",()=>{
-  const term=q.value.trim().toLowerCase();
-  if(!term){render(PRODUCTS);return;}
-  const res=PRODUCTS.filter(p=>{
-    const hay=[p.name||"",p.shortDesc||"",p.fullDesc||"",...(p.images||[]).map(x=>x.split('/').pop()||"")].join(" ").toLowerCase();
-    return hay.includes(term);
-  });
-  render(res);
-});
-
-render();
-if(location.hash){
-  const id=decodeURIComponent(location.hash.slice(1));
-  if(PRODUCTS.some(p=>p.id===id)) openModal(id);
-}
+const PRODUCTS = [];
 </script>
 
-<!-- Pulsante ritorno menu -->
 <a href="index2.html" title="Torna al menu" class="back-btn" aria-label="Torna al menu principale">↩︎ Menu</a>
 <style>
 .back-btn{
-  position:fixed; bottom:14px; left:14px;
+  position:fixed;bottom:14px;left:14px;
   background:rgba(255,255,255,0.75);
-  color:#0a6a2b; font-size:13px; font-weight:600;
-  padding:6px 10px; border-radius:20px; text-decoration:none;
-  box-shadow:0 2px 6px rgba(0,0,0,0.15); z-index:1500;
-  transition:background .15s ease, color .15s ease;
+  color:#0a6a2b;font-size:13px;font-weight:600;
+  padding:6px 10px;border-radius:20px;text-decoration:none;
+  box-shadow:0 2px 6px rgba(0,0,0,0.15);z-index:1500;
+  transition:background .15s ease,color .15s ease;
 }
-.back-btn:hover{ background:#0a6a2b; color:#fff; }
-@media print{ .back-btn{display:none!important;} }
+.back-btn:hover{background:#0a6a2b;color:#fff;}
+@media print{.back-btn{display:none!important;}}
 </style>
-
 </body>
 </html>
