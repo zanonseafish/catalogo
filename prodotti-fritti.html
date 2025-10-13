@@ -399,5 +399,34 @@
     if(PRODUCTS.some(p=>p.id===id)) openModal(id);
   }
   </script>
+
+   <!-- Pulsante ritorno menu -->
+<a href="index2.html" title="Torna al menu" class="back-btn" aria-label="Torna al menu principale">↩︎ Back</a>
+
+<style>
+.back-btn{
+  position:fixed;
+  bottom:14px;
+  left:14px;
+  background:rgba(255,255,255,0.75);
+  color:#0a6a2b;
+  font-size:13px;
+  font-weight:600;
+  padding:6px 10px;
+  border-radius:20px;
+  text-decoration:none;
+  box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  z-index:1500;
+  transition:background .15s ease, color .15s ease;
+}
+.back-btn:hover{
+  background:#0a6a2b;
+  color:#fff;
+}
+@media print{
+  .back-btn{display:none!important;}
+}
+</style>
+  
 </body>
 </html>
