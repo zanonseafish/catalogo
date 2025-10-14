@@ -3,23 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Catalogo Prodotti ZANON SEAFISH</title>
- <!-- Open Graph -->
- 
-<meta property="og:title" content="Catalogo Prodotti ZANON SEAFISH">
-<meta property="og:description" content="Sfoglia il catalogo prodotti Zanon Seafish Ingros SRL">
-<meta property="og:url" content="https://zanonseafish.github.io/catalogo/">
-<meta property="og:type" content="website">
+  <title>Offerte ZANON SEAFISH</title>
 
-<meta property="og:image" content="https://zanonseafish.github.io/catalogo/images/og-cover1.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Offerte ZANON SEAFISH">
+  <meta property="og:description" content="Promo a tempo su selezione prodotti Zanon Seafish Ingros SRL">
+  <meta property="og:url" content="https://zanonseafish.github.io/catalogo/offerte.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://zanonseafish.github.io/catalogo/images/og-cover1.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- /Open Graph -->
 
-<meta name="twitter:card" content="summary_large_image">
-<!-- end Open Graph -->
-  
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
     :root{
       --bg:#fbfbf8;
@@ -28,6 +27,7 @@
       --line:#e7e4dc;
       --brand:#0b5;
       --price:#0a6a2b;
+      --danger:#b00020;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -37,19 +37,28 @@
     header{background:linear-gradient(180deg,#0b1620 0%, #0e1f2a 60%, #0e1f2a00 100%);color:#fff;padding:20px 12px 18px;text-align:center;position:relative}
     header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
     header img.logo{height:60px;width:auto;display:block;margin:0 auto}
-    header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:0 0 2px 0;font-size:24px;line-height:1.15;word-break:break-word;overflow-wrap:anywhere}
+    header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:0 0 2px 0;font-size:24px;line-height:1.15}
     header .sub{opacity:.85;font-size:11.5px;margin-top:0}
-    .tools{display:flex;justify-content:center;margin-top:8px}
-    .search{max-width:480px;width:100%}
-    .search input{width:100%;padding:10px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;color:var(--brand);outline:none}
+    .tools{display:flex;gap:8px;justify-content:center;margin-top:8px;flex-wrap:wrap}
+    .search{max-width:420px;width:100%}
+    .search input{width:100%;padding:10px 12px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;color:var(--brand);outline:none}
     .count{color:var(--brand);margin-top:8px;font-size:12px}
 
-    /* Container compact */
+    /* Container */
     .container{max-width:1100px;margin:6px auto 14px;padding:0 10px}
 
-    /* Slim list */
-    .list{display:flex;flex-direction:column;gap:10px}
-    .item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
+    /* Group */
+    .group{margin:12px 0 16px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.92);box-shadow:0 1px 6px rgba(0,0,0,.06)}
+    .group-head{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line);cursor:pointer}
+    .g-title{font-family:"Playfair Display",serif;font-size:18px;margin:0;flex:1}
+    .dates{font-size:12px;color:var(--muted)}
+    .badge{font-size:11px;border-radius:999px;padding:4px 8px;background:#0b5;color:#fff;white-space:nowrap}
+    .badge.red{background:var(--danger)}
+    .list{display:flex;flex-direction:column;gap:10px;padding:10px}
+    .collapsed .list{display:none}
+
+    /* Item */
+    .item{display:grid;grid-template-columns:84px 1fr 110px;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.04);cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
     .item:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.06)}
     .thumb{width:84px;height:84px;border-radius:12px;overflow:hidden;background:#f1f1ed;border:1px solid var(--line)}
     .thumb img{width:100%;height:100%;object-fit:cover;display:block}
@@ -57,7 +66,11 @@
     .title{font-family:"Playfair Display",serif;font-weight:700;font-size:18px;letter-spacing:.02em;margin:0 0 3px 0;text-transform:uppercase}
     .desc{color:var(--muted);font-size:12px;line-height:1.3;margin:0 0 4px 0}
     .divider{height:1px;background:var(--line);margin:3px 0}
-    .price{justify-self:end;align-self:end;color:var(--price);font-weight:700;font-size:16px}
+    .price-wrap{justify-self:end;align-self:end;text-align:right}
+    .old{font-size:12px;color:#888;text-decoration:line-through}
+    .price{color:var(--price);font-weight:700;font-size:16px}
+    .save{font-size:11px;color:#0a6a2b}
+    .countdown{font-size:11px;color:#b04b00;margin-top:2px}
 
     /* Modal */
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
@@ -74,24 +87,9 @@
     .modal-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px;flex:0 0 auto}
     .share-small{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer;background:#111;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.3)}
     .close-btn{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer;background:#eee;color:#111;box-shadow:0 2px 6px rgba(0,0,0,.15)}
-
-    /* Gallery area grows and scrolls if needed */
-    #mGallery{
-      flex:1 1 auto;
-      overflow:auto;
-      display:grid;
-      gap:12px;
-      align-items:center;
-      justify-items:center;
-    }
-    /* two columns if ci sono almeno 2 immagini */
+    #mGallery{flex:1 1 auto;overflow:auto;display:grid;gap:12px;align-items:center;justify-items:center}
     #mGallery:has(img:nth-child(2)){grid-template-columns:1fr 1fr;}
-    #mGallery img{
-      max-width:100%;
-      height:auto;
-      display:block;
-      object-fit:contain;
-    }
+    #mGallery img{max-width:100%;height:auto;display:block;object-fit:contain}
 
     /* Footer */
     .site-footer{max-width:1100px;margin:18px auto 24px;padding:0 10px;color:#444;font-size:12px}
@@ -101,14 +99,11 @@
     .foot-text{flex:1;min-width:240px}
     .foot-mail{font-size:12px;color:#0b5;text-decoration:none}
 
-    /* Print-only footer (senza numeri pagina) */
-    
-
     /* Responsive */
     @media (max-width:820px){
       header{padding:16px 10px 16px}
       header h1{font-size:22px}
-      .item{grid-template-columns:76px 1fr 74px}
+      .item{grid-template-columns:76px 1fr 96px}
       .thumb{width:76px;height:76px;border-radius:10px}
       .title{font-size:16px}
       .price{font-size:15px}
@@ -117,7 +112,7 @@
       header{padding:14px 8px 14px}
       header h1{font-size:20px}
       .item{grid-template-columns:66px 1fr;grid-template-rows:auto auto;gap:8px}
-      .price{grid-column:2;justify-self:end}
+      .price-wrap{grid-column:2;justify-self:end}
     }
 
     /* Print */
@@ -125,91 +120,52 @@
       @page{size:A4;margin:14mm 12mm}
       body{background:#fff}
       header{background:none!important;color:#000!important;border-bottom:1px solid #ddd!important;padding:0 0 6mm}
-      .sub{display:none!important}
-      .tools, #count{display:none!important} /* Nascondi ricerca e contatore */
+      .sub,.tools,#count{display:none!important}
       .item{break-inside:avoid-page;page-break-inside:avoid;box-shadow:none;border-color:#ddd}
       .modal{display:none!important}
       .site-rule{background:#000;height:1px}
       .site-footer{color:#000}
       .foot-mail{color:#000;text-decoration:underline}
-
-      /* Piè di pagina fisso su ogni pagina, senza numerazione */
-      
-      .print-footer .line{
-        display:inline-flex;
-        align-items:center;
-        gap:6px;
-      }
-      .print-footer img{
-        height:12px;
-        width:auto;
-        vertical-align:middle;
-      }
+      .print-footer .line{display:inline-flex;align-items:center;gap:6px}
+      .print-footer img{height:12px;width:auto;vertical-align:middle}
       .print-footer .text{font-weight:600;}
     }
 
     .search input::placeholder{color:rgba(11,85,0,.7)}
-  
-/* Nascondi sempre il piè pagina a video */
-.print-footer {
-  display: none !important;
-}
 
-/* Mostra e posiziona solo in stampa */
-@media print {
-  .print-footer {
-    display: block !important;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 10px;
-    color: #000;
-    opacity: .95;
-  }
-  .print-footer .line {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .print-footer img {
-    height: 12px;
-    width: auto;
-    vertical-align: middle;
-  }
-  .print-footer .text {
-    font-weight: 600;
-  }
-}
-
-</style>
+    /* Piè di pagina stampa: nascosto a video */
+    .print-footer { display: none !important; }
+    @media print {
+      .print-footer {
+        display: block !important; position: fixed; bottom: 0; left: 0; right: 0; width: 100%;
+        text-align: center; font-size: 10px; color: #000; opacity: .95;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
     <div class="top">
       <img class="logo" src="images/logo.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
-      <h1>Catalogo Prodotti ZANON SEAFISH</h1>
-      <div class="sub">Clicca un elemento per i dettagli e la condivisione.</div>
+      <h1>Offerte ZANON SEAFISH</h1>
+      <div class="sub">Solo promozioni attive nel periodo. Clicca un elemento per i dettagli e la condivisione.</div>
       <div class="tools">
-        <div class="search"><input id="searchBox" placeholder="Cerca prodotti…"></div>
+        <div class="search"><input id="searchBox" placeholder="Cerca nelle offerte…"></div>
+        <button id="toggleExpired" class="share-small" type="button" title="Mostra/Nascondi scadute">Mostra scadute</button>
       </div>
       <div id="count" class="count"></div>
     </div>
   </header>
 
-  <!-- Piè di pagina per la stampa (senza numeri) -->
+  <!-- Piè di pagina per la stampa -->
   <div class="print-footer" aria-hidden="true">
     <span class="line">
       <img src="images/logo.png" alt="Zanon Seafish">
-      <span class="text">Zanon Seafish – Catalogo Prodotti</span>
+      <span class="text">Zanon Seafish – Offerte</span>
     </span>
   </div>
 
-  <div class="container">
-    <div id="list" class="list"></div>
-  </div>
+  <div class="container" id="container"></div>
 
   <!-- Modal -->
   <div id="modal" class="modal" role="dialog" aria-modal="true">
@@ -241,45 +197,106 @@
       </div>
       <a class="foot-mail" href="mailto:info@zanonseafish.it" title="Scrivi a info@zanonseafish.it">✉️ Contattaci</a>
     </div>
-  </br>
   </footer>
-</br>
- 
+
   <script>
-  // === DATI ===
-  const PRODUCTS = [
-  {id:"polpette-brasato",name:"Polpette di Brasato",price:14.00,shortDesc:"Conf. 2kg – Polpette di brasato surgelate (40 pz da 50g)",fullDesc:"Polpette di brasato dal gusto autentico, preparate con carne di manzo selezionata. Ideali per secondi o buffet caldi.",images:["img2/polpette-brasato.jpg"]},
-  {id:"polpette-baccala",name:"Polpette di Baccalà",price:14.00,shortDesc:"Conf. 2kg – Polpette di baccalà surgelate (40 pz da 50g)",fullDesc:"Polpette morbide a base di baccalà e patate. Perfette fritte o al forno come antipasto di mare.",images:["img2/polpette-baccala.jpg"]},
-  {id:"polpette-tonno-cipolla",name:"Polpette di Tonno e Cipolla",price:14.00,shortDesc:"Conf. 2kg – Polpette di tonno e cipolla (40 pz da 50g)",fullDesc:"Polpette di tonno con cipolla dolce e spezie mediterranee. Croccanti e profumate.",images:["img2/polpette-tonno-cipolla.jpg"]},
-  {id:"polpette-pollo-speck",name:"Polpette di Pollo e Speck",price:12.00,shortDesc:"Conf. 2kg – Polpette di pollo e speck (40 pz da 50g)",fullDesc:"Polpette dal sapore deciso con carne di pollo e speck affumicato. Ottime per aperitivi o secondi piatti.",images:["img2/polpette-pollo-speck.jpg"]},
-  {id:"polpette-verdure",name:"Polpette di Verdure",price:12.00,shortDesc:"Conf. 2kg – Polpette di verdure miste (40 pz da 50g)",fullDesc:"Polpette vegetariane con verdure fresche selezionate. Leggere e gustose, ideali per contorni o buffet.",images:["img2/polpette-verdure.png"]},
+  // ============================================
+  // OFFERS DATA
+  // Raggruppa promo per campagna. Cancella un gruppo per rimuovere tutte le sue offerte.
+  // Visibilità automatica: validFrom <= oggi <= validTo (in timezone locale).
+  // Parametri utili:
+  //   ?show=all -> mostra anche future e scadute
+  //   Bottone "Mostra scadute" -> toggle a runtime
+  // ============================================
 
-  {id:"arancini-mozzarella-prosciutto",name:"Arancini con Mozzarella e Prosciutto Prefritti",price:5.50,shortDesc:"Conf. 3kg – Arancini con mozzarella e prosciutto prefritti",fullDesc:"Arancini di riso con cuore di mozzarella e prosciutto cotto. Pronti per la cottura.",images:["img2/arancini-prosciutto.png"]},
-  {id:"arancini-spinaci",name:"Arancini agli Spinaci Prefritti",price:5.50,shortDesc:"Conf. 3kg – Arancini agli spinaci prefritti",fullDesc:"Arancini di riso con ripieno cremoso agli spinaci e formaggio. Croccanti e saporiti.",images:["img2/arancini-spinaci.png"]},
-  {id:"arrosticini-mare",name:"Arrosticini di Mare Panati (Totano Gigas)",price:8.30,shortDesc:"Conf. 4kg – Arrosticini di mare panati",fullDesc:"Spiedini di totano gigas impanati e croccanti. Ideali fritti o al forno.",images:["img2/arrosticini-pesce-panati.png"]},
-  {id:"alici-panato",name:"Alici Panate Croccanti",price:8.90,shortDesc:"Conf. 1kg – Alici panate croccanti",fullDesc:"Filetti di alici panati e dorati. Ottimi per antipasti o secondi di mare.",images:["img2/alici-panati-croccanti.png"]},
-  {id:"filetto-baccala-prezzemolo",name:"Filetto di Baccalà Pastellato con Prezzemolo",price:11.90,shortDesc:"Conf. 5x1kg – Filetti di baccalà pastellati con prezzemolo",fullDesc:"Filetti di baccalà teneri in pastella aromatica al prezzemolo. Croccanti e profumati.",images:["img2/filetti-baccala-pastellati.png"]},
-  {id:"chele-granchio",name:"Chele di Granchio Panate",price:5.50,shortDesc:"Conf. 4x1kg – Chele di granchio panate",fullDesc:"Chele di surimi al gusto di granchio, con panatura dorata e croccante. Pronte in pochi minuti.",images:["img2/chele-granchio-panate.jpg"]},
-  {id:"fiori-zucca-mozzarella-alici",name:"Fiori di Zucca con Mozzarella e Alici Prefritti",price:9.30,shortDesc:"Conf. 5x1kg – Fiori di zucca con mozzarella e alici",fullDesc:"Fiori di zucca ripieni di mozzarella e alici. Croccanti e saporiti, già pronti da rigenerare.",images:["img2/fiori-zucca-mozz-alici.png"]},
-  {id:"fiori-zucca-prosciutto-mozzarella",name:"Fiori di Zucca con Prosciutto e Mozzarella Prefritti",price:8.10,shortDesc:"Conf. 5x1kg – Fiori di zucca con prosciutto e mozzarella",fullDesc:"Fiori di zucca con farcitura di prosciutto cotto e mozzarella filante. Doratura perfetta.",images:["img2/fiori-zucca-mozz-prosciutto.png"]},
-  {id:"frittelle-gamberi-zucchine",name:"Frittelle di Gamberi e Zucchine",price:11.50,shortDesc:"Conf. 4x1kg – Frittelle di gamberi e zucchine",fullDesc:"Frittelle di gamberi e zucchine in pastella croccante. Pronte in pochi minuti.",images:["img2/frittelle-gamberi-zucchine.png"]},
-  {id:"gamberi-patata",name:"Gamberi Avvolti in Filo di Patata",price:14.00,shortDesc:"Conf. 5x1kg – Gamberi avvolti in filo di patata",fullDesc:"Gamberi croccanti rivestiti di julienne di patata. Specialità gourmet.",images:["img2/gamberi-patata.jpg"]},
-  {id:"mozzarelline-tartufo",name:"Mozzarelline Panate con Tartufo Prefritte",price:7.80,shortDesc:"Conf. 5x1kg – Mozzarelline con tartufo prefritte",fullDesc:"Mozzarelline filanti aromatizzate al tartufo. Perfette per aperitivi.",images:["img2/mozzarelline-tartufo.png"]},
-  {id:"olive-ascolane",name:"Olive Ascolane",price:5.40,shortDesc:"Conf. 4x2,500kg – Olive ascolane ripiene di carne",fullDesc:"Olive verdi farcite con carne e panate. Croccanti e dorate in pochi minuti.",images:["img2/olive-ripiene-ascolana.png"]},
-  {id:"olive-ascolane-prefritte",name:"Olive Ascolane Prefritte",price:5.90,shortDesc:"Conf. 5x1kg – Olive ascolane prefritte",fullDesc:"Versione prefritta delle classiche olive ascolane, pronte da rigenerare in forno o friggitrice.",images:["img2/olive-ripiene-ascolana.png"]},
-  {id:"panzerotti-mozzarella",name:"Panzerotti Mozzarella e Pomodoro Prefritti",price:5.40,shortDesc:"Conf. 5x1kg – Panzerotti con mozzarella e pomodoro",fullDesc:"Mini panzerotti con ripieno di pomodoro e mozzarella filante. Perfetti come finger food.",images:["img2/panzerotti-mozzarella.png"]},
-  {id:"polpette-melanzane",name:"Polpette di Melanzane, Mozzarella e Provola Affumicata",price:5.50,shortDesc:"Conf. 5x1kg – Polpette di melanzane con mozzarella e provola affumicata",fullDesc:"Polpette vegetariane dal sapore intenso e consistenza morbida. Perfette per aperitivi e buffet.",images:["img2/polpette-melanzane.png"]},
-  {id:"salvia-pastellata",name:"Salvia Pastellata Prefritta",price:11.50,shortDesc:"Conf. 4x1kg – Foglie di salvia pastellate prefritte",fullDesc:"Foglie di salvia immerse in pastella leggera e croccante. Profumate e aromatiche.",images:["img2/salvia-pastellata.png"]},
-  {id:"tris-verdure",name:"Tris di Verdure Pastellate Prefritte",price:5.20,shortDesc:"Conf. 5x1kg – Tris di verdure pastellate prefritte",fullDesc:"Mix croccante di zucchine, carote e peperoni in pastella dorata. Perfette per contorni o antipasti.",images:["img2/tris-verdure.png"]}
-];
-  
-  // Ordina alfabeticamente per id
-  PRODUCTS.sort((a,b)=>a.id.localeCompare(b.id));
+  // Helper per costruire item veloce
+  function p({id,name,price,unit,shortDesc,fullDesc,images}){return {id,name,price,unit,shortDesc,fullDesc,images}}
 
-  const listEl=document.getElementById("list");
-  const fmt=new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"});
+  const OFFER_GROUPS = [
+    {
+      id:"autunno-2025",
+      name:"Promo Autunno 2025",
+      validFrom:"2025-10-01",
+      validTo:"2025-10-31",
+      items:[
+        // Da prodotti.html
+        {product:p({id:"19-baccala-vicentina-200",name:"Baccalà alla Vicentina 200g",price:6.50,shortDesc:"Baccalà alla vicentina, conf. da 200 g",fullDesc:"Porzione pronta da servire.",images:["images/baccala-vicentina-200.jpg"]}), discount:{type:"percent",value:20}},
+        {product:p({id:"28-salmone-preaff-norv",name:"Salmone aff.to preaffettato Norvegese 200g",price:6.50,shortDesc:"Confezione da 200 g",fullDesc:"Fette pronte al servizio.",images:["images/salmone-preaff-norv.jpg"]}), discount:{type:"price",value:1.00}},
+        // Da prodotti-fritti.html
+        {product:p({id:"anelli-cipolla",name:"Anelli di Cipolla Pastellati Prefritti",price:5.20,shortDesc:"Conf. 8x0,400kg",fullDesc:"In pastella dorata e croccante.",images:["img2/anelli-cipolla-pastellati.png"]}), discount:{type:"percent",value:15}},
+        {product:p({id:"mozzarelline-panate",name:"Mozzarelline Panate Prefritte",price:6.50,shortDesc:"Conf. 5x1kg",fullDesc:"Classiche croccanti e filanti.",images:["img2/mozzarelline-panate.png"]}), discount:{type:"price",value:0.80}}
+      ]
+    },
+    {
+      id:"natale-2025",
+      name:"Promo Natale 2025",
+      validFrom:"2025-12-01",
+      validTo:"2025-12-31",
+      items:[
+        {product:p({id:"20-baccala-vicentina",name:"Baccalà alla Vicentina 1kg",price:25.50,shortDesc:"Confezione da 1 kg",fullDesc:"Ricetta tradizionale.",images:["images/baccala-vicentina-1.jpg"]}), discount:{type:"percent",value:15}},
+        {product:p({id:"gamberi-patata",name:"Gamberi Avvolti in Filo di Patata",price:14.00,shortDesc:"Conf. 5x1kg",fullDesc:"Specialità gourmet.",images:["img2/gamberi-patata.jpg"]}), discount:{type:"percent",value:10}}
+      ]
+    }
+  ];
+
+  // ====== Core ======
+  const fmt = new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"});
+  const container=document.getElementById("container");
   const countEl=document.getElementById("count");
   const q=document.getElementById("searchBox");
+  const showAllParam=new URLSearchParams(location.search).get("show")==="all";
+  let showExpired = showAllParam;
+  const now = new Date();
+
+  function endOfDay(dateStr){
+    const d=new Date(dateStr+"T23:59:59");
+    return d;
+  }
+
+  function isActive(group){
+    const from=new Date(group.validFrom+"T00:00:00");
+    const to=endOfDay(group.validTo);
+    return now>=from && now<=to;
+  }
+  function isFuture(group){
+    const from=new Date(group.validFrom+"T00:00:00");
+    return now<from;
+  }
+  function isExpired(group){
+    const to=endOfDay(group.validTo);
+    return now>to;
+  }
+  function calcDiscounted(price, disc){
+    if(disc.type==="percent"){ return Math.max(0, +(price*(1-disc.value/100)).toFixed(2)); }
+    return Math.max(0, +(price - disc.value).toFixed(2));
+  }
+  function daysLeft(toStr){
+    const ms = endOfDay(toStr) - now;
+    if(ms<=0) return 0;
+    return Math.ceil(ms/86400000);
+  }
+
+  function productAnchorUrl(id){
+    const base=location.origin+location.pathname;
+    return `${base}#${encodeURIComponent(id)}`;
+  }
+
+  async function shareProduct(prod){
+    const imgUrl=new URL((prod.images?.[0]||"images/default1.jpg"), location.href).href;
+    const text=`${prod.name} – ${fmt.format(prod.offerPrice)}\n${prod.shortDesc||""}\n${productAnchorUrl(prod.id)}`;
+    try{
+      if(navigator.canShare && window.File && window.Blob){
+        const resp=await fetch(imgUrl,{mode:"cors"}); const blob=await resp.blob();
+        const file=new File([blob], `${prod.id}.jpg`, {type: blob.type || "image/jpeg"});
+        const data={title:prod.name,text,files:[file]};
+        if(navigator.canShare(data)){ await navigator.share(data); return; }
+      }
+      if(navigator.share){ await navigator.share({title:prod.name,text:`${prod.name} – ${fmt.format(prod.offerPrice)}\n${prod.shortDesc||""}`,url:imgUrl}); return; }
+    }catch(e){}
+    try{ await navigator.clipboard.writeText(productAnchorUrl(prod.id)); }catch(e){}
+  }
+
+  // Modal refs
   const modal=document.getElementById("modal");
   const mTitle=document.getElementById("mTitle");
   const mDesc=document.getElementById("mDesc");
@@ -288,47 +305,40 @@
   const mGallery=document.getElementById("mGallery");
   const shareBtn=document.getElementById("shareBtn");
   const closeBtn=document.getElementById("closeBtn");
-  let currentId=null;
+  let current=null;
 
-  function rowTemplate(p){
-    return `
-    <div class="item" onclick="openModal('${p.id}')">
-      <div class="thumb"><img loading="lazy" src="${p.images[0] || 'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
-      <div class="info">
-        <h3 class="title">${p.name}</h3>
-        <p class="desc">${p.shortDesc||""}</p>
-        <div class="divider"></div>
-      </div>
-      <div class="price">${fmt.format(p.price)}${p.unit || ""}</div>
-    </div>`;
+  function openModal(prod){
+    current=prod;
+    mTitle.textContent=prod.name;
+    mDesc.textContent=prod.shortDesc||"";
+    mFullDesc.textContent=prod.fullDesc||"";
+    mPrice.innerHTML = `<span class="old">${fmt.format(prod.price)}${prod.unit||""}</span> → <span class="price">${fmt.format(prod.offerPrice)}${prod.unit||""}</span>`;
+    const imgs=(prod.images||[]).slice(0,2);
+    mGallery.innerHTML=imgs.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${prod.name}" onerror="this.onerror=null;this.src='images/default1.png';">`).join("");
+    shareBtn.onclick=()=>shareProduct(prod);
+    modal.classList.add("open"); document.body.style.overflow="hidden"; closeBtn.focus();
+    if(location.hash!=="#"+prod.id) history.pushState({modal:true,id:prod.id},"","#"+prod.id);
+    setTimeout(adjustModalImages,0);
   }
-
-  function render(list=PRODUCTS){
-    listEl.innerHTML = list.length ? list.map(rowTemplate).join("") : '<div class="item">Nessun risultato</div>';
-    countEl.textContent=list.length===PRODUCTS.length?`${list.length} prodotti`:`${list.length} risultati`;
+  function closeModal(){
+    if(!modal.classList.contains("open")) return;
+    modal.classList.remove("open"); document.body.style.overflow="";
+    current=null;
+    if(location.hash) history.pushState("",document.title,location.pathname+location.search);
   }
-
-  function productAnchorUrl(id){
-    const base=location.origin+location.pathname;
-    return `${base}#${encodeURIComponent(id)}`;
-  }
-
-  async function shareProduct(id){
-    const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
-    const imgUrl=new URL(p.images[0], location.href).href;
-    const text=`${p.name} – ${fmt.format(p.price)}\n${p.shortDesc||""}\n${productAnchorUrl(p.id)}`;
-    try{
-      if(navigator.canShare && window.File && window.Blob){
-        const resp=await fetch(imgUrl,{mode:"cors"});
-        const blob=await resp.blob();
-        const file=new File([blob], `${p.id}.jpg`, {type: blob.type || "image/jpeg"});
-        const data={title:p.name,text,files:[file]};
-        if(navigator.canShare(data)){ await navigator.share(data); return; }
-      }
-      if(navigator.share){ await navigator.share({title:p.name,text:`${p.name} – ${fmt.format(p.price)}\n${p.shortDesc||""}`,url:imgUrl}); return; }
-    }catch(e){}
-    try{ await navigator.clipboard.writeText(productAnchorUrl(p.id)); }catch(e){}
-  }
+  document.getElementById("closeBtn").onclick=closeModal;
+  modal.addEventListener("click",e=>{ if(e.target===modal) closeModal(); });
+  window.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
+  window.addEventListener("popstate",()=>{
+    if(location.hash){
+      const id=decodeURIComponent(location.hash.slice(1));
+      const all=flattenGroups(buildViewGroups(true));
+      const prod=all.find(x=>x.id===id);
+      if(prod && !modal.classList.contains("open")) openModal(prod);
+    }else{
+      if(modal.classList.contains("open")) modal.classList.remove("open"); document.body.style.overflow="";
+    }
+  });
 
   function adjustModalImages(){
     const content = document.querySelector('.modal-content');
@@ -339,94 +349,117 @@
     const fullH  = document.getElementById('mFullDesc')?.offsetHeight || 0;
     const priceH = document.getElementById('mPrice')?.offsetHeight || 0;
     const footerH= document.querySelector('.modal-footer')?.offsetHeight || 0;
-    const paddings = 40; // approx top+bottom padding inside modal-content
+    const paddings = 40;
     const max = content.clientHeight - (titleH + descH + fullH + priceH + footerH + paddings);
     const imgs = gallery.querySelectorAll('img');
     imgs.forEach(img => { img.style.maxHeight = Math.max(120, max) + 'px'; });
   }
 
-  window.openModal = function(id){
-    const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
-    currentId=id;
-    mTitle.textContent=p.name;
-    mDesc.textContent=p.shortDesc||"";
-    mFullDesc.textContent=p.fullDesc||"";
-    mPrice.textContent=fmt.format(p.price)+(p.unit||"");
-    const imgs=(p.images||[]).slice(0,2);
-    mGallery.innerHTML=imgs.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.png';">`).join("");
-    shareBtn.onclick=()=>shareProduct(currentId);
-    modal.classList.add("open"); document.body.style.overflow="hidden"; closeBtn.focus();
-    if(location.hash!=="#"+id) history.pushState({modal:true,id},"","#"+id);
-    // after rendering, adjust sizes
-    setTimeout(adjustModalImages, 0);
+  // ====== Render ======
+  function rowTemplate(prod, group){
+    const saveVal = prod.price - prod.offerPrice;
+    const saveTxt = group.discountText || (prod.discount?.type==="percent" ? `-${prod.discount.value}%` : `- ${fmt.format(saveVal)}`);
+    const left = daysLeft(group.validTo);
+    const leftTxt = left>0 ? `Termina tra ${left} gg` : (isExpired(group) ? "Promo scaduta" : `Termina oggi`);
+    return `
+    <div class="item" onclick="openModal(${JSON.stringify(prod).replace(/"/g,'&quot;')})">
+      <div class="thumb"><img loading="lazy" src="${prod.images?.[0] || 'images/default1.jpg'}" alt="${prod.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
+      <div class="info">
+        <h3 class="title">${prod.name}</h3>
+        <p class="desc">${prod.shortDesc||""}</p>
+        <div class="divider"></div>
+        <div class="countdown">${leftTxt}</div>
+      </div>
+      <div class="price-wrap">
+        <div class="old">${fmt.format(prod.price)}${prod.unit||""}</div>
+        <div class="price">${fmt.format(prod.offerPrice)}${prod.unit||""}</div>
+        <div class="save">Risparmi ${fmt.format(saveVal)} (${saveTxt})</div>
+      </div>
+    </div>`;
   }
 
-  function closeModal(){
-    if(!modal.classList.contains("open")) return;
-    modal.classList.remove("open"); document.body.style.overflow="";
-    currentId=null;
-    if(location.hash) history.pushState("",document.title,location.pathname+location.search);
+  function groupTemplate(g){
+    const stateBadge = isExpired(g) ? `<span class="badge red">Scaduta</span>` :
+                       isFuture(g) ? `<span class="badge">Prossimamente</span>` :
+                                     `<span class="badge">Attiva</span>`;
+    return `
+    <section class="group ${g.collapsed?'collapsed':''}" id="${g.id}">
+      <div class="group-head" onclick="this.parentElement.classList.toggle('collapsed')">
+        <h2 class="g-title">${g.name}</h2>
+        <div class="dates">${new Date(g.validFrom).toLocaleDateString()} → ${new Date(g.validTo).toLocaleDateString()}</div>
+        ${stateBadge}
+      </div>
+      <div class="list">
+        ${g.items.map(prod=>rowTemplate(prod,g)).join("")}
+      </div>
+    </section>`;
   }
 
-  closeBtn.onclick=closeModal;
-  modal.addEventListener("click",e=>{ if(e.target===modal) closeModal(); });
-  window.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
-  window.addEventListener("popstate",()=>{
-    if(location.hash){
-      const id=decodeURIComponent(location.hash.slice(1));
-      if(!modal.classList.contains("open")) openModal(id);
-    }else{
-      if(modal.classList.contains("open")) modal.classList.remove("open"); document.body.style.overflow="";
+  function buildViewGroups(includeAll=false){
+    return OFFER_GROUPS
+      .filter(g=>{
+        if(includeAll) return true;
+        return isActive(g);
+      })
+      .map(g=>{
+        const items = g.items.map(it=>{
+          const offerPrice = calcDiscounted(it.product.price, it.discount);
+          return {...it.product, offerPrice, discount:it.discount};
+        });
+        return {...g, items};
+      })
+      .filter(g=>g.items.length>0);
+  }
+
+  function flattenGroups(groups){
+    return groups.flatMap(g=>g.items);
+  }
+
+  function render(){
+    const groups = buildViewGroups(showExpired);
+    const term=(q.value||"").trim().toLowerCase();
+    let groupsFiltered=groups;
+    if(term){
+      groupsFiltered=groups.map(g=>{
+        const items=g.items.filter(p=>{
+          const hay=[p.name||"",p.shortDesc||"",p.fullDesc||"",...(p.images||[]).map(x=>x.split('/').pop()||"")].join(" ").toLowerCase();
+          return hay.includes(term);
+        });
+        return {...g,items};
+      }).filter(g=>g.items.length>0);
     }
+    container.innerHTML = groupsFiltered.length
+      ? groupsFiltered.map(groupTemplate).join("")
+      : '<div class="item">Nessuna offerta</div>';
+
+    const totalItems = groupsFiltered.reduce((acc,g)=>acc+g.items.length,0);
+    countEl.textContent = `${totalItems} offerte${term? " trovate": ""}`;
+  }
+
+  // UI events
+  document.getElementById("toggleExpired").addEventListener("click",()=>{
+    showExpired=!showExpired;
+    document.getElementById("toggleExpired").textContent = showExpired ? "Nascondi scadute" : "Mostra scadute";
+    render();
   });
+  q.addEventListener("input",render);
 
-  q.addEventListener("input",()=>{
-    const term=q.value.trim().toLowerCase();
-    if(!term){render(PRODUCTS);return;}
-    const res=PRODUCTS.filter(p=>{
-      const hay=[p.name||"",p.shortDesc||"",p.fullDesc||"",...(p.images||[]).map(x=>x.split('/').pop()||"")].join(" ").toLowerCase();
-      return hay.includes(term);
-    });
-    render(res);
-  });
-
-  // Recompute image size on resize while modal open
-  window.addEventListener('resize', ()=>{ if(modal.classList.contains('open')) adjustModalImages(); });
-
+  // Start
   render();
+
+  // Deep-link su #id se presente
   if(location.hash){
     const id=decodeURIComponent(location.hash.slice(1));
-    if(PRODUCTS.some(p=>p.id===id)) openModal(id);
+    const all=flattenGroups(buildViewGroups(true));
+    const prod=all.find(x=>x.id===id);
+    if(prod) openModal(prod);
   }
+
+  // Esporta openModal globalmente per inline onclick
+  window.openModal=openModal;
   </script>
 
-   <!-- Pulsante ritorno menu -->
-<a href="index2.html" title="Torna al menu" class="back-btn" aria-label="Torna al menu principale">↩︎ Menu</a>
-
-<style>
-.back-btn{
-  position:fixed;
-  bottom:14px;
-  left:14px;
-  background:rgba(255,255,255,0.75);
-  color:#0a6a2b;
-  font-size:13px;
-  font-weight:600;
-  padding:6px 10px;
-  border-radius:20px;
-  text-decoration:none;
-  box-shadow:0 2px 6px rgba(0,0,0,0.15);
-  z-index:1500;
-  transition:background .15s ease, color .15s ease;
-}
-.back-btn:hover{
-  background:#0a6a2b;
-  color:#fff;
-}
-@media print{
-  .back-btn{display:none!important;}
-}
-</style>
-  
+  <!-- Fonti di stile di riferimento: prodotti.html e prodotti-fritti.html -->
+  <!-- Riferimenti: 0 1 -->
 </body>
 </html>
