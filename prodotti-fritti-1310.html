@@ -6,7 +6,7 @@
   <title>Offerte della settimana • ZANON SEAFISH</title>
 
   <meta property="og:title" content="Offerte della settimana • ZANON SEAFISH">
-  <meta property="og:description" content="Solo due offerte lampo, valide per la settimana corrente.">
+  <meta property="og:description" content="Due offerte in evidenza, aggiornate manualmente.">
   <meta property="og:url" content="https://zanonseafish.github.io/catalogo/offerte.html">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://zanonseafish.github.io/catalogo/images/og-cover1.jpg">
@@ -18,66 +18,48 @@
   <style>
     :root{
       --bg:#fbfbf8; --ink:#111; --muted:#606060; --line:#e7e4dc;
-      --brand:#0b5; --price:#0a6a2b; --danger:#b00020; --pulse:#ffe000;
+      --brand:#0b5; --price:#0a6a2b; --danger:#ff2965; --pulse:#ffe000;
     }
     *{box-sizing:border-box}
     body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink)}
 
-    /* Header */
     header{background:linear-gradient(180deg,#0b1620 0%, #0e1f2a 70%, #0e1f2a00 100%);color:#fff;padding:20px 12px 18px;text-align:center}
     .logo{height:60px;width:auto;display:block;margin:0 auto}
     h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:6px 0 2px 0;font-size:24px}
     .sub{opacity:.9;font-size:12px;margin:2px 0 0}
 
     .container{max-width:1000px;margin:10px auto 18px;padding:0 10px}
-
-    /* Grid */
     .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
     @media (max-width:720px){ .grid{grid-template-columns:1fr} }
 
-    /* Item card */
     .item{
       position:relative; display:grid; grid-template-columns:120px 1fr; gap:14px; align-items:center;
       background:#fff; border:2px solid var(--line); border-radius:16px; padding:12px;
-      box-shadow:0 8px 24px rgba(0,0,0,.08);
-      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-      cursor:pointer;
+      box-shadow:0 8px 24px rgba(0,0,0,.08); transition:transform .12s, box-shadow .12s, border-color .12s; cursor:pointer;
     }
     .item:hover{ transform:translateY(-2px); box-shadow:0 14px 30px rgba(0,0,0,.12); border-color:#d9d4c9; }
-    .thumb{width:120px;height:120px;border-radius:12px;overflow:hidden;background:#f1f1ed;border:1px solid var(--line)}
+
+    .thumb{position:relative;width:120px;height:120px;border-radius:12px;overflow:hidden;background:#f1f1ed;border:1px solid var(--line)}
     .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .tag{
+      position:absolute; top:6px; left:6px; z-index:2;
+      background:var(--danger); color:#fff; font-weight:900; font-size:12px;
+      padding:6px 10px; border-radius:12px; box-shadow:0 6px 16px rgba(255,41,101,.45);
+      animation:blink 1s steps(2,end) infinite;
+    }
+    @keyframes blink{50%{opacity:.55}}
+
     .title{font-family:"Playfair Display",serif;font-weight:800;font-size:20px;margin:0 0 4px;text-transform:uppercase;letter-spacing:.01em}
     .desc{color:var(--muted);font-size:12.5px;margin:0 0 8px}
     .priceWrap{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
     .old{font-size:14px;color:#888;text-decoration:line-through}
-    .price{color:#0a6a2b;font-weight:900;font-size:26px;line-height:1}
+    .price{color:var(--price);font-weight:900;font-size:26px;line-height:1}
     .unit{font-size:12px;color:#2a2a2a}
-    .saveWrap{display:flex;align-items:center;gap:8px;margin-top:6px}
-    .save{
-      font-weight:800; font-size:13px; color:#111; background:var(--pulse);
-      padding:6px 10px; border-radius:999px; border:2px solid #111; box-shadow:0 0 0 3px rgba(255,224,0,.45);
-      animation:pulse 1.2s infinite;
-    }
-    .tag{
-      position:absolute; top:10px; right:10px;
-      background:#ff2965; color:#fff; font-weight:900; font-size:13px;
-      padding:6px 10px; border-radius:12px; box-shadow:0 6px 16px rgba(255,41,101,.45);
-      animation:blink 1s steps(2,end) infinite;
-    }
-    .burst{
-      position:absolute; inset:-4px; border-radius:18px; pointer-events:none;
-      box-shadow:0 0 0 0 rgba(255,224,0,.0), 0 0 0 0 rgba(11,85,0,.0);
-      animation:glow 1.6s ease-in-out infinite;
-    }
-    @keyframes blink{50%{opacity:.55}}
+    .save{font-weight:800; font-size:13px; color:#111; background:var(--pulse);
+      padding:6px 10px; border-radius:999px; border:2px solid #111; box-shadow:0 0 0 3px rgba(255,224,0,.45); animation:pulse 1.2s infinite; display:inline-block; margin-top:6px}
     @keyframes pulse{
       0%,100%{transform:scale(1); box-shadow:0 0 0 3px rgba(255,224,0,.45)}
       50%{transform:scale(1.05); box-shadow:0 0 0 6px rgba(255,224,0,.25)}
-    }
-    @keyframes glow{
-      0%{box-shadow:0 0 0 0 rgba(255,224,0,.35), 0 0 0 0 rgba(11,85,0,.25)}
-      70%{box-shadow:0 0 0 12px rgba(255,224,0,.0), 0 0 0 20px rgba(11,85,0,.0)}
-      100%{box-shadow:0 0 0 0 rgba(255,224,0,.0), 0 0 0 0 rgba(11,85,0,.0)}
     }
 
     /* Modal */
@@ -85,8 +67,17 @@
     .modal.open{display:flex}
     .modal-content{background:#fff;border-radius:12px;max-width:820px;width:min(96vw,820px);padding:18px;position:relative;box-shadow:0 10px 24px rgba(0,0,0,.35)}
     .m-title{font-family:"Playfair Display",serif;margin:0 0 8px}
+    .badge-modal{position:absolute;top:10px;left:10px;background:var(--danger);color:#fff;font-weight:900;font-size:12px;padding:6px 10px;border-radius:12px;animation:blink 1s steps(2,end) infinite}
     .share-small{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer;background:#111;color:#fff}
     .close-btn{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer;background:#eee;color:#111;margin-left:8px}
+
+    /* FAB menu basso-sinistra (coerente con cataloghi) */
+    .fab{position:fixed;left:14px;bottom:14px;z-index:1200}
+    .fab button{width:48px;height:48px;border-radius:999px;border:none;cursor:pointer;background:#0b5;color:#fff;font-size:20px;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+    .fab-menu{position:absolute;left:0;bottom:56px;background:#fff;border:1px solid #ddd;border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.15);padding:6px;display:none;min-width:180px}
+    .fab-menu a{display:block;padding:8px 10px;border-radius:8px;color:#111;text-decoration:none}
+    .fab-menu a:hover{background:#f4f4ef}
+    .fab.open .fab-menu{display:block}
 
     /* Footer */
     .site-footer{max-width:1000px;margin:18px auto 24px;padding:0 10px;color:#444;font-size:12px}
@@ -98,8 +89,8 @@
     @media print{
       @page{size:A4;margin:14mm 12mm}
       header{background:none!important;color:#000!important;border-bottom:1px solid #ddd!important;padding:0 0 6mm}
-      .modal{display:none!important}
-      .tag,.burst,.save{animation:none!important}
+      .modal,.fab{display:none!important}
+      .tag,.save{animation:none!important}
     }
   </style>
 </head>
@@ -107,7 +98,7 @@
   <header>
     <img class="logo" src="images/logo.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
     <h1>Offerte della settimana</h1>
-    <div id="range" class="sub">Settimana: …</div>
+    <div class="sub">dal – al</div>
   </header>
 
   <main class="container">
@@ -117,6 +108,7 @@
   <!-- Modal -->
   <div id="modal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content">
+      <span class="badge-modal">OFFERTA</span>
       <h2 id="mTitle" class="m-title"></h2>
       <img id="mImg" alt="" style="max-width:100%;height:auto;display:block;border-radius:10px;border:1px solid #eee">
       <p id="mDesc" class="desc"></p>
@@ -126,6 +118,17 @@
         <button id="closeBtn" class="close-btn">Chiudi</button>
       </div>
     </div>
+  </div>
+
+  <!-- FAB menu in basso a sinistra (come prodotti e prodotti-fritti) -->
+  <div class="fab" id="fab">
+    <button aria-label="Menu" title="Menu">☰</button>
+    <nav class="fab-menu" aria-label="Menu rapido">
+      <a href="./index.html">Home</a>
+      <a href="./prodotti.html">Catalogo Prodotti</a> <!-- rif. struttura pagina prodotti 1 -->
+      <a href="./prodotti-fritti.html">Sezione Fritti</a> <!-- rif. struttura pagina fritti 2 -->
+      <a href="./offerte.html">Offerte</a>
+    </nav>
   </div>
 
   <footer class="site-footer">
@@ -144,86 +147,53 @@
 
   <script>
   // =========================
-  // Offerte settimana: solo 2 articoli scelti a caso
-  // Nessuna scelta periodo da UI
+  // INSERIMENTO MANUALE
+  // Lascia UNA sola riga-tipo, duplica per nuovi articoli
+  // Campi obbligatori: id, name, price, oldPrice, unit, shortDesc, images[0]
+  // unit accetta "€/kg", "/kg" o vuoto.
   // =========================
 
-  // Base prodotti (coerenti con cataloghi esistenti)
-  function P({id,name,price,unit,shortDesc,images}){return {id,name,price,unit,shortDesc,images}}
   const PRODUCTS = [
-    P({id:"19-baccala-vicentina-200",name:"Baccalà alla Vicentina 200g",price:6.50,unit:"",shortDesc:"Porzione pronta 200 g",images:["images/baccala-vicentina-200.jpg"]}),
-    P({id:"20-baccala-vicentina-1kg",name:"Baccalà alla Vicentina 1kg",price:25.50,unit:"",shortDesc:"Ricetta tradizionale 1 kg",images:["images/baccala-vicentina-1.jpg"]}),
-    P({id:"28-salmone-preaff-norv",name:"Salmone affumicato Norvegese 200g",price:6.50,unit:"",shortDesc:"Preaffettato 200 g",images:["images/salmone-preaff-norv.jpg"]}),
-    P({id:"anelli-cipolla",name:"Anelli di Cipolla Pastellati",price:5.20,unit:"",shortDesc:"Conf. 8×0,400 kg",images:["img2/anelli-cipolla-pastellati.png"]}),
-    P({id:"mozzarelline-panate",name:"Mozzarelline Panate",price:6.50,unit:"",shortDesc:"Conf. 5×1 kg",images:["img2/mozzarelline-panate.png"]}),
-    P({id:"gamberi-patata",name:"Gamberi in Filo di Patata",price:14.00,unit:"",shortDesc:"Conf. 5×1 kg",images:["img2/gamberi-patata.jpg"]})
+    // ESEMPIO: scommenta e duplica per aggiungere articoli
+    // {id:"ID-UNICO", name:"Nome prodotto", price:6.50, oldPrice:8.00, unit:"€/kg", shortDesc:"Descrizione breve", images:["images/percorso-immagine.jpg"]}
   ];
 
-  // Sconti candidati per la settimana (accento visivo)
-  const DISCOUNTS = [
-    {type:"percent", value:25}, {type:"percent", value:30},
-    {type:"price", value:1.00}, {type:"price", value:1.50}
-  ];
-
-  function rnd(n){ return Math.floor(Math.random()*n); }
-  function pickTwo(arr){
-    if(arr.length<=2) return arr.slice(0,2);
-    const a=rnd(arr.length); let b=rnd(arr.length);
-    while(b===a) b=rnd(arr.length);
-    return [arr[a], arr[b]];
-  }
-  function calc(price,disc){
-    return disc.type==="percent"
-      ? +(price*(1-disc.value/100)).toFixed(2)
-      : Math.max(0, +(price - disc.value).toFixed(2));
-  }
+  // ====== RENDER ======
   function fmtEUR(v){ return new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"}).format(v); }
+  function sanitizeUnit(u){ if(!u) return ""; return u.replace('€','').trim()==="/kg" ? "/kg" : "€/kg"; }
 
-  // Range settimana: lunedì–domenica locali
-  function formatWeek(){
-    const now=new Date();
-    // Europe/Rome: usiamo orario locale del browser
-    const day = (now.getDay()+6)%7; // lun=0
-    const monday = new Date(now); monday.setDate(now.getDate()-day);
-    const sunday = new Date(monday); sunday.setDate(monday.getDate()+6);
-    const opts={day:"2-digit",month:"long",year:"numeric"};
-    const it = new Intl.DateTimeFormat("it-IT",opts);
-    document.getElementById("range").textContent = `Settimana: ${it.format(monday)} → ${it.format(sunday)}`;
-  }
-
-  // Render 2 card con effetti “in rilievo”
-  function render(){
-    const grid=document.getElementById("grid");
-    const picks = pickTwo(PRODUCTS).map((p,i)=>{
-      const disc = DISCOUNTS[rnd(DISCOUNTS.length)];
-      const offer = calc(p.price,disc);
-      const save = +(p.price - offer).toFixed(2);
-      const tag = disc.type==="percent" ? `-${disc.value}%` : `- ${fmtEUR(disc.value)}`;
-      return {...p, disc, offer, save, tag, rank:i+1};
-    });
-
-    grid.innerHTML = picks.map(prod=>`
-      <article class="item" onclick="openModal(${JSON.stringify(prod).replace(/"/g,'&quot;')})" id="${prod.id}">
-        <span class="burst" aria-hidden="true"></span>
-        <span class="tag">OFFERTA ${prod.tag}</span>
-        <div class="thumb"><img loading="lazy" src="${prod.images?.[0]||'images/default1.jpg'}" alt="${prod.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
+  function rowTemplate(p){
+    const unit = p.unit ? sanitizeUnit(p.unit) : (p.unit===""? "" : "");
+    const save  = (p.oldPrice && p.oldPrice>p.price) ? (p.oldPrice - p.price) : 0;
+    const tag   = 'OFFERTA';
+    return `
+      <article class="item" onclick='openModal(${JSON.stringify(p).replace(/"/g,"&quot;")})' id="${p.id}">
+        <div class="thumb">
+          <span class="tag">${tag}</span>
+          <img loading="lazy" src="${(p.images&&p.images[0])||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';">
+        </div>
         <div>
-          <h2 class="title">${prod.name}</h2>
-          <p class="desc">${prod.shortDesc||""}</p>
+          <h2 class="title">${p.name||""}</h2>
+          <p class="desc">${p.shortDesc||""}</p>
           <div class="priceWrap">
-            <div class="old">${fmtEUR(prod.price)}${prod.unit||""}</div>
-            <div class="price">${fmtEUR(prod.offer)}${prod.unit||""}</div>
+            ${p.oldPrice?`<div class="old">${fmtEUR(p.oldPrice)}${unit}</div>`:""}
+            <div class="price">${fmtEUR(p.price||0)}${unit}</div>
             <span class="unit">IVA escl.</span>
           </div>
-          <div class="saveWrap">
-            <div class="save">RISPARMIO ${fmtEUR(prod.save)}</div>
-          </div>
+          ${save>0?`<div class="save">RISPARMIO ${fmtEUR(save)}</div>`:""}
         </div>
-      </article>
-    `).join("");
+      </article>`;
   }
 
-  // Modal basica + share
+  function render(list=PRODUCTS){
+    const grid=document.getElementById("grid");
+    grid.innerHTML = list.length ? list.map(rowTemplate).join("") :
+      `<div style="grid-column:1/-1;background:#fff;border:1px dashed #bbb;border-radius:12px;padding:14px;font-size:13px;color:#555">
+        Nessun articolo in offerta. Aggiungi una riga in <code>PRODUCTS</code> come da esempio.
+      </div>`;
+  }
+
+  // ====== MODAL ======
   const modal=document.getElementById("modal");
   const mTitle=document.getElementById("mTitle");
   const mImg=document.getElementById("mImg");
@@ -235,34 +205,33 @@
 
   function openModal(prod){
     current=prod;
-    mTitle.textContent=prod.name;
+    const unit = prod.unit ? (prod.unit.includes("/kg")?" /kg":" €/kg") : "";
+    mTitle.textContent=prod.name||"";
     mImg.src=(prod.images&&prod.images[0])||"images/default1.jpg";
-    mImg.alt=prod.name;
+    mImg.alt=prod.name||"";
+    const old = prod.oldPrice ? `<span class="old" style="text-decoration:line-through;margin-right:8px">${fmtEUR(prod.oldPrice)}${unit}</span>` : "";
     mDesc.textContent=prod.shortDesc||"";
-    mPrice.innerHTML = `<span class="old" style="text-decoration:line-through;margin-right:8px">${fmtEUR(prod.price)}</span> <strong style="font-size:22px">${fmtEUR(prod.offer)}</strong> · <span>RISPARMIO ${fmtEUR(prod.save)} (${prod.tag})</span>`;
+    mPrice.innerHTML = `${old} <strong style="font-size:22px">${fmtEUR(prod.price||0)}${unit}</strong>`;
     modal.classList.add("open"); document.body.style.overflow="hidden";
   }
   function closeModal(){ modal.classList.remove("open"); document.body.style.overflow=""; }
   closeBtn.onclick=closeModal;
   modal.addEventListener("click",e=>{ if(e.target===modal) closeModal(); });
   window.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
-
-  async function shareCurrent(){
+  shareBtn.onclick=async ()=>{
     if(!current) return;
-    const url = location.origin+location.pathname+"#"+encodeURIComponent(current.id);
-    const text = `${current.name} – ${fmtEUR(current.offer)}\n${current.shortDesc||""}\n${url}`;
-    try{
-      if(navigator.share){ await navigator.share({title:current.name,text,url}); return; }
-      await navigator.clipboard.writeText(url);
-    }catch(e){}
-  }
-  shareBtn.onclick=shareCurrent;
+    const url = location.origin+location.pathname+"#"+encodeURIComponent(current.id||"");
+    const text = `${current.name||"Offerta"} – ${fmtEUR(current.price||0)}${current.unit||""}\n${current.shortDesc||""}\n${url}`;
+    try{ if(navigator.share){ await navigator.share({title:current.name,text,url}); return; } }catch(e){}
+    try{ await navigator.clipboard.writeText(url); }catch(e){}
+  };
 
-  // Start
-  formatWeek();
+  // FAB toggle
+  const fab=document.getElementById('fab');
+  fab.querySelector('button').addEventListener('click',()=>fab.classList.toggle('open'));
+  document.addEventListener('click',e=>{ if(!fab.contains(e.target)) fab.classList.remove('open'); });
+
   render();
   </script>
-
-  <!-- Riferimenti di stile: cataloghi esistenti -->
 </body>
 </html>
