@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catalogo • Template Modulare</title>
+  <meta property="og:title" content="Catalogo • Template Modulare">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="styles.css?v=1">
+  <script defer src="app.js?v=1"></script>
+</head>
+<body>
+  <!-- Header, Modal, Footer, PrintFooter e Menu verranno iniettati sotto -->
+  <main class="container">
+    <section class="grid" id="grid"></section>
+  </main>
+
+  <!-- Dataset prodotti: modifica solo questo array -->
+  <script>
+  const PRODUCTS = [
+    // {id:"cod-001", name:"Prodotto di esempio", price:6.50, oldPrice:8.00, unit:"€/kg", shortDesc:"Descrizione", images:["images/sample.jpg"]}
+  ];
+  </script>
+
+  <!-- Loader frammenti comuni, quindi render -->
+  <script>
+  (async () => {
+    await Zanon.inject('header.html','body');
+    await Zanon.inject('menu.html','body');
+    await Zanon.inject('modal.html','body');
+    if (document.querySelector('.print-footer')===null) {
+      await Zanon.inject('print-footer.html','body');
+    }
+    await Zanon.inject('footer.html','body');
+    window.initCatalog && window.initCatalog();
+  })();
+  </script>
+</body>
+</html>
