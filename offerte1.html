@@ -185,10 +185,31 @@
 </style>
 
 <style>
+/* Stella sconto: simmetrica per centratura perfetta, +10% dimensione, pulsazione 0.9s */
 .star-wrap{position:absolute; left:6px; top:6px; width:clamp(62px,12vw,96px); height:clamp(62px,12vw,96px); pointer-events:none; z-index:2}
-.star{position:absolute; inset:0; background:#ff2965; clip-path:polygon(50% 0%,60% 18%,80% 10%,68% 28%,90% 35%,70% 40%,76% 60%,58% 50%,50% 80%,42% 50%,24% 60%,30% 40%,10% 35%,32% 28%,20% 10%,40% 18%); animation:pulse 0.9s ease-in-out infinite; filter:drop-shadow(0 6px 12px rgba(255,41,101,.35));}
-.star-text{position:absolute; top:50%; left:50%; transform:translate(-50%,-38%); font-weight:900; font-size:clamp(12px,2.6vw,16px); color:#fff; line-height:1; letter-spacing:-.2px; white-space:nowrap; user-select:none}
+.star{
+  position:absolute; inset:0; background:#ff2965;
+  /* 16 punte simmetriche, centro geometrico al 50/50 */
+  clip-path:polygon(
+    50% 0%, 57% 14%, 70% 9%, 64% 22%,
+    80% 20%, 66% 30%, 91% 35%, 68% 38%,
+    100% 50%, 68% 62%, 91% 65%, 66% 70%,
+    80% 80%, 64% 78%, 70% 91%, 57% 86%,
+    50% 100%, 43% 86%, 30% 91%, 36% 78%,
+    20% 80%, 34% 70%, 9% 65%, 32% 62%,
+    0% 50%, 32% 38%, 9% 35%, 34% 30%,
+    20% 20%, 36% 22%, 30% 9%, 43% 14%
+  );
+  animation:pulse 0.9s ease-in-out infinite;
+  filter:drop-shadow(0 6px 12px rgba(255,41,101,.35));
+}
+.star-text{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-weight:900; font-size:clamp(12px,2.6vw,16px); color:#fff; line-height:1; letter-spacing:-.2px;
+  white-space:nowrap; user-select:none
+}
 @keyframes pulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.06);filter:brightness(1.4)}}
+/* Griglia offerte coerente */
 .offer-grid{max-width:1000px;margin:12px auto;padding:0 10px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:720px){.offer-grid{grid-template-columns:1fr}}
 .offer-item{position:relative;display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center;background:#fff;border-radius:16px;border:2px solid #e7e4dc;padding:12px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
