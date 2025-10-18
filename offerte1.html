@@ -225,7 +225,7 @@
   <div class="modal-content" style="background:#fff;border-radius:12px;max-width:820px;width:min(96vw,820px);padding:18px;position:relative">
     <h2 id="mTitle" style="margin:0 0 8px"></h2>
     <div class="m-figure" style="position:relative;">
-      <img id="mImg" alt="" style="max-width:100%;height:auto;display:block;border-radius:10px;border:1px solid #eee" src="images/default1.png" onerror="this.onerror=null;this.src=\'images/default1.png\'">
+      \1 onerror="this.onerror=null;this.src=\'images/default1.png\'">
       <div class="badge-modal" style="position:absolute;left:10px;top:10px;width:clamp(52px,10vw,82px);height:clamp(52px,10vw,82px)"><div class="star"></div><div id="starTextModal" class="star-text">-0%</div></div>
     </div>
     <p id="mDesc" class="offer-desc"></p>
@@ -289,7 +289,7 @@ const modal=document.getElementById('modal'); const mTitle=document.getElementBy
 function openModal(prod){
   const unit = prod.unit ? (prod.unit.includes('/kg')?' /kg':' €/kg') : '';
   mTitle.textContent=prod.name||'';
-  mImg.src=(prod.images&&prod.images[0])||'images/default1.png';
+  setImgWithFallback(mImg, [ (prod.images&&prod.images[0]) || '', 'images/default1.png', 'images/default.png' ]);
   mImg.alt=prod.name||'';
   const old = prod.oldPrice ? `<span class="offer-old" style="margin-right:8px">${fmtEUR(prod.oldPrice)}${unit}</span>` : '';
   mDesc.textContent=prod.shortDesc||'';
@@ -303,6 +303,17 @@ function openModal(prod){
 function closeModal(){ modal.style.display='none'; document.body.style.overflow=''; }
 closeBtn.onclick=closeModal; modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
 window.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+function setImgWithFallback(img, urls){
+  let i=0;
+  const tryNext=()=>{
+    if(i>=urls.length){ return; }
+    const u=urls[i++];
+    img.onerror=()=>tryNext();
+    img.src=u;
+  };
+  tryNext();
+}
+
 render();
 </script>
 
