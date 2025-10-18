@@ -185,30 +185,17 @@
 </style>
 
 <style>
-/* Stella sconto: simmetrica per centratura perfetta, +10% dimensione, pulsazione 0.9s */
+:root{ --red:#d8001f; }
 .star-wrap{position:absolute; left:6px; top:6px; width:clamp(62px,12vw,96px); height:clamp(62px,12vw,96px); pointer-events:none; z-index:2}
-.star{
-  position:absolute; inset:0; background:#ff2965;
-  /* 16 punte simmetriche, centro geometrico al 50/50 */
-  clip-path:polygon(
-    50% 0%, 57% 14%, 70% 9%, 64% 22%,
-    80% 20%, 66% 30%, 91% 35%, 68% 38%,
-    100% 50%, 68% 62%, 91% 65%, 66% 70%,
-    80% 80%, 64% 78%, 70% 91%, 57% 86%,
-    50% 100%, 43% 86%, 30% 91%, 36% 78%,
-    20% 80%, 34% 70%, 9% 65%, 32% 62%,
-    0% 50%, 32% 38%, 9% 35%, 34% 30%,
-    20% 20%, 36% 22%, 30% 9%, 43% 14%
-  );
+.star{position:absolute; inset:0; background:var(--red);
+  border-radius:50%;
+  clip-path:polygon(100.00% 50.00%, 91.64% 55.48%, 98.30% 62.94%, 88.80% 66.07%, 93.30% 75.00%, 83.32% 75.57%, 85.36% 85.36%, 75.57% 83.32%, 75.00% 93.30%, 66.07% 88.80%, 62.94% 98.30%, 55.48% 91.64%, 50.00% 100.00%, 44.52% 91.64%, 37.06% 98.30%, 33.93% 88.80%, 25.00% 93.30%, 24.43% 83.32%, 14.64% 85.36%, 16.68% 75.57%, 6.70% 75.00%, 11.20% 66.07%, 1.70% 62.94%, 8.36% 55.48%, 0.00% 50.00%, 8.36% 44.52%, 1.70% 37.06%, 11.20% 33.93%, 6.70% 25.00%, 16.68% 24.43%, 14.64% 14.64%, 24.43% 16.68%, 25.00% 6.70%, 33.93% 11.20%, 37.06% 1.70%, 44.52% 8.36%, 50.00% 0.00%, 55.48% 8.36%, 62.94% 1.70%, 66.07% 11.20%, 75.00% 6.70%, 75.57% 16.68%, 85.36% 14.64%, 83.32% 24.43%, 93.30% 25.00%, 88.80% 33.93%, 98.30% 37.06%, 91.64% 44.52%);
   animation:pulse 0.9s ease-in-out infinite;
-  filter:drop-shadow(0 6px 12px rgba(255,41,101,.35));
+  filter:drop-shadow(0 6px 12px rgba(216,0,31,.35));
 }
-.star-text{
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  font-weight:900; font-size:clamp(12px,2.6vw,16px); color:#fff; line-height:1; letter-spacing:-.2px;
-  white-space:nowrap; user-select:none
-}
-@keyframes pulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.06);filter:brightness(1.4)}}
+.star-text{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-weight:900; font-size:clamp(12px,2.6vw,16px); color:#fff; line-height:1; letter-spacing:-.2px; white-space:nowrap; user-select:none}
+@keyframes pulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.06);filter:brightness(1.25)}}
 /* Griglia offerte coerente */
 .offer-grid{max-width:1000px;margin:12px auto;padding:0 10px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:720px){.offer-grid{grid-template-columns:1fr}}
