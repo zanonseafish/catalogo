@@ -185,9 +185,9 @@
 </style>
 
 <style>
-.star-wrap{position:absolute; left:6px; top:6px; width:clamp(56px,11vw,88px); height:clamp(56px,11vw,88px); pointer-events:none; z-index:2}
-.star{position:absolute; inset:0; background:#ff2965; clip-path:polygon(50% 0%,60% 18%,80% 10%,68% 28%,90% 35%,70% 40%,76% 60%,58% 50%,50% 80%,42% 50%,24% 60%,30% 40%,10% 35%,32% 28%,20% 10%,40% 18%); animation:pulse 1.5s ease-in-out infinite; filter:drop-shadow(0 6px 12px rgba(255,41,101,.35));}
-.star-text{position:absolute; top:50%; left:50%; transform:translate(-50%,-44%); font-weight:900; font-size:clamp(12px,2.6vw,16px); color:#fff; line-height:1; letter-spacing:-.2px; white-space:nowrap; user-select:none}
+.star-wrap{position:absolute; left:6px; top:6px; width:clamp(62px,12vw,96px); height:clamp(62px,12vw,96px); pointer-events:none; z-index:2}
+.star{position:absolute; inset:0; background:#ff2965; clip-path:polygon(50% 0%,60% 18%,80% 10%,68% 28%,90% 35%,70% 40%,76% 60%,58% 50%,50% 80%,42% 50%,24% 60%,30% 40%,10% 35%,32% 28%,20% 10%,40% 18%); animation:pulse 0.9s ease-in-out infinite; filter:drop-shadow(0 6px 12px rgba(255,41,101,.35));}
+.star-text{position:absolute; top:50%; left:50%; transform:translate(-50%,-38%); font-weight:900; font-size:clamp(12px,2.6vw,16px); color:#fff; line-height:1; letter-spacing:-.2px; white-space:nowrap; user-select:none}
 @keyframes pulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.06);filter:brightness(1.4)}}
 .offer-grid{max-width:1000px;margin:12px auto;padding:0 10px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:720px){.offer-grid{grid-template-columns:1fr}}
@@ -222,7 +222,7 @@
 
 <div id="modal" class="modal" role="dialog" aria-modal="true" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;padding:20px;z-index:1000">
   <div class="modal-content" style="background:#fff;border-radius:12px;max-width:820px;width:min(96vw,820px);padding:18px;position:relative">
-    <div class="badge-modal" style="position:absolute;left:10px;top:10px;width:clamp(64px,12vw,96px);height:clamp(64px,12vw,96px)">
+    <div class="badge-modal" style="position:absolute;left:10px;top:10px;width:clamp(70px,13vw,106px);height:clamp(70px,13vw,106px)">
       <div class="star"></div><div id="starTextModal" class="star-text">-0%</div>
     </div>
     <h2 id="mTitle" style="margin:0 0 8px"></h2>
