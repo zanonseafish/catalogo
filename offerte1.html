@@ -207,7 +207,7 @@
 
 <header>
     <div class="top">
-      <img class="logo" src="images/logo.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
+      <img class="logo" src="images/logo.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.png'">
       <h1>Catalogo Prodotti ZANON SEAFISH</h1>
       <div class="sub">Clicca un elemento per i dettagli e la condivisione.</div>
       <div class="tools">
@@ -223,11 +223,11 @@
 
 <div id="modal" class="modal" role="dialog" aria-modal="true" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;padding:20px;z-index:1000">
   <div class="modal-content" style="background:#fff;border-radius:12px;max-width:820px;width:min(96vw,820px);padding:18px;position:relative">
-    <div class="badge-modal" style="position:absolute;left:10px;top:10px;width:clamp(52px,10vw,82px);height:clamp(52px,10vw,82px)">
-      <div class="star"></div><div id="starTextModal" class="star-text">-0%</div>
-    </div>
     <h2 id="mTitle" style="margin:0 0 8px"></h2>
-    <img id="mImg" alt="" style="max-width:100%;height:auto;display:block;border-radius:10px;border:1px solid #eee">
+    <div class="m-figure" style="position:relative;">
+      <img id="mImg" alt="" style="max-width:100%;height:auto;display:block;border-radius:10px;border:1px solid #eee" src="images/default1.png" onerror="this.onerror=null;this.src=\'images/default1.png\'">
+      <div class="badge-modal" style="position:absolute;left:10px;top:10px;width:clamp(52px,10vw,82px);height:clamp(52px,10vw,82px)"><div class="star"></div><div id="starTextModal" class="star-text">-0%</div></div>
+    </div>
     <p id="mDesc" class="offer-desc"></p>
     <p id="mPrice" class="offer-now" style="margin-top:6px"></p>
     <div style="margin-top:10px"><button id="closeBtn" style="border:none;border-radius:18px;padding:8px 12px;background:#eee">Chiudi</button></div>
@@ -239,7 +239,7 @@
 <footer class="site-footer">
     <hr class="site-rule">
     <div class="site-footer-inner">
-      <img src="images/logo.png" alt="Zanon Seafish Ingros SRL" class="footer-logo" onerror="this.style.display='none'">
+      <img src="images/logo.png" alt="Zanon Seafish Ingros SRL" class="footer-logo" onerror="this.onerror=null;this.src='images/default1.png'">
       <div class="foot-text">
         <strong>Zanon Seafish Ingros SRL</strong> · P.IVA IT01654690278 ·
         Sede legale: S. Croce 491, 30135 Venezia (VE) ·
@@ -271,7 +271,7 @@ function rowTemplate(p){
   <article class="offer-item" onclick='openModal(${JSON.stringify(p).replace(/"/g,"&quot;")})' id="${p.id||''}">
     <div class="offer-thumb">
       ${label ? starHTML(label) : ''}
-      <img src="${(p.images&&p.images[0])||'images/default1.jpg'}" alt="${p.name||''}" onerror="this.onerror=null;this.src='images/default1.jpg';">
+      <img src="${(p.images&&p.images[0])||'images/default1.png'}" alt="${p.name||''}" onerror="this.onerror=null;this.src='images/default1.png'">
     </div>
     <div>
       <h3 class="offer-title">${p.name||''}</h3>
@@ -289,7 +289,7 @@ const modal=document.getElementById('modal'); const mTitle=document.getElementBy
 function openModal(prod){
   const unit = prod.unit ? (prod.unit.includes('/kg')?' /kg':' €/kg') : '';
   mTitle.textContent=prod.name||'';
-  mImg.src=(prod.images&&prod.images[0])||'images/default1.jpg';
+  mImg.src=(prod.images&&prod.images[0])||'images/default1.png';
   mImg.alt=prod.name||'';
   const old = prod.oldPrice ? `<span class="offer-old" style="margin-right:8px">${fmtEUR(prod.oldPrice)}${unit}</span>` : '';
   mDesc.textContent=prod.shortDesc||'';
