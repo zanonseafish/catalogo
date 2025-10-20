@@ -11,7 +11,24 @@
 *{box-sizing:border-box}html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-/* Alberi laterali */
+/* Colonne “pesci” laterali come nei definitivi */
+body::before,
+body::after{
+  content:"";
+  position:fixed;
+  top:0; bottom:0;
+  width:120px;
+  background-image:url("images/logo-zanon-pesce-natale.png");
+  background-repeat:repeat-y;
+  background-size:60% auto;
+  background-position:center top;
+  pointer-events:none;
+  z-index:-2; /* sotto ai contenuti, sopra allo sfondo */
+}
+body::before{ left:0 }
+body::after{ right:0 }
+  
+  /* Alberi laterali */
 html::before,html::after{content:"";position:fixed;bottom:0;width:120px;height:50vh;background-repeat:no-repeat;background-size:contain;pointer-events:none;z-index:-3}
 html::before{left:0;background-image:url("images/latosx.png");background-position:left bottom}
 html::after{right:0;background-image:url("images/latodx.png");background-position:right bottom}
