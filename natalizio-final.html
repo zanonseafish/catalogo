@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="it">
+<!DOCTYPE html><html lang="it">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,102 +8,28 @@
 <style>
 :root{--bg:#fbfbf8;--ink:#111;--muted:#606060;--line:#e7e4dc;--ok:#0a6a2b}
 *{box-sizing:border-box}html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}/* Colonne “pesci” laterali — spostate a 1,2mm dal margine e allineate a bordo / body::before, body::after{ content:""; position:fixed; top:0; bottom:0; width:120px; background-image:url("images/logo-zanon-pesce-natale.png"); background-repeat:repeat-y; background-size:60% auto; pointer-events:none; z-index:-2; / sotto ai contenuti, sopra allo sfondo */ } body::before{ left:1.2mm; background-position:left top } body::after{ right:1.2mm; background-position:right top }
 
-/* Colonne “pesci” laterali come nei definitivi */
-body::html::before{left:1.2mm;background-image:url("images/latosx.png");background-position:left bottom}:after{right:1.2mm;background-image:url("images/latodx.png");background-position:right bottom}
-  background-repeat:repeat-y;
-  background-size:60% auto;
-  background-position:center top;
-  pointer-events:none;
-  z-index:-2; /* sotto ai contenuti, sopra allo sfondo */
-}
-body::before{ left:0 }
-body::after{ right:0 }
-  
-  /* Alberi laterali */
-html::before,html::after{content:"";position:fixed;bottom:0;width:120px;height:50vh;background-repeat:no-repeat;background-size:contain;pointer-events:none;z-index:-3}
-html::before{left:0;background-image:url("images/latosx.png");background-position:left bottom}
-html::after{right:0;background-image:url("images/latodx.png");background-position:right bottom}
+/* Alberi laterali — allineati allo stesso margine 1,2mm */ html::before,html::after{content:"";position:fixed;bottom:0;width:120px;height:50vh;background-repeat:no-repeat;background-size:contain;pointer-events:none;z-index:-3} html::before{left:1.2mm;background-image:url("images/latosx.png");background-position:left bottom} html::after{right:1.2mm;background-image:url("images/latodx.png");background-position:right bottom}
 
-/* Header con sfocato rosso */
-header{position:relative;color:#fff;text-align:center;padding:20px 12px 18px}
-header::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#8b0000 0%,#b30000 60%,#b3000000 100%);filter:blur(8px);z-index:-1}
-header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
-header img.logo{height:60px;width:auto}
-header h1{font-family:"Playfair Display",serif;font-weight:600;margin:0 0 2px 0;font-size:24px;line-height:1.15}
-header .sub{opacity:.9;font-size:12px}
+/* Header con sfocato rosso */ header{position:relative;color:#fff;text-align:center;padding:20px 12px 18px} header::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#8b0000 0%,#b30000 60%,#b3000000 100%);filter:blur(8px);z-index:-1} header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto} header img.logo{height:60px;width:auto} header h1{font-family:"Playfair Display",serif;font-weight:600;margin:0 0 2px 0;font-size:24px;line-height:1.15} header .sub{opacity:.9;font-size:12px}
 
-/* Spazio ai lati per i contenuti principali (non include il bottone menu) */
-header,.container,.site-footer{padding-left:134px;padding-right:134px}
-@media (max-width:900px){header,.container,.site-footer{padding-left:16px;padding-right:16px}}
+/* Spazio ai lati per i contenuti principali (non include il bottone menu) */ header,.container,.site-footer{padding-left:134px;padding-right:134px} @media (max-width:900px){header,.container,.site-footer{padding-left:16px;padding-right:16px}}
 
-/* Lista */
-.container{max-width:1100px;margin:6px auto 14px}
-.list{display:flex;flex-direction:column;gap:10px}
-.item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
-.item:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.06)}
-.thumb{width:84px;height:84px;border-radius:12px;overflow:hidden;background:#f1f1ed;border:1px solid var(--line);display:grid;place-items:center}
-.thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.info{min-width:0}
-.title{font-family:"Playfair Display",serif;font-weight:700;font-size:18px;margin:0 0 3px 0;text-transform:uppercase}
-.desc{color:var(--muted);font-size:12px;margin:0 0 4px 0}
-.divider{height:1px;background:var(--line);margin:3px 0}
-.price{justify-self:end;align-self:end;color:var(--ok);font-weight:700;font-size:16px}
+/* Lista */ .container{max-width:1100px;margin:6px auto 14px} .list{display:flex;flex-direction:column;gap:10px} .item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease,box-shadow .12s ease} .item:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.06)} .thumb{width:84px;height:84px;border-radius:12px;overflow:hidden;background:#f1f1ed;border:1px solid var(--line);display:grid;place-items:center} .thumb img{width:100%;height:100%;object-fit:cover;display:block} .info{min-width:0} .title{font-family:"Playfair Display",serif;font-weight:700;font-size:18px;margin:0 0 3px 0;text-transform:uppercase} .desc{color:var(--muted);font-size:12px;margin:0 0 4px 0} .divider{height:1px;background:var(--line);margin:3px 0} .price{justify-self:end;align-self:end;color:var(--ok);font-weight:700;font-size:16px}
 
-/* Strumenti */
-.tools{display:flex;justify-content:center;margin-top:8px}
-.search{max-width:480px;width:100%}
-.search input{width:100%;padding:10px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;color:#fff;outline:none}
-.count{color:#fff;margin-top:8px;font-size:12px}
+/* Strumenti */ .tools{display:flex;justify-content:center;margin-top:8px} .search{max-width:480px;width:100%} .search input{width:100%;padding:10px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;color:#fff;outline:none} .count{color:#fff;margin-top:8px;font-size:12px}
 
-/* Modal */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
-.modal.open{display:flex}
-.modal-content{background:#fff;border-radius:12px;max-width:860px;width:min(96vw,860px);padding:20px;position:relative;max-height:90vh;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);display:flex;flex-direction:column}
-.m-title{font-family:"Playfair Display",serif;margin:0 0 10px 0}
-.modal-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px}
-.share-small,.close-btn{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer}
-.share-small{background:#111;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.3)}
-.close-btn{background:#eee;color:#111;box-shadow:0 2px 6px rgba(0,0,0,.15)}
-#mGallery{flex:1 1 auto;overflow:auto;display:grid;gap:12px;align-items:center;justify-items:center}
-#mGallery:has(img:nth-child(2)){grid-template-columns:1fr 1fr}
-#mGallery img{max-width:100%;height:auto;display:block;object-fit:contain}
+/* Modal */ .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000} .modal.open{display:flex} .modal-content{background:#fff;border-radius:12px;max-width:860px;width:min(96vw,860px);padding:20px;position:relative;max-height:90vh;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);display:flex;flex-direction:column} .m-title{font-family:"Playfair Display",serif;margin:0 0 10px 0} .modal-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px} .share-small,.close-btn{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer} .share-small{background:#111;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.3)} .close-btn{background:#eee;color:#111;box-shadow:0 2px 6px rgba(0,0,0,.15)} #mGallery{flex:1 1 auto;overflow:auto;display:grid;gap:12px;align-items:center;justify-items:center} #mGallery:has(img:nth-child(2)){grid-template-columns:1fr 1fr} #mGallery img{max-width:100%;height:auto;display:block;object-fit:contain}
 
-/* Footer e glow rosso sfocato più corto */
-.site-footer{max-width:1100px;margin:18px auto 24px;color:#444;font-size:12px}
-.site-rule{border:none;height:1px;background:#e5e2da;margin:6px 0 10px}
-.footer-glow{position:fixed;left:0;right:0;bottom:0;height:90px;background:linear-gradient(180deg,rgba(139,0,0,.65) 0%,rgba(179,0,0,.55) 60%,rgba(179,0,0,0) 100%);filter:blur(8px);pointer-events:none;z-index:-1}
-@media print{.footer-glow{display:none}}
+/* Footer e glow rosso sfocato più corto */ .site-footer{max-width:1100px;margin:18px auto 24px;color:#444;font-size:12px} .site-rule{border:none;height:1px;background:#e5e2da;margin:6px 0 10px} .footer-glow{position:fixed;left:0;right:0;bottom:0;height:90px;background:linear-gradient(180deg,rgba(139,0,0,.65) 0%,rgba(179,0,0,.55) 60%,rgba(179,0,0,0) 100%);filter:blur(8px);pointer-events:none;z-index:-1} @media print{.footer-glow{display:none}}
 
-/* Responsive */
-@media (max-width:820px){
-  .item{grid-template-columns:76px 1fr 74px}.thumb{width:76px;height:76px;border-radius:10px}.title{font-size:16px}.price{font-size:15px}
-}
-@media (max-width:560px){
-  .item{grid-template-columns:66px 1fr;grid-template-rows:auto auto;gap:8px}.price{grid-column:2;justify-self:end}
-}
+/* Responsive */ @media (max-width:820px){ .item{grid-template-columns:76px 1fr 74px}.thumb{width:76px;height:76px;border-radius:10px}.title{font-size:16px}.price{font-size:15px} } @media (max-width:560px){ .item{grid-template-columns:66px 1fr;grid-template-rows:auto auto;gap:8px}.price{grid-column:2;justify-self:end} }
 
-/* Stampa */
-@media print{
-  @page{size:A4;margin:14mm 12mm}
-  header::before{display:none!important}
-  header{color:#000;border-bottom:1px solid #ddd;padding:0 0 6mm}
-  .sub,.tools,#count{display:none!important}
-  .item{break-inside:avoid-page;box-shadow:none;border-color:#ddd}
-  .modal{display:none!important}
-}
+/* Stampa */ @media print{ @page{size:A4;margin:14mm 12mm} header::before{display:none!important} header{color:#000;border-bottom:1px solid #ddd;padding:0 0 6mm} .sub,.tools,#count{display:none!important} .item{break-inside:avoid-page;box-shadow:none;border-color:#ddd} .modal{display:none!important} }
 
-/* Bottone MENU identico ai “definitivi” */
-.back-btn{
-  position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:1500;
-  background:rgba(255,255,255,.75);color:#0a6a2b;font-size:13px;font-weight:600;
-  padding:6px 10px;border-radius:20px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.15);
-  -webkit-backdrop-filter:saturate(140%) blur(6px);backdrop-filter:saturate(140%) blur(6px)
-}
-.back-btn:hover{background:#0a6a2b;color:#fff}
-@media print{.back-btn{display:none!important}}
-</style>
+/* Bottone MENU */ .back-btn{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:1500;background:rgba(255,255,255,.75);color:#0a6a2b;font-size:13px;font-weight:600;padding:6px 10px;border-radius:20px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.15);-webkit-backdrop-filter:saturate(140%) blur(6px);backdrop-filter:saturate(140%) blur(6px)} .back-btn:hover{background:#0a6a2b;color:#fff} @media print{.back-btn{display:none!important}} </style>
+
 </head>
 <body>
 <header>
@@ -115,13 +40,9 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
     <div class="tools"><div class="search"><input id="searchBox" placeholder="Cerca prodotti…"></div></div>
     <div id="count" class="count"></div>
   </div>
-</header>
-
-<div class="container">
+</header><div class="container">
   <div id="list" class="list"></div>
-</div>
-
-<div id="modal" class="modal" role="dialog" aria-modal="true">
+</div><div id="modal" class="modal" role="dialog" aria-modal="true">
   <div class="modal-content" aria-labelledby="mTitle">
     <h2 id="mTitle" class="m-title"></h2>
     <div id="mGallery"></div>
@@ -133,9 +54,7 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
       <button id="closeBtn" class="close-btn" aria-label="Chiudi">Chiudi</button>
     </div>
   </div>
-</div>
-
-<footer class="site-footer">
+</div><footer class="site-footer">
   <hr class="site-rule">
   <div>
     <strong>Zanon Seafish Ingros SRL</strong> · P.IVA IT01654690278 ·
@@ -143,20 +62,27 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
     <a href="https://www.zanonseafish.it/" target="_blank" rel="noopener">www.zanonseafish.it</a> ·
     <a href="mailto:info@zanonseafish.it">info@zanonseafish.it</a>
   </div>
-</footer>
-
-<!-- Glow rosso sotto il footer -->
-<div class="footer-glow" aria-hidden="true"></div>
-
-<!-- Bottone MENU definitivo -->
-<a class="back-btn" href="index.html" title="Torna al menu">↩︎ Menu</a>
+</footer><!-- Glow rosso sotto il footer --><div class="footer-glow" aria-hidden="true"></div><!-- Bottone MENU --><a class="back-btn" href="index.html" title="Torna al menu">↩︎ Menu</a>
 
 <script>
 const PRODUCTS=[
   {id:"natale-01",name:"Capesante Gratinate",price:8.90,shortDesc:"Conf. 1kg – Capesante gratinate al forno",fullDesc:"Pronte da rigenerare in pochi minuti.",images:["images/capesante-gratinate.jpg"]},
   {id:"natale-02",name:"Gamberoni in Saor",price:14.50,shortDesc:"Conf. 1kg – Marinatura veneziana",fullDesc:"Gamberoni in saor con cipolla, pinoli e uvetta.",images:["images/gamberoni-saor.jpg"]},
   {id:"natale-03",name:"Baccalà alla Vicentina",price:25.50,shortDesc:"Conf. 1kg – Ricetta tradizionale",fullDesc:"Cottura lenta con latte e acciughe.",images:["images/baccala-vicentina.jpg"]},
-  {id:"natale-04",name:"Fritto Misto di Mare",price:13.20,shortDesc:"Conf. 1kg – Calamari, gamberi, alici",fullDesc:"Prefritto croccante.",images:["images/fritto-misto.jpg"]}
+  {id:"natale-04",name:"Fritto Misto di Mare",price:13.20,shortDesc:"Conf. 1kg – Calamari, gamberi, alici",fullDesc:"Prefritto croccante.",images:["images/fritto-misto.jpg"]},
+  /* nuovi articoli per test scorrimento */
+  {id:"natale-05",name:"Salmone in Crosta",price:22.90,shortDesc:"Conf. 1kg – Filetto di salmone in crosta",fullDesc:"Salmone avvolto in crosta dorata, pronto per il forno.",images:["images/salmone-crosta.jpg"]},
+  {id:"natale-06",name:"Moscardini in Umido",price:19.50,shortDesc:"Conf. 1kg – Moscardini in salsa di pomodoro",fullDesc:"Ricetta tradizionale mediterranea.",images:["images/moscardini-umido.jpg"]},
+  {id:"natale-07",name:"Scampi al Cognac",price:27.80,shortDesc:"Conf. 1kg – Scampi con salsa al cognac",fullDesc:"Scampi già pronti da servire.",images:["images/scampi-cognac.jpg"]},
+  {id:"natale-08",name:"Calamari Ripieni",price:18.40,shortDesc:"Conf. 1kg – Ripieno classico",fullDesc:"Calamari farciti e pronti alla cottura.",images:["images/calamari-ripieni.jpg"]},
+  {id:"natale-09",name:"Seppie in Umido",price:21.00,shortDesc:"Conf. 1kg – Seppie con piselli",fullDesc:"Preparazione pronta, gusto pieno.",images:["images/seppie-umido.jpg"]},
+  {id:"natale-10",name:"Cozze Gratinate",price:9.90,shortDesc:"Conf. 1kg – Cozze con gratin",fullDesc:"Surgelate, rigenerazione rapida.",images:["images/cozze-gratinate.jpg"]},
+  {id:"natale-11",name:"Polpo alla Gallega",price:24.90,shortDesc:"Conf. 1kg – Polpo con paprika",fullDesc:"Taglio pronto, stile galiziano.",images:["images/polpo-gallega.jpg"]},
+  {id:"natale-12",name:"Risotto alla Pescatora",price:11.50,shortDesc:"Conf. 1kg – Base pronta",fullDesc:"Solo da mantecate e servire.",images:["images/risotto-pescatora.jpg"]},
+  {id:"natale-13",name:"Arancini di Mare",price:8.70,shortDesc:"Conf. 1kg – Ripieno ai frutti di mare",fullDesc:"Perfetti per aperitivi.",images:["images/arancini-mare.jpg"]},
+  {id:"natale-14",name:"Lasagne al Salmone",price:16.80,shortDesc:"Conf. 1kg – Pasta fresca al salmone",fullDesc:"Pronte al forno.",images:["images/lasagne-salmone.jpg"]},
+  {id:"natale-15",name:"Gnocchi al Nero di Seppia",price:7.90,shortDesc:"Conf. 1kg – Gnocchi aromatizzati",fullDesc:"Da saltare con frutti di mare.",images:["images/gnocchi-nero.jpg"]},
+  {id:"natale-16",name:"Trancio di Spada al Limone",price:26.40,shortDesc:"Conf. 1kg – Spada marinato al limone",fullDesc:"Da grigliare o piastrare.",images:["images/spada-limone.jpg"]}
 ].sort((a,b)=>a.id.localeCompare(b.id));
 
 const listEl=document.getElementById("list");
@@ -181,20 +107,20 @@ function rowTemplate(p){return `
 
 function render(list=PRODUCTS){listEl.innerHTML=list.length?list.map(rowTemplate).join(""):'<div style="padding:10px;color:#555">Nessun prodotto</div>';document.getElementById("count").textContent=`${list.length} ${list.length===1?'prodotto':'prodotti'}`}
 
-function galleryHTML(imgs,alt){const arr=(imgs&&imgs.length?imgs:["images/default1.jpg"]).slice(0,2);return arr.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${alt||''}" onerror="this.onerror=null;this.src='images/default1.jpg';">`).join("")}
+function galleryHTML(imgs,alt){const arr=(imgs&&imgs.length?imgs:["images/default1.jpg"]).slice(0,2);return arr.map(src=>`<img loading=\"lazy\" src=\"${src||'images/default1.jpg'}\" alt=\"${alt||''}\" onerror=\"this.onerror=null;this.src='images/default1.jpg';\">`).join("")}
 
-function openModal(id){const p=PRODUCTS.find(x=>x.id===id);if(!p)return;currentId=id;mTitle.textContent=p.name||"";mDesc.textContent=p.shortDesc||"";mFullDesc.textContent=p.fullDesc||"";mPrice.textContent=fmt.format(p.price||0)+(p.unit||"");mGallery.innerHTML=galleryHTML(p.images,p.name);modal.classList.add("open");document.body.style.overflow="hidden";if(location.hash!=="#"+id)history.replaceState(null,"","#"+id)}
-function closeModal(){modal.classList.remove("open");document.body.style.overflow="";if(location.hash)history.replaceState(null,"",location.pathname+location.search)}
-async function shareProduct(id){const p=PRODUCTS.find(x=>x.id===id);if(!p)return;const text=`${p.name} – ${fmt.format(p.price)}\n${p.shortDesc||""}\n${location.origin+location.pathname}#${encodeURIComponent(p.id)}`;try{if(navigator.share){await navigator.share({title:p.name,text})}else{await navigator.clipboard.writeText(text);alert("Copiato negli appunti.")}}catch(e){}}
+function openModal(id){const p=PRODUCTS.find(x=>x.id===id);if(!p)return;currentId=id;mTitle.textContent=p.name||"";mDesc.textContent=p.shortDesc||"";mFullDesc.textContent=p.fullDesc||"";mPrice.textContent=fmt.format(p.price||0)+(p.unit||"");mGallery.innerHTML=galleryHTML(p.images,p.name);modal.classList.add("open");document.body.style.overflow="hidden";if(location.hash!=='#'+id)history.replaceState(null,'','#'+id)}
+function closeModal(){modal.classList.remove("open");document.body.style.overflow="";if(location.hash)history.replaceState(null,'',location.pathname+location.search)}
+async function shareProduct(id){const p=PRODUCTS.find(x=>x.id===id);if(!p)return;const text=`${p.name} – ${fmt.format(p.price)}\n${p.shortDesc||""}\n${location.origin+location.pathname}#${encodeURIComponent(p.id)}`;try{if(navigator.share){await navigator.share({title:p.name,text,})}else{await navigator.clipboard.writeText(text);alert('Dettagli copiati')}}catch(e){console.warn(e)}}
 
-q.addEventListener("input",()=>{const s=q.value.trim().toLowerCase();if(!s){render();return}const parts=s.split(/\s+/);render(PRODUCTS.filter(p=>{const hay=(p.name+" "+(p.shortDesc||"")+" "+(p.fullDesc||"")).toLowerCase();return parts.every(t=>hay.includes(t))}))});
-shareBtn.addEventListener("click",()=>shareProduct(currentId));
-closeBtn.addEventListener("click",closeModal);
-modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+shareBtn.addEventListener('click',()=>shareProduct(currentId));
+closeBtn.addEventListener('click',closeModal);
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
 
-render();
-(function(){const h=decodeURIComponent(location.hash.slice(1));if(h){const p=PRODUCTS.find(x=>x.id===h);if(p)openModal(p.id)}})();
-</script>
-</body>
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+q.addEventListener('input',()=>{const v=q.value.trim().toLowerCase();const f=PRODUCTS.filter(p=>[p.name,p.shortDesc,p.fullDesc].filter(Boolean).some(s=>s.toLowerCase().includes(v)));render(f)});
+
+window.addEventListener('load',()=>{render();const id=decodeURIComponent(location.hash.slice(1));if(id){openModal(id)}});
+</script></body>
 </html>
