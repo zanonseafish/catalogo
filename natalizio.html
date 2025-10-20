@@ -10,7 +10,7 @@
 *{box-sizing:border-box}html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-/* Pesci laterali dietro ai contenuti */
+/* Pesci laterali dietro ai contenuti (schermo) */
 body::before,body::after{
   content:"";position:fixed;top:0;bottom:0;width:120px;
   background-image:url("images/logo-zanon-pesce-natale.png");
@@ -19,7 +19,7 @@ body::before,body::after{
 body::before{left:1.2mm;background-position:left top}
 body::after{right:1.2mm;background-position:right top}
 
-/* Alberi laterali ancora più indietro */
+/* Alberi laterali dietro ai pesci (schermo) */
 html::before,html::after{
   content:"";position:fixed;bottom:0;width:120px;height:50vh;
   background-repeat:no-repeat;background-size:contain;
@@ -35,7 +35,7 @@ header img.logo{height:60px;width:auto;display:block}
 header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:0 0 2px 0;font-size:24px;line-height:1.15}
 header .sub{opacity:.85;font-size:11.5px;margin-top:0}
 
-/* Ricerca e contatore stile riferimento */
+/* Ricerca stile riferimento */
 .tools{display:flex;justify-content:center;margin-top:8px}
 .search{max-width:480px;width:100%}
 .search input{width:100%;padding:10px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;color:var(--brand);outline:none;appearance:none;-webkit-appearance:none}
@@ -71,13 +71,13 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 .share-small{background:#111;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.3)}
 .close-btn{background:#eee;color:#111;box-shadow:0 2px 6px rgba(0,0,0,.15)}
 
-/* Footer con logo stile definitivo */
-.site-footer{max-width:1100px;margin:18px auto 24px;color:#444;font-size:12px}
+/* Footer con logo e testo bianco per contrasto col rosso */
+.site-footer{max-width:1100px;margin:18px auto 24px;color:#fff;font-size:12px;text-shadow:0 1px 3px rgba(0,0,0,0.4)}
 .site-rule{border:none;height:1px;background:#e5e2da;margin:6px 0 10px}
 .site-footer-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .footer-logo{height:20px;width:auto}
 .foot-text{flex:1;min-width:240px}
-.foot-mail{font-size:12px;color:#0b5;text-decoration:none}
+.foot-mail{font-size:12px;color:#fff;text-decoration:none}
 
 /* Glow rosso solo verso l’alto dal basso */
 .footer-glow{position:fixed;left:0;right:0;bottom:0;height:120px;background:linear-gradient(to top,rgba(139,0,0,1) 0%,rgba(179,0,0,0.85) 60%,transparent 100%);pointer-events:none;z-index:-1}
@@ -86,17 +86,26 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 .back-btn{position:fixed;left:14px;bottom:14px;z-index:1500;background:rgba(255,255,255,0.75);color:#0a6a2b;font-size:13px;font-weight:600;padding:6px 10px;border-radius:20px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
 .back-btn:hover{background:#0a6a2b;color:#fff}
 
-/* Stampa: disattiva rosso; visibili solo pesci+alberi; nascondi bottone */
+/* Stampa: niente rosso; SOLO alberi/pesci con allineamento coerente; nascondi bottone */
 .print-col{display:none}
 @media print{
   @page{size:A4;margin:14mm 12mm}
   html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+  /* disattiva tutte le pseudo-colonne dello schermo per evitare sovrapposizioni */
+  body::before,body::after,html::before,html::after{display:none!important}
+
+  /* riproduci solo le colonne dedicate alla stampa, una per lato */
+  .print-col{display:block;position:fixed;top:0;bottom:0;width:120px;pointer-events:none}
+  .print-col.left{left:1.2mm;background:url("images/latosx.png") no-repeat left bottom / contain}
+  .print-col.right{right:1.2mm;background:url("images/latodx.png") no-repeat right bottom / contain}
+
+  /* niente rosso e bottone */
   header::before,.footer-glow,.back-btn{display:none!important}
-  .site-footer{color:#000}
+
+  /* testo footer nero o grigio scuro per carta bianca */
+  .site-footer{color:#000;text-shadow:none}
   .foot-mail{color:#000;text-decoration:underline}
-  .print-col{display:block;position:fixed;top:0;bottom:0;width:120px;z-index:-4;background-repeat:repeat-y;background-size:60% auto;pointer-events:none}
-  .print-col.left{left:1.2mm;background-image:url("images/latosx.png")}
-  .print-col.right{right:1.2mm;background-image:url("images/latodx.png")}
 }
 </style>
 </head>
@@ -155,7 +164,7 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 <a class="back-btn" href="index2.html" title="Torna al menu">↩︎ Menu</a>
 
 <script>
-// === DATI DEMO PER SCROLL ===
+// === DATI DEMO ===
 const PRODUCTS = [
   {id:"natale-01",name:"Capesante Gratinate",price:8.90,shortDesc:"Conf. 1kg – Capesante gratinate al forno",fullDesc:"Pronte da rigenerare in pochi minuti.",images:["images/capesante-gratinate.jpg","images/default1.jpg"]},
   {id:"natale-02",name:"Gamberoni in Saor",price:14.50,shortDesc:"Conf. 1kg – Marinatura veneziana",fullDesc:"Gamberoni in saor con cipolla, pinoli e uvetta.",images:["images/gamberoni-saor.jpg"]},
@@ -192,10 +201,7 @@ function rowTemplate(p){return `
 function render(list=PRODUCTS){
   listEl.innerHTML=list.map(rowTemplate).join("");
   countEl.textContent = `${list.length} ${list.length===1?'prodotto':'prodotti'}`;
-  // Bind click
-  document.querySelectorAll('.item').forEach(el=>{
-    el.addEventListener('click',()=>openModal(el.dataset.id));
-  });
+  document.querySelectorAll('.item').forEach(el=>el.addEventListener('click',()=>openModal(el.dataset.id)));
 }
 
 function galleryHTML(imgs,alt){
@@ -244,7 +250,6 @@ window.addEventListener('load',()=>{
   if(id) openModal(id);
 });
 
-// Ricerca
 document.getElementById('searchBox').addEventListener('input',e=>{
   const v=e.target.value.trim().toLowerCase();
   const f=PRODUCTS.filter(p=>[p.name,p.shortDesc,p.fullDesc].filter(Boolean).some(s=>s.toLowerCase().includes(v)));
