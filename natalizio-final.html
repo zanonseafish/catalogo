@@ -21,18 +21,32 @@
     body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink)}
 
     /* Colonna sinistra con pesce natalizio */
-    :root{ --decor-w: clamp(82px, 10vw, 120px); --decor-gap: 14px; }
-    body::before{
-      content:""; position:fixed; top:0; left:0; bottom:0; width:var(--decor-w);
-      background-image:url("images/logo-zanon-pesce-natale.png");
-      background-repeat:repeat-y;
-      background-size:60% auto;
-      background-position:center top;
-      pointer-events:none; z-index:0;
-      filter: drop-shadow(0 0 12px rgba(0,0,0,.05));
-    }
-#pragma:remove
-    header,.container,.site-footer,.print-footer,.back{ padding-left: calc(var(--decor-w) + var(--decor-gap)); }
+:root {
+  --decor-w: clamp(82px, 10vw, 120px);
+  --decor-gap: 14px;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--decor-w);
+  background-image: url("images/logo-zanon-pesce-natale.png");
+  background-repeat: repeat-y;
+  background-size: 60% auto;
+  background-position: center top;
+  pointer-events: none;
+  z-index: -1; /* qui lo metti */
+  filter: drop-shadow(0 0 12px rgba(0,0,0,.05));
+}
+
+body, header, .container, footer, .modal {
+  position: relative;
+  z-index: 1;
+}
+
 
     @media (max-width:600px){
       :root{ --decor-w: clamp(70px, 16vw, 100px); --decor-gap: 10px; }
