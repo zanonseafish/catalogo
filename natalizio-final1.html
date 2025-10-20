@@ -11,7 +11,7 @@
 *{box-sizing:border-box}html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-/* Colonne “pesci” laterali — a 1,2 mm dal margine */
+/* Colonne “pesci” laterali — dietro ai contenuti */
 body::before,
 body::after{
   content:"";
@@ -21,14 +21,13 @@ body::after{
   background-image:url("images/logo-zanon-pesce-natale.png");
   background-repeat:repeat-y;
   background-size:60% auto;
-  background-position:left top;
   pointer-events:none;
-  z-index:0; /* sotto ai contenuti con z-index positivi, sopra allo sfondo */
+  z-index:-3;
 }
 body::before{ left:1.2mm; background-position:left top }
 body::after{ right:1.2mm; background-position:right top }
 
-/* Alberi laterali — allineati allo stesso margine 1,2 mm */
+/* Alberi laterali — ancora più indietro */
 html::before,html::after{
   content:"";
   position:fixed;
@@ -37,7 +36,7 @@ html::before,html::after{
   background-repeat:no-repeat;
   background-size:contain;
   pointer-events:none;
-  z-index:-1;
+  z-index:-4;
 }
 html::before{left:1.2mm;background-image:url("images/latosx.png");background-position:left bottom}
 html::after{right:1.2mm;background-image:url("images/latodx.png");background-position:right bottom}
@@ -50,7 +49,7 @@ header img.logo{height:60px;width:auto}
 header h1{font-family:"Playfair Display",serif;font-weight:600;margin:0 0 2px 0;font-size:24px;line-height:1.15}
 header .sub{opacity:.9;font-size:12px}
 
-/* Spazio ai lati per i contenuti principali (non include il bottone menu) */
+/* Spazio ai lati per i contenuti principali */
 header,.container,.site-footer{padding-left:134px;padding-right:134px}
 @media (max-width:900px){header,.container,.site-footer{padding-left:16px;padding-right:16px}}
 
@@ -167,7 +166,6 @@ const PRODUCTS=[
   {id:"natale-02",name:"Gamberoni in Saor",price:14.50,shortDesc:"Conf. 1kg – Marinatura veneziana",fullDesc:"Gamberoni in saor con cipolla, pinoli e uvetta.",images:["images/gamberoni-saor.jpg"]},
   {id:"natale-03",name:"Baccalà alla Vicentina",price:25.50,shortDesc:"Conf. 1kg – Ricetta tradizionale",fullDesc:"Cottura lenta con latte e acciughe.",images:["images/baccala-vicentina.jpg"]},
   {id:"natale-04",name:"Fritto Misto di Mare",price:13.20,shortDesc:"Conf. 1kg – Calamari, gamberi, alici",fullDesc:"Prefritto croccante.",images:["images/fritto-misto.jpg"]},
-  /* nuovi articoli per test scorrimento */
   {id:"natale-05",name:"Salmone in Crosta",price:22.90,shortDesc:"Conf. 1kg – Filetto di salmone in crosta",fullDesc:"Salmone avvolto in crosta dorata, pronto per il forno.",images:["images/salmone-crosta.jpg"]},
   {id:"natale-06",name:"Moscardini in Umido",price:19.50,shortDesc:"Conf. 1kg – Moscardini in salsa di pomodoro",fullDesc:"Ricetta tradizionale mediterranea.",images:["images/moscardini-umido.jpg"]},
   {id:"natale-07",name:"Scampi al Cognac",price:27.80,shortDesc:"Conf. 1kg – Scampi con salsa al cognac",fullDesc:"Scampi già pronti da servire.",images:["images/scampi-cognac.jpg"]},
