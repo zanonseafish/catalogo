@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Catalogo Prodotti ZANON SEAFISH • Natale</title>
+
+  <!-- Open Graph -->
   <meta property="og:title" content="Catalogo Prodotti ZANON SEAFISH • Natale">
   <meta property="og:description" content="Versione natalizia del catalogo Zanon Seafish Ingros SRL">
   <meta property="og:type" content="website">
@@ -18,17 +20,19 @@
     *{box-sizing:border-box} html,body{height:100%}
     body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink)}
 
-    /* Colonna pesci: proporzioni originali, scala responsiva, ripetizione verticale */
+    /* Colonna sinistra con pesce natalizio */
     :root{ --decor-w: clamp(82px, 10vw, 120px); --decor-gap: 14px; }
     body::before{
       content:""; position:fixed; top:0; left:0; bottom:0; width:var(--decor-w);
-      background-image:url("images/pesci-natalizi-colonna.png");
+      background-image:url("images/logo-zanon-pesce-natale.png");
       background-repeat:repeat-y;
-      background-size:100% auto;            /* larghezza riempie la colonna, altezza in proporzione */
+      background-size:100% auto;
       background-position:center top;
       pointer-events:none; z-index:0;
+      filter: drop-shadow(0 0 12px rgba(0,0,0,.05));
     }
-    header,.container,.site-footer,.print-footer{ padding-left: calc(var(--decor-w) + var(--decor-gap)); }
+#pragma:remove
+    header,.container,.site-footer,.print-footer,.back{ padding-left: calc(var(--decor-w) + var(--decor-gap)); }
 
     @media (max-width:600px){
       :root{ --decor-w: clamp(70px, 16vw, 100px); --decor-gap: 10px; }
@@ -40,10 +44,10 @@
         background-size:100% auto !important;
         background-position:center top !important;
       }
-      header,.container,.site-footer,.print-footer{ padding-left: calc(var(--decor-w) + var(--decor-gap)) !important; }
+      header,.container,.site-footer,.print-footer,.back{ padding-left: calc(var(--decor-w) + var(--decor-gap)) !important; }
     }
 
-    /* Header e lista come nei definitivi */
+    /* Header e lista coerenti con le versioni di riferimento */
     header{background:linear-gradient(180deg,#0b1620 0%, #0e1f2a 60%, #0e1f2a00 100%);color:#fff;padding:20px 12px 18px;text-align:center;position:relative}
     header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
     header img.logo{height:60px;width:auto;display:block;margin:0 auto}
@@ -53,6 +57,7 @@
     .search{max-width:480px;width:100%}
     .search input{width:100%;padding:10px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;color:var(--brand);outline:none}
     .count{color:var(--brand);margin-top:8px;font-size:12px}
+
     .container{max-width:1100px;margin:6px auto 14px;padding:0 10px}
     .list{display:flex;flex-direction:column;gap:10px}
     .item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
@@ -65,7 +70,6 @@
     .divider{height:1px;background:var(--line);margin:3px 0}
     .price{justify-self:end;align-self:end;color:var(--price);font-weight:700;font-size:16px}
 
-    /* Modal */
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
     .modal.open{display:flex}
     .modal-content{background:#fff;border-radius:12px;max-width:860px;width:min(96vw,860px);padding:20px;position:relative;max-height:90vh;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);display:flex;flex-direction:column}
@@ -77,7 +81,6 @@
     #mGallery:has(img:nth-child(2)){grid-template-columns:1fr 1fr;}
     #mGallery img{max-width:100%;height:auto;display:block;object-fit:contain}
 
-    /* Footer */
     .site-footer{max-width:1100px;margin:18px auto 24px;padding:0 10px;color:#444;font-size:12px}
     .site-rule{border:none;height:1px;background:#e5e2da;margin:6px 0 10px}
     .site-footer-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -85,7 +88,21 @@
     .foot-text{flex:1;min-width:240px}
     .foot-mail{font-size:12px;color:#0b5;text-decoration:none}
 
-    /* Stampa */
+    @media (max-width:820px){
+      header{padding:16px 10px 16px}
+      header h1{font-size:22px}
+      .item{grid-template-columns:76px 1fr 74px}
+      .thumb{width:76px;height:76px;border-radius:10px}
+      .title{font-size:16px}
+      .price{font-size:15px}
+    }
+    @media (max-width:560px){
+      header{padding:14px 8px 14px}
+      header h1{font-size:20px}
+      .item{grid-template-columns:66px 1fr;grid-template-rows:auto auto;gap:8px}
+      .price{grid-column:2;justify-self:end}
+    }
+
     @media print{
       @page{size:A4;margin:14mm 12mm}
       header{background:none!important;color:#000!important;border-bottom:1px solid #ddd!important;padding:0 0 6mm}
@@ -97,7 +114,6 @@
       .foot-mail{color:#000;text-decoration:underline}
     }
 
-    /* Pulsante ritorno */
     .back{position:fixed;left:14px;bottom:14px;z-index:1200}
     .back a{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:#0b5;color:#fff;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.25)}
   </style>
@@ -105,7 +121,7 @@
 <body>
   <header>
     <div class="top">
-      <img class="logo" src="images/zanonlogonatale.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
+      <img class="logo" src="images/zanonlogonatale.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/logo.png';">
       <h1>ZANON SEAFISH</h1>
       <div class="sub">Catalogo Natalizio</div>
       <div class="tools">
@@ -119,7 +135,6 @@
     <div id="list" class="list"></div>
   </div>
 
-  <!-- Modal -->
   <div id="modal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content" aria-labelledby="mTitle">
       <h2 id="mTitle" class="m-title"></h2>
@@ -153,7 +168,20 @@
   <div class="back"><a href="index.html" title="Torna al menu">↩︎ Menu</a></div>
 
   <script>
-  const PRODUCTS = [];
+  const PRODUCTS = [
+    {id:"natale-01",name:"Capesante Gratinate",price:8.90,shortDesc:"Conf. 1kg – Capesante gratinate al forno",fullDesc:"Pronte da rigenerare in pochi minuti.",images:["images/capesante-gratinate.jpg"]},
+    {id:"natale-02",name:"Gamberoni in Saor",price:14.50,shortDesc:"Conf. 1kg – Marinatura veneziana",fullDesc:"Gamberoni in saor con cipolla, pinoli e uvetta.",images:["images/gamberoni-saor.jpg"]},
+    {id:"natale-03",name:"Baccalà alla Vicentina",price:25.50,shortDesc:"Conf. 1kg – Ricetta tradizionale",fullDesc:"Cottura lenta con latte e acciughe. Pronto da scaldare.",images:["images/baccala-vicentina.jpg"]},
+    {id:"natale-04",name:"Fritto Misto di Mare",price:13.20,shortDesc:"Conf. 1kg – Calamari, gamberi, alici",fullDesc:"Prefritto croccante. Forno o friggitrice.",images:["images/fritto-misto.jpg"]},
+    {id:"natale-05",name:"Polpette di Salmone",price:11.00,shortDesc:"Conf. 1kg – Salmone e patate",fullDesc:"Ideali per aperitivi e buffet.",images:["images/polpette-salmone.jpg"]},
+    {id:"natale-06",name:"Filetti di Branzino al Limone",price:17.90,shortDesc:"Conf. 800g – Profumo di limone",fullDesc:"Filetti senza spine. Cottura rapida.",images:["images/branzino-limone.jpg"]},
+    {id:"natale-07",name:"Seppie in Umido",price:19.80,shortDesc:"Conf. 1kg – Con piselli",fullDesc:"Ricetta casalinga pronta all’uso.",images:["images/seppie-umido.jpg"]},
+    {id:"natale-08",name:"Insalata di Mare",price:14.30,shortDesc:"Conf. 1kg – Misto di mare e verdure",fullDesc:"Già condita. Solo da impiattare.",images:["images/insalata-mare.jpg"]},
+    {id:"natale-09",name:"Salmone Affumicato Norvegese",price:6.90,shortDesc:"Conf. 200g – Fette sottili",fullDesc:"Affumicatura delicata, pronto per antipasti.",images:["images/salmone-affumicato.jpg"]},
+    {id:"natale-10",name:"Spiedini di Gamberi",price:12.40,shortDesc:"Conf. 1kg – Pronti da cuocere",fullDesc:"Spiedi regolari per griglia e forno.",images:["images/spiedini-gamberi.jpg"]}
+  ];
+  PRODUCTS.sort((a,b)=>a.id.localeCompare(b.id));
+
   const listEl=document.getElementById("list");
   const fmt=new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"});
   const countEl=document.getElementById("count");
@@ -166,51 +194,78 @@
   const mGallery=document.getElementById("mGallery");
   const shareBtn=document.getElementById("shareBtn");
   const closeBtn=document.getElementById("closeBtn");
+  let currentId=null;
 
-  function card(p){
+  function rowTemplate(p){
     return `
-      <div class="item" onclick='openModal(${JSON.stringify(p).replace(/"/g,"&quot;")})' id="${p.id}">
-        <div class="thumb"><img loading="lazy" src="${(p.images&&p.images[0])||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
-        <div class="info">
-          <h2 class="title">${p.name}</h2>
-          <p class="desc">${p.shortDesc||""}</p>
-          <div class="divider"></div>
-        </div>
-        <div class="price">${fmt.format(p.price||0)}${p.unit||""}</div>
-      </div>`;
+    <div class="item" onclick="openModal('${p.id}')">
+      <div class="thumb"><img loading="lazy" src="${(p.images&&p.images[0])||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
+      <div class="info">
+        <h3 class="title">${p.name}</h3>
+        <p class="desc">${p.shortDesc||""}</p>
+        <div class="divider"></div>
+      </div>
+      <div class="price">${fmt.format(p.price||0)}${p.unit||""}</div>
+    </div>`;
   }
 
   function render(list=PRODUCTS){
-    if(!list.length){
-      listEl.innerHTML = '<div style="padding:10px;color:#555">Nessun prodotto caricato.</div>';
-      countEl.textContent = '0 prodotti';
-      return;
-    }
-    listEl.innerHTML = list.map(card).join("");
-    countEl.textContent = list.length + ' prodotti';
+    listEl.innerHTML = list.length ? list.map(rowTemplate).join("") : '<div style="padding:10px;color:#555">Nessun prodotto</div>';
+    countEl.textContent=list.length===PRODUCTS.length?`${list.length} prodotti`:`${list.length} risultati`;
   }
 
-  function openModal(p){
-    mTitle.textContent = p.name||"";
-    mDesc.textContent = p.shortDesc||"";
-    mFullDesc.textContent = p.fullDesc||"";
-    const unit = p.unit ? ((''+p.unit).includes('/kg') ? ' /kg' : ' €/kg') : '';
-    mPrice.textContent = fmt.format(p.price||0) + unit;
-    mGallery.innerHTML = (p.images||[]).map(src=>`<img src="${src}" alt="">`).join("") || '<img src="images/default1.jpg" alt="">';
-    modal.classList.add('open'); document.body.style.overflow='hidden';
+  function openModal(id){
+    const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
+    currentId=id;
+    mTitle.textContent=p.name||"";
+    mDesc.textContent=p.shortDesc||"";
+    mFullDesc.textContent=p.fullDesc||"";
+    const unit=p.unit?(((""+p.unit).includes("/kg"))?" /kg":" €/kg"):"";
+    mPrice.textContent=fmt.format(p.price||0)+unit;
+    mGallery.innerHTML=(p.images||[]).map(src=>`<img src="${src}" alt="">`).join("")||'<img src="images/default1.jpg" alt="">';
+    modal.classList.add("open"); document.body.style.overflow="hidden";
+    history.replaceState(null,"",`#${encodeURIComponent(id)}`);
   }
-  function closeModal(){ modal.classList.remove('open'); document.body.style.overflow=''; }
-  closeBtn.onclick=closeModal;
-  modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
-  window.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
 
-  q.addEventListener('input',()=>{
-    const t=(q.value||'').toLowerCase();
-    const filtered = PRODUCTS.filter(p=>[p.name,p.shortDesc,p.fullDesc,p.id].join(' ').toLowerCase().includes(t));
-    render(filtered);
+  function closeModal(){
+    modal.classList.remove("open"); document.body.style.overflow="";
+    if(location.hash){history.replaceState(null,"",location.pathname+location.search);}
+  }
+
+  async function shareProduct(id){
+    const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
+    const imgUrl=new URL((p.images&&p.images[0])||"images/default1.jpg",location.href).href;
+    const text=`${p.name} – ${fmt.format(p.price)}\n${p.shortDesc||""}\n${location.origin+location.pathname}#${encodeURIComponent(p.id)}`;
+    try{
+      if(navigator.canShare){
+        await navigator.share({title:p.name,text,urls:[imgUrl]});
+      }else{
+        await navigator.clipboard.writeText(text);
+        alert("Link copiato negli appunti.");
+      }
+    }catch(e){}
+  }
+
+  q.addEventListener("input",()=>{
+    const s=q.value.trim().toLowerCase();
+    if(!s){render();return;}
+    const parts=s.split(/\s+/);
+    render(PRODUCTS.filter(p=>{
+      const hay=(p.name+" "+(p.shortDesc||"")+" "+(p.fullDesc||"")).toLowerCase();
+      return parts.every(t=>hay.includes(t));
+    }));
   });
 
-  render();
+  shareBtn.addEventListener("click",()=>shareProduct(currentId));
+  closeBtn.addEventListener("click",closeModal);
+  modal.addEventListener("click",e=>{ if(e.target===modal) closeModal(); });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
+
+  window.addEventListener("load",()=>{
+    render();
+    const h=decodeURIComponent(location.hash.slice(1));
+    if(h){ const p=PRODUCTS.find(x=>x.id===h); if(p) openModal(p.id); }
+  });
   </script>
 </body>
 </html>
