@@ -12,13 +12,7 @@
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
 /* Colonne “pesci” laterali come nei definitivi */
-body::before,
-body::after{
-  content:"";
-  position:fixed;
-  top:0; bottom:0;
-  width:120px;
-  background-image:url("images/logo-zanon-pesce-natale.png");
+body::html::before{left:1.2mm;background-image:url("images/latosx.png");background-position:left bottom}:after{right:1.2mm;background-image:url("images/latodx.png");background-position:right bottom}
   background-repeat:repeat-y;
   background-size:60% auto;
   background-position:center top;
