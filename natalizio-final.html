@@ -247,33 +247,37 @@
   async function shareProduct(id){
     const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
     const imgUrl=new URL((p.images&&p.images[0])||"images/default1.jpg",location.href).href;
-    const text=\`\${p.name} – \${fmt.format(p.price)}\\n\${p.shortDesc||""}\\n\${location.origin+location.pathname}#\${encodeURIComponent(p.id)}\`;
+    const text=`${p.name} – ${fmt.format(p.price)}\n${p.shortDesc||""}\n${location.origin+location.pathname}#${encodeURIComponent(p.id)}`;
     try{
       if(navigator.canShare){ await navigator.share({title:p.name,text,url:imgUrl}); }
       else { await navigator.clipboard.writeText(text); alert("Copiato negli appunti."); }
     }catch(e){}
   }
 
+  // Ricerca live
   q.addEventListener("input",()=>{
     const s=q.value.trim().toLowerCase();
     if(!s){render();return;}
-    const parts=s.split(/\\s+/);
+    const parts=s.split(/\s+/);
     render(PRODUCTS.filter(p=>{
       const hay=(p.name+" "+(p.shortDesc||"")+" "+(p.fullDesc||"")).toLowerCase();
       return parts.every(t=>hay.includes(t));
     }));
   });
 
+  // Eventi modal
   shareBtn.addEventListener("click",()=>shareProduct(currentId));
   closeBtn.addEventListener("click",closeModal);
   modal.addEventListener("click",e=>{ if(e.target===modal) closeModal(); });
   document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
 
-  window.addEventListener("load",()=>{
-    render();
+  // Render immediato
+  render();
+  // Apri da hash se presente
+  (function(){
     const h=decodeURIComponent(location.hash.slice(1));
     if(h){ const p=PRODUCTS.find(x=>x.id===h); if(p) openModal(p.id); }
-  });
+  })();
   </script>
 </body>
 </html>
