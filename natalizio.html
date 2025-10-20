@@ -71,11 +71,23 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
   background:linear-gradient(to top,rgba(139,0,0,1) 0%,rgba(179,0,0,0.85) 60%,transparent 100%);
   pointer-events:none;z-index:-1}
 
-/* Stampa: rosso disattivato, visibili solo pesci e alberi */
+/* Bottone MENU ripristinato */
+.back-btn{
+  position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:1500;
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.9);color:#0a6a2b;font-size:16px;font-weight:700;
+  padding:10px 14px;border-radius:26px;text-decoration:none;
+  box-shadow:0 4px 10px rgba(0,0,0,.15);
+  -webkit-backdrop-filter:saturate(140%) blur(6px);backdrop-filter:saturate(140%) blur(6px)
+}
+.back-btn::before{content:"↩︎"}
+.back-btn:hover{background:#0a6a2b;color:#fff}
+
+/* Stampa: rosso disattivato, visibili solo pesci e alberi; nascondi bottone */
 .print-col{display:none}
 @media print{
   html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  header::before,.footer-glow{display:none!important}
+  header::before,.footer-glow,.back-btn{display:none!important}
   .print-col{display:block;position:fixed;top:0;bottom:0;width:120px;z-index:-4;background-repeat:repeat-y;background-size:60% auto;pointer-events:none}
   .print-col.left{left:1.2mm;background-image:url("images/latosx.png")}
   .print-col.right{right:1.2mm;background-image:url("images/latodx.png")}
@@ -109,6 +121,7 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 </footer>
 
 <div class="footer-glow" aria-hidden="true"></div>
+<a class="back-btn" href="index.html" title="Torna al menu">Menu</a>
 
 <script>
 const PRODUCTS=[
