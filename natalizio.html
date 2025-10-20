@@ -91,19 +91,11 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 @media print{
   @page{size:A4;margin:14mm 12mm}
   html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-
-  /* disattiva tutte le pseudo-colonne dello schermo per evitare sovrapposizioni */
   body::before,body::after,html::before,html::after{display:none!important}
-
-  /* riproduci solo le colonne dedicate alla stampa, una per lato */
   .print-col{display:block;position:fixed;top:0;bottom:0;width:120px;pointer-events:none}
   .print-col.left{left:1.2mm;background:url("images/latosx.png") no-repeat left bottom / contain}
   .print-col.right{right:1.2mm;background:url("images/latodx.png") no-repeat right bottom / contain}
-
-  /* niente rosso e bottone */
   header::before,.footer-glow,.back-btn{display:none!important}
-
-  /* testo footer nero o grigio scuro per carta bianca */
   .site-footer{color:#000;text-shadow:none}
   .foot-mail{color:#000;text-decoration:underline}
 }
@@ -115,8 +107,8 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 
 <header>
   <div class="top">
-    <img class="logo" src="images/zanonlogonatale.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
-    <h1>Catalogo Prodotti </br> NATALE 2025</h1>
+    <img class="logo" src="images/logo.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
+    <h1>Catalogo Prodotti ZANON SEAFISH</h1>
     <div class="sub">Clicca un elemento per i dettagli e la condivisione.</div>
     <div class="tools"><div class="search"><input id="searchBox" placeholder="Cerca prodotti…"></div></div>
     <div id="count" class="count"></div>
@@ -164,15 +156,13 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 <a class="back-btn" href="index2.html" title="Torna al menu">↩︎ Menu</a>
 
 <script>
-
-   // === DATI ===
-  const PRODUCTS = [
+// === DATI ===
+const PRODUCTS = [
   {id:"polpette-brasato",name:"Polpette di Brasato",price:14.00,shortDesc:"Conf. 2kg – Polpette di brasato surgelate (40 pz da 50g)",fullDesc:"Polpette di brasato dal gusto autentico, preparate con carne di manzo selezionata. Ideali per secondi o buffet caldi.",images:["img2/polpette-brasato.jpg"]},
   {id:"polpette-baccala",name:"Polpette di Baccalà",price:14.00,shortDesc:"Conf. 2kg – Polpette di baccalà surgelate (40 pz da 50g)",fullDesc:"Polpette morbide a base di baccalà e patate. Perfette fritte o al forno come antipasto di mare.",images:["img2/polpette-baccala.jpg"]},
   {id:"polpette-tonno-cipolla",name:"Polpette di Tonno e Cipolla",price:14.00,shortDesc:"Conf. 2kg – Polpette di tonno e cipolla (40 pz da 50g)",fullDesc:"Polpette di tonno con cipolla dolce e spezie mediterranee. Croccanti e profumate.",images:["img2/polpette-tonno-cipolla.jpg"]},
   {id:"polpette-pollo-speck",name:"Polpette di Pollo e Speck",price:12.00,shortDesc:"Conf. 2kg – Polpette di pollo e speck (40 pz da 50g)",fullDesc:"Polpette dal sapore deciso con carne di pollo e speck affumicato. Ottime per aperitivi o secondi piatti.",images:["img2/polpette-pollo-speck.jpg"]},
   {id:"polpette-verdure",name:"Polpette di Verdure",price:12.00,shortDesc:"Conf. 2kg – Polpette di verdure miste (40 pz da 50g)",fullDesc:"Polpette vegetariane con verdure fresche selezionate. Leggere e gustose, ideali per contorni o buffet.",images:["img2/polpette-verdure.png"]},
-
   {id:"arancini-mozzarella-prosciutto",name:"Arancini con Mozzarella e Prosciutto Prefritti",price:5.50,shortDesc:"Conf. 3kg – Arancini con mozzarella e prosciutto prefritti",fullDesc:"Arancini di riso con cuore di mozzarella e prosciutto cotto. Pronti per la cottura.",images:["img2/arancini-prosciutto.png"]},
   {id:"arancini-spinaci",name:"Arancini agli Spinaci Prefritti",price:5.50,shortDesc:"Conf. 3kg – Arancini agli spinaci prefritti",fullDesc:"Arancini di riso con ripieno cremoso agli spinaci e formaggio. Croccanti e saporiti.",images:["img2/arancini-spinaci.png"]},
   {id:"arrosticini-mare",name:"Arrosticini di Mare Panati (Totano Gigas)",price:8.30,shortDesc:"Conf. 4kg – Arrosticini di mare panati",fullDesc:"Spiedini di totano gigas impanati e croccanti. Ideali fritti o al forno.",images:["img2/arrosticini-pesce-panati.png"]},
@@ -191,8 +181,6 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
   {id:"salvia-pastellata",name:"Salvia Pastellata Prefritta",price:11.50,shortDesc:"Conf. 4x1kg – Foglie di salvia pastellate prefritte",fullDesc:"Foglie di salvia immerse in pastella leggera e croccante. Profumate e aromatiche.",images:["img2/salvia-pastellata.png"]},
   {id:"tris-verdure",name:"Tris di Verdure Pastellate Prefritte",price:5.20,shortDesc:"Conf. 5x1kg – Tris di verdure pastellate prefritte",fullDesc:"Mix croccante di zucchine, carote e peperoni in pastella dorata. Perfette per contorni o antipasti.",images:["img2/tris-verdure.png"]}
 ];
-  
-  .sort((a,b)=>a.id.localeCompare(b.id));
 
 const listEl=document.getElementById("list");
 const countEl=document.getElementById("count");
