@@ -21,33 +21,20 @@
     body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink)}
 
     /* Colonna sinistra con pesce natalizio */
-:root {
-  --decor-w: clamp(82px, 10vw, 120px);
-  --decor-gap: 14px;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: var(--decor-w);
-  background-image: url("images/logo-zanon-pesce-natale.png");
-  background-repeat: repeat-y;
-  background-size: 60% auto;
-  background-position: 10% top; /* sposta il pesce 10% verso destra */
-  pointer-events: none;
-  z-index: -1;
-  filter: drop-shadow(0 0 12px rgba(0,0,0,.05));
-}
-
-
-body, header, .container, footer, .modal {
-  position: relative;
-  z-index: 1;
-}
-
+    :root{ --decor-w: clamp(82px, 10vw, 120px); --decor-gap: 14px; }
+    body::before{
+      content:""; position:fixed; top:0; left:0; bottom:0; width:var(--decor-w);
+      background-image:url("images/logo-zanon-pesce-natale.png");
+      background-repeat:repeat-y;
+      background-size:60% auto;              /* pesce ridotto */
+      background-position:10% top;           /* distacco dal bordo sinistro */
+      pointer-events:none; z-index:-1;       /* sempre dietro */
+      filter: drop-shadow(0 0 12px rgba(0,0,0,.05));
+    }
+    /* Tutto il resto sopra lo sfondo */
+    body, header, .container, footer, .modal { position:relative; z-index:1; }
+    /* Allinea il contenuto alla colonna sinistra */
+    header,.container,.site-footer,.back{ padding-left: calc(var(--decor-w) + var(--decor-gap)); }
 
     @media (max-width:600px){
       :root{ --decor-w: clamp(70px, 16vw, 100px); --decor-gap: 10px; }
@@ -56,10 +43,10 @@ body, header, .container, footer, .modal {
       body::before{
         position:absolute !important;
         width: var(--decor-w) !important;
-        background-size:100% auto !important;
-        background-position:center top !important;
+        background-size:60% auto !important;
+        background-position:10% top !important;
       }
-      header,.container,.site-footer,.print-footer,.back{ padding-left: calc(var(--decor-w) + var(--decor-gap)) !important; }
+      header,.container,.site-footer{ padding-left: calc(var(--decor-w) + var(--decor-gap)) !important; }
     }
 
     /* Header e lista coerenti con le versioni di riferimento */
@@ -183,6 +170,7 @@ body, header, .container, footer, .modal {
   <div class="back"><a href="index.html" title="Torna al menu">↩︎ Menu</a></div>
 
   <script>
+  // === DATI DI ESEMPIO ===
   const PRODUCTS = [
     {id:"natale-01",name:"Capesante Gratinate",price:8.90,shortDesc:"Conf. 1kg – Capesante gratinate al forno",fullDesc:"Pronte da rigenerare in pochi minuti.",images:["images/capesante-gratinate.jpg"]},
     {id:"natale-02",name:"Gamberoni in Saor",price:14.50,shortDesc:"Conf. 1kg – Marinatura veneziana",fullDesc:"Gamberoni in saor con cipolla, pinoli e uvetta.",images:["images/gamberoni-saor.jpg"]},
@@ -229,6 +217,15 @@ body, header, .container, footer, .modal {
     countEl.textContent=list.length===PRODUCTS.length?`${list.length} prodotti`:`${list.length} risultati`;
   }
 
+  // Fallback robusto per immagini modal
+  function galleryHTML(imgs, alt){
+    const arr = (imgs && imgs.length ? imgs : ["images/default1.jpg"]).slice(0, 2);
+    return arr.map(src =>
+      `<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${alt||''}"
+        onerror="this.onerror=null; this.src='images/default1.jpg';">`
+    ).join("");
+  }
+
   function openModal(id){
     const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
     currentId=id;
@@ -237,9 +234,9 @@ body, header, .container, footer, .modal {
     mFullDesc.textContent=p.fullDesc||"";
     const unit=p.unit?(((""+p.unit).includes("/kg"))?" /kg":" €/kg"):"";
     mPrice.textContent=fmt.format(p.price||0)+unit;
-    mGallery.innerHTML=(p.images||[]).map(src=>`<img src="${src}" alt="">`).join("")||'<img src="images/default1.jpg" alt="">';
+    mGallery.innerHTML = galleryHTML(p.images, p.name);
     modal.classList.add("open"); document.body.style.overflow="hidden";
-    history.replaceState(null,"",`#${encodeURIComponent(id)}`);
+    if(location.hash!=="#"+id) history.replaceState(null,"","#"+id);
   }
 
   function closeModal(){
@@ -250,21 +247,17 @@ body, header, .container, footer, .modal {
   async function shareProduct(id){
     const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
     const imgUrl=new URL((p.images&&p.images[0])||"images/default1.jpg",location.href).href;
-    const text=`${p.name} – ${fmt.format(p.price)}\n${p.shortDesc||""}\n${location.origin+location.pathname}#${encodeURIComponent(p.id)}`;
+    const text=\`\${p.name} – \${fmt.format(p.price)}\\n\${p.shortDesc||""}\\n\${location.origin+location.pathname}#\${encodeURIComponent(p.id)}\`;
     try{
-      if(navigator.canShare){
-        await navigator.share({title:p.name,text,urls:[imgUrl]});
-      }else{
-        await navigator.clipboard.writeText(text);
-        alert("Link copiato negli appunti.");
-      }
+      if(navigator.canShare){ await navigator.share({title:p.name,text,url:imgUrl}); }
+      else { await navigator.clipboard.writeText(text); alert("Copiato negli appunti."); }
     }catch(e){}
   }
 
   q.addEventListener("input",()=>{
     const s=q.value.trim().toLowerCase();
     if(!s){render();return;}
-    const parts=s.split(/\s+/);
+    const parts=s.split(/\\s+/);
     render(PRODUCTS.filter(p=>{
       const hay=(p.name+" "+(p.shortDesc||"")+" "+(p.fullDesc||"")).toLowerCase();
       return parts.every(t=>hay.includes(t));
