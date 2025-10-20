@@ -11,57 +11,49 @@
 <style>
 :root{
   --bg:#fbfbf8;--ink:#111;--muted:#606060;--line:#e7e4dc;
-  --brand:#0a84ff;--ok:#0a6a2b;--decor-w:clamp(82px,10vw,120px);--decor-gap:14px
+  --brand:#0a84ff;--ok:#0a6a2b
 }
 *{box-sizing:border-box}
 html,body{height:100%}
-body{
-  margin:0;background:var(--bg);color:var(--ink);
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif
-}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-/* sfondo alberi */
+/* sfondi laterali, nascosti su mobile per evitare sovrapposizioni */
 html::before,html::after{
-  content:"";position:fixed;bottom:0;width:var(--decor-w);height:40vh;
-  background-repeat:no-repeat;background-size:contain;pointer-events:none;z-index:-3
+  content:"";position:fixed;bottom:0;width:120px;height:40vh;background-repeat:no-repeat;background-size:contain;pointer-events:none;z-index:-3
 }
 html::before{left:0;background-image:url("images/latosx.png");background-position:left bottom}
 html::after{right:0;background-image:url("images/latodx.png");background-position:right bottom}
+@media (max-width: 560px){
+  html::before,html::after{display:none}
+}
 
 /* layout */
 .container{max-width:1200px;margin:0 auto;padding:18px 16px 120px}
 .header{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .header .brand{display:flex;align-items:center;gap:12px}
 .header .brand img{height:48px;width:auto}
-.header h1{
-  margin:0;font-family:"Playfair Display",serif;font-weight:700;font-size:clamp(22px,4vw,36px)
-}
+.header h1{margin:0;font-family:"Playfair Display",serif;font-weight:700;font-size:clamp(22px,4vw,36px)}
 .header .season{color:var(--muted);font-weight:600}
 
+/* strumenti */
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+input[type="search"]{flex:1 1 260px;padding:10px 12px;border:1px solid var(--line);border-radius:10px}
+button.icon{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer}
+
 /* griglia prodotti */
-.grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-  gap:16px;margin-top:18px
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.figure{position:relative;width:100%;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:#f1f1f1}
+.figure img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.figure[data-empty="1"]::after{
+  content:"";position:absolute;inset:0;background:
+  linear-gradient(135deg,#f6f6f6, #eaeaea);
 }
-.card{
-  background:#fff;border:1px solid var(--line);border-radius:14px;
-  padding:12px;display:flex;flex-direction:column;gap:8px
-}
-.card img{width:100%;height:180px;object-fit:cover;border-radius:10px}
 .card .name{font-weight:600}
 .card .meta{font-size:0.9rem;color:var(--muted)}
 .card .price{font-weight:700;color:var(--ok)}
 
-/* search + toolbar */
-.tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-input[type="search"]{
-  flex:1 1 260px;padding:10px 12px;border:1px solid var(--line);border-radius:10px
-}
-button.icon{
-  border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer
-}
-
-/* modal scheda */
+/* modal */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:1000}
 .modal.open{display:flex}
 .sheet{max-width:780px;width:100%;background:#fff;border-radius:16px;overflow:hidden}
@@ -71,29 +63,23 @@ button.icon{
 .sheet .row{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted)}
 .sheet .price{font-weight:700;color:var(--ok)}
 .sheet .cta{display:flex;gap:10px;margin-top:12px}
-.sheet .cta a, .sheet .cta button{
-  padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;text-decoration:none;color:inherit
-}
+.sheet .cta a,.sheet .cta button{padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;text-decoration:none;color:inherit}
 
-/* FOOTER */
+/* footer */
 .site-footer{margin-top:28px;padding:16px 0;color:var(--muted);border-top:1px solid var(--line);font-size:.95rem}
 
 /* MENU in basso a sinistra, identico ai template */
 .back{position:fixed;left:14px;bottom:14px;z-index:1200}
-.back a{
-  display:inline-flex;align-items:center;gap:6px;padding:10px 12px;border-radius:999px;
-  background:var(--brand);color:#fff;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.25);font-weight:600
-}
+.back a{display:inline-flex;align-items:center;gap:6px;padding:10px 12px;border-radius:999px;background:var(--brand);color:#fff;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.25);font-weight:600}
 .back a:focus-visible{outline:2px solid #fff;outline-offset:3px}
 @media print{.back{display:none!important}}
 </style>
 </head>
-
 <body>
 <div class="container">
   <header class="header">
     <div class="brand">
-      <img src="images/logo-zanon.png" alt="Zanon Seafish">
+      <img src="images/logo-zanon.png" alt="Zanon Seafish" onerror="this.style.display='none'">
       <div>
         <h1>Catalogo Natale</h1>
         <div class="season">Selezione natalizia 2024</div>
@@ -108,7 +94,7 @@ button.icon{
   <section id="grid" class="grid" aria-live="polite"></section>
 
   <footer class="site-footer">
-    Zanon Seafish Ingros SRL • Via dell’Industria 12 • P.IVA 01234567890 • Aggiornato: 2024-12-01
+    Zanon Seafish Ingros SRL • Via dell’Industria 12 • P.IVA 01234567890
   </footer>
 </div>
 
@@ -136,7 +122,21 @@ button.icon{
 <div class="back"><a href="index.html" title="Torna al menu">↩︎ Menu</a></div>
 
 <script>
-/* Dataset esempio. Sostituisci con i tuoi prodotti reali se necessario. */
+/* Utility: immagine fallback senza icone rotte */
+function safeImg(src, alt){
+  const wrap = document.createElement("div");
+  wrap.className = "figure";
+  const img = document.createElement("img");
+  img.loading = "lazy";
+  img.alt = alt || "";
+  img.src = src || "";
+  let ok = true;
+  img.onerror = ()=>{ if(ok){ ok=false; wrap.dataset.empty="1"; img.remove(); } };
+  wrap.appendChild(img);
+  return wrap;
+}
+
+/* Dataset placeholder. Sostituisci percorsi con i tuoi reali. */
 const PRODUCTS = [
   {id:"COD123", name:"Baccalà mantecato", cat:"Antipasti", price:"€ 12,90", img:"images/prod/baccala.jpg", desc:"Cremoso, pronto all’uso."},
   {id:"COD124", name:"Gamberi in tempura", cat:"Fritti",    price:"€ 14,50", img:"images/prod/tempura.jpg", desc:"Croccanti, 10 pezzi."},
@@ -158,12 +158,10 @@ const mclose = document.getElementById("mclose");
 function card(p){
   const el = document.createElement("article");
   el.className = "card";
-  el.innerHTML = `
-    <img src="${p.img}" alt="${p.name}">
-    <div class="name">${p.name}</div>
-    <div class="meta">${p.cat} • <span>${p.id}</span></div>
-    <div class="price">${p.price}</div>
-  `;
+  el.appendChild(safeImg(p.img, p.name));
+  const name = document.createElement("div"); name.className="name"; name.textContent=p.name; el.appendChild(name);
+  const meta = document.createElement("div"); meta.className="meta"; meta.textContent = `${p.cat} • ${p.id}`; el.appendChild(meta);
+  const price = document.createElement("div"); price.className="price"; price.textContent=p.price; el.appendChild(price);
   el.addEventListener("click",()=>openModal(p.id));
   return el;
 }
@@ -174,22 +172,14 @@ function render(list=PRODUCTS){
 }
 
 function openModal(id){
-  const p = PRODUCTS.find(x=>x.id===id);
-  if(!p) return;
+  const p = PRODUCTS.find(x=>x.id===id); if(!p) return;
   mimg.src = p.img; mimg.alt = p.name;
   document.getElementById("modal-title").textContent = p.name;
-  mcode.textContent = p.id;
-  mcat.textContent = p.cat;
-  mprice.textContent = p.price;
-  mdesc.textContent = p.desc || "";
-  modal.classList.add("open");
-  history.replaceState(null,"","#"+id);
+  mcode.textContent = p.id; mcat.textContent = p.cat; mprice.textContent = p.price; mdesc.textContent = p.desc || "";
+  modal.classList.add("open"); history.replaceState(null,"","#"+id);
 }
 
-function closeModal(){
-  modal.classList.remove("open");
-  history.replaceState(null,"",location.pathname+location.search);
-}
+function closeModal(){ modal.classList.remove("open"); history.replaceState(null,"",location.pathname+location.search); }
 
 async function shareProduct(p){
   const text = `${p.name} • ${p.price} • Codice ${p.id}`;
@@ -215,18 +205,12 @@ mshare.addEventListener("click",()=>{
   const p = PRODUCTS.find(x=>x.id===id);
   if(p) shareProduct(p);
 });
-
 mclose.addEventListener("click",(e)=>{e.preventDefault();closeModal();});
 modal.addEventListener("click",(e)=>{ if(e.target===modal) closeModal(); });
 document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeModal(); });
 
 render();
-(function(){
-  const h = decodeURIComponent(location.hash.slice(1));
-  if(!h) return;
-  const p = PRODUCTS.find(x=>x.id===h);
-  if(p) openModal(p.id);
-})();
+(function(){ const h = decodeURIComponent(location.hash.slice(1)); if(!h) return; const p = PRODUCTS.find(x=>x.id===h); if(p) openModal(p.id); })();
 </script>
 </body>
 </html>
