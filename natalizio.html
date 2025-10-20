@@ -6,7 +6,7 @@
 <title>Catalogo Prodotti ZANON SEAFISH • Natale</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fbfbf8;--ink:#111;--muted:#606060;--line:#e7e4dc;--brand:#0b5;--price:#0a6a2b}
+:root{--bg:#fbfbf8;--ink:#111;--muted:#606060;--line:#e5e2da;--brand:#0b5;--price:#0a6a2b}
 *{box-sizing:border-box}html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
@@ -31,23 +31,23 @@ html::after{right:1.2mm;background-image:url("images/latodx.png");background-pos
 header{position:relative;color:#fff;text-align:center;padding:20px 12px 18px}
 header::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,#8b0000 0%,#b30000 80%,transparent 100%);z-index:-1}
 header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
-header img.logo{height:60px;width:auto;display:block;margin:0 auto}
+header img.logo{height:60px;width:auto;display:block}
 header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:0 0 2px 0;font-size:24px;line-height:1.15}
 header .sub{opacity:.85;font-size:11.5px;margin-top:0}
 
-/* Ricerca e contatore in stile riferimento */
+/* Ricerca e contatore stile riferimento */
 .tools{display:flex;justify-content:center;margin-top:8px}
 .search{max-width:480px;width:100%}
 .search input{width:100%;padding:10px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;color:var(--brand);outline:none;appearance:none;-webkit-appearance:none}
 .search input::placeholder{color:rgba(11,85,0,.7)}
 .count{color:var(--brand);margin-top:8px;font-size:12px}
 
-/* Layout */
+/* Layout contenuti */
 header,.container,.site-footer{padding-left:134px;padding-right:134px}
 @media (max-width:900px){header,.container,.site-footer{padding-left:16px;padding-right:16px}}
 .container{max-width:1100px;margin:6px auto 14px}
 .list{display:flex;flex-direction:column;gap:10px}
-.item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
+.item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
 .item:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.06)}
 .thumb{width:84px;height:84px;border-radius:12px;overflow:hidden;background:#f1f1ed;border:1px solid var(--line)}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
@@ -57,7 +57,21 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 .divider{height:1px;background:var(--line);margin:3px 0}
 .price{justify-self:end;align-self:end;color:var(--price);font-weight:700;font-size:16px}
 
-/* Footer con logo come definitivo */
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
+.modal.open{display:flex}
+.modal-content{background:#fff;border-radius:12px;max-width:860px;width:min(96vw,860px);padding:20px;position:relative;max-height:90vh;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);display:flex;flex-direction:column}
+.m-title{font-family:"Playfair Display",serif;margin:0 0 10px 0}
+.m-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:8px 0;color:#333}
+.m-price{color:var(--price);font-weight:700}
+#gallery{flex:1 1 auto;overflow:auto;display:grid;gap:12px;align-items:center;justify-items:center}
+#gallery:has(img:nth-child(2)){grid-template-columns:1fr 1fr}
+#gallery img{max-width:100%;height:auto;display:block;object-fit:contain;border-radius:8px;border:1px solid var(--line)}
+.share-small,.close-btn{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer}
+.share-small{background:#111;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.3)}
+.close-btn{background:#eee;color:#111;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+
+/* Footer con logo stile definitivo */
 .site-footer{max-width:1100px;margin:18px auto 24px;color:#444;font-size:12px}
 .site-rule{border:none;height:1px;background:#e5e2da;margin:6px 0 10px}
 .site-footer-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -65,25 +79,21 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 .foot-text{flex:1;min-width:240px}
 .foot-mail{font-size:12px;color:#0b5;text-decoration:none}
 
+/* Glow rosso solo verso l’alto dal basso */
+.footer-glow{position:fixed;left:0;right:0;bottom:0;height:120px;background:linear-gradient(to top,rgba(139,0,0,1) 0%,rgba(179,0,0,0.85) 60%,transparent 100%);pointer-events:none;z-index:-1}
+
 /* Bottone MENU stile definitivo */
-.back-btn{
-  position:fixed;left:14px;bottom:14px;z-index:1500;
-  background:rgba(255,255,255,0.75);color:#0a6a2b;
-  font-size:13px;font-weight:600;padding:6px 10px;border-radius:20px;text-decoration:none;
-  box-shadow:0 2px 6px rgba(0,0,0,0.15);transition:background .15s ease,color .15s ease
-}
+.back-btn{position:fixed;left:14px;bottom:14px;z-index:1500;background:rgba(255,255,255,0.75);color:#0a6a2b;font-size:13px;font-weight:600;padding:6px 10px;border-radius:20px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
 .back-btn:hover{background:#0a6a2b;color:#fff}
 
-/* Stampa: rosso disattivato, visibili solo pesci e alberi; nascondi bottone */
+/* Stampa: disattiva rosso; visibili solo pesci+alberi; nascondi bottone */
 .print-col{display:none}
 @media print{
   @page{size:A4;margin:14mm 12mm}
   html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  header::before{display:none!important}
+  header::before,.footer-glow,.back-btn{display:none!important}
   .site-footer{color:#000}
   .foot-mail{color:#000;text-decoration:underline}
-  .back-btn{display:none!important}
-  /* colonne laterali sempre visibili in stampa */
   .print-col{display:block;position:fixed;top:0;bottom:0;width:120px;z-index:-4;background-repeat:repeat-y;background-size:60% auto;pointer-events:none}
   .print-col.left{left:1.2mm;background-image:url("images/latosx.png")}
   .print-col.right{right:1.2mm;background-image:url("images/latodx.png")}
@@ -104,7 +114,26 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
   </div>
 </header>
 
-<div class="container"><div id="list" class="list"></div></div>
+<div class="container">
+  <div id="list" class="list"></div>
+</div>
+
+<!-- Modal -->
+<div id="modal" class="modal" role="dialog" aria-modal="true">
+  <div class="modal-content" aria-labelledby="mTitle">
+    <h2 id="mTitle" class="m-title"></h2>
+    <div class="m-meta">
+      <span id="mShort"></span>
+      <span id="mPrice" class="m-price"></span>
+    </div>
+    <div id="gallery"></div>
+    <p id="mFull"></p>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px">
+      <button id="shareBtn" class="share-small" title="Condividi" aria-label="Condividi">📤 Condividi</button>
+      <button id="closeBtn" class="close-btn" aria-label="Chiudi">Chiudi</button>
+    </div>
+  </div>
+</div>
 
 <footer class="site-footer">
   <hr class="site-rule">
@@ -121,19 +150,106 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
   </div>
 </footer>
 
+<div class="footer-glow" aria-hidden="true"></div>
+
 <a class="back-btn" href="index2.html" title="Torna al menu">↩︎ Menu</a>
 
 <script>
-const PRODUCTS=[
-{id:"polpette-brasato",name:"Polpette di Brasato",price:14.00,shortDesc:"Conf. 2kg – Polpette di brasato surgelate (40 pz da 50g)"},
-{id:"polpette-baccala",name:"Polpette di Baccalà",price:14.00,shortDesc:"Conf. 2kg – Polpette di baccalà surgelate (40 pz da 50g)"},
-{id:"arancini-spinaci",name:"Arancini agli Spinaci Prefritti",price:5.50,shortDesc:"Conf. 3kg – Arancini agli spinaci prefritti"},
-{id:"gamberi-patata",name:"Gamberi Avvolti in Filo di Patata",price:14.00,shortDesc:"Conf. 5x1kg – Gamberi avvolti in filo di patata"}
+// === DATI DEMO PER SCROLL ===
+const PRODUCTS = [
+  {id:"natale-01",name:"Capesante Gratinate",price:8.90,shortDesc:"Conf. 1kg – Capesante gratinate al forno",fullDesc:"Pronte da rigenerare in pochi minuti.",images:["images/capesante-gratinate.jpg","images/default1.jpg"]},
+  {id:"natale-02",name:"Gamberoni in Saor",price:14.50,shortDesc:"Conf. 1kg – Marinatura veneziana",fullDesc:"Gamberoni in saor con cipolla, pinoli e uvetta.",images:["images/gamberoni-saor.jpg"]},
+  {id:"natale-03",name:"Baccalà alla Vicentina",price:25.50,shortDesc:"Conf. 1kg – Ricetta tradizionale",fullDesc:"Cottura lenta con latte e acciughe.",images:["images/baccala-vicentina.jpg"]},
+  {id:"natale-04",name:"Fritto Misto di Mare",price:13.20,shortDesc:"Conf. 1kg – Calamari, gamberi, alici",fullDesc:"Prefritto croccante.",images:["images/fritto-misto.jpg"]},
+  {id:"natale-05",name:"Salmone in Crosta",price:22.90,shortDesc:"Conf. 1kg – Filetto di salmone in crosta",fullDesc:"Salmone in crosta dorata pronto forno.",images:["images/salmone-crosta.jpg"]},
+  {id:"natale-06",name:"Moscardini in Umido",price:19.50,shortDesc:"Conf. 1kg – Moscardini in salsa di pomodoro",fullDesc:"Ricetta mediterranea tradizionale.",images:["images/moscardini-umido.jpg"]},
+  {id:"natale-07",name:"Scampi al Cognac",price:27.80,shortDesc:"Conf. 1kg – Scampi con salsa al cognac",fullDesc:"Scampi già pronti.",images:["images/scampi-cognac.jpg"]},
+  {id:"natale-08",name:"Calamari Ripieni",price:18.40,shortDesc:"Conf. 1kg – Ripieno classico",fullDesc:"Calamari farciti pronti.",images:["images/calamari-ripieni.jpg"]},
+  {id:"natale-09",name:"Seppie in Umido",price:21.00,shortDesc:"Conf. 1kg – Seppie con piselli",fullDesc:"Preparazione pronta.",images:["images/seppie-umido.jpg"]},
+  {id:"natale-10",name:"Cozze Gratinate",price:9.90,shortDesc:"Conf. 1kg – Cozze con gratin",fullDesc:"Rigenerazione rapida.",images:["images/cozze-gratinate.jpg"]}
 ].sort((a,b)=>a.id.localeCompare(b.id));
-const list=document.getElementById("list");
+
+const listEl=document.getElementById("list");
+const countEl=document.getElementById("count");
 const fmt=new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"});
-function row(p){return`<div class='item'><div class='thumb'><img src='images/default1.jpg' alt='${p.name}'></div><div class='info'><h3 class='title'>${p.name}</h3><p class='desc'>${p.shortDesc}</p><div class='divider'></div></div><div class='price'>${fmt.format(p.price)}</div></div>`}
-list.innerHTML=PRODUCTS.map(row).join("");
+const modal=document.getElementById("modal");
+const mTitle=document.getElementById("mTitle");
+const mShort=document.getElementById("mShort");
+const mFull=document.getElementById("mFull");
+const mPrice=document.getElementById("mPrice");
+const gallery=document.getElementById("gallery");
+const closeBtn=document.getElementById("closeBtn");
+const shareBtn=document.getElementById("shareBtn");
+let currentId=null;
+
+function rowTemplate(p){return `
+<div class="item" data-id="${p.id}">
+  <div class="thumb"><img loading="lazy" src="${(p.images&&p.images[0])||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
+  <div class="info"><h3 class="title">${p.name}</h3><p class="desc">${p.shortDesc||""}</p><div class="divider"></div></div>
+  <div class="price">${fmt.format(p.price||0)}${p.unit||""}</div>
+</div>`}
+
+function render(list=PRODUCTS){
+  listEl.innerHTML=list.map(rowTemplate).join("");
+  countEl.textContent = `${list.length} ${list.length===1?'prodotto':'prodotti'}`;
+  // Bind click
+  document.querySelectorAll('.item').forEach(el=>{
+    el.addEventListener('click',()=>openModal(el.dataset.id));
+  });
+}
+
+function galleryHTML(imgs,alt){
+  const arr=(imgs&&imgs.length?imgs:["images/default1.jpg"]).slice(0,2);
+  return arr.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${alt||''}" onerror="this.onerror=null;this.src='images/default1.jpg';">`).join("");
+}
+
+function openModal(id){
+  const p=PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  currentId=id;
+  mTitle.textContent=p.name||"";
+  mShort.textContent=p.shortDesc||"";
+  mFull.textContent=p.fullDesc||"";
+  mPrice.textContent=fmt.format(p.price||0)+(p.unit||"");
+  gallery.innerHTML=galleryHTML(p.images,p.name);
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+  if(location.hash!=='#'+id) history.replaceState(null,'','#'+id);
+}
+
+function closeModal(){
+  modal.classList.remove('open');
+  document.body.style.overflow='';
+  if(location.hash) history.replaceState(null,'',location.pathname+location.search);
+}
+
+async function shareProduct(id){
+  const p=PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  const text = `${p.name} – ${fmt.format(p.price)}\n${p.shortDesc||""}\n${location.origin+location.pathname}#${encodeURIComponent(p.id)}`;
+  try{
+    if(navigator.share){ await navigator.share({title:p.name,text}); }
+    else { await navigator.clipboard.writeText(text); alert('Dettagli copiati'); }
+  }catch(e){ console.warn(e); }
+}
+
+closeBtn.addEventListener('click',closeModal);
+shareBtn.addEventListener('click',()=>shareProduct(currentId));
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+window.addEventListener('load',()=>{
+  render();
+  const id=decodeURIComponent(location.hash.slice(1));
+  if(id) openModal(id);
+});
+
+// Ricerca
+document.getElementById('searchBox').addEventListener('input',e=>{
+  const v=e.target.value.trim().toLowerCase();
+  const f=PRODUCTS.filter(p=>[p.name,p.shortDesc,p.fullDesc].filter(Boolean).some(s=>s.toLowerCase().includes(v)));
+  render(f);
+});
 </script>
 </body>
 </html>
