@@ -4,10 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Catalogo Prodotti ZANON SEAFISH • Natale</title>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fbfbf8;--ink:#111;--muted:#606060;--line:#e7e4dc;--ok:#0a6a2b}
+:root{--bg:#fbfbf8;--ink:#111;--muted:#606060;--line:#e7e4dc;--ok:#0a6a2b;--brand:#0a6a2b}
 *{box-sizing:border-box}html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
@@ -28,45 +27,55 @@ html::before,html::after{
 html::before{left:1.2mm;background-image:url("images/latosx.png");background-position:left bottom}
 html::after{right:1.2mm;background-image:url("images/latodx.png");background-position:right bottom}
 
-/* Header con sfocato rosso */
+/* Header con gradiente solo verso i prodotti */
 header{position:relative;color:#fff;text-align:center;padding:20px 12px 18px}
-header::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#8b0000 0%,#b30000 60%,#b3000000 100%);filter:blur(8px);z-index:-1}
+header::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(to bottom,#8b0000 0%,#b30000 80%,transparent 100%);
+  z-index:-1}
 header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
 header img.logo{height:60px;width:auto}
 header h1{font-family:"Playfair Display",serif;font-weight:600;margin:0 0 2px 0;font-size:24px;line-height:1.15}
 header .sub{opacity:.9;font-size:12px}
 
-/* Spazio laterale dei contenuti */
+/* Ricerca stile riferimento */
+.tools{display:flex;justify-content:center;margin-top:8px}
+.search{max-width:480px;width:100%}
+.search input{
+  width:100%;padding:10px;border-radius:999px;
+  border:1px solid #ffffff40;background:#ffffff12;
+  color:var(--brand);appearance:none;-webkit-appearance:none;
+}
+.search input::placeholder{color:rgba(11,85,0,.7)}
+.count{color:#fff;margin-top:8px;font-size:12px}
+
+/* Layout */
 header,.container,.site-footer{padding-left:134px;padding-right:134px}
 @media (max-width:900px){header,.container,.site-footer{padding-left:16px;padding-right:16px}}
-
-/* Lista prodotti */
 .container{max-width:1100px;margin:6px auto 14px}
 .list{display:flex;flex-direction:column;gap:10px}
-.item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
-.item:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.06)}
+.item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer}
 .thumb{width:84px;height:84px;border-radius:12px;overflow:hidden;background:#f1f1ed;border:1px solid var(--line)}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.info{min-width:0;padding-left:8px}
+.info{min-width:0}
 .title{font-family:"Playfair Display",serif;font-weight:700;font-size:18px;margin:0 0 3px 0;text-transform:uppercase}
 .desc{color:var(--muted);font-size:12px;margin:0 0 4px 0}
 .divider{height:1px;background:var(--line);margin:3px 0}
 .price{justify-self:end;align-self:end;color:var(--ok);font-weight:700;font-size:16px}
 
-/* Footer migliorato */
+/* Footer migliorato, rosso solo verso l’alto */
 .site-footer{max-width:1100px;margin:18px auto 24px;color:#fff;font-size:12px;text-shadow:0 1px 3px rgba(0,0,0,0.4)}
 .site-rule{border:none;height:1px;background:#e5e2da;margin:6px 0 10px}
-.footer-glow{position:fixed;left:0;right:0;bottom:0;height:140px;background:linear-gradient(180deg,rgba(139,0,0,1) 0%,rgba(179,0,0,0.85) 50%,rgba(179,0,0,0) 100%);filter:blur(6px);pointer-events:none;z-index:-1}
+.footer-glow{
+  position:fixed;left:0;right:0;bottom:0;height:120px;
+  background:linear-gradient(to top,rgba(139,0,0,1) 0%,rgba(179,0,0,0.85) 60%,transparent 100%);
+  pointer-events:none;z-index:-1}
 
-/* Bottone MENU */
-.back-btn{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:1500;background:rgba(255,255,255,.75);color:#0a6a2b;font-size:13px;font-weight:600;padding:6px 10px;border-radius:20px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.15);-webkit-backdrop-filter:saturate(140%) blur(6px);backdrop-filter:saturate(140%) blur(6px)}
-.back-btn:hover{background:#0a6a2b;color:#fff}
-
-/* Stampa: forziamo visibilità laterali anche senza "stampa sfondi" */
+/* Stampa: rosso disattivato, visibili solo pesci e alberi */
 .print-col{display:none}
 @media print{
   html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  header,.container,.site-footer{padding-left:134px;padding-right:134px}
+  header::before,.footer-glow{display:none!important}
   .print-col{display:block;position:fixed;top:0;bottom:0;width:120px;z-index:-4;background-repeat:repeat-y;background-size:60% auto;pointer-events:none}
   .print-col.left{left:1.2mm;background-image:url("images/latosx.png")}
   .print-col.right{right:1.2mm;background-image:url("images/latodx.png")}
@@ -74,7 +83,6 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 </style>
 </head>
 <body>
-<!-- Colonne per la stampa -->
 <div class="print-col left" aria-hidden="true"></div>
 <div class="print-col right" aria-hidden="true"></div>
 
@@ -88,11 +96,7 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
   </div>
 </header>
 
-<div class="container">
-  <div id="list" class="list"></div>
-</div>
-
-<div id="modal" class="modal" role="dialog" aria-modal="true" style="display:none"></div>
+<div class="container"><div id="list" class="list"></div></div>
 
 <footer class="site-footer">
   <hr class="site-rule">
@@ -105,58 +109,19 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 </footer>
 
 <div class="footer-glow" aria-hidden="true"></div>
-<a class="back-btn" href="index.html" title="Torna al menu">↩︎ Menu</a>
 
 <script>
 const PRODUCTS=[
-  {id:"natale-01",name:"Capesante Gratinate",price:8.90,shortDesc:"Conf. 1kg – Capesante gratinate al forno",fullDesc:"Pronte da rigenerare in pochi minuti.",images:["images/capesante-gratinate.jpg"]},
-  {id:"natale-02",name:"Gamberoni in Saor",price:14.50,shortDesc:"Conf. 1kg – Marinatura veneziana",fullDesc:"Gamberoni in saor con cipolla, pinoli e uvetta.",images:["images/gamberoni-saor.jpg"]},
-  {id:"natale-03",name:"Baccalà alla Vicentina",price:25.50,shortDesc:"Conf. 1kg – Ricetta tradizionale",fullDesc:"Cottura lenta con latte e acciughe.",images:["images/baccala-vicentina.jpg"]},
-  {id:"natale-04",name:"Fritto Misto di Mare",price:13.20,shortDesc:"Conf. 1kg – Calamari, gamberi, alici",fullDesc:"Prefritto croccante.",images:["images/fritto-misto.jpg"]},
-  {id:"natale-05",name:"Salmone in Crosta",price:22.90,shortDesc:"Conf. 1kg – Filetto di salmone in crosta",fullDesc:"Salmone avvolto in crosta dorata, pronto per il forno.",images:["images/salmone-crosta.jpg"]},
-  {id:"natale-06",name:"Moscardini in Umido",price:19.50,shortDesc:"Conf. 1kg – Moscardini in salsa di pomodoro",fullDesc:"Ricetta tradizionale mediterranea.",images:["images/moscardini-umido.jpg"]},
-  {id:"natale-07",name:"Scampi al Cognac",price:27.80,shortDesc:"Conf. 1kg – Scampi con salsa al cognac",fullDesc:"Scampi già pronti da servire.",images:["images/scampi-cognac.jpg"]},
-  {id:"natale-08",name:"Calamari Ripieni",price:18.40,shortDesc:"Conf. 1kg – Ripieno classico",fullDesc:"Calamari farciti e pronti alla cottura.",images:["images/calamari-ripieni.jpg"]},
-  {id:"natale-09",name:"Seppie in Umido",price:21.00,shortDesc:"Conf. 1kg – Seppie con piselli",fullDesc:"Preparazione pronta, gusto pieno.",images:["images/seppie-umido.jpg"]},
-  {id:"natale-10",name:"Cozze Gratinate",price:9.90,shortDesc:"Conf. 1kg – Cozze con gratin",fullDesc:"Surgelate, rigenerazione rapida.",images:["images/cozze-gratinate.jpg"]},
-  {id:"natale-11",name:"Polpo alla Gallega",price:24.90,shortDesc:"Conf. 1kg – Polpo con paprika",fullDesc:"Taglio pronto, stile galiziano.",images:["images/polpo-gallega.jpg"]},
-  {id:"natale-12",name:"Risotto alla Pescatora",price:11.50,shortDesc:"Conf. 1kg – Base pronta",fullDesc:"Solo da mantecate e servire.",images:["images/risotto-pescatora.jpg"]},
-  {id:"natale-13",name:"Arancini di Mare",price:8.70,shortDesc:"Conf. 1kg – Ripieno ai frutti di mare",fullDesc:"Perfetti per aperitivi.",images:["images/arancini-mare.jpg"]},
-  {id:"natale-14",name:"Lasagne al Salmone",price:16.80,shortDesc:"Conf. 1kg – Pasta fresca al salmone",fullDesc:"Pronte al forno.",images:["images/lasagne-salmone.jpg"]},
-  {id:"natale-15",name:"Gnocchi al Nero di Seppia",price:7.90,shortDesc:"Conf. 1kg – Gnocchi aromatizzati",fullDesc:"Da saltare con frutti di mare.",images:["images/gnocchi-nero.jpg"]},
-  {id:"natale-16",name:"Trancio di Spada al Limone",price:26.40,shortDesc:"Conf. 1kg – Spada marinato al limone",fullDesc:"Da grigliare o piastrare.",images:["images/spada-limone.jpg"]}
-].sort((a,b)=>a.id.localeCompare(b.id));
-
-const listEl=document.getElementById("list");
+{id:"natale-01",name:"Capesante Gratinate",price:8.90,shortDesc:"Conf. 1kg – Capesante gratinate al forno"},
+{id:"natale-02",name:"Gamberoni in Saor",price:14.50,shortDesc:"Conf. 1kg – Marinatura veneziana"},
+{id:"natale-03",name:"Baccalà alla Vicentina",price:25.50,shortDesc:"Conf. 1kg – Ricetta tradizionale"},
+{id:"natale-04",name:"Fritto Misto di Mare",price:13.20,shortDesc:"Conf. 1kg – Calamari, gamberi, alici"},
+{id:"natale-05",name:"Salmone in Crosta",price:22.90,shortDesc:"Conf. 1kg – Filetto di salmone in crosta"}
+];
+const list=document.getElementById("list");
 const fmt=new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"});
-const countEl=document.getElementById("count");
-const q=document.getElementById("searchBox");
-
-function rowTemplate(p){
-  return `
-  <div class="item">
-    <div class="thumb"><img loading="lazy" src="${(p.images&&p.images[0])||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
-    <div class="info">
-      <h3 class="title">${p.name}</h3>
-      <p class="desc">${p.shortDesc||""}</p>
-      <div class="divider"></div>
-    </div>
-    <div class="price">${fmt.format(p.price||0)}${p.unit||""}</div>
-  </div>`;
-}
-
-function render(list=PRODUCTS){
-  listEl.innerHTML=list.length?list.map(rowTemplate).join(""):'<div style="padding:10px;color:#555">Nessun prodotto</div>';
-  if(countEl) countEl.textContent=`${list.length} ${list.length===1?'prodotto':'prodotti'}`;
-}
-
-q && q.addEventListener('input',()=>{
-  const v=q.value.trim().toLowerCase();
-  const f=PRODUCTS.filter(p=>[p.name,p.shortDesc,p.fullDesc].filter(Boolean).some(s=>s.toLowerCase().includes(v)));
-  render(f);
-});
-
-window.addEventListener('load',()=>render());
+function row(p){return`<div class='item'><div class='thumb'><img src='images/default1.jpg' alt='${p.name}'></div><div class='info'><h3 class='title'>${p.name}</h3><p class='desc'>${p.shortDesc}</p><div class='divider'></div></div><div class='price'>${fmt.format(p.price)}</div></div>`}
+list.innerHTML=PRODUCTS.map(row).join("");
 </script>
 </body>
 </html>
