@@ -3,281 +3,97 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Catalogo Prodotti ZANON SEAFISH • Natale</title>
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Catalogo Prodotti ZANON SEAFISH • Natale">
-  <meta property="og:description" content="Versione natalizia del catalogo Zanon Seafish Ingros SRL">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://zanonseafish.github.io/catalogo/images/og-cover1.jpg">
-  <meta name="twitter:card" content="summary_large_image">
-
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
+  <title>Zanon Seafish • Catalogo Natalizio</title>
   <style>
-    :root{ --bg:#fbfbf8; --ink:#111; --muted:#606060; --line:#e7e4dc; --brand:#0b5; --price:#0a6a2b; }
-    *{box-sizing:border-box} html,body{height:100%}
-    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink)}
-
-    /* Colonna sinistra con pesce natalizio */
-    :root{ --decor-w: clamp(82px, 10vw, 120px); --decor-gap: 14px; }
+    :root { --decor-w: clamp(82px, 10vw, 120px); --decor-gap: 14px; }
+    body, header, .container, footer, .modal { position: relative; z-index: 1; }
+    body {
+      margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background-color:#fbfbf8;
+      background-image:url("images/nevicata-soft.png"), url("images/texture-carta.png");
+      background-repeat:repeat, repeat; background-size:600px auto, auto; background-position:center top, center; color:#111;
+    }
+    /* Albero sinistro fisso */
     body::before{
       content:""; position:fixed; top:0; left:0; bottom:0; width:var(--decor-w);
-      background-image:url("images/logo-zanon-pesce-natale.png");
-      background-repeat:repeat-y;
-      background-size:60% auto;              /* pesce ridotto */
-      background-position:10% top;           /* distacco dal bordo sinistro */
-      pointer-events:none; z-index:-1;       /* sempre dietro */
-      filter: drop-shadow(0 0 12px rgba(0,0,0,.05));
+      background-image:url("images/albero-sinistra.png"); background-repeat:no-repeat;
+      background-size:contain; background-position:left bottom; pointer-events:none; z-index:-3;
     }
-    /* Tutto il resto sopra lo sfondo */
-    body, header, .container, footer, .modal { position:relative; z-index:1; }
-    /* Allinea il contenuto alla colonna sinistra */
-    header,.container,.site-footer,.back{ padding-left: calc(var(--decor-w) + var(--decor-gap)); }
-
-    @media (max-width:600px){
-      :root{ --decor-w: clamp(70px, 16vw, 100px); --decor-gap: 10px; }
+    /* Albero destro fisso */
+    body::after{
+      content:""; position:fixed; top:0; right:0; bottom:0; width:var(--decor-w);
+      background-image:url("images/albero-destra.png"); background-repeat:no-repeat;
+      background-size:contain; background-position:right bottom; pointer-events:none; z-index:-3;
     }
-    @media print{
-      body::before{
-        position:absolute !important;
-        width: var(--decor-w) !important;
-        background-size:60% auto !important;
-        background-position:10% top !important;
-      }
-      header,.container,.site-footer{ padding-left: calc(var(--decor-w) + var(--decor-gap)) !important; }
+    /* Pesci che scorrono */
+    .scroll-decor{
+      position:absolute; top:0; left:0; width:var(--decor-w); height:100%;
+      background-image:url("images/logo-zanon-pesce-natale.png"); background-repeat:repeat-y;
+      background-size:60% auto; background-position:10% top; filter:drop-shadow(0 0 10px rgba(0,0,0,.05));
+      z-index:-2; pointer-events:none;
     }
-
-    /* Header e lista coerenti con le versioni di riferimento */
-    header{background:linear-gradient(180deg,#0b1620 0%, #0e1f2a 60%, #0e1f2a00 100%);color:#fff;padding:20px 12px 18px;text-align:center;position:relative}
-    header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
-    header img.logo{height:60px;width:auto;display:block;margin:0 auto}
-    header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:0 0 2px 0;font-size:24px;line-height:1.15}
-    header .sub{opacity:.85;font-size:11.5px;margin-top:0}
-    .tools{display:flex;justify-content:center;margin-top:8px}
-    .search{max-width:480px;width:100%}
-    .search input{width:100%;padding:10px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;color:var(--brand);outline:none}
-    .count{color:var(--brand);margin-top:8px;font-size:12px}
-
-    .container{max-width:1100px;margin:6px auto 14px;padding:0 10px}
-    .list{display:flex;flex-direction:column;gap:10px}
-    .item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
-    .item:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.06)}
-    .thumb{width:84px;height:84px;border-radius:12px;overflow:hidden;background:#f1f1ed;border:1px solid var(--line)}
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-    .info{min-width:0;padding-left:8px}
-    .title{font-family:"Playfair Display",serif;font-weight:700;font-size:18px;letter-spacing:.02em;margin:0 0 3px 0;text-transform:uppercase}
-    .desc{color:var(--muted);font-size:12px;line-height:1.3;margin:0 0 4px 0}
-    .divider{height:1px;background:var(--line);margin:3px 0}
-    .price{justify-self:end;align-self:end;color:var(--price);font-weight:700;font-size:16px}
-
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
-    .modal.open{display:flex}
-    .modal-content{background:#fff;border-radius:12px;max-width:860px;width:min(96vw,860px);padding:20px;position:relative;max-height:90vh;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);display:flex;flex-direction:column}
-    .m-title{font-family:"Playfair Display",serif;margin:0 0 10px 0}
-    .modal-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px;flex:0 0 auto}
-    .share-small{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer;background:#111;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.3)}
-    .close-btn{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer;background:#eee;color:#111;box-shadow:0 2px 6px rgba(0,0,0,.15)}
-    #mGallery{flex:1 1 auto;overflow:auto;display:grid;gap:12px;align-items:center;justify-items:center}
-    #mGallery:has(img:nth-child(2)){grid-template-columns:1fr 1fr;}
-    #mGallery img{max-width:100%;height:auto;display:block;object-fit:contain}
-
-    .site-footer{max-width:1100px;margin:18px auto 24px;padding:0 10px;color:#444;font-size:12px}
-    .site-rule{border:none;height:1px;background:#e5e2da;margin:6px 0 10px}
-    .site-footer-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-    .footer-logo{height:20px;width:auto}
-    .foot-text{flex:1;min-width:240px}
-    .foot-mail{font-size:12px;color:#0b5;text-decoration:none}
-
-    @media (max-width:820px){
-      header{padding:16px 10px 16px}
-      header h1{font-size:22px}
-      .item{grid-template-columns:76px 1fr 74px}
-      .thumb{width:76px;height:76px;border-radius:10px}
-      .title{font-size:16px}
-      .price{font-size:15px}
+    .scroll-decor-right{
+      position:absolute; top:0; right:0; width:var(--decor-w); height:100%;
+      background-image:url("images/logo-zanon-pesce-natale.png"); background-repeat:repeat-y;
+      background-size:60% auto; background-position:90% top; filter:drop-shadow(0 0 10px rgba(0,0,0,.05));
+      z-index:-2; pointer-events:none;
     }
-    @media (max-width:560px){
-      header{padding:14px 8px 14px}
-      header h1{font-size:20px}
-      .item{grid-template-columns:66px 1fr;grid-template-rows:auto auto;gap:8px}
-      .price{grid-column:2;justify-self:end}
-    }
-
-    @media print{
-      @page{size:A4;margin:14mm 12mm}
-      header{background:none!important;color:#000!important;border-bottom:1px solid #ddd!important;padding:0 0 6mm}
-      .sub,.tools,#count{display:none!important}
-      .item{break-inside:avoid-page;page-break-inside:avoid;box-shadow:none;border-color:#ddd}
-      .modal{display:none!important}
-      .site-rule{background:#000;height:1px}
-      .site-footer{color:#000}
-      .foot-mail{color:#000;text-decoration:underline}
-    }
-
-    .back{position:fixed;left:14px;bottom:14px;z-index:1200}
-    .back a{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:#0b5;color:#fff;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+    header, .container, .site-footer { padding-left:calc(var(--decor-w) + var(--decor-gap)); padding-right:calc(var(--decor-w) + var(--decor-gap)); }
+    /* Header rosso */
+    header{background:linear-gradient(180deg,#8b0000 0%,#b30000 60%,#b3000000 100%);color:#fff;text-align:center;padding:20px 12px 18px;}
+    header h1{margin:0;font-family:"Playfair Display",serif;font-weight:600;font-size:24px}
+    .container{max-width:1100px;margin:0 auto}
+    .list{display:flex;flex-direction:column;gap:10px;margin:20px 0}
+    .item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;background:rgba(255,255,255,.92);border:1px solid #e7e4dc;border-radius:10px;padding:8px 10px}
+    .thumb img{width:84px;height:84px;object-fit:cover;border-radius:8px}
+    .title{font-weight:700;font-family:"Playfair Display",serif;margin:0}
+    .desc{font-size:12px;color:#606060}
+    .price{text-align:right;color:#0a6a2b;font-weight:700}
+    footer{text-align:center;font-size:12px;color:#555;padding:20px 0}
+    @media (max-width:600px){ :root{--decor-w:clamp(64px,14vw,96px);--decor-gap:10px} }
   </style>
 </head>
 <body>
+  <div class="scroll-decor"></div>
+  <div class="scroll-decor-right"></div>
+
   <header>
-    <div class="top">
-      <img class="logo" src="images/zanonlogonatale.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/logo.png';">
-      <h1>ZANON SEAFISH</h1>
-      <div class="sub">Catalogo Natalizio</div>
-      <div class="tools">
-        <div class="search"><input id="searchBox" placeholder="Cerca prodotti…"></div>
-      </div>
-      <div id="count" class="count"></div>
-    </div>
+    <h1>Catalogo Natalizio Zanon Seafish</h1>
+    <p>Speciale selezione di prodotti per le feste</p>
   </header>
 
   <div class="container">
-    <div id="list" class="list"></div>
-  </div>
-
-  <div id="modal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content" aria-labelledby="mTitle">
-      <h2 id="mTitle" class="m-title"></h2>
-      <div id="mGallery"></div>
-      <p id="mDesc" class="desc"></p>
-      <p id="mFullDesc"></p>
-      <p id="mPrice" class="price" style="margin-top:0"></p>
-      <div class="modal-footer">
-        <button id="shareBtn" class="share-small" title="Condividi" aria-label="Condividi">📤 Condividi</button>
-        <button id="closeBtn" class="close-btn" aria-label="Chiudi">Chiudi</button>
+    <div class="list">
+      <div class="item">
+        <div class="thumb"><img src="images/capesante-gratinate.jpg" onerror="this.src='images/default1.jpg'" alt="Capesante Gratinate"></div>
+        <div>
+          <h3 class="title">Capesante Gratinate</h3>
+          <p class="desc">Conf. 1kg – Capesante al forno pronte da rigenerare</p>
+        </div>
+        <div class="price">€8,90</div>
+      </div>
+      <div class="item">
+        <div class="thumb"><img src="images/gamberoni-saor.jpg" onerror="this.src='images/default1.jpg'" alt="Gamberoni in Saor"></div>
+        <div>
+          <h3 class="title">Gamberoni in Saor</h3>
+          <p class="desc">Conf. 1kg – Ricetta veneziana con cipolla e uvetta</p>
+        </div>
+        <div class="price">€14,50</div>
+      </div>
+      <div class="item">
+        <div class="thumb"><img src="images/baccala-vicentina.jpg" onerror="this.src='images/default1.jpg'" alt="Baccalà alla Vicentina"></div>
+        <div>
+          <h3 class="title">Baccalà alla Vicentina</h3>
+          <p class="desc">Conf. 1kg – Cottura lenta e sapore autentico</p>
+        </div>
+        <div class="price">€25,50</div>
       </div>
     </div>
   </div>
 
-  <footer class="site-footer">
-    <hr class="site-rule">
-    <div class="site-footer-inner">
-      <img src="images/logo.png" alt="Zanon Seafish Ingros SRL" class="footer-logo" onerror="this.style.display='none'">
-      <div class="foot-text">
-        <strong>Zanon Seafish Ingros SRL</strong> · P.IVA IT01654690278 ·
-        Sede legale: S. Croce 491, 30135 Venezia (VE) ·
-        Sede amm. e magazzini: Via Colombara 115/A, 30176 Marghera (VE) ·
-        Tel: 041 5382830 · 041 3963095 ·
-        <a href="https://www.zanonseafish.it/" target="_blank" rel="noopener">www.zanonseafish.it</a> ·
-        <a href="mailto:info@zanonseafish.it">info@zanonseafish.it</a>
-      </div>
-      <a class="foot-mail" href="mailto:info@zanonseafish.it" title="Scrivi a info@zanonseafish.it">✉️ Contattaci</a>
-    </div>
+  <footer>
+    <p>Zanon Seafish Ingros SRL – Via Colombara 115/A, 30176 Marghera (VE)</p>
+    <p><a href="mailto:info@zanonseafish.it">info@zanonseafish.it</a></p>
   </footer>
-
-  <div class="back"><a href="index.html" title="Torna al menu">↩︎ Menu</a></div>
-
-  <script>
-  // === DATI DI ESEMPIO ===
-  const PRODUCTS = [
-    {id:"natale-01",name:"Capesante Gratinate",price:8.90,shortDesc:"Conf. 1kg – Capesante gratinate al forno",fullDesc:"Pronte da rigenerare in pochi minuti.",images:["images/capesante-gratinate.jpg"]},
-    {id:"natale-02",name:"Gamberoni in Saor",price:14.50,shortDesc:"Conf. 1kg – Marinatura veneziana",fullDesc:"Gamberoni in saor con cipolla, pinoli e uvetta.",images:["images/gamberoni-saor.jpg"]},
-    {id:"natale-03",name:"Baccalà alla Vicentina",price:25.50,shortDesc:"Conf. 1kg – Ricetta tradizionale",fullDesc:"Cottura lenta con latte e acciughe. Pronto da scaldare.",images:["images/baccala-vicentina.jpg"]},
-    {id:"natale-04",name:"Fritto Misto di Mare",price:13.20,shortDesc:"Conf. 1kg – Calamari, gamberi, alici",fullDesc:"Prefritto croccante. Forno o friggitrice.",images:["images/fritto-misto.jpg"]},
-    {id:"natale-05",name:"Polpette di Salmone",price:11.00,shortDesc:"Conf. 1kg – Salmone e patate",fullDesc:"Ideali per aperitivi e buffet.",images:["images/polpette-salmone.jpg"]},
-    {id:"natale-06",name:"Filetti di Branzino al Limone",price:17.90,shortDesc:"Conf. 800g – Profumo di limone",fullDesc:"Filetti senza spine. Cottura rapida.",images:["images/branzino-limone.jpg"]},
-    {id:"natale-07",name:"Seppie in Umido",price:19.80,shortDesc:"Conf. 1kg – Con piselli",fullDesc:"Ricetta casalinga pronta all’uso.",images:["images/seppie-umido.jpg"]},
-    {id:"natale-08",name:"Insalata di Mare",price:14.30,shortDesc:"Conf. 1kg – Misto di mare e verdure",fullDesc:"Già condita. Solo da impiattare.",images:["images/insalata-mare.jpg"]},
-    {id:"natale-09",name:"Salmone Affumicato Norvegese",price:6.90,shortDesc:"Conf. 200g – Fette sottili",fullDesc:"Affumicatura delicata, pronto per antipasti.",images:["images/salmone-affumicato.jpg"]},
-    {id:"natale-10",name:"Spiedini di Gamberi",price:12.40,shortDesc:"Conf. 1kg – Pronti da cuocere",fullDesc:"Spiedi regolari per griglia e forno.",images:["images/spiedini-gamberi.jpg"]}
-  ];
-  PRODUCTS.sort((a,b)=>a.id.localeCompare(b.id));
-
-  const listEl=document.getElementById("list");
-  const fmt=new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"});
-  const countEl=document.getElementById("count");
-  const q=document.getElementById("searchBox");
-  const modal=document.getElementById("modal");
-  const mTitle=document.getElementById("mTitle");
-  const mDesc=document.getElementById("mDesc");
-  const mFullDesc=document.getElementById("mFullDesc");
-  const mPrice=document.getElementById("mPrice");
-  const mGallery=document.getElementById("mGallery");
-  const shareBtn=document.getElementById("shareBtn");
-  const closeBtn=document.getElementById("closeBtn");
-  let currentId=null;
-
-  function rowTemplate(p){
-    return `
-    <div class="item" onclick="openModal('${p.id}')">
-      <div class="thumb"><img loading="lazy" src="${(p.images&&p.images[0])||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
-      <div class="info">
-        <h3 class="title">${p.name}</h3>
-        <p class="desc">${p.shortDesc||""}</p>
-        <div class="divider"></div>
-      </div>
-      <div class="price">${fmt.format(p.price||0)}${p.unit||""}</div>
-    </div>`;
-  }
-
-  function render(list=PRODUCTS){
-    listEl.innerHTML = list.length ? list.map(rowTemplate).join("") : '<div style="padding:10px;color:#555">Nessun prodotto</div>';
-    countEl.textContent=list.length===PRODUCTS.length?`${list.length} prodotti`:`${list.length} risultati`;
-  }
-
-  // Fallback robusto per immagini modal
-  function galleryHTML(imgs, alt){
-    const arr = (imgs && imgs.length ? imgs : ["images/default1.jpg"]).slice(0, 2);
-    return arr.map(src =>
-      `<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${alt||''}"
-        onerror="this.onerror=null; this.src='images/default1.jpg';">`
-    ).join("");
-  }
-
-  function openModal(id){
-    const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
-    currentId=id;
-    mTitle.textContent=p.name||"";
-    mDesc.textContent=p.shortDesc||"";
-    mFullDesc.textContent=p.fullDesc||"";
-    const unit=p.unit?(((""+p.unit).includes("/kg"))?" /kg":" €/kg"):"";
-    mPrice.textContent=fmt.format(p.price||0)+unit;
-    mGallery.innerHTML = galleryHTML(p.images, p.name);
-    modal.classList.add("open"); document.body.style.overflow="hidden";
-    if(location.hash!=="#"+id) history.replaceState(null,"","#"+id);
-  }
-
-  function closeModal(){
-    modal.classList.remove("open"); document.body.style.overflow="";
-    if(location.hash){history.replaceState(null,"",location.pathname+location.search);}
-  }
-
-  async function shareProduct(id){
-    const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
-    const imgUrl=new URL((p.images&&p.images[0])||"images/default1.jpg",location.href).href;
-    const text=`${p.name} – ${fmt.format(p.price)}\n${p.shortDesc||""}\n${location.origin+location.pathname}#${encodeURIComponent(p.id)}`;
-    try{
-      if(navigator.canShare){ await navigator.share({title:p.name,text,url:imgUrl}); }
-      else { await navigator.clipboard.writeText(text); alert("Copiato negli appunti."); }
-    }catch(e){}
-  }
-
-  // Ricerca live
-  q.addEventListener("input",()=>{
-    const s=q.value.trim().toLowerCase();
-    if(!s){render();return;}
-    const parts=s.split(/\s+/);
-    render(PRODUCTS.filter(p=>{
-      const hay=(p.name+" "+(p.shortDesc||"")+" "+(p.fullDesc||"")).toLowerCase();
-      return parts.every(t=>hay.includes(t));
-    }));
-  });
-
-  // Eventi modal
-  shareBtn.addEventListener("click",()=>shareProduct(currentId));
-  closeBtn.addEventListener("click",closeModal);
-  modal.addEventListener("click",e=>{ if(e.target===modal) closeModal(); });
-  document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
-
-  // Render immediato
-  render();
-  // Apri da hash se presente
-  (function(){
-    const h=decodeURIComponent(location.hash.slice(1));
-    if(h){ const p=PRODUCTS.find(x=>x.id===h); if(p) openModal(p.id); }
-  })();
-  </script>
 </body>
 </html>
