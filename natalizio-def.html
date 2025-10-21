@@ -101,6 +101,11 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
   .site-footer{color:#000;text-shadow:none}
   .foot-mail{color:#000;text-decoration:underline}
 }
+
+.cat{margin:16px 8px 6px;font:600 18px/1.2 Playfair Display, serif;color:#fff;
+  background:linear-gradient(90deg,rgba(255,255,255,0.15),rgba(255,255,255,0));
+  padding:8px 12px;border-radius:10px}
+@media (min-width:700px){.cat{margin:24px 8px 8px;font-size:20px}}
 </style>
 </head>
 <body>
@@ -199,21 +204,35 @@ const PRODUCTS = [
 
 const list=document.getElementById('list');
 const count=document.getElementById('count');
-const fmt=new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'});
+\1
+function unitLabel(u){if(u==="/confezione") return " €/conf."; if(u==="/kg") return " €/kg"; return u?(" "+u):"";}
 
 function row(p){
   return `<div class='item' data-id='${p.id}'>
-    <div class='thumb'><img loading='lazy' src='${(p.images&&p.images[0])||"images/default1.jpg"}' alt='${p.name}' onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
+    <div class='thumb'><img loading='lazy' src='${(p.images&&p.images[0])||"images/default1.jpg"}' alt='' onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
     <div class='info'><h3 class='title'>${p.name}</h3><p class='desc'>${p.shortDesc||""}</p><div class='divider'></div></div>
-    <div class='price'>${fmt.format(p.price||0)}${p.unit||""}</div>
+    <div class='price'>${fmt.format(p.price||0)}${unitLabel(p.unit)}</div>
   </div>`
 }
 
+
 function render(arr){
-  list.innerHTML=arr.map(row).join('');
+  // group by category preserving order
+  const order=[], mapObj={};
+  for(const p of arr){
+    const c = p.category || 'Altri';
+    if(!mapObj[c]){ mapObj[c]=[]; order.push(c); }
+    mapObj[c].push(p);
+  }
+  let out='';
+  for(const c of order){
+    out += `<h2 class="cat">${c}</h2>` + mapObj[c].map(row).join('');
+  }
+  list.innerHTML=out;
   count.textContent=`${arr.length} ${arr.length===1?'prodotto':'prodotti'}`;
   document.querySelectorAll('.item').forEach(el=>el.onclick=()=>openModal(el.dataset.id));
 }
+
 render(PRODUCTS);
 
 /* Modal */
