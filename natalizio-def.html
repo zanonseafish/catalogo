@@ -83,15 +83,20 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 .back-btn{position:fixed;left:14px;bottom:14px;z-index:1500;background:rgba(255,255,255,0.75);color:#0a6a2b;font-size:13px;font-weight:600;padding:6px 10px;border-radius:20px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
 .back-btn:hover{background:#0a6a2b;color:#fff}
 
-/* Stampa: solo alberi/pesci, niente rosso */
+/* Stampa: alberi dietro, prodotti davanti */
 .print-col{display:none}
 @media print{
   @page{size:A4;margin:14mm 12mm}
   html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  /* Nascondo decorazioni schermo */
   body::before,body::after,html::before,html::after{display:none!important}
-  .print-col{display:block;position:fixed;top:0;bottom:0;width:120px;pointer-events:none}
+  /* Strato alberi in stampa: dietro a tutto */
+  .print-col{display:block;position:fixed;top:0;bottom:0;width:120px;pointer-events:none;z-index:-1}
   .print-col.left{left:1.2mm;background:url("images/latosx.png") no-repeat left bottom / contain}
   .print-col.right{right:1.2mm;background:url("images/latodx.png") no-repeat right bottom / contain}
+  /* Contenuti in primo piano */
+  body{position:relative;z-index:0}
+  header,.container,.site-footer,.list,.item{position:relative;z-index:1}
   header::before,.footer-glow,.back-btn{display:none!important}
   .site-footer{color:#000;text-shadow:none}
   .foot-mail{color:#000;text-decoration:underline}
@@ -150,28 +155,46 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 <script>
 // === DATI ===
 const PRODUCTS = [
-  {id:"polpette-brasato",name:"Polpette di Brasato",price:14.00,shortDesc:"Conf. 2kg – Polpette di brasato surgelate (40 pz da 50g)",fullDesc:"Polpette di brasato dal gusto autentico, preparate con carne di manzo selezionata. Ideali per secondi o buffet caldi.",images:["img2/polpette-brasato.jpg"]},
-  {id:"polpette-baccala",name:"Polpette di Baccalà",price:14.00,shortDesc:"Conf. 2kg – Polpette di baccalà surgelate (40 pz da 50g)",fullDesc:"Polpette morbide a base di baccalà e patate. Perfette fritte o al forno come antipasto di mare.",images:["img2/polpette-baccala.jpg"]},
-  {id:"polpette-tonno-cipolla",name:"Polpette di Tonno e Cipolla",price:14.00,shortDesc:"Conf. 2kg – Polpette di tonno e cipolla (40 pz da 50g)",fullDesc:"Polpette di tonno con cipolla dolce e spezie mediterranee. Croccanti e profumate.",images:["img2/polpette-tonno-cipolla.jpg"]},
-  {id:"polpette-pollo-speck",name:"Polpette di Pollo e Speck",price:12.00,shortDesc:"Conf. 2kg – Polpette di pollo e speck (40 pz da 50g)",fullDesc:"Polpette dal sapore deciso con carne di pollo e speck affumicato. Ottime per aperitivi o secondi piatti.",images:["img2/polpette-pollo-speck.jpg"]},
-  {id:"polpette-verdure",name:"Polpette di Verdure",price:12.00,shortDesc:"Conf. 2kg – Polpette di verdure miste (40 pz da 50g)",fullDesc:"Polpette vegetariane con verdure fresche selezionate. Leggere e gustose, ideali per contorni o buffet.",images:["img2/polpette-verdure.png"]},
-  {id:"arancini-mozzarella-prosciutto",name:"Arancini con Mozzarella e Prosciutto Prefritti",price:5.50,shortDesc:"Conf. 3kg – Arancini con mozzarella e prosciutto prefritti",fullDesc:"Arancini di riso con cuore di mozzarella e prosciutto cotto. Pronti per la cottura.",images:["img2/arancini-prosciutto.png"]},
-  {id:"arancini-spinaci",name:"Arancini agli Spinaci Prefritti",price:5.50,shortDesc:"Conf. 3kg – Arancini agli spinaci prefritti",fullDesc:"Arancini di riso con ripieno cremoso agli spinaci e formaggio. Croccanti e saporiti.",images:["img2/arancini-spinaci.png"]},
-  {id:"arrosticini-mare",name:"Arrosticini di Mare Panati (Totano Gigas)",price:8.30,shortDesc:"Conf. 4kg – Arrosticini di mare panati",fullDesc:"Spiedini di totano gigas impanati e croccanti. Ideali fritti o al forno.",images:["img2/arrosticini-pesce-panati.png"]},
-  {id:"alici-panato",name:"Alici Panate Croccanti",price:8.90,shortDesc:"Conf. 1kg – Alici panate croccanti",fullDesc:"Filetti di alici panati e dorati. Ottimi per antipasti o secondi di mare.",images:["img2/alici-panati-croccanti.png"]},
-  {id:"filetto-baccala-prezzemolo",name:"Filetto di Baccalà Pastellato con Prezzemolo",price:11.90,shortDesc:"Conf. 5x1kg – Filetti di baccalà pastellati con prezzemolo",fullDesc:"Filetti di baccalà teneri in pastella aromatica al prezzemolo. Croccanti e profumati.",images:["img2/filetti-baccala-pastellati.png"]},
-  {id:"chele-granchio",name:"Chele di Granchio Panate",price:5.50,shortDesc:"Conf. 4x1kg – Chele di granchio panate",fullDesc:"Chele di surimi al gusto di granchio, con panatura dorata e croccante. Pronte in pochi minuti.",images:["img2/chele-granchio-panate.jpg"]},
-  {id:"fiori-zucca-mozzarella-alici",name:"Fiori di Zucca con Mozzarella e Alici Prefritti",price:9.30,shortDesc:"Conf. 5x1kg – Fiori di zucca con mozzarella e alici",fullDesc:"Fiori di zucca ripieni di mozzarella e alici. Croccanti e saporiti, già pronti da rigenerare.",images:["img2/fiori-zucca-mozz-alici.png"]},
-  {id:"fiori-zucca-prosciutto-mozzarella",name:"Fiori di Zucca con Prosciutto e Mozzarella Prefritti",price:8.10,shortDesc:"Conf. 5x1kg – Fiori di zucca con prosciutto e mozzarella",fullDesc:"Fiori di zucca con farcitura di prosciutto cotto e mozzarella filante. Doratura perfetta.",images:["img2/fiori-zucca-mozz-prosciutto.png"]},
-  {id:"frittelle-gamberi-zucchine",name:"Frittelle di Gamberi e Zucchine",price:11.50,shortDesc:"Conf. 4x1kg – Frittelle di gamberi e zucchine",fullDesc:"Frittelle di gamberi e zucchine in pastella croccante. Pronte in pochi minuti.",images:["img2/frittelle-gamberi-zucchine.png"]},
-  {id:"gamberi-patata",name:"Gamberi Avvolti in Filo di Patata",price:14.00,shortDesc:"Conf. 5x1kg – Gamberi avvolti in filo di patata",fullDesc:"Gamberi croccanti rivestiti di julienne di patata. Specialità gourmet.",images:["img2/gamberi-patata.jpg"]},
-  {id:"mozzarelline-tartufo",name:"Mozzarelline Panate con Tartufo Prefritte",price:7.80,shortDesc:"Conf. 5x1kg – Mozzarelline con tartufo prefritte",fullDesc:"Mozzarelline filanti aromatizzate al tartufo. Perfette per aperitivi.",images:["img2/mozzarelline-tartufo.png"]},
-  {id:"olive-ascolane",name:"Olive Ascolane",price:5.40,shortDesc:"Conf. 4x2,500kg – Olive ascolane ripiene di carne",fullDesc:"Olive verdi farcite con carne e panate. Croccanti e dorate in pochi minuti.",images:["img2/olive-ripiene-ascolana.png"]},
-  {id:"olive-ascolane-prefritte",name:"Olive Ascolane Prefritte",price:5.90,shortDesc:"Conf. 5x1kg – Olive ascolane prefritte",fullDesc:"Versione prefritta delle classiche olive ascolane, pronte da rigenerare in forno o friggitrice.",images:["img2/olive-ripiene-ascolana.png"]},
-  {id:"panzerotti-mozzarella",name:"Panzerotti Mozzarella e Pomodoro Prefritti",price:5.40,shortDesc:"Conf. 5x1kg – Panzerotti con mozzarella e pomodoro",fullDesc:"Mini panzerotti con ripieno di pomodoro e mozzarella filante. Perfetti come finger food.",images:["img2/panzerotti-mozzarella.png"]},
-  {id:"polpette-melanzane",name:"Polpette di Melanzane, Mozzarella e Provola Affumicata",price:5.50,shortDesc:"Conf. 5x1kg – Polpette di melanzane con mozzarella e provola affumicata",fullDesc:"Polpette vegetariane dal sapore intenso e consistenza morbida. Perfette per aperitivi e buffet.",images:["img2/polpette-melanzane.png"]},
-  {id:"salvia-pastellata",name:"Salvia Pastellata Prefritta",price:11.50,shortDesc:"Conf. 4x1kg – Foglie di salvia pastellate prefritte",fullDesc:"Foglie di salvia immerse in pastella leggera e croccante. Profumate e aromatiche.",images:["img2/salvia-pastellata.png"]},
-  {id:"tris-verdure",name:"Tris di Verdure Pastellate Prefritte",price:5.20,shortDesc:"Conf. 5x1kg – Tris di verdure pastellate prefritte",fullDesc:"Mix croccante di zucchine, carote e peperoni in pastella dorata. Perfette per contorni o antipasti.",images:["img2/tris-verdure.png"]}
+  // === Affumicati ===
+  {id:"salmone-norvegia-600",category:"Affumicati",name:"Salmone preaffettato Norvegia 600 g",price:20.50,unit:"/confezione",shortDesc:"Senza pelle, baffa 600 g.",fullDesc:"Salmone preaffettato di origine Norvegia, senza pelle, formato baffa da 600 g. Ideale per antipasti o carpacci.",images:[""]},
+  {id:"salmone-norvegia-1kg",category:"Affumicati",name:"Salmone preaffettato Norvegia 1 kg",price:32.50,unit:"/confezione",shortDesc:"Senza pelle, baffa 1 kg.",fullDesc:"Salmone preaffettato Norvegia senza pelle in baffa da 1 kg. Fette regolari, gusto equilibrato.",images:[""]},
+  {id:"salmone-scozia-600",category:"Affumicati",name:"Salmone preaffettato Scozia 600 g",price:23.80,unit:"/confezione",shortDesc:"Senza pelle, baffa 600 g.",fullDesc:"Salmone scozzese preaffettato senza pelle, baffa da 600 g. Aroma deciso da affumicatura tradizionale.",images:[""]},
+  {id:"salmone-scozia-1kg",category:"Affumicati",name:"Salmone preaffettato Scozia 1 kg",price:39.50,unit:"/confezione",shortDesc:"Senza pelle, baffa 1 kg.",fullDesc:"Salmone scozzese preaffettato senza pelle, baffa da 1 kg. Fetta ampia e consistente.",images:[""]},
+  {id:"cuore-salmone-120-astucci",category:"Affumicati",name:"Cuore di Salmone 120 g astuccio",price:7.00,unit:"/confezione",shortDesc:"Filetto cuore 120 g.",fullDesc:"Filetto cuore di salmone da 120 g in astuccio. Taglio centrale, texture morbida.",images:[""]},
+  {id:"spada-fettine-80-astucci",category:"Affumicati",name:"Pesce spada a fettine 80 g astuccio",price:3.80,unit:"/confezione",shortDesc:"Busta 80 g in astuccio.",fullDesc:"Fettine di pesce spada in busta da 80 g, confezione in astuccio. Pronte per antipasti.",images:[""]},
+  {id:"tonno-fettine-80-astucci",category:"Affumicati",name:"Tonno a fettine 80 g astuccio",price:4.80,unit:"/confezione",shortDesc:"Busta 80 g in astuccio.",fullDesc:"Fettine di tonno in busta da 80 g, confezione in astuccio. Sapore pieno e delicato.",images:[""]},
+  {id:"salmone-preaff-200-busta",category:"Affumicati",name:"Salmone preaffettato 200 g busta",price:6.50,unit:"/confezione",shortDesc:"Busta 200 g.",fullDesc:"Salmone preaffettato in busta da 200 g. Fette sottili, pronte da servire.",images:[""]},
+  {id:"sgombro-aff-pepe-200",category:"Affumicati",name:"Filetto di Sgombro affumicato al pepe 200 g",price:6.00,unit:"/confezione",shortDesc:"Busta 200 g al pepe.",fullDesc:"Filetti di sgombro affumicati al pepe in busta da 200 g. Gusto aromatico.",images:[""]},
+
+  // === I Baccalà in vaschetta ===
+  {id:"baccala-mantecato-200",category:"I Baccalà in vaschetta",name:"Baccalà mantecato 200 g",price:4.80,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Classico baccalà mantecato in vaschetta da 200 g. Crema vellutata, pronta all’uso.",images:[""]},
+  {id:"baccala-mantecato-1kg",category:"I Baccalà in vaschetta",name:"Baccalà mantecato 1 kg",price:20.50,unit:"/confezione",shortDesc:"Vaschetta 1 kg.",fullDesc:"Baccalà mantecato formato convenienza da 1 kg. Per ristorazione e buffet.",images:[""]},
+  {id:"baccala-vicentina-200",category:"I Baccalà in vaschetta",name:"Baccalà alla Vicentina 200 g",price:7.50,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Ricetta alla Vicentina in vaschetta da 200 g. Cottura lenta e saporita.",images:[""]},
+  {id:"baccala-vicentina-1kg",category:"I Baccalà in vaschetta",name:"Baccalà alla Vicentina 1 kg",price:30.00,unit:"/confezione",shortDesc:"Vaschetta 1 kg.",fullDesc:"Formato 1 kg della ricetta alla Vicentina. Ideale per servizio in sala.",images:[""]},
+  {id:"baccala-condito-200",category:"I Baccalà in vaschetta",name:"Baccalà condito 200 g",price:7.50,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Baccalà condito con olio e spezie in vaschetta da 200 g.",images:[""]},
+  {id:"baccala-condito-1kg",category:"I Baccalà in vaschetta",name:"Baccalà condito 1 kg",price:32.00,unit:"/confezione",shortDesc:"Vaschetta 1 kg.",fullDesc:"Baccalà condito formato 1 kg. Pronto da rigenerare e servire.",images:[""]},
+  {id:"baccala-umido-150",category:"I Baccalà in vaschetta",name:"Baccalà in umido 150 g",price:5.50,unit:"/confezione",shortDesc:"Vaschetta 150 g.",fullDesc:"Baccalà in umido porzione singola da 150 g. Sugo ricco.",images:[""]},
+  {id:"baccala-umido-1kg",category:"I Baccalà in vaschetta",name:"Baccalà in umido 1 kg",price:31.00,unit:"/confezione",shortDesc:"Vaschetta 1 kg.",fullDesc:"Baccalà in umido formato 1 kg. Resa elevata per cucina professionale.",images:[""]},
+
+  // === Il Dentice mantecato ===
+  {id:"dentice-mantecato-200",category:"Il Dentice mantecato",name:"Dentice mantecato 200 g",price:9.00,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Crema di dentice mantecato in vaschetta da 200 g. Sapore fine.",images:[""]},
+  {id:"dentice-mantecato-500",category:"Il Dentice mantecato",name:"Dentice mantecato 500 g",price:18.50,unit:"/confezione",shortDesc:"Vaschetta 500 g.",fullDesc:"Dentice mantecato formato 500 g. Consistenza spalmabile.",images:[""]},
+
+  // === Il Saor di Gamberi e Sarde ===
+  {id:"gamberi-in-saor-200",category:"Il Saor di Gamberi e Sarde",name:"Gamberi in saor 200 g",price:6.00,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Gamberi in saor alla veneziana in vaschetta da 200 g.",images:[""]},
+  {id:"gamberi-in-saor-1kg",category:"Il Saor di Gamberi e Sarde",name:"Gamberi in saor 1 kg",price:27.00,unit:"/confezione",shortDesc:"Vaschetta 1 kg.",fullDesc:"Gamberi in saor formato 1 kg per ristorazione.",images:[""]},
+  {id:"sarde-in-saor-800",category:"Il Saor di Gamberi e Sarde",name:"Sarde in saor 800 g",price:13.50,unit:"/confezione",shortDesc:"Con uvetta e pinoli, vaschetta 800 g.",fullDesc:"Sarde in saor con uvetta e pinoli in vaschetta da 800 g. Ricetta tipica veneziana.",images:[""]},
+
+  // === Altre specialità ===
+  {id:"polpa-riccio-70",category:"Altre specialità",name:"Polpa di riccio 70 g",price:12.50,unit:"/confezione",shortDesc:"Marca Smeralda, vaso 70 g.",fullDesc:"Polpa di riccio di mare Smeralda in vasetto da 70 g. Intensa e sapida.",images:[""]},
+  {id:"polpa-granchio-170",category:"Altre specialità",name:"Polpa di granchio 170 g",price:10.00,unit:"/confezione",shortDesc:"Marca Smeralda, 170 g.",fullDesc:"Polpa di granchio Smeralda da 170 g. Pronta per insalate e sushi-roll.",images:[""]},
+  {id:"alici-cantabrico-50",category:"Altre specialità",name:"Filetti di alici Cantabrico 50 g",price:3.50,unit:"/confezione",shortDesc:"In olio di oliva, latta 50 g.",fullDesc:"Filetti di alici del Cantabrico in olio di oliva, lattina da 50 g.",images:[""]},
+  {id:"alici-marinate-200",category:"Altre specialità",name:"Alici marinate 200 g",price:3.00,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Filetti di alici marinate in vaschetta da 200 g. Fresche e pronte.",images:[""]},
+  {id:"bocconcini-alici-olive-200",category:"Altre specialità",name:"Bocconcini alici e olive 200 g",price:4.00,unit:"/confezione",shortDesc:"In olio di girasole, 200 g.",fullDesc:"Bocconcini di alici e olive in olio di girasole, vaschetta da 200 g.",images:[""]},
+  {id:"alici-sicilia-evo-720",category:"Altre specialità",name:"Alici Sicilia EVO 720 g",price:14.50,unit:"/confezione",shortDesc:"Filetti in vaso vetro 720 g.",fullDesc:"Filetti di alici Sicilia in olio extra vergine, vaso vetro da 720 g.",images:[""]},
+  {id:"tonno-vaso-180",category:"Altre specialità",name:"Filetti di tonno in olio 180 g",price:7.00,unit:"/confezione",shortDesc:"Vaso vetro 180 g.",fullDesc:"Filetti di tonno in olio di oliva in vaso di vetro da 180 g.",images:[""]},
+  {id:"tonno-latta-850",category:"Altre specialità",name:"Filetti di tonno in olio 850 g",price:20.00,unit:"/confezione",shortDesc:"Latta richiudibile 850 g.",fullDesc:"Filetti di tonno in olio di oliva, latta richiudibile da 850 g.",images:[""]},
+  {id:"stoccafisso-secco-kg",category:"Altre specialità",name:"Stoccafisso secco sottovuoto",price:56.00,unit:"/kg",shortDesc:"Confezionato sottovuoto, vendita a peso.",fullDesc:"Stoccafisso secco confezionato sottovuoto. Prezzo al kg.",images:[""]}
 ];
 
 const list=document.getElementById('list');
