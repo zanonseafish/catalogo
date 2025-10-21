@@ -3,51 +3,45 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Catalogo Prodotti ZANON SEAFISH • Natale</title>
+<title>Catalogo Prodotti ZANON SEAFISH</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#fbfbf8;--ink:#111;--muted:#606060;--line:#e7e4dc;--brand:#0b5;--price:#0a6a2b}
 *{box-sizing:border-box}html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink)}
 
-/* Pesci laterali dietro ai contenuti (schermo) */
-body::before,body::after{
-  content:"";position:fixed;top:0;bottom:0;width:120px;
-  background-image:url("images/logo-zanon-pesce-natale.png");
-  background-repeat:repeat-y;background-size:60% auto;
-  pointer-events:none;z-index:-3}
-body::before{left:1.2mm;background-position:left top}
-body::after{right:1.2mm;background-position:right top}
-
-/* Alberi laterali dietro ai pesci (schermo) */
+/* SOLO ALBERI LATERALI */
 html::before,html::after{
   content:"";position:fixed;bottom:0;width:120px;height:50vh;
-  background-repeat:no-repeat;background-size:contain;
-  pointer-events:none;z-index:-4}
+  background-repeat:no-repeat;background-size:contain;pointer-events:none;z-index:0;
+}
 html::before{left:1.2mm;background-image:url("images/latosx.png");background-position:left bottom}
 html::after{right:1.2mm;background-image:url("images/latodx.png");background-position:right bottom}
 
-/* Header con gradiente solo verso i prodotti */
-header{position:relative;color:#fff;text-align:center;padding:20px 12px 18px}
-header::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,#8b0000 0%,#b30000 80%,transparent 100%);z-index:-1}
+/* Header: gradiente rosso */
+header{
+  background:linear-gradient(180deg,#8b0000 0%, #b30000 70%, #b3000000 100%);
+  color:#fff;padding:20px 12px 18px;text-align:center;position:relative
+}
 header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
-header img.logo{height:60px;width:auto;display:block}
-header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:0 0 2px 0;font-size:24px;line-height:1.15}
+header img.logo{height:60px;width:auto;display:block;margin:0 auto}
+header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:0 0 2px 0;font-size:24px;line-height:1.15;word-break:break-word;overflow-wrap:anywhere}
 header .sub{opacity:.85;font-size:11.5px;margin-top:0}
 
-/* Ricerca stile riferimento */
+/* Ricerca */
 .tools{display:flex;justify-content:center;margin-top:8px}
 .search{max-width:480px;width:100%}
-.search input{width:100%;padding:10px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;color:var(--brand);outline:none;appearance:none;-webkit-appearance:none}
+.search input{width:100%;padding:10px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;color:var(--brand);outline:none}
 .search input::placeholder{color:rgba(11,85,0,.7)}
 .count{color:var(--brand);margin-top:8px;font-size:12px}
 
-/* Layout contenuti con margini laterali per pesci/alberi */
+/* Margini per lasciare spazio agli alberi */
 header,.container,.site-footer{padding-left:134px;padding-right:134px}
 @media (max-width:900px){header,.container,.site-footer{padding-left:16px;padding-right:16px}}
 .container{max-width:1100px;margin:6px auto 14px}
 
-/* === Schede prodotto COPIATE dal definitivo === */
+/* Card */
 .list{display:flex;flex-direction:column;gap:10px}
 .item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
 .item:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.06)}
@@ -59,56 +53,85 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 .divider{height:1px;background:var(--line);margin:3px 0}
 .price{justify-self:end;align-self:end;color:var(--price);font-weight:700;font-size:16px}
 
+/* Titoli categoria: gradiente rosso */
+.cat{
+  margin:14px 2px 6px;padding:8px 12px;border-radius:10px;border:1px solid #e5e2da;
+  background:linear-gradient(90deg, rgba(139,0,0,.25) 0%, rgba(179,0,0,.10) 55%, rgba(179,0,0,0) 100%);
+  font-family:"Playfair Display",serif;font-weight:700;font-size:18px;color:#7a0000
+}
+
 /* Modal */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
 .modal.open{display:flex}
 .modal-content{background:#fff;border-radius:12px;max-width:860px;width:min(96vw,860px);padding:20px;position:relative;max-height:90vh;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);display:flex;flex-direction:column}
 .m-title{font-family:"Playfair Display",serif;margin:0 0 10px 0}
-.m-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:8px 0;color:#333}
-.m-price{color:var(--price);font-weight:700}
-#gallery{flex:1 1 auto;overflow:auto;display:grid;gap:12px;align-items:center;justify-items:center}
-#gallery:has(img:nth-child(2)){grid-template-columns:1fr 1fr}
-#gallery img{max-width:100%;height:auto;display:block;object-fit:contain;border-radius:8px;border:1px solid var(--line)}
-.share-small,.close-btn{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer}
-.share-small{background:#111;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.3)}
-.close-btn{background:#eee;color:#111;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.modal-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px;flex:0 0 auto}
+.share-small{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer;background:#111;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.3)}
+.close-btn{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer;background:#eee;color:#111;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+#mGallery{flex:1 1 auto;overflow:auto;display:grid;gap:12px;align-items:center;justify-items:center}
+#mGallery:has(img:nth-child(2)){grid-template-columns:1fr 1fr}
+#mGallery img{max-width:100%;height:auto;display:block;object-fit:contain}
 
-/* Footer con logo e testo bianco per contrasto col rosso */
-.site-footer{max-width:1100px;margin:18px auto 24px;color:#fff;font-size:12px;text-shadow:0 1px 3px rgba(0,0,0,0.4)}
+/* Footer */
+.site-footer{max-width:1100px;margin:18px auto 24px;color:#444;font-size:12px}
 .site-rule{border:none;height:1px;background:#e5e2da;margin:6px 0 10px}
 .site-footer-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .footer-logo{height:20px;width:auto}
 .foot-text{flex:1;min-width:240px}
-.foot-mail{font-size:12px;color:#fff;text-decoration:none}
+.foot-mail{font-size:12px;color:#0b5;text-decoration:none}
 
-/* Glow rosso solo verso l’alto dal basso */
-.footer-glow{position:fixed;left:0;right:0;bottom:0;height:120px;background:linear-gradient(to top,rgba(139,0,0,1) 0%,rgba(179,0,0,0.85) 60%,transparent 100%);pointer-events:none;z-index:-1}
+/* Responsive */
+@media (max-width:820px){
+  header{padding:16px 10px 16px}
+  header h1{font-size:22px}
+  .item{grid-template-columns:76px 1fr 74px}
+  .thumb{width:76px;height:76px;border-radius:10px}
+  .title{font-size:16px}
+  .price{font-size:15px}
+}
+@media (max-width:560px){
+  header{padding:14px 8px 14px}
+  header h1{font-size:20px}
+  .item{grid-template-columns:66px 1fr;grid-template-rows:auto auto;gap:8px}
+  .price{grid-column:2;justify-self:end}
+}
 
-/* Bottone MENU stile definitivo */
-.back-btn{position:fixed;left:14px;bottom:14px;z-index:1500;background:rgba(255,255,255,0.75);color:#0a6a2b;font-size:13px;font-weight:600;padding:6px 10px;border-radius:20px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
-.back-btn:hover{background:#0a6a2b;color:#fff}
-
-/* Stampa: niente rosso; SOLO alberi/pesci con allineamento coerente; nascondi bottone */
-.print-col{display:none}
+/* Stampa: alberi visibili */
 @media print{
-  @page{size:A4;margin:14mm 12mm}
+  /* patched */
+  @page{size:A4;margin:14mm 12mm
+
+  /* Porta articoli sopra gli alberi in stampa */
+  header,
+  .cat,
+  .item,
+  .site-footer{
+    position:relative !important;
+    z-index:10 !important;
+    background:transparent !important;
+  }
+}
   html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  body::before,body::after,html::before,html::after{display:none!important}
-  .print-col{display:block;position:fixed;top:0;bottom:0;width:120px;pointer-events:none}
-  .print-col.left{left:1.2mm;background:url("images/latosx.png") no-repeat left bottom / contain}
-  .print-col.right{right:1.2mm;background:url("images/latodx.png") no-repeat right bottom / contain}
-  header::before,.footer-glow,.back-btn{display:none!important}
-  .site-footer{color:#000;text-shadow:none}
+  html::before,html::after{
+    display:block !important; position:fixed !important; bottom:0; top:auto;
+    width:120px; height:50vh; z-index:0 !important;
+  }
+  header{background:none!important;color:#000!important;border-bottom:1px solid #ddd!important;padding:0 0 6mm}
+  .tools,#count{display:none!important}
+  .item{break-inside:avoid-page;page-break-inside:avoid;box-shadow:none;border-color:#ddd}
+  .modal{display:none!important}
+  .site-footer{color:#000}
   .foot-mail{color:#000;text-decoration:underline}
 }
+.back-btn{position:fixed;bottom:14px;left:14px;background:rgba(255,255,255,0.75);color:#0a6a2b;font-size:13px;font-weight:600;padding:6px 10px;border-radius:20px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,0.15);z-index:1500}
+.back-btn:hover{background:#0a6a2b;color:#fff}
+@media print{.back-btn{display:none!important}}
 </style>
 </head>
 <body>
-<div class="print-col left" aria-hidden="true"></div>
-<div class="print-col right" aria-hidden="true"></div>
-
 <header>
   <div class="top">
+    <!-- logo aggiornato -->
     <img class="logo" src="images/zanonlogonatale.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
     <h1>Catalogo Prodotti ZANON SEAFISH</h1>
     <div class="sub">Clicca un elemento per i dettagli e la condivisione.</div>
@@ -125,13 +148,11 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 <div id="modal" class="modal" role="dialog" aria-modal="true">
   <div class="modal-content" aria-labelledby="mTitle">
     <h2 id="mTitle" class="m-title"></h2>
-    <div class="m-meta">
-      <span id="mShort"></span>
-      <span id="mPrice" class="m-price"></span>
-    </div>
-    <div id="gallery"></div>
-    <p id="mFull"></p>
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px">
+    <div id="mGallery"></div>
+    <p id="mDesc" class="desc"></p>
+    <p id="mFullDesc"></p>
+    <p id="mPrice" class="price" style="margin-top:0"></p>
+    <div class="modal-footer">
       <button id="shareBtn" class="share-small" title="Condividi" aria-label="Condividi">📤 Condividi</button>
       <button id="closeBtn" class="close-btn" aria-label="Chiudi">Chiudi</button>
     </div>
@@ -144,123 +165,134 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
     <img src="images/logo.png" alt="Zanon Seafish Ingros SRL" class="footer-logo" onerror="this.style.display='none'">
     <div class="foot-text">
       <strong>Zanon Seafish Ingros SRL</strong> · P.IVA IT01654690278 ·
-      S. Croce 491, 30135 Venezia (VE) ·
-      Via Colombara 115/A, 30176 Marghera (VE) ·
+      Sede legale: S. Croce 491, 30135 Venezia (VE) ·
+      Sede amm. e magazzini: Via Colombara 115/A, 30176 Marghera (VE) ·
       Tel: 041 5382830 · 041 3963095 ·
       <a href="https://www.zanonseafish.it/" target="_blank" rel="noopener">www.zanonseafish.it</a> ·
-      <a href="mailto:info@zanonseafish.it" class="foot-mail">info@zanonseafish.it</a>
+      <a class="foot-mail" href="mailto:info@zanonseafish.it">info@zanonseafish.it</a>
     </div>
   </div>
 </footer>
 
-<div class="footer-glow" aria-hidden="true"></div>
-
-<a class="back-btn" href="index2.html" title="Torna al menu">↩︎ Menu</a>
+<a href="index2.html" title="Torna al menu" class="back-btn" aria-label="Torna al menu principale">↩︎ Home</a>
 
 <script>
-// === DATI ===
+/* === DATI prodotti (immutati) === */
 const PRODUCTS = [
-  {id:"polpette-brasato",name:"Polpette di Brasato",price:14.00,shortDesc:"Conf. 2kg – Polpette di brasato surgelate (40 pz da 50g)",fullDesc:"Polpette di brasato dal gusto autentico, preparate con carne di manzo selezionata. Ideali per secondi o buffet caldi.",images:["img2/polpette-brasato.jpg"]},
-  {id:"polpette-baccala",name:"Polpette di Baccalà",price:14.00,shortDesc:"Conf. 2kg – Polpette di baccalà surgelate (40 pz da 50g)",fullDesc:"Polpette morbide a base di baccalà e patate. Perfette fritte o al forno come antipasto di mare.",images:["img2/polpette-baccala.jpg"]},
-  {id:"polpette-tonno-cipolla",name:"Polpette di Tonno e Cipolla",price:14.00,shortDesc:"Conf. 2kg – Polpette di tonno e cipolla (40 pz da 50g)",fullDesc:"Polpette di tonno con cipolla dolce e spezie mediterranee. Croccanti e profumate.",images:["img2/polpette-tonno-cipolla.jpg"]},
-  {id:"polpette-pollo-speck",name:"Polpette di Pollo e Speck",price:12.00,shortDesc:"Conf. 2kg – Polpette di pollo e speck (40 pz da 50g)",fullDesc:"Polpette dal sapore deciso con carne di pollo e speck affumicato. Ottime per aperitivi o secondi piatti.",images:["img2/polpette-pollo-speck.jpg"]},
-  {id:"polpette-verdure",name:"Polpette di Verdure",price:12.00,shortDesc:"Conf. 2kg – Polpette di verdure miste (40 pz da 50g)",fullDesc:"Polpette vegetariane con verdure fresche selezionate. Leggere e gustose, ideali per contorni o buffet.",images:["img2/polpette-verdure.png"]},
-  {id:"arancini-mozzarella-prosciutto",name:"Arancini con Mozzarella e Prosciutto Prefritti",price:5.50,shortDesc:"Conf. 3kg – Arancini con mozzarella e prosciutto prefritti",fullDesc:"Arancini di riso con cuore di mozzarella e prosciutto cotto. Pronti per la cottura.",images:["img2/arancini-prosciutto.png"]},
-  {id:"arancini-spinaci",name:"Arancini agli Spinaci Prefritti",price:5.50,shortDesc:"Conf. 3kg – Arancini agli spinaci prefritti",fullDesc:"Arancini di riso con ripieno cremoso agli spinaci e formaggio. Croccanti e saporiti.",images:["img2/arancini-spinaci.png"]},
-  {id:"arrosticini-mare",name:"Arrosticini di Mare Panati (Totano Gigas)",price:8.30,shortDesc:"Conf. 4kg – Arrosticini di mare panati",fullDesc:"Spiedini di totano gigas impanati e croccanti. Ideali fritti o al forno.",images:["img2/arrosticini-pesce-panati.png"]},
-  {id:"alici-panato",name:"Alici Panate Croccanti",price:8.90,shortDesc:"Conf. 1kg – Alici panate croccanti",fullDesc:"Filetti di alici panati e dorati. Ottimi per antipasti o secondi di mare.",images:["img2/alici-panati-croccanti.png"]},
-  {id:"filetto-baccala-prezzemolo",name:"Filetto di Baccalà Pastellato con Prezzemolo",price:11.90,shortDesc:"Conf. 5x1kg – Filetti di baccalà pastellati con prezzemolo",fullDesc:"Filetti di baccalà teneri in pastella aromatica al prezzemolo. Croccanti e profumati.",images:["img2/filetti-baccala-pastellati.png"]},
-  {id:"chele-granchio",name:"Chele di Granchio Panate",price:5.50,shortDesc:"Conf. 4x1kg – Chele di granchio panate",fullDesc:"Chele di surimi al gusto di granchio, con panatura dorata e croccante. Pronte in pochi minuti.",images:["img2/chele-granchio-panate.jpg"]},
-  {id:"fiori-zucca-mozzarella-alici",name:"Fiori di Zucca con Mozzarella e Alici Prefritti",price:9.30,shortDesc:"Conf. 5x1kg – Fiori di zucca con mozzarella e alici",fullDesc:"Fiori di zucca ripieni di mozzarella e alici. Croccanti e saporiti, già pronti da rigenerare.",images:["img2/fiori-zucca-mozz-alici.png"]},
-  {id:"fiori-zucca-prosciutto-mozzarella",name:"Fiori di Zucca con Prosciutto e Mozzarella Prefritti",price:8.10,shortDesc:"Conf. 5x1kg – Fiori di zucca con prosciutto e mozzarella",fullDesc:"Fiori di zucca con farcitura di prosciutto cotto e mozzarella filante. Doratura perfetta.",images:["img2/fiori-zucca-mozz-prosciutto.png"]},
-  {id:"frittelle-gamberi-zucchine",name:"Frittelle di Gamberi e Zucchine",price:11.50,shortDesc:"Conf. 4x1kg – Frittelle di gamberi e zucchine",fullDesc:"Frittelle di gamberi e zucchine in pastella croccante. Pronte in pochi minuti.",images:["img2/frittelle-gamberi-zucchine.png"]},
-  {id:"gamberi-patata",name:"Gamberi Avvolti in Filo di Patata",price:14.00,shortDesc:"Conf. 5x1kg – Gamberi avvolti in filo di patata",fullDesc:"Gamberi croccanti rivestiti di julienne di patata. Specialità gourmet.",images:["img2/gamberi-patata.jpg"]},
-  {id:"mozzarelline-tartufo",name:"Mozzarelline Panate con Tartufo Prefritte",price:7.80,shortDesc:"Conf. 5x1kg – Mozzarelline con tartufo prefritte",fullDesc:"Mozzarelline filanti aromatizzate al tartufo. Perfette per aperitivi.",images:["img2/mozzarelline-tartufo.png"]},
-  {id:"olive-ascolane",name:"Olive Ascolane",price:5.40,shortDesc:"Conf. 4x2,500kg – Olive ascolane ripiene di carne",fullDesc:"Olive verdi farcite con carne e panate. Croccanti e dorate in pochi minuti.",images:["img2/olive-ripiene-ascolana.png"]},
-  {id:"olive-ascolane-prefritte",name:"Olive Ascolane Prefritte",price:5.90,shortDesc:"Conf. 5x1kg – Olive ascolane prefritte",fullDesc:"Versione prefritta delle classiche olive ascolane, pronte da rigenerare in forno o friggitrice.",images:["img2/olive-ripiene-ascolana.png"]},
-  {id:"panzerotti-mozzarella",name:"Panzerotti Mozzarella e Pomodoro Prefritti",price:5.40,shortDesc:"Conf. 5x1kg – Panzerotti con mozzarella e pomodoro",fullDesc:"Mini panzerotti con ripieno di pomodoro e mozzarella filante. Perfetti come finger food.",images:["img2/panzerotti-mozzarella.png"]},
-  {id:"polpette-melanzane",name:"Polpette di Melanzane, Mozzarella e Provola Affumicata",price:5.50,shortDesc:"Conf. 5x1kg – Polpette di melanzane con mozzarella e provola affumicata",fullDesc:"Polpette vegetariane dal sapore intenso e consistenza morbida. Perfette per aperitivi e buffet.",images:["img2/polpette-melanzane.png"]},
-  {id:"salvia-pastellata",name:"Salvia Pastellata Prefritta",price:11.50,shortDesc:"Conf. 4x1kg – Foglie di salvia pastellate prefritte",fullDesc:"Foglie di salvia immerse in pastella leggera e croccante. Profumate e aromatiche.",images:["img2/salvia-pastellata.png"]},
-  {id:"tris-verdure",name:"Tris di Verdure Pastellate Prefritte",price:5.20,shortDesc:"Conf. 5x1kg – Tris di verdure pastellate prefritte",fullDesc:"Mix croccante di zucchine, carote e peperoni in pastella dorata. Perfette per contorni o antipasti.",images:["img2/tris-verdure.png"]}
+  {id:"salmone-norvegia-600",category:"Affumicati",name:"Salmone preaffettato Norvegia 600 g",price:20.50,unit:"/confezione",shortDesc:"Senza pelle, baffa 600 g.",fullDesc:"Salmone preaffettato di origine Norvegia, senza pelle, formato baffa da 600 g.",images:[""]},
+  {id:"salmone-norvegia-1kg",category:"Affumicati",name:"Salmone preaffettato Norvegia 1 kg",price:32.50,unit:"/confezione",shortDesc:"Senza pelle, baffa 1 kg.",fullDesc:"Salmone preaffettato Norvegia senza pelle in baffa da 1 kg.",images:[""]},
+  {id:"salmone-scozia-600",category:"Affumicati",name:"Salmone preaffettato Scozia 600 g",price:23.80,unit:"/confezione",shortDesc:"Senza pelle, baffa 600 g.",fullDesc:"Salmone scozzese preaffettato senza pelle, baffa da 600 g.",images:[""]},
+  {id:"salmone-scozia-1kg",category:"Affumicati",name:"Salmone preaffettato Scozia 1 kg",price:39.50,unit:"/confezione",shortDesc:"Senza pelle, baffa 1 kg.",fullDesc:"Salmone scozzese preaffettato senza pelle, baffa da 1 kg.",images:[""]},
+  {id:"cuore-salmone-120-astucci",category:"Affumicati",name:"Cuore di Salmone 120 g astuccio",price:7.00,unit:"/confezione",shortDesc:"Filetto cuore 120 g.",fullDesc:"Filetto cuore di salmone da 120 g in astuccio.",images:[""]},
+  {id:"spada-fettine-80-astucci",category:"Affumicati",name:"Pesce spada a fettine 80 g astuccio",price:3.80,unit:"/confezione",shortDesc:"Busta 80 g in astuccio.",fullDesc:"Fettine di pesce spada pronte per antipasti.",images:["images/spada-affumicato.jpg"]},
+  {id:"tonno-fettine-80-astucci",category:"Affumicati",name:"Tonno a fettine 80 g astuccio",price:4.80,unit:"/confezione",shortDesc:"Busta 80 g in astuccio.",fullDesc:"Fettine di tonno in busta da 80 g.",images:["images/tonno-affumicato.jpg"]},
+  {id:"salmone-preaff-200-busta",category:"Affumicati",name:"Salmone preaffettato 200 g busta",price:6.50,unit:"/confezione",shortDesc:"Busta 200 g.",fullDesc:"Salmone preaffettato in busta da 200 g.",images:["images/salmone-preaff-norv.jpg"]},
+  {id:"sgombro-aff-pepe-200",category:"Affumicati",name:"Filetto di Sgombro affumicato al pepe 200 g",price:6.00,unit:"/confezione",shortDesc:"Busta 200 g al pepe.",fullDesc:"Filetti di sgombro affumicati al pepe.",images:["images/aringa-affumicata.jpg"]},
+
+  {id:"baccala-mantecato-200",category:"I Baccalà in vaschetta",name:"Baccalà mantecato 200 g",price:4.80,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Baccalà mantecato in vaschetta da 200 g.",images:["images/baccala-mantecato-35-200.jpg"]},
+  {id:"baccala-mantecato-1kg",category:"I Baccalà in vaschetta",name:"Baccalà mantecato 1 kg",price:20.50,unit:"/confezione",shortDesc:"Vaschetta 1 kg.",fullDesc:"Baccalà mantecato formato 1 kg.",images:["images/baccala-mantecato-35-front.jpg"]},
+  {id:"baccala-vicentina-200",category:"I Baccalà in vaschetta",name:"Baccalà alla Vicentina 200 g",price:7.50,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Ricetta alla Vicentina, vaschetta 200 g.",images:["images/baccala-vicentina-200.jpg"]},
+  {id:"baccala-vicentina-1kg",category:"I Baccalà in vaschetta",name:"Baccalà alla Vicentina 1 kg",price:30.00,unit:"/confezione",shortDesc:"Vaschetta 1 kg.",fullDesc:"Formato 1 kg della Vicentina.",images:["images/baccala-vicentina-1.jpg"]},
+  {id:"baccala-condito-200",category:"I Baccalà in vaschetta",name:"Baccalà condito 200 g",price:7.50,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Baccalà condito con olio e spezie.",images:["images/baccala-condito-200.jpg"]},
+  {id:"baccala-condito-1kg",category:"I Baccalà in vaschetta",name:"Baccalà condito 1 kg",price:32.00,unit:"/confezione",shortDesc:"Vaschetta 1 kg.",fullDesc:"Baccalà condito formato 1 kg.",images:["images/baccala-condito-200.jpg"]},
+  {id:"baccala-umido-150",category:"I Baccalà in vaschetta",name:"Baccalà in umido 150 g",price:5.50,unit:"/confezione",shortDesc:"Vaschetta 150 g.",fullDesc:"Baccalà in umido porzione singola.",images:["images/baccala-umido-150.jpg"]},
+  {id:"baccala-umido-1kg",category:"I Baccalà in vaschetta",name:"Baccalà in umido 1 kg",price:31.00,unit:"/confezione",shortDesc:"Vaschetta 1 kg.",fullDesc:"Baccalà in umido formato 1 kg.",images:["images/baccala-umido-1.jpg"]},
+
+  {id:"dentice-mantecato-200",category:"Il Dentice mantecato",name:"Dentice mantecato 200 g",price:9.00,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Crema di dentice mantecato.",images:["images/dentice-crema-200.jpg"]},
+  {id:"dentice-mantecato-500",category:"Il Dentice mantecato",name:"Dentice mantecato 500 g",price:18.50,unit:"/confezione",shortDesc:"Vaschetta 500 g.",fullDesc:"Dentice mantecato 500 g.",images:["images/dentice-crema-500.jpg"]},
+
+  {id:"gamberi-in-saor-200",category:"Il Saor di Gamberi e Sarde",name:"Gamberi in saor 200 g",price:6.00,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Gamberi in saor alla veneziana.",images:["images/saor-gamberi.png"]},
+  {id:"gamberi-in-saor-1kg",category:"Il Saor di Gamberi e Sarde",name:"Gamberi in saor 1 kg",price:27.00,unit:"/confezione",shortDesc:"Vaschetta 1 kg.",fullDesc:"Gamberi in saor formato 1 kg.",images:["images/saor-gamberi.png"]},
+  {id:"sarde-in-saor-800",category:"Il Saor di Gamberi e Sarde",name:"Sarde in saor 800 g",price:13.50,unit:"/confezione",shortDesc:"Con uvetta e pinoli, vaschetta 800 g.",fullDesc:"Sarde in saor tipiche veneziane.",images:["images/saor-sarde.png"]},
+
+  {id:"polpa-riccio-70",category:"Altre specialità",name:"Polpa di riccio 70 g",price:12.50,unit:"/confezione",shortDesc:"Smeralda, vaso 70 g.",fullDesc:"Polpa di riccio Smeralda 70 g.",images:["images/polpa-riccio.jpg"]},
+  {id:"polpa-granchio-170",category:"Altre specialità",name:"Polpa di granchio 170 g",price:10.00,unit:"/confezione",shortDesc:"Smeralda, 170 g.",fullDesc:"Polpa di granchio Smeralda 170 g.",images:["images/polpa-granchio.jpg"]},
+  {id:"alici-cantabrico-50",category:"Altre specialità",name:"Filetti di alici Cantabrico 50 g",price:3.50,unit:"/confezione",shortDesc:"In olio di oliva, latta 50 g.",fullDesc:"Filetti di alici del Cantabrico 50 g.",images:["images/acciughe-filetti-riunione.jpg"]},
+  {id:"alici-marinate-200",category:"Altre specialità",name:"Alici marinate 200 g",price:3.00,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Filetti di alici marinate 200 g.",images:["images/alici-filetto.jpg"]},
+  {id:"bocconcini-alici-olive-200",category:"Altre specialità",name:"Bocconcini alici e olive 200 g",price:4.00,unit:"/confezione",shortDesc:"In olio di girasole, 200 g.",fullDesc:"Bocconcini di alici e olive.",images:["images/alici-bocconcini.jpg"]},
+  {id:"alici-sicilia-evo-720",category:"Altre specialità",name:"Alici Sicilia EVO 720 g",price:14.50,unit:"/confezione",shortDesc:"Filetti in vaso vetro 720 g.",fullDesc:"Filetti di alici Sicilia in EVO 720 g.",images:["images/acciughe-filetti.jpg"]},
+  {id:"tonno-vaso-180",category:"Altre specialità",name:"Filetti di tonno in olio 180 g",price:7.00,unit:"/confezione",shortDesc:"Vaso vetro 180 g.",fullDesc:"Filetti di tonno in olio 180 g.",images:["images/tonno-filetto-albatros.jpg"]},
+  {id:"tonno-latta-850",category:"Altre specialità",name:"Filetti di tonno in olio 850 g",price:20.00,unit:"/confezione",shortDesc:"Latta richiudibile 850 g.",fullDesc:"Filetti di tonno in olio 850 g.",images:["images/tonno-filetti-acantilado.jpg"]},
+  {id:"stoccafisso-secco-kg",category:"Altre specialità",name:"Stoccafisso secco sottovuoto",price:56.00,unit:"/kg",shortDesc:"Confezionato sottovuoto, vendita a peso.",fullDesc:"Stoccafisso secco sottovuoto. Prezzo al kg.",images:["images/stoccafisso-secco.jpg"]}
 ];
 
+/* === APP === */
 const listEl=document.getElementById("list");
 const countEl=document.getElementById("count");
+const q=document.getElementById("searchBox");
 const fmt=new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"});
 const modal=document.getElementById("modal");
 const mTitle=document.getElementById("mTitle");
-const mShort=document.getElementById("mShort");
-const mFull=document.getElementById("mFull");
+const mDesc=document.getElementById("mDesc");
+const mFullDesc=document.getElementById("mFullDesc");
 const mPrice=document.getElementById("mPrice");
-const gallery=document.getElementById("gallery");
-const closeBtn=document.getElementById("closeBtn");
+const mGallery=document.getElementById("mGallery");
 const shareBtn=document.getElementById("shareBtn");
+const closeBtn=document.getElementById("closeBtn");
 let currentId=null;
 
+function unitLabel(u){return u==="/confezione"?" €/conf.":(u==="/kg"?" €/kg":(u||""));}
+
 function rowTemplate(p){return `
-<div class="item" data-id="${p.id}">
-  <div class="thumb"><img loading="lazy" src="${(p.images&&p.images[0])||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
-  <div class="info"><h3 class="title">${p.name}</h3><p class="desc">${p.shortDesc||""}</p><div class="divider"></div></div>
-  <div class="price">${fmt.format(p.price||0)}${p.unit||""}</div>
-</div>`}
+  <div class="item" onclick="openModal('${p.id}')">
+    <div class="thumb"><img loading="lazy" src="${(p.images&&p.images[0])||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
+    <div class="info">
+      <h3 class="title">${p.name}</h3>
+      <p class="desc">${p.shortDesc||""}</p>
+      <div class="divider"></div>
+    </div>
+    <div class="price">${fmt.format(p.price||0)}${unitLabel(p.unit)}</div>
+  </div>`}
 
 function render(list=PRODUCTS){
-  listEl.innerHTML=list.map(rowTemplate).join("");
-  countEl.textContent = `${list.length} ${list.length===1?'prodotto':'prodotti'}`;
-  document.querySelectorAll('.item').forEach(el=>el.addEventListener('click',()=>openModal(el.dataset.id)));
+  const order=[], groups={};
+  for(const p of list){const c=p.category||"Altri";if(!groups[c]){groups[c]=[];order.push(c)}groups[c].push(p)}
+  let out=""; for(const c of order){ out+=`<div class="cat">${c}</div>`+groups[c].map(rowTemplate).join("") }
+  listEl.innerHTML = out || '<div class="item">Nessun risultato</div>';
+  countEl.textContent=list.length===PRODUCTS.length?`${list.length} prodotti`:`${list.length} risultati`;
 }
 
-function galleryHTML(imgs,alt){
-  const arr=(imgs&&imgs.length?imgs:["images/default1.jpg"]).slice(0,2);
-  return arr.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${alt||''}" onerror="this.onerror=null;this.src='images/default1.jpg';">`).join("");
-}
-
-function openModal(id){
-  const p=PRODUCTS.find(x=>x.id===id);
-  if(!p) return;
-  currentId=id;
-  mTitle.textContent=p.name||"";
-  mShort.textContent=p.shortDesc||"";
-  mFull.textContent=p.fullDesc||"";
-  mPrice.textContent=fmt.format(p.price||0)+(p.unit||"");
-  gallery.innerHTML=galleryHTML(p.images,p.name);
-  modal.classList.add('open');
-  document.body.style.overflow='hidden';
-  if(location.hash!=='#'+id) history.replaceState(null,'','#'+id);
-}
-
-function closeModal(){
-  modal.classList.remove('open');
-  document.body.style.overflow='';
-  if(location.hash) history.replaceState(null,'',location.pathname+location.search);
-}
+function productAnchorUrl(id){return `${location.origin+location.pathname}#${encodeURIComponent(id)}`}
 
 async function shareProduct(id){
-  const p=PRODUCTS.find(x=>x.id===id);
-  if(!p) return;
-  const text = `${p.name} – ${fmt.format(p.price)}\n${p.shortDesc||""}\n${location.origin+location.pathname}#${encodeURIComponent(p.id)}`;
+  const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
+  const url=productAnchorUrl(p.id);
+  const img=(p.images&&p.images[0])?new URL(p.images[0], location.href).href:null;
+  const text=`${p.name} – ${fmt.format(p.price)}${unitLabel(p.unit)}\n${p.shortDesc||""}\n${url}`;
   try{
-    if(navigator.share){ await navigator.share({title:p.name,text}); }
-    else { await navigator.clipboard.writeText(text); alert('Dettagli copiati'); }
-  }catch(e){ console.warn(e); }
+    if(img && navigator.canShare && window.File && window.Blob){
+      const resp=await fetch(img,{mode:"cors"}); const blob=await resp.blob();
+      const file=new File([blob], `${p.id}.jpg`, {type: blob.type || "image/jpeg"});
+      const data={title:p.name,text,files:[file]}; if(navigator.canShare(data)){await navigator.share(data);return;}
+    }
+    if(navigator.share){await navigator.share({title:p.name,text,url});return;}
+  }catch(e){}
+  try{await navigator.clipboard.writeText(url);alert("Link copiato");}catch(e){}
 }
 
-closeBtn.addEventListener('click',closeModal);
-shareBtn.addEventListener('click',()=>shareProduct(currentId));
-modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+window.openModal=function(id){
+  const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
+  currentId=id;
+  mTitle.textContent=p.name; mDesc.textContent=p.shortDesc||""; mFullDesc.textContent=p.fullDesc||"";
+  mPrice.textContent=fmt.format(p.price||0)+unitLabel(p.unit);
+  const imgs=(p.images||[]).slice(0,2); mGallery.innerHTML=imgs.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';">`).join("");
+  shareBtn.onclick=()=>shareProduct(currentId);
+  modal.classList.add("open"); document.body.style.overflow="hidden";
+  if(location.hash!=="#"+id) history.pushState({modal:true,id},"","#"+id);
+}
+function closeModal(){ if(!modal.classList.contains("open"))return; modal.classList.remove("open"); document.body.style.overflow=""; if(location.hash) history.pushState("",document.title,location.pathname+location.search); }
+closeBtn.onclick=closeModal;
+modal.addEventListener("click",e=>{ if(e.target===modal) closeModal(); });
+window.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
 
-window.addEventListener('load',()=>{
-  render();
-  const id=decodeURIComponent(location.hash.slice(1));
-  if(id) openModal(id);
+q.addEventListener("input",()=>{
+  const t=q.value.trim().toLowerCase();
+  const res=!t?PRODUCTS:PRODUCTS.filter(p=>(`${p.name} ${p.shortDesc||""} ${p.fullDesc||""} ${p.category||""}`).toLowerCase().includes(t));
+  render(res);
 });
 
-document.getElementById('searchBox').addEventListener('input',e=>{
-  const v=e.target.value.trim().toLowerCase();
-  const f=PRODUCTS.filter(p=>[p.name,p.shortDesc,p.fullDesc].filter(Boolean).some(s=>s.toLowerCase().includes(v)));
-  render(f);
-});
+render();
+if(location.hash){const id=decodeURIComponent(location.hash.slice(1)); if(PRODUCTS.some(p=>p.id===id)) openModal(id);}
 </script>
 </body>
 </html>
