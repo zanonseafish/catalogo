@@ -102,7 +102,7 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
   .foot-mail{color:#000;text-decoration:underline}
 }
 
-.cat{margin:16px 8px 6px;font:600 18px/1.2 Playfair Display, serif;color:#fff;
+.cat{margin:16px 8px 6px;font:600 18px/1.2 'Playfair Display',serif;color:#fff;
   background:linear-gradient(90deg,rgba(255,255,255,0.15),rgba(255,255,255,0));
   padding:8px 12px;border-radius:10px}
 @media (min-width:700px){.cat{margin:24px 8px 8px;font-size:20px}}
@@ -204,8 +204,8 @@ const PRODUCTS = [
 
 const list=document.getElementById('list');
 const count=document.getElementById('count');
-\1
-function unitLabel(u){if(u==="/confezione") return " €/conf."; if(u==="/kg") return " €/kg"; return u?(" "+u):"";}
+const fmt=new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'});
+function unitLabel(u){if(u===\"/confezione\") return \" €/conf.\"; if(u===\"/kg\") return \" €/kg\"; return u?(\" \"+u):\"\";}
 
 function row(p){
   return `<div class='item' data-id='${p.id}'>
@@ -217,17 +217,10 @@ function row(p){
 
 
 function render(arr){
-  // group by category preserving order
-  const order=[], mapObj={};
-  for(const p of arr){
-    const c = p.category || 'Altri';
-    if(!mapObj[c]){ mapObj[c]=[]; order.push(c); }
-    mapObj[c].push(p);
-  }
+  const order=[], groups={};
+  for(const p of arr){ const c=p.category||'Altri'; if(!groups[c]){groups[c]=[]; order.push(c);} groups[c].push(p); }
   let out='';
-  for(const c of order){
-    out += `<h2 class="cat">${c}</h2>` + mapObj[c].map(row).join('');
-  }
+  for(const c of order){ out += `<h2 class="cat">${c}</h2>` + groups[c].map(row).join(''); }
   list.innerHTML=out;
   count.textContent=`${arr.length} ${arr.length===1?'prodotto':'prodotti'}`;
   document.querySelectorAll('.item').forEach(el=>el.onclick=()=>openModal(el.dataset.id));
