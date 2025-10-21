@@ -6,119 +6,89 @@
 <title>Catalogo Prodotti ZANON SEAFISH • Natale</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fbfbf8;--ink:#111;--muted:#606060;--line:#e7e4dc;--brand:#0a6a2b;--price:#0a6a2b}
-*{box-sizing:border-box}html,body{height:100%}
+:root{
+  --bg:#fbfbf8;--ink:#111;--muted:#606060;--line:#e7e4dc;
+  --brand:#0a6a2b;--price:#0a6a2b;--card:#ffffffd9;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-/* Pesci laterali (schermo) */
-body::before,body::after{content:"";position:fixed;top:0;bottom:0;width:120px;background-image:url("images/logo-zanon-pesce-natale.png");background-repeat:repeat-y;background-size:60% auto;pointer-events:none;z-index:-3}
-body::before{left:1.2mm;background-position:left top}
-body::after{right:1.2mm;background-position:right top}
+/* Header */
+header{position:sticky;top:0;z-index:5;background:linear-gradient(180deg,#b30000 0%,#b30000cc 60%,transparent 100%);padding:16px 12px 8px;color:#fff}
+header .wrap{max-width:980px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;grid-gap:12px;align-items:center}
+header img.logo{height:48px;width:auto;filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+header h1{margin:0;font:600 22px/1.1 "Playfair Display",serif}
+header .sub{font-size:12px;opacity:.85;margin-top:4px}
+.tools{margin-top:8px}
+.search input{width:100%;padding:10px 12px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(255,255,255,.2);color:#fff;outline:none}
+.search input::placeholder{color:#f0f0f0}
 
-/* Alberi dietro ai pesci (schermo) */
-html::before,html::after{content:"";position:fixed;bottom:0;width:120px;height:50vh;background-repeat:no-repeat;background-size:contain;pointer-events:none;z-index:-4}
-html::before{left:1.2mm;background-image:url("images/latosx.png");background-position:left bottom}
-html::after{right:1.2mm;background-image:url("images/latodx.png");background-position:right bottom}
+/* Layout */
+.container{max-width:980px;margin:10px auto 60px;padding:0 10px}
+.count{margin:10px 0 0 2px;font-size:13px;color:var(--muted)}
 
-/* Header con gradiente verso i prodotti */
-header{position:relative;color:#fff;text-align:center;padding:20px 12px 18px}
-header::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,#8b0000 0%,#b30000 80%,transparent 100%);z-index:-1}
-header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
-header img.logo{height:60px;width:auto;display:block}
-header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:0 0 2px 0;font-size:24px;line-height:1.15}
-header .sub{opacity:.85;font-size:11.5px;margin-top:0}
+/* Cards */
+.list{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:560px){.list{grid-template-columns:1fr 1fr}}
+@media(min-width:920px){.list{grid-template-columns:1fr 1fr 1fr}}
+.item{display:grid;grid-template-columns:84px 1fr auto;gap:10px;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--card);backdrop-filter:saturate(1.2) blur(0.5px);cursor:pointer}
+.thumb{width:84px;height:84px;border-radius:10px;overflow:hidden;background:#f3f3f0;border:1px solid #eceae2}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.title{margin:0 0 6px 0;font:600 15px/1.2 Inter,system-ui}
+.desc{margin:0;color:#555;font-size:12px}
+.divider{height:1px;background:var(--line);margin-top:8px}
+.price{align-self:center;font:600 15px/1 Inter;color:var(--price)}
 
-/* Cerca stile riferimento */
-.tools{display:flex;justify-content:center;margin-top:8px}
-.search{max-width:480px;width:100%}
-.search input{width:100%;padding:10px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;color:var(--brand);outline:none}
-.search input::placeholder{color:rgba(11,85,0,.7)}
-.count{color:var(--brand);margin-top:8px;font-size:12px}
+/* Categoria */
+.cat{margin:16px 4px 6px;font:600 18px/1.2 "Playfair Display",serif;color:#fff;
+  background:linear-gradient(90deg,rgba(179,0,0,.55),rgba(179,0,0,0));
+  padding:8px 12px;border-radius:10px}
+@media (min-width:700px){.cat{margin:24px 4px 8px;font-size:20px}}
 
-/* Layout con margini laterali per pesci/alberi */
-header,.container,.site-footer{padding-left:134px;padding-right:134px}
-@media (max-width:900px){header,.container,.site-footer{padding-left:16px;padding-right:16px}}
-.container{max-width:1100px;margin:6px auto 14px}
-
-/* Card PRODOTTO identiche al definitivo */
-.list{display:flex;flex-direction:column;gap:10px}
-.item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
-.item:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.06)}
-.thumb{width:84px;height:84px;border-radius:12px;overflow:hidden;background:#f1f1ed;border:1px solid var(--line)}
-.thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.info{min-width:0;padding-left:8px}
-.title{font-family:"Playfair Display",serif;font-weight:700;font-size:18px;letter-spacing:.02em;margin:0 0 3px 0;text-transform:uppercase}
-.desc{color:var(--muted);font-size:12px;line-height:1.3;margin:0 0 4px 0}
-.divider{height:1px;background:var(--line);margin:3px 0}
-.price{justify-self:end;align-self:end;color:var(--price);font-weight:700;font-size:16px}
-@media (max-width:820px){.item{grid-template-columns:76px 1fr 76px}.thumb{width:76px;height:76px}.title{font-size:17px}.price{font-size:15px}}
-@media (max-width:560px){.item{grid-template-columns:64px 1fr 72px}.thumb{width:64px;height:64px}.title{font-size:16px}.desc{font-size:11.5px}.price{font-size:14px}}
-
-/* Modal */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
+/* Modal semplice */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:20}
 .modal.open{display:flex}
-.modal-content{background:#fff;border-radius:12px;max-width:860px;width:min(96vw,860px);padding:20px;position:relative;max-height:90vh;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);display:flex;flex-direction:column}
-.m-title{font-family:"Playfair Display",serif;margin:0 0 10px 0}
-.m-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:8px 0;color:#333}
-.m-price{color:var(--price);font-weight:700}
-#gallery{flex:1 1 auto;overflow:auto;display:grid;gap:12px;align-items:center;justify-items:center}
-#gallery:has(img:nth-child(2)){grid-template-columns:1fr 1fr}
-#gallery img{max-width:100%;height:auto;display:block;object-fit:contain;border-radius:8px;border:1px solid var(--line)}
-.share-small,.close-btn{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer}
-.share-small{background:#111;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.3)}
-.close-btn{background:#eee;color:#111;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.modal .card{width:min(720px,94vw);max-height:90vh;overflow:auto;background:#fff;border-radius:14px;border:1px solid var(--line)}
+.modal header{position:sticky;top:0;background:#fff;color:#111;border-bottom:1px solid var(--line);padding:10px 14px}
+.modal .body{padding:14px}
+.modal .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px}
+.modal .gallery img{width:100%;height:120px;object-fit:cover;border-radius:8px;border:1px solid #eee}
+.modal .name{font:600 18px/1.2 Inter;margin:6px 0}
+.modal .text{font-size:14px;color:#333}
+.modal .close{margin-left:auto;border:1px solid #ddd;border-radius:10px;padding:6px 10px;background:#f8f8f8;cursor:pointer}
 
-/* Footer bianco sopra glow rosso */
-.site-footer{max-width:1100px;margin:18px auto 24px;color:#fff;font-size:12px;text-shadow:0 1px 3px rgba(0,0,0,0.4)}
-.site-rule{border:none;height:1px;background:#e5e2da;margin:6px 0 10px}
-.site-footer-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.footer-logo{height:20px;width:auto}
-.foot-text{flex:1;min-width:240px}
-.foot-mail{font-size:12px;color:#fff;text-decoration:none}
-
-/* Glow rosso dal basso */
-.footer-glow{position:fixed;left:0;right:0;bottom:0;height:120px;background:linear-gradient(to top,rgba(139,0,0,1) 0%,rgba(179,0,0,0.85) 60%,transparent 100%);pointer-events:none;z-index:-1}
-
-/* Bottone MENU */
-.back-btn{position:fixed;left:14px;bottom:14px;z-index:1500;background:rgba(255,255,255,0.75);color:#0a6a2b;font-size:13px;font-weight:600;padding:6px 10px;border-radius:20px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
-.back-btn:hover{background:#0a6a2b;color:#fff}
-
-/* Stampa: alberi dietro, prodotti davanti */
-.print-col{display:none}
+/* Stampa: garantisce articoli in primo piano */
 @media print{
-  @page{size:A4;margin:14mm 12mm}
-  html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  /* Nascondo decorazioni schermo */
-  body::before,body::after,html::before,html::after{display:none!important}
-  /* Strato alberi in stampa: dietro a tutto */
-  .print-col{display:block;position:fixed;top:0;bottom:0;width:120px;pointer-events:none;z-index:-1}
-  .print-col.left{left:1.2mm;background:url("images/latosx.png") no-repeat left bottom / contain}
-  .print-col.right{right:1.2mm;background:url("images/latodx.png") no-repeat right bottom / contain}
-  /* Contenuti in primo piano */
-  body{position:relative;z-index:0}
-  header,.container,.site-footer,.list,.item{position:relative;z-index:1}
-  header::before,.footer-glow,.back-btn{display:none!important}
-  .site-footer{color:#000;text-shadow:none}
-  .foot-mail{color:#000;text-decoration:underline}
+  header{position:static}
+  .item{background:#fff !important}
+  body, .container, .list{z-index:0}
 }
 
-.cat{margin:16px 8px 6px;font:600 18px/1.2 'Playfair Display',serif;color:#fff;
-  background:linear-gradient(90deg,rgba(255,255,255,0.15),rgba(255,255,255,0));
-  padding:8px 12px;border-radius:10px}
-@media (min-width:700px){.cat{margin:24px 8px 8px;font-size:20px}}
+/* Semplice decorazione di sfondo opzionale, z-index dietro a tutto */
+.bg-deco{position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.15;background-image:
+  radial-gradient(ellipse at 10% 0%, #b30000 10%, transparent 40%),
+  radial-gradient(ellipse at 90% 100%, #b30000 10%, transparent 40%);
+  background-size:600px 600px, 600px 600px;
+  background-repeat:no-repeat;
+  background-position: -150px -150px, calc(100% + 150px) calc(100% + 150px);
+}
 </style>
 </head>
 <body>
-<div class="print-col left" aria-hidden="true"></div>
-<div class="print-col right" aria-hidden="true"></div>
+<div class="bg-deco" aria-hidden="true"></div>
 
 <header>
-  <div class="top">
-    <img class="logo" src="images/zanonlogonatale.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
-    <h1>Catalogo Prodotti </br> NATALE 2025</h1>
-    <div class="sub">Clicca un elemento per i dettagli e la condivisione.</div>
-    <div class="tools"><div class="search"><input id="searchBox" placeholder="Cerca prodotti…"></div></div>
-    <div id="count" class="count"></div>
+  <div class="wrap">
+    <img class="logo" src="images/zanonlogonatale.png" alt="Zanon Seafish" onerror="this.onerror=null;this.src='images/default1.jpg';">
+    <div>
+      <h1>Catalogo Prodotti • Natale 2025</h1>
+      <div class="sub">Clicca un elemento per i dettagli. Ricerca su nomi, descrizioni e categorie.</div>
+      <div class="tools">
+        <div class="search"><input id="searchBox" placeholder="Cerca prodotti…"></div>
+      </div>
+      <div id="count" class="count"></div>
+    </div>
   </div>
 </header>
 
@@ -126,39 +96,25 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
   <div id="list" class="list"></div>
 </div>
 
-<div id="modal" class="modal" role="dialog" aria-modal="true">
-  <div class="modal-content" aria-labelledby="mTitle">
-    <h2 id="mTitle" class="m-title"></h2>
-    <div class="m-meta"><span id="mShort"></span><span id="mPrice" class="m-price"></span></div>
-    <div id="gallery"></div>
-    <p id="mFull"></p>
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px">
-      <button id="shareBtn" class="share-small" title="Condividi" aria-label="Condividi">📤 Condividi</button>
-      <button id="closeBtn" class="close-btn" aria-label="Chiudi">Chiudi</button>
+<!-- Modal -->
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="card">
+    <header style="display:flex;align-items:center;gap:8px">
+      <div id="mTitle" style="font:600 16px/1.2 Inter">Dettagli</div>
+      <button class="close" id="mClose" type="button">Chiudi</button>
+    </header>
+    <div class="body">
+      <div class="gallery" id="mGallery"></div>
+      <div class="name" id="mName"></div>
+      <div class="text" id="mShort"></div>
+      <div class="text" id="mFull" style="margin-top:6px;color:#444"></div>
+      <div class="text" style="margin-top:10px;font-weight:600">Prezzo: <span id="mPrice"></span></div>
     </div>
   </div>
 </div>
 
-<footer class="site-footer">
-  <hr class="site-rule">
-  <div class="site-footer-inner">
-    <img src="images/logo.png" alt="Zanon Seafish Ingros SRL" class="footer-logo" onerror="this.style.display='none'">
-    <div class="foot-text">
-      <strong>Zanon Seafish Ingros SRL</strong> · P.IVA IT01654690278 ·
-      S. Croce 491, 30135 Venezia (VE) ·
-      Via Colombara 115/A, 30176 Marghera (VE) ·
-      Tel: 041 5382830 · 041 3963095 ·
-      <a href="https://www.zanonseafish.it/" target="_blank" rel="noopener">www.zanonseafish.it</a> ·
-      <a href="mailto:info@zanonseafish.it" class="foot-mail">info@zanonseafish.it</a>
-     </br>  </br> </div>
-  </div>
-</footer>
-
-<div class="footer-glow" aria-hidden="true"></div>
-<a class="back-btn" href="index2.html" title="Torna al menu">↩︎ Menu</a>
-
 <script>
-// === DATI ===
+/* ==== DATI ==== */
 const PRODUCTS = [
   // === Affumicati ===
   {id:"salmone-norvegia-600",category:"Affumicati",name:"Salmone preaffettato Norvegia 600 g",price:20.50,unit:"/confezione",shortDesc:"Senza pelle, baffa 600 g.",fullDesc:"Salmone preaffettato di origine Norvegia, senza pelle, formato baffa da 600 g. Ideale per antipasti o carpacci.",images:[""]},
@@ -202,82 +158,82 @@ const PRODUCTS = [
   {id:"stoccafisso-secco-kg",category:"Altre specialità",name:"Stoccafisso secco sottovuoto",price:56.00,unit:"/kg",shortDesc:"Confezionato sottovuoto, vendita a peso.",fullDesc:"Stoccafisso secco confezionato sottovuoto. Prezzo al kg.",images:[""]}
 ];
 
-const list=document.getElementById('list');
-const count=document.getElementById('count');
-const fmt=new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'});
-function unitLabel(u){if(u===\"/confezione\") return \" €/conf.\"; if(u===\"/kg\") return \" €/kg\"; return u?(\" \"+u):\"\";}
+/* ==== APP ==== */
+const list  = document.getElementById('list');
+const count = document.getElementById('count');
+const searchBox = document.getElementById('searchBox');
+
+const fmt = new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'});
+function unitLabel(u){ if(u==="/confezione") return " €/conf."; if(u==="/kg") return " €/kg"; return u?(" "+u):""; }
 
 function row(p){
+  const img = (p.images && p.images[0]) ? p.images[0] : "images/default1.jpg";
   return `<div class='item' data-id='${p.id}'>
-    <div class='thumb'><img loading='lazy' src='${(p.images&&p.images[0])||"images/default1.jpg"}' alt='' onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
+    <div class='thumb'><img loading='lazy' src='${img}' alt='' onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
     <div class='info'><h3 class='title'>${p.name}</h3><p class='desc'>${p.shortDesc||""}</p><div class='divider'></div></div>
     <div class='price'>${fmt.format(p.price||0)}${unitLabel(p.unit)}</div>
-  </div>`
+  </div>`;
 }
-
 
 function render(arr){
   const order=[], groups={};
-  for(const p of arr){ const c=p.category||'Altri'; if(!groups[c]){groups[c]=[]; order.push(c);} groups[c].push(p); }
+  for(const p of arr){
+    const c = p.category || 'Altri';
+    if(!groups[c]){ groups[c]=[]; order.push(c); }
+    groups[c].push(p);
+  }
   let out='';
-  for(const c of order){ out += `<h2 class="cat">${c}</h2>` + groups[c].map(row).join(''); }
-  list.innerHTML=out;
-  count.textContent=`${arr.length} ${arr.length===1?'prodotto':'prodotti'}`;
+  for(const c of order){
+    out += `<h2 class="cat">${c}</h2>` + groups[c].map(row).join('');
+  }
+  list.innerHTML = out;
+  count.textContent = `${arr.length} ${arr.length===1?'prodotto':'prodotti'}`;
   document.querySelectorAll('.item').forEach(el=>el.onclick=()=>openModal(el.dataset.id));
 }
 
-render(PRODUCTS);
-
-/* Modal */
-const modal=document.getElementById('modal'),
-      mTitle=document.getElementById('mTitle'),
-      mShort=document.getElementById('mShort'),
-      mFull=document.getElementById('mFull'),
-      mPrice=document.getElementById('mPrice'),
-      gallery=document.getElementById('gallery'),
-      closeBtn=document.getElementById('closeBtn'),
-      shareBtn=document.getElementById('shareBtn');
-let currentId=null;
-
-function galleryHTML(imgs,alt){
-  const a=(imgs&&imgs.length?imgs:["images/default1.jpg"]).slice(0,2);
-  return a.map(s=>`<img loading='lazy' src='${s||"images/default1.jpg"}' alt='${alt||""}' onerror="this.onerror=null;this.src='images/default1.jpg';">`).join('')
+function applySearch(){
+  const q = (searchBox?.value||"").trim().toLowerCase();
+  const arr = !q ? PRODUCTS :
+    PRODUCTS.filter(p => (`${p.name} ${p.shortDesc||""} ${p.fullDesc||""} ${p.category||""}`).toLowerCase().includes(q));
+  render(arr);
 }
 
+document.addEventListener('DOMContentLoaded', applySearch);
+if (document.readyState === 'complete' || document.readyState === 'interactive') applySearch();
+if (searchBox) searchBox.addEventListener('input', applySearch);
+
+/* Modal minimale */
+const modal = document.getElementById('modal');
+const mTitle = document.getElementById('mTitle');
+const mName  = document.getElementById('mName');
+const mShort = document.getElementById('mShort');
+const mFull  = document.getElementById('mFull');
+const mPrice = document.getElementById('mPrice');
+const mGallery = document.getElementById('mGallery');
+const mClose = document.getElementById('mClose');
+
+function galleryHTML(imgs, alt){
+  const arr = (Array.isArray(imgs) && imgs.length ? imgs : ["images/default1.jpg","images/default1.jpg","images/default1.jpg"]);
+  return arr.map(s=>`<img src="${s||'images/default1.jpg'}" alt="">`).join('');
+}
 function openModal(id){
-  const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
-  currentId=id;
-  mTitle.textContent=p.name||"";
-  mShort.textContent=p.shortDesc||"";
-  mFull.textContent=p.fullDesc||"";
-  mPrice.textContent=fmt.format(p.price||0)+(p.unit||"");
-  gallery.innerHTML=galleryHTML(p.images,p.name);
+  const p = PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  mTitle.textContent = p.name||"";
+  mName.textContent  = p.name||"";
+  mShort.textContent = p.shortDesc||"";
+  mFull.textContent  = p.fullDesc||"";
+  mPrice.textContent = fmt.format(p.price||0) + unitLabel(p.unit);
+  mGallery.innerHTML = galleryHTML(p.images, p.name);
   modal.classList.add('open');
   document.body.style.overflow='hidden';
-  if(location.hash!=='#'+id) history.replaceState(null,'','#'+id);
 }
-
 function closeModal(){
   modal.classList.remove('open');
   document.body.style.overflow='';
-  if(location.hash) history.replaceState(null,'',location.pathname+location.search);
 }
-closeBtn.onclick=closeModal;
-modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
-
-shareBtn.onclick=async()=>{
-  const p=PRODUCTS.find(x=>x.id===currentId); if(!p) return;
-  const t=`${p.name} – ${fmt.format(p.price)}\n${p.shortDesc||""}\n${location.origin+location.pathname}#${encodeURIComponent(p.id)}`;
-  try{ if(navigator.share){ await navigator.share({title:p.name,text:t}); }
-       else { await navigator.clipboard.writeText(t); alert('Dettagli copiati'); } }
-  catch(e){}
-};
-
-document.getElementById('searchBox').addEventListener('input',e=>{
-  const v=e.target.value.trim().toLowerCase();
-  render(PRODUCTS.filter(p=>[p.name,p.shortDesc,p.fullDesc].filter(Boolean).some(s=>s.toLowerCase().includes(v))));
-});
+mClose.addEventListener('click', closeModal);
+modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
 </script>
 </body>
 </html>
