@@ -19,8 +19,11 @@ html::before,html::after{
 html::before{left:1.2mm;background-image:url("images/latosx.png");background-position:left bottom}
 html::after{right:1.2mm;background-image:url("images/latodx.png");background-position:right bottom}
 
-/* Header come prodotti-definitivo */
-header{background:linear-gradient(180deg,#0b1620 0%, #0e1f2a 60%, #0e1f2a00 100%);color:#fff;padding:20px 12px 18px;text-align:center;position:relative}
+/* Header: gradiente rosso */
+header{
+  background:linear-gradient(180deg,#8b0000 0%, #b30000 70%, #b3000000 100%);
+  color:#fff;padding:20px 12px 18px;text-align:center;position:relative
+}
 header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
 header img.logo{height:60px;width:auto;display:block;margin:0 auto}
 header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:0 0 2px 0;font-size:24px;line-height:1.15;word-break:break-word;overflow-wrap:anywhere}
@@ -38,7 +41,7 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 @media (max-width:900px){header,.container,.site-footer{padding-left:16px;padding-right:16px}}
 .container{max-width:1100px;margin:6px auto 14px}
 
-/* Card come prodotti-definitivo */
+/* Card */
 .list{display:flex;flex-direction:column;gap:10px}
 .item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
 .item:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.06)}
@@ -50,12 +53,14 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 .divider{height:1px;background:var(--line);margin:3px 0}
 .price{justify-self:end;align-self:end;color:var(--price);font-weight:700;font-size:16px}
 
-/* Titoli categoria rosso sfocato semitrasparente */
-.cat{margin:14px 2px 6px;padding:8px 12px;border-radius:10px;border:1px solid #e5e2da;
-  background:linear-gradient(90deg,rgba(179,0,0,.18),rgba(179,0,0,0));backdrop-filter:blur(1px);
-  font-family:"Playfair Display",serif;font-weight:700;font-size:18px;color:#7a0000}
+/* Titoli categoria: gradiente rosso */
+.cat{
+  margin:14px 2px 6px;padding:8px 12px;border-radius:10px;border:1px solid #e5e2da;
+  background:linear-gradient(90deg, rgba(139,0,0,.25) 0%, rgba(179,0,0,.10) 55%, rgba(179,0,0,0) 100%);
+  font-family:"Playfair Display",serif;font-weight:700;font-size:18px;color:#7a0000
+}
 
-/* Modal identica */
+/* Modal */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
 .modal.open{display:flex}
 .modal-content{background:#fff;border-radius:12px;max-width:860px;width:min(96vw,860px);padding:20px;position:relative;max-height:90vh;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);display:flex;flex-direction:column}
@@ -67,7 +72,7 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 #mGallery:has(img:nth-child(2)){grid-template-columns:1fr 1fr}
 #mGallery img{max-width:100%;height:auto;display:block;object-fit:contain}
 
-/* Footer come prodotti-definitivo */
+/* Footer */
 .site-footer{max-width:1100px;margin:18px auto 24px;color:#444;font-size:12px}
 .site-rule{border:none;height:1px;background:#e5e2da;margin:6px 0 10px}
 .site-footer-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -91,9 +96,14 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
   .price{grid-column:2;justify-self:end}
 }
 
-/* Stampa */
+/* Stampa: alberi visibili */
 @media print{
   @page{size:A4;margin:14mm 12mm}
+  html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html::before,html::after{
+    display:block !important; position:fixed !important; bottom:0; top:auto;
+    width:120px; height:50vh; z-index:0 !important;
+  }
   header{background:none!important;color:#000!important;border-bottom:1px solid #ddd!important;padding:0 0 6mm}
   .tools,#count{display:none!important}
   .item{break-inside:avoid-page;page-break-inside:avoid;box-shadow:none;border-color:#ddd}
@@ -109,7 +119,8 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 <body>
 <header>
   <div class="top">
-    <img class="logo" src="images/logo.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
+    <!-- logo aggiornato -->
+    <img class="logo" src="images/zanonlogonatale.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
     <h1>Catalogo Prodotti ZANON SEAFISH</h1>
     <div class="sub">Clicca un elemento per i dettagli e la condivisione.</div>
     <div class="tools"><div class="search"><input id="searchBox" placeholder="Cerca prodotti…"></div></div>
@@ -154,20 +165,18 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 <a href="index2.html" title="Torna al menu" class="back-btn" aria-label="Torna al menu principale">↩︎ Home</a>
 
 <script>
-/* ==== DATI: con immagini reali dove già esistono nei file allegati ==== */
+/* === DATI prodotti (immutati) === */
 const PRODUCTS = [
-  // === Affumicati ===
   {id:"salmone-norvegia-600",category:"Affumicati",name:"Salmone preaffettato Norvegia 600 g",price:20.50,unit:"/confezione",shortDesc:"Senza pelle, baffa 600 g.",fullDesc:"Salmone preaffettato di origine Norvegia, senza pelle, formato baffa da 600 g.",images:[""]},
   {id:"salmone-norvegia-1kg",category:"Affumicati",name:"Salmone preaffettato Norvegia 1 kg",price:32.50,unit:"/confezione",shortDesc:"Senza pelle, baffa 1 kg.",fullDesc:"Salmone preaffettato Norvegia senza pelle in baffa da 1 kg.",images:[""]},
   {id:"salmone-scozia-600",category:"Affumicati",name:"Salmone preaffettato Scozia 600 g",price:23.80,unit:"/confezione",shortDesc:"Senza pelle, baffa 600 g.",fullDesc:"Salmone scozzese preaffettato senza pelle, baffa da 600 g.",images:[""]},
   {id:"salmone-scozia-1kg",category:"Affumicati",name:"Salmone preaffettato Scozia 1 kg",price:39.50,unit:"/confezione",shortDesc:"Senza pelle, baffa 1 kg.",fullDesc:"Salmone scozzese preaffettato senza pelle, baffa da 1 kg.",images:[""]},
   {id:"cuore-salmone-120-astucci",category:"Affumicati",name:"Cuore di Salmone 120 g astuccio",price:7.00,unit:"/confezione",shortDesc:"Filetto cuore 120 g.",fullDesc:"Filetto cuore di salmone da 120 g in astuccio.",images:[""]},
-  {id:"spada-fettine-80-astucci",category:"Affumicati",name:"Pesce spada a fettine 80 g astuccio",price:3.80,unit:"/confezione",shortDesc:"Busta 80 g in astuccio.",fullDesc:"Fettine di pesce spada pronte per antipasti.",images:["images/spada-affumicato.jpg"]}, /* da prodotti-definitivo */
-  {id:"tonno-fettine-80-astucci",category:"Affumicati",name:"Tonno a fettine 80 g astuccio",price:4.80,unit:"/confezione",shortDesc:"Busta 80 g in astuccio.",fullDesc:"Fettine di tonno in busta da 80 g.",images:["images/tonno-affumicato.jpg"]}, /* da prodotti-definitivo */
-  {id:"salmone-preaff-200-busta",category:"Affumicati",name:"Salmone preaffettato 200 g busta",price:6.50,unit:"/confezione",shortDesc:"Busta 200 g.",fullDesc:"Salmone preaffettato in busta da 200 g.",images:["images/salmone-preaff-norv.jpg"]}, /* da prodotti-definitivo */
-  {id:"sgombro-aff-pepe-200",category:"Affumicati",name:"Filetto di Sgombro affumicato al pepe 200 g",price:6.00,unit:"/confezione",shortDesc:"Busta 200 g al pepe.",fullDesc:"Filetti di sgombro affumicati al pepe.",images:["images/aringa-affumicata.jpg"]}, /* percorso usato negli allegati */
+  {id:"spada-fettine-80-astucci",category:"Affumicati",name:"Pesce spada a fettine 80 g astuccio",price:3.80,unit:"/confezione",shortDesc:"Busta 80 g in astuccio.",fullDesc:"Fettine di pesce spada pronte per antipasti.",images:["images/spada-affumicato.jpg"]},
+  {id:"tonno-fettine-80-astucci",category:"Affumicati",name:"Tonno a fettine 80 g astuccio",price:4.80,unit:"/confezione",shortDesc:"Busta 80 g in astuccio.",fullDesc:"Fettine di tonno in busta da 80 g.",images:["images/tonno-affumicato.jpg"]},
+  {id:"salmone-preaff-200-busta",category:"Affumicati",name:"Salmone preaffettato 200 g busta",price:6.50,unit:"/confezione",shortDesc:"Busta 200 g.",fullDesc:"Salmone preaffettato in busta da 200 g.",images:["images/salmone-preaff-norv.jpg"]},
+  {id:"sgombro-aff-pepe-200",category:"Affumicati",name:"Filetto di Sgombro affumicato al pepe 200 g",price:6.00,unit:"/confezione",shortDesc:"Busta 200 g al pepe.",fullDesc:"Filetti di sgombro affumicati al pepe.",images:["images/aringa-affumicata.jpg"]},
 
-  // === I Baccalà in vaschetta ===
   {id:"baccala-mantecato-200",category:"I Baccalà in vaschetta",name:"Baccalà mantecato 200 g",price:4.80,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Baccalà mantecato in vaschetta da 200 g.",images:["images/baccala-mantecato-35-200.jpg"]},
   {id:"baccala-mantecato-1kg",category:"I Baccalà in vaschetta",name:"Baccalà mantecato 1 kg",price:20.50,unit:"/confezione",shortDesc:"Vaschetta 1 kg.",fullDesc:"Baccalà mantecato formato 1 kg.",images:["images/baccala-mantecato-35-front.jpg"]},
   {id:"baccala-vicentina-200",category:"I Baccalà in vaschetta",name:"Baccalà alla Vicentina 200 g",price:7.50,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Ricetta alla Vicentina, vaschetta 200 g.",images:["images/baccala-vicentina-200.jpg"]},
@@ -177,16 +186,13 @@ const PRODUCTS = [
   {id:"baccala-umido-150",category:"I Baccalà in vaschetta",name:"Baccalà in umido 150 g",price:5.50,unit:"/confezione",shortDesc:"Vaschetta 150 g.",fullDesc:"Baccalà in umido porzione singola.",images:["images/baccala-umido-150.jpg"]},
   {id:"baccala-umido-1kg",category:"I Baccalà in vaschetta",name:"Baccalà in umido 1 kg",price:31.00,unit:"/confezione",shortDesc:"Vaschetta 1 kg.",fullDesc:"Baccalà in umido formato 1 kg.",images:["images/baccala-umido-1.jpg"]},
 
-  // === Il Dentice mantecato ===
   {id:"dentice-mantecato-200",category:"Il Dentice mantecato",name:"Dentice mantecato 200 g",price:9.00,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Crema di dentice mantecato.",images:["images/dentice-crema-200.jpg"]},
   {id:"dentice-mantecato-500",category:"Il Dentice mantecato",name:"Dentice mantecato 500 g",price:18.50,unit:"/confezione",shortDesc:"Vaschetta 500 g.",fullDesc:"Dentice mantecato 500 g.",images:["images/dentice-crema-500.jpg"]},
 
-  // === Il Saor di Gamberi e Sarde ===
   {id:"gamberi-in-saor-200",category:"Il Saor di Gamberi e Sarde",name:"Gamberi in saor 200 g",price:6.00,unit:"/confezione",shortDesc:"Vaschetta 200 g.",fullDesc:"Gamberi in saor alla veneziana.",images:["images/saor-gamberi.png"]},
   {id:"gamberi-in-saor-1kg",category:"Il Saor di Gamberi e Sarde",name:"Gamberi in saor 1 kg",price:27.00,unit:"/confezione",shortDesc:"Vaschetta 1 kg.",fullDesc:"Gamberi in saor formato 1 kg.",images:["images/saor-gamberi.png"]},
   {id:"sarde-in-saor-800",category:"Il Saor di Gamberi e Sarde",name:"Sarde in saor 800 g",price:13.50,unit:"/confezione",shortDesc:"Con uvetta e pinoli, vaschetta 800 g.",fullDesc:"Sarde in saor tipiche veneziane.",images:["images/saor-sarde.png"]},
 
-  // === Altre specialità ===
   {id:"polpa-riccio-70",category:"Altre specialità",name:"Polpa di riccio 70 g",price:12.50,unit:"/confezione",shortDesc:"Smeralda, vaso 70 g.",fullDesc:"Polpa di riccio Smeralda 70 g.",images:["images/polpa-riccio.jpg"]},
   {id:"polpa-granchio-170",category:"Altre specialità",name:"Polpa di granchio 170 g",price:10.00,unit:"/confezione",shortDesc:"Smeralda, 170 g.",fullDesc:"Polpa di granchio Smeralda 170 g.",images:["images/polpa-granchio.jpg"]},
   {id:"alici-cantabrico-50",category:"Altre specialità",name:"Filetti di alici Cantabrico 50 g",price:3.50,unit:"/confezione",shortDesc:"In olio di oliva, latta 50 g.",fullDesc:"Filetti di alici del Cantabrico 50 g.",images:["images/acciughe-filetti-riunione.jpg"]},
@@ -198,7 +204,7 @@ const PRODUCTS = [
   {id:"stoccafisso-secco-kg",category:"Altre specialità",name:"Stoccafisso secco sottovuoto",price:56.00,unit:"/kg",shortDesc:"Confezionato sottovuoto, vendita a peso.",fullDesc:"Stoccafisso secco sottovuoto. Prezzo al kg.",images:["images/stoccafisso-secco.jpg"]}
 ];
 
-/* ==== APP identica a prodotti-definitivo, con categorie e €/conf. ==== */
+/* === APP === */
 const listEl=document.getElementById("list");
 const countEl=document.getElementById("count");
 const q=document.getElementById("searchBox");
