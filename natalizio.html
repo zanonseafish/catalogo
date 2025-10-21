@@ -94,7 +94,10 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 .close-btn{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer;background:#eee;color:#111;box-shadow:0 2px 6px rgba(0,0,0,.15)}
 #mGallery{flex:1 1 auto;overflow:auto;display:grid;gap:12px;align-items:center;justify-items:center}
 #mGallery:has(img:nth-child(2)){grid-template-columns:1fr 1fr}
-#mGallery img{max-width:100%;height:auto;display:block;object-fit:contain}
+#mGallery img{max-width:100%;height:auto;display:block;object-fit:contain
+  max-height:80vh;
+  object-fit:contain;
+}
 
 /* Footer */
 .site-footer{max-width:1100px;margin:18px auto 24px;color:#444;font-size:12px}
@@ -338,6 +341,12 @@ window.openModal=function(id){
   mTitle.textContent=p.name; mDesc.textContent=p.shortDesc||""; mFullDesc.textContent=p.fullDesc||"";
   mPrice.textContent=fmt.format(p.price||0)+unitLabel(p.unit);
   const imgs=(p.images||[]).slice(0,2); mGallery.innerHTML=imgs.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';">`).join("");
+  // ridimensiona quando le immagini sono caricate
+  mGallery.querySelectorAll('img').forEach(img=>{
+    img.addEventListener('load', adjustModalImages, {once:false});
+  });
+  setTimeout(adjustModalImages, 0);
+
   shareBtn.onclick=()=>shareProduct(currentId);
   modal.classList.add("open"); document.body.style.overflow="hidden";
   if(location.hash!=="#"+id) history.pushState({modal:true,id},"","#"+id);
@@ -355,6 +364,27 @@ q.addEventListener("input",()=>{
 
 render();
 if(location.hash){const id=decodeURIComponent(location.hash.slice(1)); if(PRODUCTS.some(p=>p.id===id)) openModal(id);}
+function adjustModalImages(){
+    const content = document.querySelector('.modal-content');
+    const gallery = document.getElementById('mGallery');
+    if(!content || !gallery) return;
+    const titleH = document.getElementById('mTitle')?.offsetHeight || 0;
+    const descH  = document.getElementById('mDesc')?.offsetHeight || 0;
+    const fullH  = document.getElementById('mFullDesc')?.offsetHeight || 0;
+    const priceH = document.getElementById('mPrice')?.offsetHeight || 0;
+    const footerH= document.querySelector('.modal-footer')?.offsetHeight || 0;
+    const paddings = 40; // approx top+bottom padding inside modal-content
+    const max = content.clientHeight - (titleH + descH + fullH + priceH + footerH + paddings);
+    const imgs = gallery.querySelectorAll('img');
+    imgs.forEach(img => { img.style.maxHeight = Math.max(120, max) + 'px'; }
+
+window.addEventListener('resize', ()=>{ if(modal.classList.contains('open')) adjustModalImages(); });
+
+
+window.addEventListener('load', ()=>{
+  const h = decodeURIComponent(location.hash.slice(1));
+  if(h && typeof openModal==='function'){ try{ openModal(h); }catch(e){} }
+});
 </script>
 </body>
 </html>
