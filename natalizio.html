@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Catalogo Prodotti ZANON SEAFISH • Natale</title>
+<title>Catalogo Prodotti ZANON SEAFISH • "Natale2025"</title>
    <!-- Open Graph -->
-<meta property="og:title" content="Catalogo Prodotti ZANON SEAFISH">
-<meta property="og:description" content="Sfoglia il catalogo prodotti Zanon Seafish Ingros SRL">
+<meta property="og:title" content="Offerte Natale 2025 ZANON SEAFISH">
+<meta property="og:description" content="Sfoglia il catalogo delle offerte di Natale 2025 - Zanon Seafish Ingros SRL">
 <meta property="og:url" content="https://zanonseafish.github.io/catalogo/natalizio.html">
 <meta property="og:type" content="website">
 
@@ -63,6 +63,9 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 .desc{color:var(--muted);font-size:12px;line-height:1.3;margin:0 0 4px 0}
 .divider{height:1px;background:var(--line);margin:3px 0}
 .price{justify-self:end;align-self:end;color:var(--price);font-weight:700;font-size:16px}
+
+/* Apice IVA */
+.iva{display:block;font-size:10px;line-height:1;text-align:center;color:var(--muted);margin-top:2px}
 
 /* Titoli categoria: gradiente rosso */
 .cat{
@@ -185,12 +188,12 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 const PRODUCTS = [
   // === Affumicati ===
   {id:"salmone-norvegia-600",category:"Affumicati",name:"Salmone preaffettato Norvegia 600 g",price:20.50,unit:"/confezione",shortDesc:"Senza pelle, baffa 600 g.",fullDesc:"Salmone preaffettato di origine Norvegia, senza pelle, formato baffa da 600 g. Ideale per antipasti o carpacci.",images:[""]},
-  {id:"salmone-norvegia-1kg",category:"Affumicati",name:"Salmone preaffettato Norvegia 1 kg",price:32.50,unit:"/confezione",shortDesc:"Senza pelle, baffa 1 kg.",fullDesc:"Salmone preaffettato Norvegia senza pelle in baffa da 1 kg. Fette regolari, gusto equilibrato.",images:[""]},
+  {id:"salmone-re-norvegia-1kg",category:"Affumicati",name:"Salmone preaffettato Norvegia 1 kg",price:32.50,unit:"/confezione",shortDesc:"Senza pelle, baffa 1 kg.",fullDesc:"La baffa preaffettata Re Salmone coniuga perfettamente tradizione e innovazione ed è rivolta alla clientela professionale come ristoranti e hotel. La nostra speciale ricetta è frutto di tutta la nostra competenza e passione.",images:["images/Re-Salmone-1000.png","images/lavorazione.png"]},
   {id:"salmone-scozia-600",category:"Affumicati",name:"Salmone preaffettato Scozia 600 g",price:23.80,unit:"/confezione",shortDesc:"Senza pelle, baffa 600 g.",fullDesc:"Salmone scozzese preaffettato senza pelle, baffa da 600 g. Aroma deciso da affumicatura tradizionale.",images:[""]},
   {id:"salmone-scozia-1kg",category:"Affumicati",name:"Salmone preaffettato Scozia 1 kg",price:39.50,unit:"/confezione",shortDesc:"Senza pelle, baffa 1 kg.",fullDesc:"Salmone scozzese preaffettato senza pelle, baffa da 1 kg. Fetta ampia e consistente.",images:[""]},
-  {id:"cuore-salmone-120-astucci",category:"Affumicati",name:"Cuore di Salmone 120 g astuccio",price:7.00,unit:"/confezione",shortDesc:"Filetto cuore 120 g.",fullDesc:"Filetto cuore di salmone da 120 g in astuccio. Taglio centrale, texture morbida.",images:[""]},
-  {id:"spada-fettine-80-astucci",category:"Affumicati",name:"Pesce spada a fettine 80 g astuccio",price:5.50,unit:"/confezione",shortDesc:"Busta 80 g in astuccio.",fullDesc:"Fettine di pesce spada in busta da 80 g, confezione in astuccio. Pronte per antipasti.",images:["images/spada-affumicato.jpg"]},
-  {id:"tonno-fettine-80-astucci",category:"Affumicati",name:"Tonno a fettine 80 g astuccio",price:4.80,unit:"/confezione",shortDesc:"Busta 80 g in astuccio.",fullDesc:"Fettine di tonno in busta da 80 g, confezione in astuccio. Sapore pieno e delicato.",images:["images/tonno-affumicato.jpg"]},
+  {id:"cuore-salmone-120-filetto",category:"Affumicati",name:"Cuore di Salmone 120 g astuccio",price:7.00,unit:"/confezione",shortDesc:"Filetto cuore 120 g.",fullDesc:"Il Filettino Re Salmone è ottenuto esclusivamente dalla parte più pregiata del Salmone, lavorato da fresco e mai congelato. Ideale per piatti eleganti ed innovativi.",images:["images/Filettino-Re-Salmone-120.jpg","images/lavorazione.png"]},
+  {id:"spada-affumicato-astucci",category:"Affumicati",name:"Pesce spada a fettine 80 g astuccio",price:5.50,unit:"/confezione",shortDesc:"Busta 80 g in astuccio.",fullDesc:"Fettine di pesce spada in busta da 80 g, confezione in astuccio. Pronte per antipasti.",images:["images/pesce-spada-affumicato.webp"]},
+  {id:"tonno-bresaola-affumicato-astucci",category:"Affumicati",name:"Tonno a fettine 80 g astuccio",price:4.80,unit:"/confezione",shortDesc:"Busta 80 g in astuccio.",fullDesc:"Fettine di tonno in busta da 80 g, confezione in astuccio. Sapore pieno e delicato.",images:["images/bresaola-tonno-affumicato.webp","images/bresaola-tonno-back.webp"]},
   {id:"salmone-preaff-200-busta",category:"Affumicati",name:"Salmone preaffettato 200 g busta",price:6.50,unit:"/confezione",shortDesc:"Busta 200 g.",fullDesc:"Salmone preaffettato in busta da 200 g. Fette sottili, pronte da servire.",images:["images/salmone-preaff-norv.jpg"]},
   {id:"sgombro-aff-pepe-200",category:"Affumicati",name:"Filetto di Sgombro affumicato al pepe 200 g",price:6.00,unit:"/confezione",shortDesc:"Busta 200 g al pepe.",fullDesc:"Filetti di sgombro affumicati al pepe in busta da 200 g. Gusto aromatico.",images:["images/aringa-affumicata.jpg"]},
 
@@ -243,6 +246,7 @@ let currentId=null;
 
 function unitLabel(u){return u==="/confezione"?" €/conf.":(u==="/kg"?" €/kg":(u||""));}
 
+/* CARD: prezzo + IVA inclusa sotto, centrata */
 function rowTemplate(p){return `
   <div class="item" data-id="${p.id}">
     <div class="thumb"><img loading="lazy" src="${(p.images&&p.images[0])||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
@@ -251,7 +255,7 @@ function rowTemplate(p){return `
       <p class="desc">${p.shortDesc||""}</p>
       <div class="divider"></div>
     </div>
-    <div class="price">${fmt.format(p.price||0)}${unitLabel(p.unit)}</div>
+    <div class="price">${fmt.format(p.price||0)}${unitLabel(p.unit)}<span class="iva">IVA inclusa</span></div>
   </div>`}
 
 function render(list=PRODUCTS){
@@ -305,7 +309,8 @@ function openModal(id){
   mTitle.textContent=p.name||"";
   mDesc.textContent=p.shortDesc||"";
   mFullDesc.textContent=p.fullDesc||"";
-  mPrice.textContent=fmt.format(p.price||0)+unitLabel(p.unit);
+  /* MODAL: prezzo + riga separata IVA INCLUSA */
+  mPrice.innerHTML = fmt.format(p.price||0)+unitLabel(p.unit) + '<br><span class="iva">IVA INCLUSA</span>';
   const imgs=(p.images||[]).slice(0,2); // max 2
   mGallery.innerHTML=imgs.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';">`).join("");
   mGallery.querySelectorAll('img').forEach(img=>{ img.addEventListener('load', adjustModalImages); });
