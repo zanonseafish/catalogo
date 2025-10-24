@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Catalogo Prodotti ZANON SEAFISH • "Natale2025" (Quantità • FIX 2 • Modal Responsive)</title>
+     <!-- Open Graph -->
+<meta property="og:title" content="Offerte Natale 2025 ZANON SEAFISH">
+<meta property="og:description" content="Sfoglia il catalogo delle offerte di Natale 2025 - Zanon Seafish Ingros SRL">
+<meta property="og:url" content="https://zanonseafish.github.io/catalogo/natalizio.html">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://zanonseafish.github.io/catalogo/images/og-cover2.jpg">
+<meta property="og:image:secure_url" content="https://zanonseafish.github.io/catalogo/images/og-cover2.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<!-- end Open Graph -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* SOLO ALBERI LATERALI, SEMPRE DIETRO */
+html::before,html::after{
+  content:"";position:fixed;bottom:0;width:120px;height:50vh;
+  background-repeat:no-repeat;background-size:contain;pointer-events:none;z-index:-3 !important;
+}
+html::before{left:1.2mm;background-image:url("images/latosx.png");background-position:left bottom}
+html::after{right:1.2mm;background-image:url("images/latodx.png");background-position:right bottom}
+
+:root{--bg:#fbfbf8;--ink:#111;--muted:#606060;--line:#e7e4dc;--price:#0a6a2b;--accent:#8b0000}
+*{box-sizing:border-box}html,body{height:100%}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink)}
+/* Header (identico a natalizio) */
+header{background:linear-gradient(180deg,#8b0000 0%, #b30000 70%, #b3000000 100%);color:#fff;padding:20px 12px 18px;text-align:center;position:relative}
+header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
+header img.logo{height:60px;width:auto;display:block;margin:0 auto}
+header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:0 0 2px 0;font-size:24px;line-height:1.15}
+header .sub{font-weight:700;color:#fff;font-size:18px;margin-top:0;animation:blink 2s infinite}
+.contatti{font-size:13px;font-weight:500;margin-top:2px}
+.contatti a{color:inherit;text-decoration:underline}
+.tools{display:flex;justify-content:center;margin-top:8px}
+.search{max-width:480px;width:100%}
+.search input{width:100%;padding:10px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;color:#fff;outline:none}
+.search input::placeholder{color:#fff}
+/* Layout con margini come natalizio */
+header,.container,.site-footer{padding-left:134px;padding-right:134px}
+@media (max-width:900px){header,.container,.site-footer{padding-left:16px;padding-right:16px}}
+.container{max-width:1100px;margin:6px auto 14px}
+/* Lista/card (identiche a natalizio) */
+.list{display:flex;flex-direction:column;gap:10px}
+.item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.thumb{width:84px;height:84px;border-radius:12px;overflow:hidden;background:#f1f1ed;border:1px solid var(--line)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.info{min-width:0;padding-left:8px}
+.title{font-family:"Playfair Display",serif;font-weight:700;font-size:18px;letter-spacing:.02em;margin:0 0 3px 0;text-transform:uppercase}
+.title .open{background:none;border:none;color:inherit;font:inherit;cursor:pointer;padding:0;text-align:left}
+.desc{color:var(--muted);font-size:12px;line-height:1.3;margin:0 0 4px 0}
+.divider{height:1px;background:var(--line);margin:3px 0}
+.price{color:var(--price);font-weight:700;font-size:16px;text-align:right}
+.iva{display:block;font-size:10px;line-height:1;text-align:right;color:var(--muted);margin-top:2px}
+/* Categoria */
+.cat{margin:14px 2px 6px;padding:8px 12px;border-radius:10px;border:1px solid #e5e2da;background:linear-gradient(90deg, rgba(139,0,0,.25) 0%, rgba(179,0,0,.10) 55%, rgba(179,0,0,0) 100%);font-family:"Playfair Display",serif;font-weight:700;font-size:18px;color:#7a0000}
+/* Contatore +/− */
+.qty{display:inline-flex;align-items:center;gap:6px;border:1px solid #ddd;border-radius:999px;padding:4px 6px;margin-top:6px;user-select:none}
+.qty button{border:none;background:#f6f6f3;padding:4px 8px;border-radius:999px;font-size:14px;cursor:pointer}
+.qty .num{min-width:20px;text-align:center;font-weight:700}
+
+/* ===================
+   MODAL RESPONSIVE FIX
+   =================== */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:16px;z-index:5000}
+.modal.open{display:flex}
+/* Usa unità dinamiche per mobile (dvh) e fallback (svh) */
+:root{--vh:100dvh}
+@supports not (height: 1dvh){ :root{--vh:100svh} }
+
+.modal-content{
+  background:#fff;border-radius:12px;
+  width:min(96vw,860px);
+  max-height:calc(var(--vh) - 32px);
+  padding:16px;position:relative;overflow:hidden;
+  box-shadow:0 10px 24px rgba(0,0,0,.35);
+  display:flex;flex-direction:column;gap:10px;
+}
+.m-title{font-family:"Playfair Display",serif;margin:0}
+/* Sezioni testuali */
+#mDesc,#mFullDesc,#mPrice,.qty+*{flex:0 0 auto}
+/* Galleria che si adatta e scrolla */
+#mGallery{
+  flex:1 1 auto;overflow:auto;
+  display:flex;flex-direction:column;gap:12px;
+  align-items:center;justify-content:flex-start;
+}
+#mGallery img{
+  display:block;max-width:100%;height:auto;object-fit:contain;
+  /* impedisce overflow verticale su display piccoli */
+  max-height:calc(100% - 12px);
+}
+.modal-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:4px;flex:0 0 auto}
+.share-small, .close-btn{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer}
+.share-small{background:#111;color:#fff}
+.close-btn{background:#eee;color:#111}
+
+/* Carrello fisso */
+.cart{position:fixed;left:14px;top:10px;background:rgba(255,255,255,.9);backdrop-filter:blur(2px);border:1px solid #ddd;border-radius:12px;box-shadow:0 6px 16px rgba(0,0,0,.15);padding:10px 12px;max-width:340px;z-index:1500;display:inline-flex;align-items:center}
+.cart.collapsed{padding:6px 10px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;max-width:unset}
+.cart h4{margin:0 0 6px 0;font-size:14px}
+.cart-list{font-size:12px;line-height:1.35;max-height:160px;overflow:auto;margin-bottom:6px}
+.cart-empty{color:#777;font-style:italic}
+.cart-total{display:flex;justify-content:space-between;align-items:center;font-weight:700;margin-top:6px}
+.cart-actions{display:flex;justify-content:space-between;align-items:center;margin-top:6px;gap:8px}
+.cart button{border:none;border-radius:999px;padding:8px 12px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff}
+.cart .toggle{background:#eee;color:#222}
+.cart.collapsed .when-expanded{display:none}
+.cart.collapsed .when-collapsed{display:inline-flex;gap:6px;align-items:center}
+.cart:not(.collapsed) .when-collapsed{display:none}
+
+/* Animazione header */
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+
+/* Stampa */
+@media print{
+  .tools,.cart,.qty,.share-small,.actions-bottom{display:none!important}
+}
+
+/* Footer logo fix: avoid oversized image on mobile */
+.site-footer img{max-width:160px;height:auto;display:inline-block}
+.footer-logo{height:20px;width:auto}
+.site-footer-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* Responsiveness cards */
+@media (max-width:820px){
+  .item{grid-template-columns:76px 1fr 74px}
+  .thumb{width:76px;height:76px;border-radius:10px}
+  .title{font-size:16px}
+  .price{font-size:15px}
+}
+@media (max-width:560px){
+  .item{grid-template-columns:66px 1fr;grid-template-rows:auto auto;gap:8px}
+  .price{grid-column:2;justify-self:end}
+}
+
+/* Actions above footer */
+.actions-bottom{display:flex;justify-content:center;gap:10px;margin:16px 0 6px}
+.actions-bottom button{border:none;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.12)}
+.actions-bottom .ghost{background:#eee;color:#222}
+
+/* Footer identical to natalizio-2 */
+.site-footer{max-width:1100px;margin:18px auto 24px;color:#444;font-size:12px;padding-left:134px;padding-right:134px}
+@media (max-width:900px){.site-footer{padding-left:16px;padding-right:16px}}
+.site-rule{border:none;height:1px;background:#e5e2da;margin:6px 0 10px}
+.site-footer-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.site-footer img{max-width:160px;height:auto;display:inline-block}
+.footer-logo{height:20px;width:auto}
+.foot-text{flex:1;min-width:240px}
+.foot-text a{color:#064;text-decoration:underline}
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <img class="logo" src="images/zanonlogonatale.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
+    <h1>Catalogo Natale 2025</h1>
+    <div class="sub">Attendiamo i Vs graditi ordini entro mercoledì 4 dicembre</div>
+    <div class="contatti">
+      📞 041 5382830 &nbsp;|&nbsp;
+      <a href="mailto:amministrazione@zanonseafish.it">✉️ amministrazione@zanonseafish.it</a>
+    </div>
+    <div class="tools"><div class="search"><input id="searchBox" placeholder="Cerca prodotti…"></div></div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="cat">Affumicati</div>
+  <div id="list" class="list"></div>
+</div>
+
+<!-- Modal -->
+<div id="modal" class="modal" role="dialog" aria-modal="true">
+  <div class="modal-content" aria-labelledby="mTitle">
+    <h2 id="mTitle" class="m-title"></h2>
+    <div id="mGallery"></div>
+    <p id="mDesc" class="desc"></p>
+    <p id="mFullDesc"></p>
+    <p id="mPrice" class="price" style="margin-top:0"></p>
+    <div class="qty" aria-label="Quantità">
+      <button id="mMinus" aria-label="Diminuisci">–</button>
+      <span id="mNum" class="num">0</span>
+      <button id="mPlus" aria-label="Aumenta">+</button>
+      <span class="mini">Quantità</span>
+    </div>
+    <div class="modal-footer">
+      <button id="shareBtn" class="share-small" title="Condividi" aria-label="Condividi">📤 Condividi</button>
+      <button id="closeBtn" class="close-btn" aria-label="Chiudi">Chiudi</button>
+    </div>
+  </div>
+</div>
+
+<!-- Carrello -->
+<div id="cart" class="cart collapsed" aria-live="polite">
+  <span class="when-collapsed">🧾 <strong id="miniCount">0</strong></span>
+  <div class="when-expanded">
+    <h4>Riepilogo</h4>
+    <div id="cartList" class="cart-list cart-empty">Nessun articolo</div>
+    <div class="cart-total"><span>Totale</span><span id="cartTotal">€ 0,00</span></div>
+    <div class="cart-actions">
+      <button id="toggleBtn" class="toggle" type="button">Riduci</button>
+      <button id="mailBtn" type="button">Prepara mail</button>
+    </div>
+  </div>
+</div>
+
+<div class="actions-bottom" id="final-actions"><button id="openCartBtn" class="ghost" type="button" onclick="openCartFromBottom()">Vedi carrello</button><button id="mailBtnBottom" type="button" onclick="openMail()">Prepara mail</button></div>
+
+<footer class="site-footer">
+  <hr class="site-rule">
+  <div class="site-footer-inner">
+    <img src="images/logo.png" alt="Zanon Seafish Ingros SRL" class="footer-logo" onerror="this.style.display='none'">
+    <div class="foot-text">
+      <strong>Zanon Seafish Ingros SRL</strong> · P.IVA IT01654690278 ·
+      Sede legale: S. Croce 491, 30135 Venezia (VE) ·
+      Sede amm. e magazzini: Via Colombara 115/A, 30176 Marghera (VE) ·
+      Tel: 041 5382830 · 041 3963095 ·
+      <a href="https://www.zanonseafish.it/" target="_blank" rel="noopener">www.zanonseafish.it</a> ·
+      <a class="foot-mail" href="mailto:amministrazione@zanonseafish.it">amministrazione@zanonseafish.it</a>
+    </br></br></br>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* === DATI prodotti (prezzi e descrizioni invariati) === */
+const PRODUCTS = [
+  // === Affumicati ===
+  {id:"salmone-tiamo-norvegia-600",category:"Affumicati",name:"Salmone 'Ti Amo' preaffettato Norvegia",price:20.50,unit:"/confezione",shortDesc:"Lavorato da fresco, senza coloranti e additivi. Conf. 600 gr",fullDesc:"I nostri salmoni non sono pescati all'amo... ma allevati con amore! Ogni giorno ci impegniamo responsabilmente per migliorare le condizioni dei nostri allevamenti secondo i più rigidi criteri di sicurezza. Tutti i salmoni Re Salmone crescono secondo alti standard qualitativi, sono lavorati senza coloranti, additivi e senza mai ricorrere a processi di congelamento. Perché garantire la salute e la genuinità dei nostri salmoni è anche un gesto d'amore per il nostro benessere.",images:["images/salmone-tiamo-norvegia-600.jpg"]},
+  {id:"salmone-re-norvegia-1kg",category:"Affumicati",name:"Salmone preaffettato Norvegia",price:32.50,unit:"/confezione",shortDesc:"Lavorato da fresco, senza coloranti e additivi. Conf. 1 kg.",fullDesc:"La baffa preaffettata Re Salmone coniuga perfettamente tradizione e innovazione ed è rivolta alla clientela professionale come ristoranti e hotel. La nostra speciale ricetta è frutto di tutta la nostra competenza e passione.",images:["images/Re-Salmone-1000.png","images/lavorazione.png"]},
+  {id:"salmone-scozia-600",category:"Affumicati",name:"Salmone preaffettato Scozia",price:23.80,unit:"/confezione",shortDesc:"Senza pelle, affumicatura a freddo. Conf. da 600 gr.",fullDesc:"Prodotto da salmone fresco scozzese (Salmo salar). Senza spine, senza pelle, senza grassi, salatura a secco, affumicato a freddo. Conf. da 600 gr",images:["images/salmone-scozia-600.jpg"]},
+  {id:"salmone-scozia-tiamo-1kg",category:"Affumicati",name:"Filetto di salmone preaffettato Scozia 'Coda Nera'",price:39.50,unit:"/confezione",shortDesc:"Salmone preaffettato scozzese qualità 'Coda Nera'. Conf. 1 kg",fullDesc:"Salmone di qualità superiore affumicato su fuoco di legna. Carni morbide di colore arancio e dal sapore delicato, con un leggere aroma di fumo. Filetto a fette di salmone senza pelle, grasso e parti scure.",images:["images/salmone-affumicato-codanera.jpg"]},
+  {id:"cuore-salmone-tiamo-120-filetto",category:"Affumicati",name:"Filettino di salmone 'Ti Amo' Norvegia",price:7.00,unit:"/confezione",shortDesc:"Filettino 'cuore' Norvegia 'Ti Amo' 120 gr.",fullDesc:"Il Filettino Re Salmone è ottenuto esclusivamente dalla parte più pregiata del Salmone, lavorato da fresco e mai congelato. Ideale per piatti eleganti ed innovativi.",images:["images/Filettino-Re-Salmone-120.jpg","images/lavorazione.png"]},
+  {id:"spada-affumicato-astucci",category:"Affumicati",name:"Pesce spada affumicato",price:5.50,unit:"/confezione",shortDesc:"Confezione da 80 gr.",fullDesc:"Pescato nelle acque incontaminate dell'Oceano Atlantico. Salato a mano, lenta stagionatura e affumicatura a bassa temperatura. Il Pesce Spada Bottega del Mare è morbido e delicato",images:["images/pesce-spada-affumicato.webp"]},
+  {id:"tonno-bresaola-affumicato-astucci",category:"Affumicati",name:"Tonno affumicato 'Gran Tunnina'",price:4.80,unit:"/confezione",shortDesc:"Confezione da 80 gr.",fullDesc:"Gran Tunnina. Tonno affumicato. Per apprezzare tutte le qualità del prodotto, si consiglia di aprire la confezione 10 minuti prima di servire.",images:["images/bresaola-tonno-affumicato.webp","images/bresaola-tonno-back.webp"]},
+  {id:"salmone-preaff-200-busta",category:"Affumicati",name:"Salmone preaffettato Norvegia",price:6.50,unit:"/confezione",shortDesc:"Preaffettato. Confezione da 200 gr.",fullDesc:"Salmone norvegese preaffettato in busta da 200 gr. Fette sottili, pronte da servire.",images:["images/salmone-norvegia-affumicato-200.jpg"]},
+  {id:"sgombro-aff-pepe-200",category:"Affumicati",name:"Filetto di Sgombro al pepe",price:6.00,unit:"/confezione",shortDesc:"Sgombro affumicato al pepe. Confezione da 200 gr.",fullDesc:"Filetti di sgombro affumicati al pepe in busta sottovuoto da 200 gr. Gusto aromatico, aroma deciso, texture morbida.",images:["images/aringa-affumicata.jpg"]},
+
+  // === I Baccalà in vaschetta ===
+  {id:"baccala-mantecato-200",category:"I Baccalà in vaschetta",name:"Baccalà mantecato 200 gr",price:4.80,unit:"/confezione",shortDesc:"Vaschetta da 200 gr.",fullDesc:"Classico baccalà mantecato in vaschetta da 200 gr. Crema vellutata, pronta all’uso.",images:["images/baccala-mantecato-35-200.jpg"]},
+  {id:"baccala-mantecato-1kg",category:"I Baccalà in vaschetta",name:"Baccalà mantecato 1 kg",price:20.50,unit:"/confezione",shortDesc:"Vaschetta da 1 kg.",fullDesc:"Baccalà mantecato formato 'convenienza' da 1 kg. Pronto all’uso per crostini o secondi rapidi.",images:["images/baccala-mantecato-35-front.jpg"]},
+  {id:"baccala-vicentina-200",category:"I Baccalà in vaschetta",name:"Baccalà alla Vicentina 200 gr",price:7.50,unit:"/confezione",shortDesc:"Vaschetta da 200 gr.",fullDesc:"Ricetta alla Vicentina in vaschetta da 200 gr. Cottura lenta e saporita.",images:["images/baccala-vicentina-200.jpg"]},
+  {id:"baccala-vicentina-1kg",category:"I Baccalà in vaschetta",name:"Baccalà alla Vicentina 1 kg",price:30.00,unit:"/confezione",shortDesc:"Vaschetta da 1 kg.",fullDesc:"Ricetta tradizionale alla vicentina in vaschetta formato 'convenienza' da 1 kg. Cottura lenta e gusto autentico.",images:["images/baccala-vicentina-1.jpg"]},
+  {id:"baccala-condito-200",category:"I Baccalà in vaschetta",name:"Baccalà condito 200 gr",price:7.50,unit:"/confezione",shortDesc:"Vaschetta da 200 gr.",fullDesc:"Baccalà condito con olio e spezie in vaschetta da 200 gr.",images:["images/baccala-condito-200.jpg"]},
+  {id:"baccala-condito-1kg",category:"I Baccalà in vaschetta",name:"Baccalà condito 1 kg",price:32.00,unit:"/confezione",shortDesc:"Vaschetta da 1 kg.",fullDesc:"Baccalà condito formato 'convenienza' da 1 kg. Pronto all’uso per crostini o secondi rapidi.",images:["images/baccala-condito-200.jpg"]},
+  {id:"baccala-umido-150",category:"I Baccalà in vaschetta",name:"Baccalà in umido 150 gr",price:5.50,unit:"/confezione",shortDesc:"Vaschetta da 150 gr.",fullDesc:"Baccalà in umido porzione da 150 gr. Pronto all’uso per crostini o secondi rapidi.",images:["images/baccala-umido-150.jpg"]},
+  {id:"baccala-umido-1kg",category:"I Baccalà in vaschetta",name:"Baccalà in umido 1 kg",price:31.00,unit:"/confezione",shortDesc:"Vaschetta da 1 kg.",fullDesc:"Baccalà in umido formato 'convenienza' da 1 kg. Preparazione in umido dal sapore ricco. Da scaldare e servire.",images:["images/baccala-umido-1.jpg"]},
+
+  // === Il Dentice mantecato ===
+  {id:"dentice-mantecato-200",category:"Il Dentice mantecato",name:"Dentice mantecato 200 gr",price:9.00,unit:"/confezione",shortDesc:"Vaschetta 200 gr.",fullDesc:"Crema di dentice mantecato in vaschetta da 200 gr. Crema spalmabile di dentice. Perfetta per antipasti veloci. Sapore fine.",images:["images/dentice-crema-200.jpg"]},
+  {id:"dentice-mantecato-500",category:"Il Dentice mantecato",name:"Dentice mantecato 500 gr",price:18.50,unit:"/confezione",shortDesc:"Vaschetta 500 gr.",fullDesc:"Dentice mantecato formato 500 gr. Crema spalmabile di dentice. Perfetta per antipasti veloci. Sapore fine..",images:["images/dentice-crema-500.jpg"]},
+
+  // === Il Saor di Gamberi e Sarde ===
+  {id:"gamberi-in-saor-200",category:"Il Saor di Gamberi e Sarde",name:"Gamberi in saor 200 gr",price:6.00,unit:"/confezione",shortDesc:"Vaschetta 200 gr.",fullDesc:"Gamberi pronti in saòr, condimento tipico veneziano dolce-agrodolce. Vanno serviti freddi o a temperatura ambiente, perfetti per antipasti veloci. Gusto deciso ma armonioso, ideale per sorprendere senza impegnarsi in cucina. Confezione da 200 g, già pronta all'uso",images:["images/saor-gamberi.png"]},
+  {id:"gamberi-in-saor-1kg",category:"Il Saor di Gamberi e Sarde",name:"Gamberi in saor 1 kg",price:27.00,unit:"/confezione",shortDesc:"Vaschetta 1 kg.",fullDesc:"Gamberi pronti in saòr, condimento tipico veneziano dolce-agrodolce. Vanno serviti freddi o a temperatura ambiente, perfetti per antipasti veloci. Gusto deciso ma armonioso, ideale per sorprendere senza impegnarsi in cucina. Confezione da 1 kg, già pronta all'uso",images:["images/saor-gamberi.png"]},
+  {id:"sarde-in-saor-800",category:"Il Saor di Gamberi e Sarde",name:"Sarde in saor 800 gr",price:13.50,unit:"/confezione",shortDesc:"Con uvetta e pinoli, vaschetta 800 gr.",fullDesc:"Ricetta storica della cucina veneziana, nata quando il pesce doveva durare giorni sulle barche: cipolla stufata, aceto, uvetta e pinoli a creare quel gusto agrodolce tipico che “fa saòr”. È un piatto che si porta dietro secoli di tradizione e rimane uguale perché funziona: dolcezza, acidità e pesce che assorbe tutto il condimento col tempo. Perfette da portare in tavola così come sono, fredde, come antipasto classico delle feste.",images:["images/saor-sarde.png"]},
+
+  // === Altre specialità ===
+  {id:"polpa-riccio-70",category:"Altre specialità",name:"Polpa di riccio",price:12.50,unit:"/confezione",shortDesc:"Marca 'Smeralda', confezione da 70 gr.",fullDesc:"Polpa di riccio di mare 'Smeralda' in confezione da 70 gr. Gusto iodato marcato, colore aranciato e consistenza cremosa. Si usa in piccole quantità per insaporire: su crostini, per mantecare una pasta veloce o per dare spinta a una base già pronta. Un ingrediente che modifica subito il profilo del piatto anche in dosi minime.",images:["images/polpa-riccio.jpg"]},
+  {id:"polpa-granchio-170",category:"Altre specialità",name:"Polpa di granchio",price:10.00,unit:"/confezione",shortDesc:"Marca 'Smeralda', confezione da 170 gr.",fullDesc:"Polpa di granchio 'Smeralda' in confezione da 170 gr. Al naturale. Gusto delicato ma definito, carne bianca di crostaceo lavorata con minima aggiunta (acqua, sale). Colore chiaro, consistenza compatta, profilo marino sottile. Ingredienti semplici, senza aromi forti o marinature complesse. Pensata per valorizzare piatti dove il sapore di granchio deve emergere senza sovrastare gli altri elementi.",images:["images/polpa-granchio.jpg"]},
+  {id:"alici-cantabrico-50-olio-oliva",category:"Altre specialità",name:"Acciughe del Mar Cantabrico 'Regina Isabella'",price:3.00,unit:"/confezione",shortDesc:"Acciughe del Mar Cantabrico Regina Isabella, in olio di oliva, conf. 50 gr.",fullDesc:"Dopo un'accurata ricerca abbiamo selezionato le migliori acciughe del Mar Cantabrico. Per i filetti Regina Isabella selezioniamo esclusivamente acciughe fresche pescate nel periodo migliore dell'anno, la primavera. Dopo una leggera salatura e una maturazione di circa 10 mesi dotto sale, si ottengono dei filetti dal sapore senza paragoni e dal gusto inconfondibile.",images:["images/alici-intere-cantabrico-olio.jpg"]},
+  {id:"alici-marinate-200",category:"Altre specialità",name:"Alici marinate",price:3.50,unit:"/confezione",shortDesc:"Vaschetta 200 gr.",fullDesc:"Ricetta tradizionale mediterranea: filetti di alice puliti e immersi in aceto o succo di limone, olio e spezie, secondo la tecnica della marinatura. Gusto delicato ma distintivo, consistenza morbida e buon equilibrio tra mare e acidità. Colore chiaro-argenteo sul dorso e bianco sul ventre, aspetto tipico del prodotto ben marinato Fatto per essere servito freddo come antipasto o abbinato ad altri sapori semplici.",images:["images/alici-marinate-200.jpg"]},
+  {id:"bocconcini-alici-olive-200",category:"Altre specialità",name:"Bocconcini alici e olive",price:4.00,unit:"/confezione",shortDesc:"In olio di girasole, 200 gr.",fullDesc:"Filetti di alici uniti a olive in un abbinamento saporito: il profilo marino delle alici incontra la dolcezza salata delle olive. Colore chiaro-argenteo dei filetti e le olive scure creano contrasto visivo. Consistenza morbida, gusto equilibrato tra mare e olive. Ideale per antipasti semplici o contorni con carattere.",images:["images/alici-bocconcini.jpg"]},
+  {id:"alici-sicilia-evo-720",category:"Altre specialità",name:"Filetti di alici Sicilia",price:14.50,unit:"/confezione",shortDesc:"Filetti di alici 'Albatros' in conf. vetro 720 gr.",fullDesc:"Alici conservate in olio di semi di girasole. Filetti interi, regolari, colore naturale e sapore netto di alici senza aromi aggiunti. Vaso grande in vetro, prodotto pensato per uso domestico continuativo o per più persone a tavola. Consistenza compatta, tipica della salatura e pulizia tradizionale.",images:["images/alici-filetti.jpg"]},
+  {id:"tonno-vaso-180",category:"Altre specialità",name:"Filetti di tonno in olio d'oliva",price:4.50,unit:"/confezione",shortDesc:"Filetti di tonno 'Albatros' in conf. vetro 180 gr.",fullDesc:"Tonno pinne gialle lavorato e conservato in olio d’oliva. Carne compatta, colore rosato uniforme e gusto pulito senza aromi aggiunti. Specie ricercata per la sua delicatezza naturale e per la capacità di mantenere sapore e consistenza",images:["images/tonno-filetto-albatros.jpg"]},
+  {id:"tonno-latta-850",category:"Altre specialità",name:"Filetti di tonno 'Acantilado' in olio d'oliva",price:20.00,unit:"/confezione",shortDesc:"Latta richiudibile 850 gr.",fullDesc:"Filetti di tonno selezionato, conservati in olio extravergine d’oliva. Carne rosata, lavorazione artigianale che mantiene consistenza e gusto del pesce. Marchio 'Acantilado', garanzia di materie prime controllate e lavorazione tradizionale. Senza aromi aggiunti, adatti a usi vari in cucina.",images:["images/tonno-filetti-acantilado.jpg"]},
+  {id:"stoccafisso-secco-kg",category:"Altre specialità",name:"Stoccafisso secco sottovuoto",price:56.00,unit:"/kg",shortDesc:"Stoccafisso secco confezionato sottovuoto, vendita a peso.",fullDesc:"Lo stoccafisso secco è un alimento che si ottiene essiccando il merluzzo. È un prodotto ricco di proteine, vitamine e sali minerali, ma povero di grassi. Prima del consumo, necessita di un processo di ammollo e reidratazione in acqua.",images:["images/stoccafisso-secco-sottovuoto.png"]}
+];
+/* ==== STATO ==== */
+const cart={};
+const fmt=new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'});
+function unitLabel(u){return u==='/confezione'?' €/conf.':(u==='/kg'?' €/kg':(u||''));}
+function getQty(id){return cart[id]||0;}
+function setQty(id,q){cart[id]=Math.max(0,q|0); if(cart[id]===0) delete cart[id]; renderCart(); syncRowQty(id); if(currentId===id) updateModalQty();}
+function addQty(id,delta){setQty(id,getQty(id)+delta);}
+function abbr(p){return p.abbr||p.name;}
+/* ==== LISTA ==== */
+const listEl=document.getElementById('list');
+function rowTemplate(p){return `
+<div class="item" data-id="${p.id}">
+  <div class="thumb" onclick="openModal('${p.id}')"><img loading="lazy" src="${(p.images&&p.images[0])||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
+  <div class="info">
+    <h3 class="title"><button class="open" onclick="openModal('${p.id}')">${p.name}</button></h3>
+    <p class="desc">${p.shortDesc||""}</p>
+    <div class="divider"></div>
+    <div class="qty" aria-label="Quantità" onclick="event.stopPropagation();">
+      <button onclick="event.stopPropagation();addQty('${p.id}',-1)" aria-label="Diminuisci">–</button>
+      <span id="num-${p.id}" class="num">0</span>
+      <button onclick="event.stopPropagation();addQty('${p.id}',+1)" aria-label="Aumenta">+</button>
+      <span class="mini">Quantità</span>
+    </div>
+  </div>
+  <div class="price">${fmt.format(p.price||0)}${unitLabel(p.unit)}<span class="iva">IVA inclusa</span></div>
+</div>`}
+function renderList(list=PRODUCTS){ listEl.innerHTML=list.map(rowTemplate).join(''); syncAllQty(); }
+/* ==== MODAL ==== */
+const modal=document.getElementById('modal');
+const mTitle=document.getElementById('mTitle');
+const mGallery=document.getElementById('mGallery');
+const mDesc=document.getElementById('mDesc');
+const mFullDesc=document.getElementById('mFullDesc');
+const mPrice=document.getElementById('mPrice');
+const shareBtn=document.getElementById('shareBtn');
+const closeBtn=document.getElementById('closeBtn');
+const mMinus=document.getElementById('mMinus');
+const mPlus=document.getElementById('mPlus');
+const mNum=document.getElementById('mNum');
+let currentId=null;
+function openModal(id){
+  const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
+  currentId=id;
+  document.body.style.overflow='hidden';
+  mTitle.textContent=p.name||'';
+  mDesc.textContent=p.shortDesc||'';
+  mFullDesc.textContent=p.fullDesc||'';
+  mPrice.innerHTML=fmt.format(p.price||0)+unitLabel(p.unit)+'<br><span class="iva">IVA INCLUSA</span>';
+  const imgs=(p.images||[]).slice(0,2);
+  mGallery.innerHTML = imgs.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';">`).join('');
+  updateModalQty();
+  modal.classList.add('open');
+  resetModalScroll();
+  adjustModalLayout();
+}
+function updateModalQty(){ mNum.textContent=getQty(currentId); }
+function closeModal(){ modal.classList.remove('open'); document.body.style.overflow=''; }
+closeBtn.addEventListener('click',closeModal);
+modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
+window.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+/* Ricalcolo responsive: usa altezza viewport effettiva e misura sezioni fisse */
+function adjustModalLayout(){
+  const mc=document.querySelector('#modal .modal-content');
+  const gal=document.getElementById('mGallery');
+  if(!mc || !gal) return;
+  const vh = Math.min(window.innerHeight, document.documentElement.clientHeight);
+  mc.style.maxHeight = (vh - 32) + 'px';
+  // Calcola spazio residuo per la galleria
+  const fixed = Array.from(mc.children)
+    .filter(el => el !== gal)
+    .reduce((s,el)=> s + el.offsetHeight, 0);
+  const padd = 32;
+  const gMax = Math.max(160, vh - fixed - padd);
+  gal.style.maxHeight = gMax + 'px';
+  gal.querySelectorAll('img').forEach(img=>{
+    img.style.maxHeight = (gMax - 12) + 'px';
+    img.style.width = '100%';
+    img.style.height = 'auto';
+    img.style.objectFit = 'contain';
+  });
+}
+function resetModalScroll(){
+  const mc=document.querySelector('#modal .modal-content');
+  const gal=document.getElementById('mGallery');
+  if(mc) mc.scrollTop=0;
+  if(gal) gal.scrollTop=0;
+  window.scrollTo(0,0);
+}
+window.addEventListener('resize', adjustModalLayout);
+window.addEventListener('orientationchange', adjustModalLayout);
+
+// Ricalcola quando le immagini caricano
+document.addEventListener('load', function(e){
+  if(e.target && e.target.closest && e.target.closest('#mGallery')) adjustModalLayout();
+}, true);
+
+/* ==== RICERCA ==== */
+const q=document.getElementById('searchBox');
+q.addEventListener('input',()=>{
+  const v=(q?.value||'').trim().toLowerCase();
+  const res=!v?PRODUCTS:PRODUCTS.filter(p => (`${p.name} ${p.shortDesc||''} ${p.fullDesc||''}`).toLowerCase().includes(v));
+  renderList(res);
+});
+/* ==== CART ==== */
+const cartEl=document.getElementById('cart');
+const cartListEl=document.getElementById('cartList');
+const cartTotalEl=document.getElementById('cartTotal');
+const miniCountEl=document.getElementById('miniCount');
+const toggleBtn=document.getElementById('toggleBtn');
+function positionCart(){
+  const cat = document.querySelector('.cat');
+  const header = document.querySelector('header');
+  if(cat){
+    const rect = cat.getBoundingClientRect();
+    const offset = 46;
+    cartEl.style.top = Math.max(6, rect.top - offset) + 'px';
+  }else{
+    const h = header?.offsetHeight || 0;
+    cartEl.style.top = (h + 10) + 'px';
+  }
+}
+function renderCart(){
+  const rows=[]; let total=0; let count=0;
+  for(const id of Object.keys(cart)){
+    const q=cart[id]; const p=PRODUCTS.find(x=>x.id===id);
+    if(!p||q<=0) continue;
+    rows.push(`• ${abbr(p)} × ${q}`);
+    total+=(p.price||0)*q; count+=q;
+  }
+  cartListEl.innerHTML = rows.length?rows.join('<br>'):'Nessun articolo';
+  cartListEl.classList.toggle('cart-empty', rows.length===0);
+  cartTotalEl.textContent=fmt.format(total);
+  miniCountEl.textContent=count;
+  positionCart();
+}
+cartEl.addEventListener('click',()=>{
+  if(cartEl.classList.contains('collapsed')){ cartEl.classList.remove('collapsed'); positionCart(); }
+});
+toggleBtn.addEventListener('click',e=>{ e.stopPropagation(); cartEl.classList.add('collapsed'); positionCart(); });
+
+/* ==== MAILTO: formato richiesto ==== */
+document.getElementById('mailBtn').addEventListener('click',()=>{
+  const ids=Object.keys(cart);
+  if(!ids.length){ alert('Seleziona almeno un articolo.'); return; }
+  let body='Gentile Zanon Seafish,%0D%0A%0D%0ADesidero inviare il seguente ordine:%0D%0A';
+  body+='Q.tà | Titolo | Short descr | Prezzo unitario | Totale riga%0D%0A';
+  body+='--------------------------------------------------------------%0D%0A';
+  let tot=0, count=0;
+  for(const id of ids){
+    const q=cart[id]; const p=PRODUCTS.find(x=>x.id===id); if(!p) continue;
+    const sub=(p.price||0)*q; tot+=sub; count+=q;
+    const line=`${q} | ${p.name} | ${p.shortDesc||''} | ${fmt.format(p.price||0)}${unitLabel(p.unit)} | ${fmt.format(sub)}`;
+    body+=encodeURIComponent(line)+'%0D%0A';
+  }
+  body+='--------------------------------------------------------------%0D%0A';
+  body+=`Totale articoli: ${count}%0D%0A';
+  body+=`Totale ordine: ${fmt.format(tot)}%0D%0A%0D%0A';
+  body+=`Dati per il ritiro/consegna:%0D%0ANome azienda / nominativo:%0D%0AIndirizzo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A';
+  const subject=encodeURIComponent('Ordine Catalogo Natale 2025');
+  const mailto=`mailto:amministrazione@zanonseafish.it?subject=${subject}&body=${body}`;
+  window.location.href=mailto;
+});
+
+/* ==== INIT ==== */
+function syncRowQty(id){ const el=document.getElementById('num-'+id); if(el) el.textContent=getQty(id); }
+function syncAllQty(){ PRODUCTS.forEach(p=>syncRowQty(p.id)); }
+window.addEventListener('load',()=>{ renderList(PRODUCTS); renderCart(); positionCart(); });
+window.addEventListener('resize', positionCart);
+
+function openMail(){
+  const ids = Object.keys(cart);
+  if(!ids.length){ alert('Seleziona almeno un articolo.'); return; }
+  let body='Gentile Zanon Seafish,%0D%0A%0D%0ADesidero inviare il seguente ordine:%0D%0A';
+  body+='Q.tà | Titolo | Short descr | Prezzo unitario | Totale riga%0D%0A';
+  body+='--------------------------------------------------------------%0D%0A';
+  let tot=0, count=0;
+  for(const id of ids){
+    const q=cart[id]; const p=PRODUCTS.find(x=>x.id===id); if(!p) continue;
+    const sub=(p.price||0)*q; tot+=sub; count+=q;
+    const line=`${q} | ${p.name} | ${p.shortDesc||''} | ${fmt.format(p.price||0)}${unitLabel(p.unit)} | ${fmt.format(sub)}`;
+    body+=encodeURIComponent(line)+'%0D%0A';
+  }
+  body+='--------------------------------------------------------------%0D%0A';
+  body+=`Totale articoli: ${count}%0D%0A';
+  body+=`Totale ordine: ${fmt.format(tot)}%0D%0A%0D%0A';
+  body+=`Dati per il ritiro:%0D%0ANome azienda / nominativo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A';
+  const subject=encodeURIComponent('Ordine Catalogo Natale 2025');
+  const mailto=`mailto:amministrazione@zanonseafish.it?subject=${subject}&body=${body}`;
+  window.location.href=mailto;
+}
+function openCartFromBottom(){
+  const cartEl = document.getElementById('cart');
+  if(!cartEl) return;
+  cartEl.classList.remove('collapsed');
+  const exp = cartEl.querySelector('.when-expanded');
+  if(exp) exp.style.display='block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>
