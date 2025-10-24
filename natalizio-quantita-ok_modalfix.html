@@ -390,7 +390,7 @@ function openMail(){
   body+='--------------------------------------------------------------%0D%0A';
   body+=`Totale articoli: ${count}%0D%0A`;
   body+=`Totale ordine: ${fmt.format(tot)}%0D%0A%0D%0A`;
-  body+=`Dati per il ritiro/consegna:%0D%0ANome azienda / nominativo:%0D%0AIndirizzo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A`;
+  body+=`Dati per il ritiro:%0D%0ANome azienda / nominativo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A`;
   const subject=encodeURIComponent('Ordine Catalogo Natale 2025');
   const mailto=`mailto:amministrazione@zanonseafish.it?subject=${subject}&body=${body}`;
   window.location.href=mailto;
