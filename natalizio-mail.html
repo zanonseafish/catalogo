@@ -57,9 +57,9 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 /* Modal */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:5000}
 .modal.open{display:flex}
-.modal-content{background:#fff;border-radius:12px;max-width:860px;width:min(96vw,860px);padding:20px;position:relative;max-height:90vh;overflow:auto;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+.modal-content{background:#fff;border-radius:12px;max-width:860px;width:min(96vw,860px);padding:20px;position:relative;max-height:90vh;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);display:flex;flex-direction:column}
 .m-title{font-family:"Playfair Display",serif;margin:0 0 10px 0}
-#mGallery img{max-width:100%;height:auto;display:block;object-fit:contain}
+#mGallery img{max-width:100%;height:auto;display:block;object-fit:contain;max-height:80vh}
 .modal-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px}
 .share-small, .close-btn{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer}
 .share-small{background:#111;color:#fff}
@@ -121,6 +121,12 @@ header,.container,.site-footer{padding-left:134px;padding-right:134px}
 .cart.collapsed .when-collapsed{display:inline-flex;gap:6px;align-items:center}
 .cart.collapsed .when-expanded{display:none!important}
 .cart:not(.collapsed) .when-expanded{display:block}
+
+
+/* === Fix: immagini modal adattate allo schermo === */
+.modal .modal-content{background:#fff;border-radius:12px;max-width:860px;width:min(96vw,860px);padding:20px;position:relative;max-height:90vh;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);display:flex;flex-direction:column}
+#mGallery{flex:1 1 auto;overflow:auto;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:flex-start}
+#mGallery img{max-width:100%;height:auto;display:block;object-fit:contain;max-height:80vh}
 
 </style>
 </head>
@@ -290,15 +296,17 @@ function openModal(id){
   mFullDesc.textContent=p.fullDesc||'';
   mPrice.innerHTML=fmt.format(p.price||0)+unitLabel(p.unit)+'<br><span class="iva">IVA INCLUSA</span>';
   const imgs=(p.images||[]).slice(0,2);
-  mGallery.innerHTML=imgs.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';">`).join('');
+  mGallery.innerHTML = imgs.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';" onload="adjustModalLayout()">`).join('');
   updateModalQty();
-  modal.classList.add('open'); document.body.style.overflow='hidden';
+  modal.classList.add('open'); document.body.style.overflow='hidden'; resetModalScroll(); adjustModalLayout();
 }
 function updateModalQty(){ mNum.textContent=getQty(currentId); }
 function closeModal(){ modal.classList.remove('open'); document.body.style.overflow=''; document.body.classList.remove('hide-cart'); }
 closeBtn.addEventListener('click',closeModal);
 modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
 window.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+window.addEventListener('resize', adjustModalLayout);
+window.addEventListener('orientationchange', adjustModalLayout);
 mMinus.addEventListener('click',()=>addQty(currentId,-1));
 mPlus.addEventListener('click',()=>addQty(currentId,+1));
 /* ==== RICERCA ==== */
@@ -405,6 +413,39 @@ function openCartFromBottom(){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
+
+function adjustModalLayout(){
+  try{
+    const modalEl = document.getElementById('modal');
+    if(!modalEl || !modalEl.classList.contains('open')) return;
+    const content = modalEl.querySelector('.modal-content');
+    const gallery = document.getElementById('mGallery');
+    const title   = document.getElementById('mTitle');
+    const desc    = document.getElementById('mDesc');
+    const full    = document.getElementById('mFullDesc');
+    const price   = document.getElementById('mPrice');
+    const footer  = document.querySelector('.modal-footer');
+
+    const vh = Math.max(320, Math.floor(window.innerHeight * 0.90));
+    const used = (title?.offsetHeight||0) + (desc?.offsetHeight||0) + (full?.offsetHeight||0) + (price?.offsetHeight||0) + (footer?.offsetHeight||0) + 28; // paddings
+    const maxH = Math.max(120, vh - used);
+
+    if(content){ content.style.maxHeight = vh + 'px'; }
+    if(gallery){
+      gallery.style.maxHeight = maxH + 'px';
+      gallery.querySelectorAll('img').forEach(img => { img.style.maxHeight = Math.max(100, maxH - 8) + 'px'; });
+    }
+  }catch(e){}
+}
+
+function resetModalScroll(){
+  const modalEl = document.getElementById('modal');
+  const content = modalEl?.querySelector('.modal-content');
+  const gallery = document.getElementById('mGallery');
+  if(content){ content.scrollTop = 0; }
+  if(gallery){ gallery.scrollTop = 0; }
+  window.scrollTo(0,0);
+}
 </script>
 </body>
 </html>
