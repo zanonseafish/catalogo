@@ -384,21 +384,43 @@ function productUrl(id){
   const base = location.origin + location.pathname; // ignora og:url
   return `${base}#${id}`;
 }
-function shareCurrent(){
+async function shareCurrent(){
   const p = PRODUCTS.find(x => x.id === currentId);
   if(!p){ alert('Apri un prodotto da condividere.'); return; }
-  const url   = productUrl(p.id);
-  const title = p.name || 'Prodotto';
-  const text  = `${p.name} — ${fmt.format(p.price||0)}${unitLabel(p.unit)}\n${url}`;
 
-  if (navigator.share && (typeof navigator.canShare !== 'function' || navigator.canShare({ title, text, url }))){
-    navigator.share({ title, text, url }).catch(()=>{});
-  }else{
-    // Fallback: copia testo e apri WhatsApp
-    (navigator.clipboard?.writeText(text).catch(()=>{}));
-    alert('Testo copiato. Apro WhatsApp. Puoi incollare dove vuoi.');
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+  const url   = productUrl(p.id);
+  const imgRel = (p.images && p.images[0]) || 'images/default1.jpg';
+  // Costruisci URL assoluto dell'immagine
+  const basePath = location.origin + location.pathname.replace(/[^/]*$/, '');
+  const imgUrl = imgRel.startsWith('http') ? imgRel : (imgRel.startsWith('/') ? (location.origin + imgRel) : (basePath + imgRel));
+  const title = p.name || 'Prodotto';
+  const textBare = `${p.name} — ${fmt.format(p.price||0)}${unitLabel(p.unit)}
+${url}`;
+  const textWithImg = `${p.name} — ${fmt.format(p.price||0)}${unitLabel(p.unit)}
+${imgUrl}
+${url}`;
+
+  // Tentativo Web Share con file (Level 2)
+  try{
+    const resp = await fetch(imgUrl, {mode:'cors'});
+    if(resp.ok){
+      const blob = await resp.blob();
+      const extGuess = (imgUrl.split('.').pop() || 'jpg').toLowerCase();
+      const mime = blob.type || (extGuess==='png' ? 'image/png' : (extGuess==='webp' ? 'image/webp' : 'image/jpeg'));
+      const file = new File([blob], `${p.id}.${extGuess}`, {type:mime});
+      if(navigator.share && (!navigator.canShare || navigator.canShare({ files:[file] }))){
+        await navigator.share({ title, text: textBare, files:[file] });
+        return;
+      }
+    }
+  }catch(_){ /* ignora e usa fallback */ }
+
+  // Fallback: Web Share senza file con URL immagine nel testo, altrimenti WhatsApp
+  if(navigator.share){
+    try{ await navigator.share({ title, text: textWithImg, url }); return; }catch(_){}
   }
+  (navigator.clipboard?.writeText(textWithImg).catch(()=>{}));
+  window.open(`https://wa.me/?text=${encodeURIComponent(textWithImg)}`, '_blank');
 }
 shareBtn.addEventListener('click', shareCurrent);
 
