@@ -261,7 +261,7 @@ function abbr(p){return p.abbr||p.name;}
 /* ==== LISTA ==== */
 const listEl=document.getElementById('list');
 function rowTemplate(p){return `
-<div class="item" data-id="${p.id}">
+<div id="${p.id}" class="item" data-id="${p.id}">
   <div class="thumb" onclick="openModal('${p.id}')"><img loading="lazy" src="${(p.images&&p.images[0])||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
   <div class="info">
     <h3 class="title"><button class="open" onclick="openModal('${p.id}')">${p.name}</button></h3>
@@ -356,6 +356,16 @@ cartEl.addEventListener('click',()=>{
 });
 toggleBtn.addEventListener('click',e=>{ e.stopPropagation(); cartEl.classList.add('collapsed'); positionCart(); });
 
+/* === Utility: azzera carrello + conferma === */
+function clearCart(){
+  for(const k of Object.keys(cart)) delete cart[k];
+  renderCart(); syncAllQty();
+}
+function confirmAndClear(){
+  clearCart();
+  alert('Ordine pronto in email. Carrello azzerato.');
+}
+
 /* ==== MAILTO: formato richiesto ==== */
 document.getElementById('mailBtn').addEventListener('click',()=>{
   const ids=Object.keys(cart);
@@ -376,8 +386,55 @@ document.getElementById('mailBtn').addEventListener('click',()=>{
   body+=`Dati per il ritiro/consegna:%0D%0ANome azienda / nominativo:%0D%0AIndirizzo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A`;
   const subject=encodeURIComponent('Ordine Catalogo Natale 2025');
   const mailto=`mailto:amministrazione@zanonseafish.it?subject=${subject}&body=${body}`;
-  window.location.href=mailto;
+  window.location.href = mailto;
+  setTimeout(confirmAndClear, 400);
+  return;
 });
+
+/* === Condividi prodotto aperto in MODAL === */
+function productUrl(id){
+  const base = location.origin + location.pathname; // ignora og:url
+  return `${base}#${id}`;
+}
+async function shareCurrent(){
+  const p = PRODUCTS.find(x => x.id === currentId);
+  if(!p){ alert('Apri un prodotto da condividere.'); return; }
+
+  const url   = productUrl(p.id);
+  const imgRel = (p.images && p.images[0]) || 'images/default1.jpg';
+  // Costruisci URL assoluto dell'immagine
+  const basePath = location.origin + location.pathname.replace(/[^/]*$/, '');
+  const imgUrl = imgRel.startsWith('http') ? imgRel : (imgRel.startsWith('/') ? (location.origin + imgRel) : (basePath + imgRel));
+  const title = p.name || 'Prodotto';
+  const textBare = `${p.name} — ${fmt.format(p.price||0)}${unitLabel(p.unit)}
+${url}`;
+  const textWithImg = `${p.name} — ${fmt.format(p.price||0)}${unitLabel(p.unit)}
+${imgUrl}
+${url}`;
+
+  // Tentativo Web Share con file (Level 2)
+  try{
+    const resp = await fetch(imgUrl, {mode:'cors'});
+    if(resp.ok){
+      const blob = await resp.blob();
+      const extGuess = (imgUrl.split('.').pop() || 'jpg').toLowerCase();
+      const mime = blob.type || (extGuess==='png' ? 'image/png' : (extGuess==='webp' ? 'image/webp' : 'image/jpeg'));
+      const file = new File([blob], `${p.id}.${extGuess}`, {type:mime});
+      if(navigator.share && (!navigator.canShare || navigator.canShare({ files:[file] }))){
+        await navigator.share({ title, text: textBare, files:[file] });
+        return;
+      }
+    }
+  }catch(_){ /* ignora e usa fallback */ }
+
+  // Fallback: Web Share senza file con URL immagine nel testo, altrimenti WhatsApp
+  if(navigator.share){
+    try{ await navigator.share({ title, text: textWithImg, url }); return; }catch(_){}
+  }
+  (navigator.clipboard?.writeText(textWithImg).catch(()=>{}));
+  window.open(`https://wa.me/?text=${encodeURIComponent(textWithImg)}`, '_blank');
+}
+shareBtn.addEventListener('click', shareCurrent);
 
 /* ==== INIT ==== */
 function syncRowQty(id){ const el=document.getElementById('num-'+id); if(el) el.textContent=getQty(id); }
@@ -404,7 +461,9 @@ function openMail(){
   body+=`Dati per il ritiro:%0D%0ANome azienda / nominativo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A`;
   const subject=encodeURIComponent('Ordine Catalogo Natale 2025');
   const mailto=`mailto:amministrazione@zanonseafish.it?subject=${subject}&body=${body}`;
-  window.location.href=mailto;
+  window.location.href = mailto;
+  setTimeout(confirmAndClear, 400);
+  return;
 }
 function openCartFromBottom(){
   const cartEl = document.getElementById('cart');
@@ -445,7 +504,7 @@ function resetModalScroll(){
   const gallery = document.getElementById('mGallery');
   if(content){ content.scrollTop = 0; }
   if(gallery){ gallery.scrollTop = 0; }
-  window.scrollTo(0,0);
+  // keep page scroll position
 }
 </script>
 
