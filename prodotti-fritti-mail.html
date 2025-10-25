@@ -218,7 +218,7 @@ function render(list){
   var target = list || PRODUCTS;
   var html = '';
   for(var i=0;i<target.length;i++){ html += rowTemplate(target[i]); }
-  listEl.innerHTML = html if html else '<div class="item">Nessun risultato</div>';
+  listEl.innerHTML = html ? html : '<div class="item">Nessun risultato</div>';
   countEl.textContent = (target.length===PRODUCTS.length? (target.length+' prodotti') : (target.length+' risultati'));
   syncAllQty();
 }
