@@ -356,6 +356,16 @@ cartEl.addEventListener('click',()=>{
 });
 toggleBtn.addEventListener('click',e=>{ e.stopPropagation(); cartEl.classList.add('collapsed'); positionCart(); });
 
+/* === Utility: azzera carrello + conferma === */
+function clearCart(){
+  for(const k of Object.keys(cart)) delete cart[k];
+  renderCart(); syncAllQty();
+}
+function confirmAndClear(){
+  clearCart();
+  alert('Ordine pronto in email. Carrello azzerato.');
+}
+
 /* ==== MAILTO: formato richiesto ==== */
 document.getElementById('mailBtn').addEventListener('click',()=>{
   const ids=Object.keys(cart);
@@ -376,7 +386,9 @@ document.getElementById('mailBtn').addEventListener('click',()=>{
   body+=`Dati per il ritiro/consegna:%0D%0ANome azienda / nominativo:%0D%0AIndirizzo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A`;
   const subject=encodeURIComponent('Ordine Catalogo Natale 2025');
   const mailto=`mailto:amministrazione@zanonseafish.it?subject=${subject}&body=${body}`;
-  window.location.href=mailto;
+  window.location.href = mailto;
+  setTimeout(confirmAndClear, 400);
+  return;
 });
 
 /* === Condividi prodotto aperto in MODAL === */
@@ -449,7 +461,9 @@ function openMail(){
   body+=`Dati per il ritiro:%0D%0ANome azienda / nominativo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A`;
   const subject=encodeURIComponent('Ordine Catalogo Natale 2025');
   const mailto=`mailto:amministrazione@zanonseafish.it?subject=${subject}&body=${body}`;
-  window.location.href=mailto;
+  window.location.href = mailto;
+  setTimeout(confirmAndClear, 400);
+  return;
 }
 function openCartFromBottom(){
   const cartEl = document.getElementById('cart');
