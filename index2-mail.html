@@ -1,146 +1,155 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Catalogo Zanon Seafish – Seleziona catalogo (mail)</title>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-<meta property="og:title" content="Catalogo Zanon Seafish – Seleziona catalogo">
-<meta property="og:description" content="Scegli tra catalogo completo e prodotti fritti. Carrello condiviso tra le pagine mail.">
+   <!-- Open Graph -->
+ 
+<meta property="og:title" content="Catalogo Prodotti ZANON SEAFISH">
+<meta property="og:description" content="Sfoglia il catalogo prodotti Zanon Seafish Ingros SRL">
+<meta property="og:url" content="https://zanonseafish.github.io/catalogo/index2.html">
 <meta property="og:type" content="website">
+
+<meta property="og:image" content="https://zanonseafish.github.io/catalogo/images/og-cover1.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
 <meta name="twitter:card" content="summary_large_image">
-<style>
-:root{--bg:#fbfbf8;--ink:#111;--muted:#606060;--line:#e7e4dc;--brand:#0b5;--accent:var(--brand)}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink)}
-header{background:linear-gradient(180deg,#0b1620 0%, #0e1f2a 60%, #0e1f2a00 100%);color:#fff;padding:24px 12px 22px;text-align:center}
-header .top{max-width:900px;margin:0 auto}
-header img.logo{height:60px;width:auto;display:block;margin:0 auto 6px}
-h1{font-family:"Playfair Display",serif;font-weight:600;margin:0;font-size:26px}
-.sub{opacity:.85;font-size:12px;margin-top:6px}
-.container{max-width:900px;margin:18px auto;padding:0 12px}
-.grid{display:grid;grid-template-columns:1fr;gap:12px}
-.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 1px 6px rgba(0,0,0,.06);display:flex;align-items:center;justify-content:space-between;gap:12px}
-.card h2{font-family:"Playfair Display",serif;font-size:20px;margin:0}
-.card p{margin:4px 0 0 0;color:#555;font-size:13px}
-.card .actions{display:flex;gap:10px;align-items:center}
-.btn{border:none;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff}
-.btn.ghost{background:#eee;color:#222}
-.cart{position:fixed;left:14px;top:10px;background:rgba(255,255,255,.9);border:1px solid #ddd;border-radius:12px;box-shadow:0 6px 16px rgba(0,0,0,.15);padding:10px 12px;max-width:320px;z-index:1500;display:inline-flex;align-items:center}
-.cart.collapsed{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;border-radius:999px;padding:6px 10px;cursor:pointer}
-.cart h4{margin:0 0 6px 0;font-size:14px}
-.cart-list{font-size:12px;line-height:1.35;max-height:160px;overflow:auto;margin-bottom:6px}
-.cart-empty{color:#777;font-style:italic}
-.cart-total{display:flex;justify-content:space-between;align-items:center;font-weight:700;margin-top:6px}
-.cart-actions{display:flex;justify-content:space-between;align-items:center;margin-top:6px;gap:8px}
-.cart button{border:none;border-radius:999px;padding:8px 12px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff}
-.cart .toggle{background:#eee;color:#222}
-.cart.collapsed .when-expanded{display:none}
-.cart:not(.collapsed) .when-expanded{display:block}
-.cart.collapsed .when-collapsed{display:inline-flex;gap:6px;align-items:center}
-.site-footer{max-width:900px;margin:24px auto;padding:0 12px;color:#444;font-size:12px}
-.site-rule{border:none;height:1px;background:#e5e2da;margin:12px 0}
-@media (min-width:740px){.grid{grid-template-columns:1fr 1fr}}
-</style>
+<!-- end Open Graph -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catalogo Prodotti ZANON SEAFISH</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#fbfbf8;
+      --ink:#111;
+      --line:#e7e4dc;
+      --brand:#0b5;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--ink);
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+    }
+
+    header{
+      background:linear-gradient(180deg,#0b1620 0%, #0e1f2a 60%, #0e1f2a00 100%);
+      color:#fff;
+      padding:24px 12px 20px;
+      text-align:center;
+    }
+    header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
+    header img.logo{height:60px;width:auto;display:block;margin:0 auto}
+    header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:6px 0 2px 0;font-size:24px;line-height:1.2}
+    header .sub{opacity:.85;font-size:11.5px}
+
+    main{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:40px 10px;
+    }
+
+    .catalog-container{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:30px;
+      margin-top:20px;
+    }
+
+    .catalog-button{
+      background:linear-gradient(145deg,#0b5,#094);
+      color:#fff;
+      border:none;
+      border-radius:14px;
+      padding:25px 50px;
+      font-size:1.2em;
+      cursor:pointer;
+      transition:transform 0.25s ease, box-shadow 0.25s ease;
+      text-transform:uppercase;
+      font-weight:600;
+      box-shadow:0 4px 10px rgba(0,0,0,0.15);
+    }
+    .catalog-button:hover,
+    .catalog-button:active{
+      transform:scale(1.08);
+      box-shadow:0 8px 18px rgba(0,0,0,0.25);
+    }
+
+    footer{
+      max-width:1100px;
+      margin:18px auto 24px;
+      padding:0 10px;
+      color:#444;
+      font-size:12px;
+    }
+    .site-rule{border:none;height:1px;background:#e5e2da;margin:6px 0 10px}
+    .site-footer-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .footer-logo{height:20px;width:auto}
+    .foot-text{flex:1;min-width:240px}
+    .foot-mail{font-size:12px;color:#0b5;text-decoration:none}
+
+    @media (max-width:600px){
+      .catalog-button{width:80%;}
+    }
+  </style>
 </head>
 <body>
-<header>
-  <div class="top">
-    <img class="logo" src="images/logo.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
-    <h1>Seleziona catalogo (area di prova mail)</h1>
-    <div class="sub">Carrello condiviso tra queste pagine: index2-mail, prodotti-mail, prodotti-fritti-mail</div>
-  </div>
-</header>
-
-<!-- Cart preview (condiviso) -->
-<div id="cart" class="cart collapsed" aria-live="polite">
-  <span class="when-collapsed">🧾 <strong id="miniCount">0</strong></span>
-  <div class="when-expanded">
-    <h4>Riepilogo</h4>
-    <div id="cartList" class="cart-list cart-empty">Nessun articolo</div>
-    <div class="cart-total"><span>Totale</span><span id="cartTotal">€ 0,00</span></div>
-    <div class="cart-actions">
-      <button id="toggleBtn" class="toggle" type="button">Riduci</button>
-      <button id="mailBtn" type="button">Prepara mail</button>
+  <header>
+    <div class="top">
+      <img class="logo" src="images/logo.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
+      <h1>Catalogo Prodotti ZANON SEAFISH</h1>
+      <div class="sub">Seleziona il catalogo da visualizzare</div>
     </div>
-  </div>
-</div>
+  </header>
 
-<div class="container">
-  <div class="grid">
-    <div class="card">
-      <div>
-        <h2>Tutti i prodotti</h2>
-        <p>Catalogo completo. “IVA ESCLUSA”. Carrello condiviso.</p>
-      </div>
-      <div class="actions">
-        <button id="goProdotti" class="btn">Apri</button>
-      </div>
+  <main>
+    <div class="catalog-container">
+      <button class="catalog-button" onclick="location.href='https://zanonseafish.github.io/catalogo/prodotti-mail.html'">
+        Prodotti Conservati
+      </button>
+      <button class="catalog-button" onclick="location.href='https://zanonseafish.github.io/catalogo/prodotti-fritti-mail.html'">
+        Prodotti Fritti
+      </button>
     </div>
-    <div class="card">
-      <div>
-        <h2>Prodotti fritti</h2>
-        <p>Selezione fritti. “IVA ESCLUSA”. Carrello condiviso.</p>
-      </div>
-      <div class="actions">
-        <button id="goFritti" class="btn">Apri</button>
-      </div>
-    </div>
-  </div>
-</div>
+  </main>
 
-<footer class="site-footer">
-  <hr class="site-rule">
-  <div>© Zanon Seafish Ingros SRL · <a href="mailto:info@zanonseafish.it">info@zanonseafish.it</a></div>
-</footer>
+  <footer class="site-footer">
+    <hr class="site-rule">
+    <div class="site-footer-inner">
+      <img src="images/logo.png" alt="Zanon Seafish Ingros SRL" class="footer-logo" onerror="this.style.display='none'">
+      <div class="foot-text">
+        <strong>Zanon Seafish Ingros SRL</strong> · P.IVA IT01654690278 ·
+        Sede legale: S. Croce 491, 30135 Venezia (VE) ·
+        Sede amm. e magazzini: Via Colombara 115/A, 30176 Marghera (VE) ·
+        Tel: 041 5382830 · 041 3963095 ·
+        <a href="https://www.zanonseafish.it/" target="_blank" rel="noopener">www.zanonseafish.it</a> ·
+        <a href="mailto:info@zanonseafish.it">info@zanonseafish.it</a>
+      </div>
+      <a class="foot-mail" href="mailto:info@zanonseafish.it" title="Scrivi a info@zanonseafish.it">✉️ Contattaci</a>
+    </div>
+  </footer>
 
 <script>
-/* CART SHARED v2 header (stesso storage tra pagine mail) */
-var CART_KEY='zanonCartV1';
-function loadCart(){try{return JSON.parse(localStorage.getItem(CART_KEY))||{}}catch(e){return {}}}
-function saveCart(c){localStorage.setItem(CART_KEY,JSON.stringify(c))}
-var Cart={data:loadCart(),clear:function(){this.data={}; saveCart(this.data);},sum:function(){var tot=0,cnt=0; for(var k in this.data){var it=this.data[k]; if(typeof it==='number'){cnt+=it;} else if(it&&typeof it.qty==='number'){cnt+=it.qty;} } return {count:cnt,total:0};}};
-/* Mini render del riepilogo carrello */
-var fmt = new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"});
-var cartEl=document.getElementById('cart');
-var cartListEl=document.getElementById('cartList');
-var cartTotalEl=document.getElementById('cartTotal');
-var miniCountEl=document.getElementById('miniCount');
-var toggleBtn=document.getElementById('toggleBtn');
-function renderCart(){
-  // Qui non conosciamo i prezzi perché index2-mail non ha PRODUCTS; mostriamo solo quantita per id
-  var rows=[]; var count=0;
-  var data=Cart.data||{};
-  for(var id in data){
-    var q=data[id]|0;
-    if(q>0){ rows.push('• '+id+' × '+q); count+=q; }
-  }
-  cartListEl.innerHTML = rows.length?rows.join('<br>'):'Nessun articolo';
-  if(rows.length===0){ cartListEl.classList.add('cart-empty'); } else { cartListEl.classList.remove('cart-empty'); }
-  cartTotalEl.textContent='—';
-  miniCountEl.textContent=count;
-}
-cartEl.addEventListener('click',function(){ if(cartEl.classList.contains('collapsed')){ cartEl.classList.remove('collapsed'); } });
-toggleBtn.addEventListener('click',function(e){ e.stopPropagation(); cartEl.classList.add('collapsed'); });
-
-/* Navigazione ai cataloghi mail */
-document.getElementById('goProdotti').addEventListener('click', function(){ location.href = './prodotti-mail.html'; });
-document.getElementById('goFritti').addEventListener('click', function(){ location.href = './prodotti-fritti-mail.html'; });
-
-/* Mail da index2-mail azzera carrello dopo */
-function openMail(){
-  var data=Cart.data||{};
-  if(!Object.keys(data).length){ alert('Seleziona almeno un articolo nei cataloghi.'); return; }
-  var subject=encodeURIComponent('Ordine Catalogo Prodotti');
-  var body=encodeURIComponent('Gentile Zanon Seafish,\n\nVedi ordine imposto dai cataloghi mail.\n(Invia da catalogo per dettaglio prezzi e righe.)');
-  location.href='mailto:info@zanonseafish.it?subject='+subject+'&body='+body;
-  setTimeout(function(){ Cart.clear(); renderCart(); alert('Ordine pronto in email. Carrello azzerato.'); }, 400);
-}
-document.getElementById('mailBtn').addEventListener('click', openMail);
-
-/* Init */
-renderCart();
+// Cart key alignment for mail sandbox; no UI changes here.
+(function(){
+  var CART_KEY='zanonCartV1';
+  try{
+    var c = localStorage.getItem(CART_KEY);
+    if(!c){ localStorage.setItem(CART_KEY, JSON.stringify({})); }
+  }catch(e){}
+})();
 </script>
-</body></html>
+
+</body>
+</html>
