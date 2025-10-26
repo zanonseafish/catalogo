@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="it"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Catalogo Prodotti ZANON SEAFISH – Prodotti (mail)</title>
+
+  <meta property="og:title" content="Catalogo Prodotti ZANON SEAFISH">
+  <meta property="og:description" content="Sfoglia il catalogo prodotti Zanon Seafish Ingros SRL">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/og-cover1.jpg">
+  <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -114,7 +120,7 @@ header .sub{opacity:.85;font-size:11.5px;margin-top:0}
 
 <div class="actions-bottom" id="final-actions">
   <button id="backBtn" class="ghost" type="button">← Indietro</button>
-  <button id="openCartBtn" class="ghost" type="button">Vedi carrello</button>
+  <button id="switchBtn" class="ghost" type="button">Vai ai fritti</button><button id="openCartBtn" class="ghost" type="button">Vedi carrello</button>
   <button id="mailBtnBottom" type="button">Prepara mail</button>
 </div>
 
@@ -376,7 +382,7 @@ function openMail(){
 document.getElementById('mailBtn').addEventListener('click', openMail);
 document.getElementById('mailBtnBottom').addEventListener('click', openMail);
 document.getElementById('openCartBtn').addEventListener('click', function(){ document.getElementById('cart').classList.remove('collapsed'); positionCart(); });
-document.getElementById('backBtn').addEventListener('click', function(){ if (history.length > 1) history.back(); else location.href = '/catalogo/'; });
+document.getElementById('backBtn').addEventListener('click', function(){ location.href = '/catalogo/index2-mail.html'; }); else location.href = '/catalogo/'; });
 window.addEventListener('cart:update', function(){ renderCart(); syncAllQty(); });
 
 /* Init */
