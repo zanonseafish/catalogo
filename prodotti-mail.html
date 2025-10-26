@@ -1,26 +1,13 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Catalogo Prodotti ZANON SEAFISH</title>
- <!-- Open Graph -->
- 
-<meta property="og:title" content="Catalogo Prodotti ZANON SEAFISH">
-<meta property="og:description" content="Sfoglia il catalogo prodotti Zanon Seafish Ingros SRL">
-<meta property="og:url" content="https://zanonseafish.github.io/catalogo/">
-<meta property="og:type" content="website">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Catalogo Prodotti ZANON SEAFISH – Prodotti (mail)</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
 
-<meta property="og:image" content="https://zanonseafish.github.io/catalogo/images/og-cover1.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-
-<meta name="twitter:card" content="summary_large_image">
-<!-- end Open Graph -->
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
     :root{
       --bg:#fbfbf8;
       --ink:#111;
@@ -185,7 +172,9 @@
 }
 
 
-/* === Cart & Qty minimal === */
+/* Additions for mail */
+.price{color:#0a6a2b;font-weight:700}
+.iva-note{display:block;font-size:11px;color:#666;margin-top:2px;text-transform:uppercase;letter-spacing:.02em;text-align:center}
 .qty{display:inline-flex;align-items:center;gap:6px;border:1px solid #ddd;border-radius:999px;padding:4px 6px;margin-top:6px;user-select:none}
 .qty button{border:none;background:#f6f6f3;padding:4px 8px;border-radius:999px;font-size:14px;cursor:pointer}
 .qty .num{min-width:20px;text-align:center;font-weight:700}
@@ -202,11 +191,10 @@
 .actions-bottom button{border:none;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer;background:#0b5;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.12)}
 .actions-bottom .ghost{background:#eee;color:#222}
 @media print{ .tools,#count,.cart,.qty,.share-small,.actions-bottom{display:none!important} }
-
 </style>
 </head>
 <body>
-  <header>
+<header>
     <div class="top">
       <img class="logo" src="images/logo.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
       <h1>Catalogo Prodotti ZANON SEAFISH</h1>
@@ -231,37 +219,10 @@
   </div>
 </div>
 
+<div class="container">
+  <div id="list" class="list"></div>
+</div>
 
-  <!-- Piè di pagina per la stampa (senza numeri) -->
-  <div class="print-footer" aria-hidden="true">
-    <span class="line">
-      <img src="images/logo.png" alt="Zanon Seafish">
-      <span class="text">Zanon Seafish – Catalogo Prodotti</span>
-    </span>
-  </div>
-
-  <div class="container">
-    <div id="list" class="list"></div>
-  </div>
-
-  <!-- Modal -->
-  <div id="modal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content" aria-labelledby="mTitle">
-      <h2 id="mTitle" class="m-title"></h2>
-      <div id="mGallery"></div>
-      <p id="mDesc" class="desc"></p>
-      <p id="mFullDesc"></p>
-      <p id="mPrice" class="price" style="margin-top:0"></p>
-<p class="m-iva">IVA ESCLUSA</p>
-      <div class="modal-footer">
-        <button id="shareBtn" class="share-small" title="Condividi" aria-label="Condividi">📤 Condividi</button>
-        <button id="closeBtn" class="close-btn" aria-label="Chiudi">Chiudi</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  
 <div class="actions-bottom" id="final-actions">
   <button id="backBtn" class="ghost" type="button">← Indietro</button>
   <button id="openCartBtn" class="ghost" type="button">Vedi carrello</button>
@@ -285,12 +246,21 @@
     </div>
   </br>
   </footer>
-</br>
- 
-  <script>
-  // === DATI ===
-  const PRODUCTS = [
-    {id:"36-tonno-corallo-busta",name:"Tonno Corallo in busta",price:7.50,shortDesc:"Tonno Corallo all'olio di semi di girasole, confezione da 1 kg",fullDesc:"",images:["images/tonno-corallo.jpg"]},
+
+<script>
+/* Cart shared v2 */
+var CART_KEY='zanonCartV1';
+var PROD_REG=new Map();
+function regProducts(list){ for(var i=0;i<list.length;i++){ var p=list[i]; PROD_REG.set(p.id, p); } }
+function loadCart(){try{return JSON.parse(localStorage.getItem(CART_KEY))||{}}catch(e){return {}}}
+function saveCart(c){localStorage.setItem(CART_KEY,JSON.stringify(c))}
+function unitLabel(u){return u==='/kg'?' €/kg':(u==='/confezione'?' €/conf.':'')}
+var Cart={data:loadCart(),get:function(id){return this.data[id]|0},set:function(id,q){q=Math.max(0,q|0); if(q===0) delete this.data[id]; else this.data[id]=q; saveCart(this.data); window.dispatchEvent(new Event('cart:update'));},clear:function(){this.data={}; saveCart(this.data); window.dispatchEvent(new Event('cart:update'))},items:function(){var out=[]; for(var k in this.data){out.push({id:k,qty:this.data[k],meta:PROD_REG.get(k)})} return out;}};
+window.addEventListener('storage',function(e){if(e.key===CART_KEY){Cart.data=loadCart(); window.dispatchEvent(new Event('cart:update'));}});
+
+/* Dati */
+const PRODUCTS = [
+{id:"36-tonno-corallo-busta",name:"Tonno Corallo in busta",price:7.50,shortDesc:"Tonno Corallo all'olio di semi di girasole, confezione da 1 kg",fullDesc:"",images:["images/tonno-corallo.jpg"]},
     {id:"31-tonno-affumicato-trancio",name:"Tonno affumicato in trancio",price:27.50,unit:"/kg",shortDesc:"Tonno affumicato in trancio da 1 kg circa",fullDesc:"Tranci di tonno pinna gialla da tagliare fine",images:["images/tonno-affumicato.jpg"]},
     {id:"32-spada-affumicato",name:"Pesce spada affumicato",price:36.50,unit:"/kg",shortDesc:"Pesce spada affumicato in trancio da 1 kg circa",fullDesc:"Pesce spada affumicato in tranci da 1 kg circa",images:["images/spada-affumicato.jpg"]},
     {id:"05-bocconcini-alici-arrotolate",name:"Bocconcini di alici e olive spinate arrotolate",price:13.70,shortDesc:"Alici e olive spinate ed arrotolate, confezione da 1 kg",fullDesc:"Bocconcini di alici e olive spinate, ideali per crostini e antipasti",images:["images/alici-bocconcini.jpg", "images/alici-bocconcini-back.jpg"]},
@@ -335,291 +305,68 @@
     {id:"41-uova-aringa",name:"Uova di Aringa",price:10.50,shortDesc:"Uova di aringa, confezione da 55 gr",fullDesc:"Per tartine e sushi. Grana fine, sapore affumicato leggero.",images:["images/uova-aringa.jpg"]},
     {id:"42-uova-lompo",name:"Uova di Lompo",price:2.80,shortDesc:"Uova di lompo, confezione da 50 gr",fullDesc:"Classiche per decorazioni e finger food. Colore brillante.",images:["images/uova-lompo.jpg"]},
     {id:"43-uova-salmone",name:"Uova di Salmone",price:10.30,shortDesc:"Uova di salmone, confezione da 50 gr",fullDesc:"Uova corpose dal gusto delicato. Perfette su blinis e avocado toast.",images:["images/uova-salmone.jpg"]}
-  ];
-<script>try{ regProducts(PRODUCTS); }catch(e){}</script>
-  // Ordina alfabeticamente per id
-  PRODUCTS.sort((a,b)=>a.id.localeCompare(b.id));
+];
+PRODUCTS.sort(function(a,b){ return String(a.id).localeCompare(String(b.id)); });
+regProducts(PRODUCTS);
 
-  const listEl=document.getElementById("list");
-  const fmt=new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"});
-  const countEl=document.getElementById("count");
-  const q=document.getElementById("searchBox");
-  const modal=document.getElementById("modal");
-  const mTitle=document.getElementById("mTitle");
-  const mDesc=document.getElementById("mDesc");
-  const mFullDesc=document.getElementById("mFullDesc");
-  const mPrice=document.getElementById("mPrice");
-  const mGallery=document.getElementById("mGallery");
-  const shareBtn=document.getElementById("shareBtn");
-  const closeBtn=document.getElementById("closeBtn");
-  let currentId=null;
-
-  function rowTemplate(p){
-    return `
-    <div class="item" onclick="openModal('${p.id}')">
-      <div class="thumb"><img loading="lazy" src="${p.images[0] || 'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
-      <div class="info">
-        <h3 class="title">${p.name}</h3>
-        <p class="desc">${p.shortDesc||""}</p>
-        <div class="divider"></div>\
-        <div class="qty" onclick="event.stopPropagation()">\
-          <button onclick="event.stopPropagation();addQty(p.id,-1)" aria-label="Diminuisci">–</button>\
-          <span id="num-${p.id}" class="num">0</span>\
-          <button onclick="event.stopPropagation();addQty(p.id,+1)" aria-label="Aumenta">+</button>\
-          <span class="mini">Quantità</span>\
-        </div>
-      </div>
-      <div class="price">${fmt.format(p.price)}${p.unit || ""}</div>
-<span class="iva-note">IVA ESCLUSA</span>
-
-    </div>`;
-  }
-
-  function render(list=PRODUCTS){
-    listEl.innerHTML = list.length ? list.map(rowTemplate).join("") : '<div class="item">Nessun risultato</div>';
-    countEl.textContent=list.length===PRODUCTS.length?`${list.length} prodotti`:`${list.length} risultati`;
-  }
-
-  function productAnchorUrl(id){
-    const base=location.origin+location.pathname;
-    return `${base}#${encodeURIComponent(id)}`;
-  }
-
-  async function shareProduct(id){
-    const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
-    const imgUrl=new URL(p.images[0], location.href).href;
-    const text=`${p.name} – ${fmt.format(p.price)}\n${p.shortDesc||""}\n${productAnchorUrl(p.id)}`;
-    try{
-      if(navigator.canShare && window.File && window.Blob){
-        const resp=await fetch(imgUrl,{mode:"cors"});
-        const blob=await resp.blob();
-        const file=new File([blob], `${p.id}.jpg`, {type: blob.type || "image/jpeg"});
-        const data={title:p.name,text,files:[file]};
-        if(navigator.canShare(data)){ await navigator.share(data); return; }
-      }
-      if(navigator.share){ await navigator.share({title:p.name,text:`${p.name} – ${fmt.format(p.price)}\n${p.shortDesc||""}`,url:imgUrl}); return; }
-    }catch(e){}
-    try{ await navigator.clipboard.writeText(productAnchorUrl(p.id)); }catch(e){}
-  }
-
-  function adjustModalImages(){
-    const content = document.querySelector('.modal-content');
-    const gallery = document.getElementById('mGallery');
-    if(!content || !gallery) return;
-    const titleH = document.getElementById('mTitle')?.offsetHeight || 0;
-    const descH  = document.getElementById('mDesc')?.offsetHeight || 0;
-    const fullH  = document.getElementById('mFullDesc')?.offsetHeight || 0;
-    const priceH = document.getElementById('mPrice')?.offsetHeight || 0;
-    const footerH= document.querySelector('.modal-footer')?.offsetHeight || 0;
-    const paddings = 40; // approx top+bottom padding inside modal-content
-    const max = content.clientHeight - (titleH + descH + fullH + priceH + footerH + paddings);
-    const imgs = gallery.querySelectorAll('img');
-    imgs.forEach(img => { img.style.maxHeight = Math.max(120, max) + 'px'; });
-  }
-
-  window.openModal = function(id){
-    const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
-    currentId=id;
-    mTitle.textContent=p.name;
-    mDesc.textContent=p.shortDesc||"";
-    mFullDesc.textContent=p.fullDesc||"";
-    mPrice.textContent=fmt.format(p.price)+(p.unit||"");
-    const imgs=(p.images||[]).slice(0,2);
-    mGallery.innerHTML=imgs.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.png';">`).join("");
-    shareBtn.onclick=()=>shareProduct(currentId);
-    modal.classList.add("open"); document.body.style.overflow="hidden"; closeBtn.focus();
-    if(location.hash!=="#"+id) history.pushState({modal:true,id},"","#"+id);
-    // after rendering, adjust sizes
-    setTimeout(adjustModalImages, 0);
-  }
-
-  function closeModal(){
-    if(!modal.classList.contains("open")) return;
-    modal.classList.remove("open"); document.body.style.overflow="";
-    currentId=null;
-    if(location.hash) history.pushState("",document.title,location.pathname+location.search);
-  }
-
-  closeBtn.onclick=closeModal;
-  modal.addEventListener("click",e=>{ if(e.target===modal) closeModal(); });
-  window.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
-  window.addEventListener("popstate",()=>{
-    if(location.hash){
-      const id=decodeURIComponent(location.hash.slice(1));
-      if(!modal.classList.contains("open")) openModal(id);
-    }else{
-      if(modal.classList.contains("open")) modal.classList.remove("open"); document.body.style.overflow="";
-    }
-  });
-
-  q.addEventListener("input",()=>{
-    const term=q.value.trim().toLowerCase();
-    if(!term){render(PRODUCTS);return;}
-    const res=PRODUCTS.filter(p=>{
-      const hay=[p.name||"",p.shortDesc||"",p.fullDesc||"",...(p.images||[]).map(x=>x.split('/').pop()||"")].join(" ").toLowerCase();
-      return hay.includes(term);
-    });
-    render(res);
-  });
-
-  // Recompute image size on resize while modal open
-  window.addEventListener('resize', ()=>{ if(modal.classList.contains('open')) adjustModalImages(); });
-
-  render();
-  if(location.hash){
-    const id=decodeURIComponent(location.hash.slice(1));
-    if(PRODUCTS.some(p=>p.id===id)) openModal(id);
-  }
-  </script>
-
-   <!-- Pulsante ritorno menu -->
-<a href="index2.html" title="Torna al menu" class="back-btn" aria-label="Torna al menu principale">↩︎ Menu</a>
-
-<style>
-.back-btn{
-  position:fixed;
-  bottom:14px;
-  left:14px;
-  background:rgba(255,255,255,0.75);
-  color:#0a6a2b;
-  font-size:13px;
-  font-weight:600;
-  padding:6px 10px;
-  border-radius:20px;
-  text-decoration:none;
-  box-shadow:0 2px 6px rgba(0,0,0,0.15);
-  z-index:1500;
-  transition:background .15s ease, color .15s ease;
-}
-.back-btn:hover{
-  background:#0a6a2b;
-  color:#fff;
-}
-@media print{
-  .back-btn{display:none!important;}
-}
-</style>
-  
-
-<script>
-/* === CART SHARED v2 (inject) === */
-var CART_KEY='zanonCartV1';
-var PROD_REG=new Map();
-function regProducts(list){
-  var basePath=location.origin+location.pathname.replace(/[^/]*$/,'');
-  for(var i=0;i<list.length;i++){
-    var p=list[i];
-    PROD_REG.set(p.id,{id:p.id,name:p.name,price:p.price||0,unit:p.unit||'',shortDesc:p.shortDesc||'',images:(p.images||[]),basePath:basePath});
-  }
-}
-function loadCart(){try{return JSON.parse(localStorage.getItem(CART_KEY))||{}}catch(e){return {}}}
-function saveCart(c){localStorage.setItem(CART_KEY,JSON.stringify(c))}
-function unitLabel(u){return u==='/kg'?' €/kg':(u==='/confezione'?' €/conf.':'')}
-var Cart={data:loadCart(),get:function(id){return this.data[id]|0},set:function(id,q){q=Math.max(0,q|0); if(q===0) delete this.data[id]; else this.data[id]=q; saveCart(this.data); window.dispatchEvent(new Event('cart:update'));},clear:function(){this.data={}; saveCart(this.data); window.dispatchEvent(new Event('cart:update'))},items:function(){var out=[]; for(var k in this.data){out.push({id:k,qty:this.data[k],meta:PROD_REG.get(k)})} return out;}};
-window.addEventListener('storage',function(e){if(e.key===CART_KEY){Cart.data=loadCart(); window.dispatchEvent(new Event('cart:update'));}});
-</script>
-
-
-<script>
-var CART_KEY='zanonCartV1';
-var PROD_REG=new Map();
-function regProducts(list){ for(var i=0;i<list.length;i++){ var p=list[i]; PROD_REG.set(p.id, p); } }
-function loadCart(){try{return JSON.parse(localStorage.getItem(CART_KEY))||{}}catch(e){return {}}}
-function saveCart(c){localStorage.setItem(CART_KEY,JSON.stringify(c))}
-function unitLabel(u){return u==='/kg'?' €/kg':(u==='/confezione'?' €/conf.':'')}
-var Cart={data:loadCart(),get:function(id){return this.data[id]|0},set:function(id,q){q=Math.max(0,q|0); if(q===0) delete this.data[id]; else this.data[id]=q; saveCart(this.data); window.dispatchEvent(new Event('cart:update'));},clear:function(){this.data={}; saveCart(this.data); window.dispatchEvent(new Event('cart:update'))},items:function(){var out=[]; for(var k in this.data){out.push({id:k,qty:this.data[k],meta:PROD_REG.get(k)})} return out;}};
-window.addEventListener('storage',function(e){if(e.key===CART_KEY){Cart.data=loadCart(); window.dispatchEvent(new Event('cart:update'));}});
-
+/* Helpers */
 var fmt = new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"});
+function getQty(id){return Cart.get(id)}
+function setQty(id,q){Cart.set(id,q); renderCart(); syncRowQty(id);}
+function addQty(id,delta){setQty(id, getQty(id)+delta)}
+
+/* Render */
+var listEl=document.getElementById("list");
+function rowTemplate(p){
+  return '<div id="'+p.id+'" class="item" data-id="'+p.id+'">'
+    + '<div class="thumb"><img loading="lazy" src="'+((p.images&&p.images[0])||'images/default1.jpg')+'" alt="'+p.name+'" onerror="this.onerror=null;this.src=\'images/default1.jpg\';"></div>'
+    + '<div class="info">'
+    +   '<h3 class="title">'+p.name+'</h3>'
+    +   '<p class="desc">'+(p.shortDesc||"")+'</p>'
+    +   '<div class="divider"></div>'
+    +   '<div class="qty" aria-label="Quantità" onclick="event.stopPropagation();">'
+    +     '<button onclick="event.stopPropagation();addQty(\''+p.id+'\',-1)" aria-label="Diminuisci">–</button>'
+    +     '<span id="num-'+p.id+'" class="num">0</span>'
+    +     '<button onclick="event.stopPropagation();addQty(\''+p.id+'\',+1)" aria-label="Aumenta">+</button>'
+    +     '<span class="mini">Quantità</span>'
+    +   '</div>'
+    + '</div>'
+    + '<div class="price-wrap">'
+    +   '<div class="price">'+fmt.format(p.price||0)+(p.unit?unitLabel(p.unit):"")+'</div>'
+    +   '<span class="iva-note">IVA ESCLUSA</span>'
+    + '</div>'
+    + '</div>';
+}
+function render(list){ var t=list||PRODUCTS; var html=''; for(var i=0;i<t.length;i++) html+=rowTemplate(t[i]); listEl.innerHTML = html ? html : '<div class="item">Nessun risultato</div>'; syncAllQty(); }
+
+/* Cart render */
 var cartEl=document.getElementById('cart');
 var cartListEl=document.getElementById('cartList');
 var cartTotalEl=document.getElementById('cartTotal');
 var miniCountEl=document.getElementById('miniCount');
 var toggleBtn=document.getElementById('toggleBtn');
 function positionCart(){ var header=document.querySelector('header'); var h = header ? header.offsetHeight : 0; cartEl.style.top = (h + 10) + 'px'; }
-function renderCart(){
-  var rows=[]; var total=0; var count=0;
-  for(var id in Cart.data){
-    var q=Cart.data[id]; if(q<=0) continue;
-    var p=PROD_REG.get(id)||{id:id,name:id,price:0};
-    rows.push('• '+(p.name||id)+' × '+q);
-    total+=(p.price||0)*q; count+=q;
-  }
-  cartListEl.innerHTML = rows.length?rows.join('<br>'):'Nessun articolo';
-  if(rows.length===0){ cartListEl.classList.add('cart-empty'); } else { cartListEl.classList.remove('cart-empty'); }
-  cartTotalEl.textContent=fmt.format(total);
-  miniCountEl.textContent=count;
-  positionCart();
-}
+function renderCart(){ var rows=[], total=0, count=0; for(var id in Cart.data){ var q=Cart.data[id]; if(q<=0) continue; var p=PROD_REG.get(id)||{id:id,name:id,price:0}; rows.push('• '+(p.name||id)+' × '+q); total+=(p.price||0)*q; count+=q; } cartListEl.innerHTML = rows.length?rows.join('<br>'):'Nessun articolo'; if(rows.length===0){ cartListEl.classList.add('cart-empty'); } else { cartListEl.classList.remove('cart-empty'); } cartTotalEl.textContent=fmt.format(total); miniCountEl.textContent=count; positionCart(); }
 cartEl.addEventListener('click',function(){ if(cartEl.classList.contains('collapsed')){ cartEl.classList.remove('collapsed'); positionCart(); } });
 toggleBtn.addEventListener('click',function(e){ e.stopPropagation(); cartEl.classList.add('collapsed'); positionCart(); });
-document.getElementById('openCartBtn').addEventListener('click', function(){ document.getElementById('cart').classList.remove('collapsed'); positionCart(); });
-document.getElementById('backBtn').addEventListener('click', function(){ location.href = '/catalogo/index2-mail.html'; });
-try{document.getElementById('switchBtn').addEventListener('click', function(){ location.href = './prodotti-fritti-mail.html'; });}catch(e){}
-function openMail(){
-  var items = Cart.items().filter(function(x){return x.qty>0});
-  if(!items.length){ alert('Seleziona almeno un articolo.'); return; }
-  var body='Gentile Zanon Seafish,%0D%0A%0D%0ADesidero inviare il seguente ordine:%0D%0A';
-  body+='Q.tà | Titolo | Short descr | Prezzo unitario | Totale riga%0D%0A';
-  body+='--------------------------------------------------------------%0D%0A';
-  var tot=0, count=0;
-  for(var i=0;i<items.length;i++){
-    var it=items[i]; var p=it.meta||{}; var q=it.qty; var sub=(p.price||0)*q; tot+=sub; count+=q;
-    var line = q+' | '+(p.name||it.id)+' | '+(p.shortDesc||'')+' | '+fmt.format(p.price||0)+(p.unit?unitLabel(p.unit):'')+' | '+fmt.format(sub);
-    body+=encodeURIComponent(line)+'%0D%0A';
-  }
-  body+='--------------------------------------------------------------%0D%0A';
-  body+='Totale articoli: '+count+'%0D%0A';
-  body+='Totale ordine: '+fmt.format(tot)+'%0D%0A%0D%0A';
-  body+='Dati per il ritiro/consegna:%0D%0ANome azienda / nominativo:%0D%0AIndirizzo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A';
-  var subject=encodeURIComponent('Ordine Catalogo Prodotti');
-  var mailto='mailto:info@zanonseafish.it?subject='+subject+'&body='+body;
-  window.location.href = mailto;
-  setTimeout(function(){ Cart.clear(); renderCart(); syncAllQty(); alert('Ordine pronto in email. Carrello azzerato.'); }, 400);
-}
+document.getElementById('openCartBtn').addEventListener('click', function(){ cartEl.classList.remove('collapsed'); positionCart(); });
+
+/* Mail */
+function clearCart(){ Cart.clear(); renderCart(); syncAllQty(); }
+function confirmAndClear(){ clearCart(); alert('Ordine pronto in email. Carrello azzerato.'); }
+function openMail(){ var items = Cart.items().filter(function(x){return x.qty>0}); if(!items.length){ alert('Seleziona almeno un articolo.'); return; } var body='Gentile Zanon Seafish,%0D%0A%0D%0ADesidero inviare il seguente ordine:%0D%0A'; body+='Q.tà | Titolo | Short descr | Prezzo unitario | Totale riga%0D%0A'; body+='--------------------------------------------------------------%0D%0A'; var tot=0, count=0; for(var i=0;i<items.length;i++){ var it=items[i]; var p=it.meta||{}; var q=it.qty; var sub=(p.price||0)*q; tot+=sub; count+=q; var line = q+' | '+(p.name||it.id)+' | '+(p.shortDesc||'')+' | '+fmt.format(p.price||0)+(p.unit?unitLabel(p.unit):'')+' | '+fmt.format(sub); body+=encodeURIComponent(line)+'%0D%0A'; } body+='--------------------------------------------------------------%0D%0A'; body+='Totale articoli: '+count+'%0D%0A'; body+='Totale ordine: '+fmt.format(tot)+'%0D%0A%0D%0A'; body+='Dati per il ritiro/consegna:%0D%0ANome azienda / nominativo:%0D%0AIndirizzo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A'; var subject=encodeURIComponent('Ordine Catalogo Prodotti'); var mailto='mailto:info@zanonseafish.it?subject='+subject+'&body='+body; window.location.href = mailto; setTimeout(confirmAndClear, 400); }
 document.getElementById('mailBtn').addEventListener('click', openMail);
 document.getElementById('mailBtnBottom').addEventListener('click', openMail);
 
-function getQty(id){ return Cart.get(id); }
-function setQty(id,q){ Cart.set(id,q); renderCart(); syncRowQty(id); }
-function addQty(id,delta){ setQty(id, getQty(id)+delta); }
+/* Back + Switch */
+document.getElementById('backBtn').addEventListener('click', function(){ location.href = '/catalogo/index2-mail.html'; });
+document.getElementById('switchBtn').addEventListener('click', function(){ location.href = './prodotti-fritti-mail.html'; });
+
+/* Init */
 function syncRowQty(id){ var el=document.getElementById('num-'+id); if(el) el.textContent=getQty(id); }
 function syncAllQty(){ for(var i=0;i<PRODUCTS.length;i++) syncRowQty(PRODUCTS[i].id); }
 window.addEventListener('cart:update', function(){ renderCart(); syncAllQty(); });
+render(PRODUCTS); renderCart();
 </script>
-
 </body>
 </html>
-
-<script>
-(function(){
-  function openMail(){
-    var items = Cart.items().filter(function(x){return x.qty>0});
-    if(!items.length){ alert('Seleziona almeno un articolo.'); return; }
-    var fmt=new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"});
-    var body='Gentile Zanon Seafish,%0D%0A%0D%0ADesidero inviare il seguente ordine:%0D%0A';
-    body+='Q.tà | Titolo | Short descr | Prezzo unitario | Totale riga%0D%0A';
-    body+='--------------------------------------------------------------%0D%0A';
-    var tot=0,count=0;
-    for(var i=0;i<items.length;i++){
-      var it=items[i]; var p=it.meta||{}; var q=it.qty; var sub=(p.price||0)*q; tot+=sub; count+=q;
-      var line = q+' | '+(p.name||it.id)+' | '+(p.shortDesc||'')+' | '+fmt.format(p.price||0)+(p.unit?unitLabel(p.unit):'')+' | '+fmt.format(sub);
-      body+=encodeURIComponent(line)+'%0D%0A';
-    }
-    body+='--------------------------------------------------------------%0D%0A';
-    body+='Totale articoli: '+count+'%0D%0A';
-    body+='Totale ordine: '+fmt.format(tot)+'%0D%0A%0D%0A';
-    body+='Dati per il ritiro/consegna:%0D%0ANome azienda / nominativo:%0D%0AIndirizzo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A';
-    var subject=encodeURIComponent('Ordine Catalogo Prodotti');
-    var mailto='mailto:info@zanonseafish.it?subject='+subject+'&body='+body;
-    window.location.href = mailto;
-    setTimeout(function(){ Cart.clear(); if(typeof renderCart==='function') renderCart(); if(typeof syncAllQty==='function') syncAllQty(); alert('Ordine pronto in email. Carrello azzerato.'); }, 400);
-  }
-  var b1=document.getElementById('mailBtn'); if(b1) b1.addEventListener('click', openMail);
-  var b2=document.getElementById('mailBtnBottom'); if(b2) b2.addEventListener('click', openMail);
-})();
-</script>
-
-<script>
-try{document.getElementById('switchBtn').addEventListener('click', function(){ location.href = './prodotti-fritti-mail.html'; });}catch(e){}
-</script>
