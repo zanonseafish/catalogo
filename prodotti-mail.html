@@ -251,10 +251,10 @@
 /* Cart shared v2 */
 var CART_KEY='zanonCartV1';
 var PROD_REG=new Map();
-function regProducts(list){ for(var i=0;i<list.length;i++){ var p=list[i]; PROD_REG.set(p.id, p); } }
+function regProducts(list){ for(var i=0;i<list.length;i++){ var p=list[i]; var pr=Number(String(p.price||0).replace(',', '.')); if(!isFinite(pr)) pr=0; var norm=Object.assign({}, p, {price: pr}); PROD_REG.set(p.id, norm); } }
 function loadCart(){try{return JSON.parse(localStorage.getItem(CART_KEY))||{}}catch(e){return {}}}
 function saveCart(c){localStorage.setItem(CART_KEY,JSON.stringify(c))}
-function unitLabel(u){return u==='/kg'?' €/kg':(u==='/confezione'?' €/conf.':'')}
+function unitLabel(u){u=u||'';return u==='/kg'?' €/kg':(u==='/confezione'?' €/conf.':(u?' '+u:''))}
 var Cart={data:loadCart(),get:function(id){return this.data[id]|0},set:function(id,q){q=Math.max(0,q|0); if(q===0) delete this.data[id]; else this.data[id]=q; saveCart(this.data); window.dispatchEvent(new Event('cart:update'));},clear:function(){this.data={}; saveCart(this.data); window.dispatchEvent(new Event('cart:update'))},items:function(){var out=[]; for(var k in this.data){out.push({id:k,qty:this.data[k],meta:PROD_REG.get(k)})} return out;}};
 window.addEventListener('storage',function(e){if(e.key===CART_KEY){Cart.data=loadCart(); window.dispatchEvent(new Event('cart:update'));}});
 
@@ -346,10 +346,10 @@ var cartTotalEl=document.getElementById('cartTotal');
 var miniCountEl=document.getElementById('miniCount');
 var toggleBtn=document.getElementById('toggleBtn');
 function positionCart(){ var header=document.querySelector('header'); var h = header ? header.offsetHeight : 0; cartEl.style.top = (h + 10) + 'px'; }
-function renderCart(){ var rows=[], total=0, count=0; for(var id in Cart.data){ var q=Cart.data[id]; if(q<=0) continue; var p=PROD_REG.get(id)||{id:id,name:id,price:0}; rows.push('• '+(p.name||id)+' × '+q); total+=(p.price||0)*q; count+=q; } cartListEl.innerHTML = rows.length?rows.join('<br>'):'Nessun articolo'; if(rows.length===0){ cartListEl.classList.add('cart-empty'); } else { cartListEl.classList.remove('cart-empty'); } cartTotalEl.textContent=fmt.format(total); miniCountEl.textContent=count; positionCart(); }
-cartEl.addEventListener('click',function(){ if(cartEl.classList.contains('collapsed')){ cartEl.classList.remove('collapsed'); positionCart(); } });
-toggleBtn.addEventListener('click',function(e){ e.stopPropagation(); cartEl.classList.add('collapsed'); positionCart(); });
-document.getElementById('openCartBtn').addEventListener('click', function(){ cartEl.classList.remove('collapsed'); positionCart(); });
+function renderCart(){ var rows=[], total=0, count=0; for(var id in Cart.data){ var q=Cart.data[id]; if(q<=0) continue; var p=PROD_REG.get(id)||{id:id,name:id,price:0}; rows.push('• '+(p.name||id)+' × '+q); total+=(p.price||0)*q; count+=q; } cartListEl.innerHTML = rows.length?rows.join('<br>'):'Nessun articolo'; if(rows.length===0){ cartListEl.classList.add('cart-empty'); } else { cartListEl.classList.remove('cart-empty'); } cartTotalEl.textContent=fmt.format(total); miniCountEl.textContent=count; if(count===0){ cartEl.classList.add('collapsed'); cartEl.style.display='none'; } positionCart(); }
+cartEl.addEventListener('click',function(){ if(cartEl.classList.contains('collapsed')){ cartEl.style.display=''; cartEl.classList.remove('collapsed'); positionCart(); } });
+toggleBtn.addEventListener('click',function(e){ e.stopPropagation(); cartEl.classList.add('collapsed'); cartEl.style.display='none'; });
+document.getElementById('openCartBtn').addEventListener('click', function(){ cartEl.style.display=''; cartEl.classList.remove('collapsed'); positionCart(); });
 
 /* Mail */
 function clearCart(){ Cart.clear(); renderCart(); syncAllQty(); }
