@@ -215,6 +215,12 @@
 
 @media print{ .tools,#count,#cart,.qty,.share-small,.actions-bottom,.fab-back{display:none!important} }
 </style>
+
+<style>
+.actions-bottom{display:flex;justify-content:center;gap:10px;margin:16px 0 6px}
+.actions-bottom button{border:none;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer;background:#0b5;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.12)}
+.actions-bottom .ghost{background:#eee;color:#222}
+</style>
 </head>
 <body>
   <header>
@@ -249,7 +255,7 @@
       <p id="mDesc" class="desc"></p>
       <p id="mFullDesc"></p>
       <p id="mPrice" class="price" style="margin-top:0"></p>
-      <div class="modal-footer">
+      <div class="qty" aria-label="Quantità"><button id="mMinus" aria-label="Diminuisci">–</button><span id="mNum" class="num">0</span><button id="mPlus" aria-label="Aumenta">+</button><span class="mini">Quantità</span></div><div class="modal-footer">
         <button id="shareBtn" class="share-small" title="Condividi" aria-label="Condividi">📤 Condividi</button>
         <button id="closeBtn" class="close-btn" aria-label="Chiudi">Chiudi</button>
       </div>
@@ -257,6 +263,12 @@
   </div>
 
   <!-- Footer -->
+<div class="actions-bottom" id="final-actions" style="margin-top:16px;margin-bottom:8px">
+  <button id="backBtnFixed" class="ghost" type="button">Indietro</button>
+  <button id="mailBtnBottom" type="button">Prepara mail</button>
+  <button id="switchBtn" class="ghost" type="button">Vai a tutti i prodotti</button>
+</div>
+
   <footer class="site-footer">
     <hr class="site-rule">
     <div class="site-footer-inner">
@@ -479,8 +491,6 @@
   <button id="switchBtn" class="ghost" type="button">Vai a tutti i prodotti</button>
 </div>
 
-<button id="fabBack" class="fab-back" type="button">← Indietro</button>
-
 <script>
 (function(){
   var CART_KEY='zanonCartV1', META_KEY='zanonCartMetaV1';
@@ -575,5 +585,93 @@
   if(miniCountEl && Number(miniCountEl.textContent||'0')===0){ cartEl.classList.add('collapsed'); }
 })();
 </script>
-<script>__attachSwitch('./prodotti-mail.html');</script></body>
+<script>__attachSwitch('./prodotti-mail.html');</script>
+<script>
+(function(){
+  var CART_KEY='zanonCartV1', META_KEY='zanonCartMetaV1';
+  function load(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return {}}}
+  function save(k,v){localStorage.setItem(k, JSON.stringify(v))}
+  var META=load(META_KEY);
+
+  // 5.1 Register all PRODUCTS present on the page immediately
+  try{
+    if(Array.isArray(window.PRODUCTS)){
+      for(var i=0;i<PRODUCTS.length;i++){
+        var p=PRODUCTS[i];
+        var pr=Number(String(p.price||0).replace(',', '.'))||0;
+        META[p.id]={id:p.id,name:(p.name||p.title||p.id),price:pr,unit:(p.unit||''),shortDesc:(p.shortDesc||'')};
+      }
+      save(META_KEY,META);
+      // Trigger a cart re-render if function exists
+      if(typeof window.dispatchEvent==='function'){ window.dispatchEvent(new Event('cart:update')); }
+    }
+  }catch(e){}
+
+  // 5.2 Improve cart list rendering by including shortDesc
+  (function improveCartList(){
+    var fmt=new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'});
+    function render(){
+      var cartEl=document.getElementById('cartList');
+      var totalEl=document.getElementById('cartTotal');
+      var mini=document.getElementById('miniCount');
+      if(!cartEl) return;
+      var cart=load(CART_KEY);
+      var rows=[], tot=0, cnt=0;
+      for(var id in cart){
+        var q=cart[id]|0; if(q<=0) continue;
+        var m=META[id]||{id:id,name:id,shortDesc:'',price:0,unit:''};
+        rows.push('• '+m.name+(m.shortDesc?(' – '+m.shortDesc):'')+' × '+q);
+        tot += (m.price||0)*q; cnt += q;
+      }
+      cartEl.innerHTML = rows.length? rows.join('<br>') : 'Nessun articolo';
+      if(totalEl) totalEl.textContent = fmt.format(tot);
+      if(mini) mini.textContent = cnt;
+    }
+    window.addEventListener('cart:update', render);
+    document.addEventListener('DOMContentLoaded', render);
+    window.addEventListener('storage', function(e){ if(e.key===CART_KEY||e.key===META_KEY) render(); });
+  })();
+
+  // 5.3 Modal qty buttons
+  document.addEventListener('click', function(ev){
+    var plus = ev.target.id==='mPlus';
+    var minus= ev.target.id==='mMinus';
+    if(!plus && !minus) return;
+    ev.stopPropagation();
+    var id = (window.currentId) || (document.querySelector('.modal.open') && document.querySelector('.modal.open').getAttribute('data-id')) || null;
+    if(!id){
+      // try closest .item clicked previously
+      var last = document.querySelector('.item:hover'); if(last) id=last.id;
+    }
+    if(!id) return;
+    if(typeof window.addQty==='function'){
+      window.addQty(id, plus? +1 : -1);
+    }else{
+      // fallback direct localStorage
+      var cart=load(CART_KEY);
+      var q=(cart[id]|0) + (plus?+1:-1);
+      if(q<=0) delete cart[id]; else cart[id]=q;
+      save(CART_KEY,cart);
+      window.dispatchEvent(new Event('cart:update'));
+    }
+    // update mNum
+    try{
+      var cart2=load(CART_KEY);
+      var mNum=document.getElementById('mNum');
+      if(mNum) mNum.textContent = cart2[id]|0;
+    }catch(e){}
+  }, true);
+
+  // 5.4 Back + switch wiring
+  var back=document.getElementById('backBtnFixed');
+  if(back) back.addEventListener('click', function(){ location.href='/catalogo/index2-mail.html'; });
+  var sw=document.getElementById('switchBtn');
+  if(sw){
+    var href = document.title.toLowerCase().includes('fritti') ? './prodotti-mail.html' : './prodotti-fritti-mail.html';
+    sw.addEventListener('click', function(){ location.href=href; });
+  }
+})();
+</script>
+
+</body>
 </html>
