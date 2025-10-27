@@ -5,7 +5,7 @@
  
 <meta property="og:title" content="Catalogo Prodotti ZANON SEAFISH">
 <meta property="og:description" content="Sfoglia il catalogo prodotti Zanon Seafish Ingros SRL">
-<meta property="og:url" content="https://zanonseafish.github.io/catalogo/index2.html">
+<meta property="og:url" content="https://zanonseafish.github.io/catalogo/index2-mail.html">
 <meta property="og:type" content="website">
 
 <meta property="og:image" content="https://zanonseafish.github.io/catalogo/images/og-cover1.jpg">
@@ -139,5 +139,17 @@
       <a class="foot-mail" href="mailto:info@zanonseafish.it" title="Scrivi a info@zanonseafish.it">✉️ Contattaci</a>
     </div>
   </footer>
+
+<script>
+// Cart key alignment for mail sandbox; no UI changes here.
+(function(){
+  var CART_KEY='zanonCartV1';
+  try{
+    var c = localStorage.getItem(CART_KEY);
+    if(!c){ localStorage.setItem(CART_KEY, JSON.stringify({})); }
+  }catch(e){}
+})();
+</script>
+
 </body>
 </html>
