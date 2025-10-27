@@ -205,6 +205,14 @@ font-weight:700;cursor:pointer;background:#eee;color:#222;box-shadow:0 4px 10px 
 #backFab:hover{filter:brightness(0.96)}
 @media print{ #backFab{display:none!important} }
 </style>
+<style id="cart-fixed-top-left">
+#cart{position:fixed; top: max(10px, env(safe-area-inset-top)); left: max(10px, env(safe-area-inset-left)); right:auto; bottom:auto; z-index:2600}
+#cart.collapsed{top:max(10px, env(safe-area-inset-top)); left:max(10px, env(safe-area-inset-left))}
+@media (max-width:480px){
+  #cart{top:max(8px, env(safe-area-inset-top)); left:max(8px, env(safe-area-inset-left))}
+}
+@media print{ #cart{display:none!important} }
+</style>
 </head>
 <body>
   <header>
@@ -317,18 +325,25 @@ font-weight:700;cursor:pointer;background:#eee;color:#222;box-shadow:0 4px 10px 
   let currentId=null;
 
   function rowTemplate(p){
-    return `
-    <div class="item" onclick="openModal('${p.id}')">
+  return `
+    <div class="item" data-id="${p.id}" onclick="openModal('${p.id}')">
       <div class="thumb"><img loading="lazy" src="${p.images[0] || 'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
       <div class="info">
         <h3 class="title">${p.name}</h3>
         <p class="desc">${p.shortDesc||""}</p>
         <div class="divider"></div>
+        <div class="qty" aria-label="Quantità" role="group">
+          <button type="button" data-act="minus" aria-label="Diminuisci">–</button>
+          <span class="num">${(window.Cart&&window.Cart.get)?window.Cart.get(p.id):0}</span>
+          <button type="button" data-act="plus" aria-label="Aumenta">+</button>
+          <span class="mini">Quantità</span>
+        </div>
       </div>
-      <div class="price">${fmt.format(p.price)}${p.unit || ""}</div>
-      <span class="iva-note">IVA ESCLUSA</span>
+      <div class="price">${fmt.format(p.price)}${p.unit || ""}
+        <span class="iva-note">IVA ESCLUSA</span>
+      </div>
     </div>`;
-  }
+}
 
   function render(list=PRODUCTS){
     listEl.innerHTML = list.length ? list.map(rowTemplate).join("") : '<div class="item">Nessun risultato</div>';
@@ -375,6 +390,7 @@ font-weight:700;cursor:pointer;background:#eee;color:#222;box-shadow:0 4px 10px 
   window.openModal = function(id){
     const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
     currentId=id;
+    window.currentProductId = id;
     mTitle.textContent=p.name;
     mDesc.textContent=p.shortDesc||"";
     mFullDesc.textContent=p.fullDesc||"";
@@ -421,6 +437,34 @@ font-weight:700;cursor:pointer;background:#eee;color:#222;box-shadow:0 4px 10px 
   window.addEventListener('resize', ()=>{ if(modal.classList.contains('open')) adjustModalImages(); });
 
   render();
+(function(){
+  var bb = document.getElementById('backBtnFixed');
+  if(bb){ bb.addEventListener('click', function(){
+    if(history.length>1){ history.back(); }
+    else { location.href = '/catalogo/'; }
+  }); }
+})();
+// === Qty controls in LIST (prevent modal open on +/-) ===
+document.addEventListener('click', function(e){
+  const btn = e.target.closest('[data-act]');
+  if(!btn) return;
+  const qty = btn.closest('.qty');
+  const item = btn.closest('.item');
+  if(!qty || !item) return;
+  e.stopPropagation(); // 2) open modal only if click is outside qty
+  const id = item.getAttribute('data-id');
+  const delta = btn.dataset.act === 'plus' ? 1 : -1;
+  const q0 = (window.Cart && window.Cart.get) ? window.Cart.get(id) : 0;
+  const q1 = Math.max(0, q0 + delta);
+  if(window.Cart && window.Cart.set){ window.Cart.set(id, q1); }
+  // update row counter
+  const numEl = qty.querySelector('.num'); if(numEl) numEl.textContent = q1;
+  // sync modal counter if open on same id
+  if(window.currentProductId === id){
+    const mNum = document.getElementById('mNum'); if(mNum) mNum.textContent = q1;
+  }
+  if(typeof window.renderCart === 'function') window.renderCart();
+}, true);
   if(location.hash){
     const id=decodeURIComponent(location.hash.slice(1));
     if(PRODUCTS.some(p=>p.id===id)) openModal(id);
