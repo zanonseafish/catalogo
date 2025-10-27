@@ -188,6 +188,7 @@
 
 
 
+
 <!-- cart+qty styles (single) -->
 <style>
 .qty{display:inline-flex;align-items:center;gap:6px;border:1px solid #ddd;border-radius:999px;padding:6px 10px;margin-top:6px;user-select:none}
@@ -950,6 +951,83 @@ document.addEventListener('DOMContentLoaded', function() {
   var m=document.getElementById('mailBtnBottom'); if(m && typeof openMail==='function') m.onclick=openMail;
   var s=document.getElementById('switchBtn'); if(s) s.onclick=function(){ location.href='./prodotti-mail.html'; };
 });
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var b=document.getElementById('backBtnFixed'); if(b) b.onclick=function(){ location.href='/catalogo/index2-mail.html'; };
+  var s=document.getElementById('switchBtn'); if(s) s.onclick=function(){ location.href='./prodotti-mail.html'; };
+  var m=document.getElementById('mailBtnBottom'); if(m && typeof openMail==='function') m.onclick=openMail;
+});
+</script>
+
+
+<script>
+(function(){
+  if(window.__mailCartReady) return; window.__mailCartReady=true;
+  var CART_KEY='zanonCartV1', META_KEY='zanonCartMetaV1';
+  function load(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return {}}}
+  function save(k,v){localStorage.setItem(k, JSON.stringify(v))}
+  var META=load(META_KEY);
+  try{
+    if(Array.isArray(window.PRODUCTS)){
+      for(var i=0;i<PRODUCTS.length;i++){
+        var p=PRODUCTS[i];
+        var pr = Number(String(p.price||0).replace(',','.')) || 0;
+        META[p.id]={id:p.id,name:(p.name||p.id),price:pr,unit:(p.unit||''),shortDesc:(p.shortDesc||'')};
+      }
+      save(META_KEY,META);
+    }
+  }catch(e){}
+  var Cart=window.Cart||{data:load(CART_KEY)};
+  Cart.get=function(id){return Cart.data[id]|0};
+  Cart.set=function(id,q){ q=Math.max(0,q|0); if(q===0) delete Cart.data[id]; else Cart.data[id]=q; save(CART_KEY,Cart.data); window.dispatchEvent(new Event('cart:update')); };
+  Cart.clear=function(){ Cart.data={}; save(CART_KEY,Cart.data); window.dispatchEvent(new Event('cart:update')); };
+  Cart.items=function(){ var o=[]; for(var k in Cart.data)o.push({id:k,qty:Cart.data[k],meta:META[k]}); return o; };
+  window.Cart=Cart;
+  var fmt=new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'});
+  function syncInlineQty(){ document.querySelectorAll('.qty .num[id^="q-"]').forEach(function(s){ var id=s.id.slice(2); s.textContent=Cart.get(id)||0; }); }
+  function renderCart(){
+    var L=document.getElementById('cartList'), T=document.getElementById('cartTotal'), M=document.getElementById('miniCount');
+    var rows=[], tot=0, cnt=0;
+    for(var id in Cart.data){ var q=Cart.data[id]|0; if(q<=0) continue; var m=META[id]||{id:id,name:id,price:0,shortDesc:''}; rows.push('• '+m.name+(m.shortDesc?(' – '+m.shortDesc):'')+' × '+q); tot+=(m.price||0)*q; cnt+=q; }
+    if(L) L.innerHTML=rows.length?rows.join('<br>'):'Nessun articolo';
+    if(T) T.textContent=fmt.format(tot);
+    if(M) M.textContent=cnt;
+    syncInlineQty();
+  }
+  window.addQty=function(id,d){ Cart.set(id, Cart.get(id)+d); };
+  document.addEventListener('DOMContentLoaded', function(){
+    var cart=document.getElementById('cart');
+    var pill=document.getElementById('cartPill'); if(pill) pill.onclick=function(e){e.stopPropagation(); cart.classList.remove('collapsed');};
+    var tgl=document.getElementById('toggleBtn'); if(tgl) tgl.onclick=function(e){e.stopPropagation(); cart.classList.add('collapsed');};
+    var clr=document.getElementById('clearBtn'); if(clr) clr.onclick=function(e){e.stopPropagation(); Cart.clear();};
+    function unitLabel(u){u=u||'';return u==='/kg'?' €/kg':(u==='/confezione'?' €/conf.':(u?' '+u:''))}
+    window.openMail=function(){
+      var items=Cart.items().filter(function(x){return x.qty>0}); if(!items.length){ alert('Seleziona almeno un articolo.'); return; }
+      var body='Gentile Zanon Seafish,%0D%0A%0D%0ADesidero inviare il seguente ordine:%0D%0A';
+      body+='Q.tà | Titolo | Short descr | Prezzo unitario | Totale riga%0D%0A';
+      body+='--------------------------------------------------------------%0D%0A';
+      var tot=0,cnt=0;
+      for(var i=0;i<items.length;i++){ var it=items[i]; var m=it.meta||{}; var sub=(m.price||0)*it.qty; tot+=sub; cnt+=it.qty;
+        var line = it.qty+' | '+(m.name||it.id)+' | '+(m.shortDesc||'')+' | '+fmt.format(m.price||0)+(m.unit?unitLabel(m.unit):'')+' | '+fmt.format(sub);
+        body+=encodeURIComponent(line)+'%0D%0A'; }
+      body+='--------------------------------------------------------------%0D%0A';
+      body+='Totale articoli: '+cnt+'%0D%0A';
+      body+='Totale ordine: '+fmt.format(tot)+'%0D%0A%0D%0A';
+      body+='Dati per il ritiro/consegna:%0D%0ANome azienda / nominativo:%0D%0AIndirizzo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A';
+      var mailto='mailto:info@zanonseafish.it?subject='+encodeURIComponent('Ordine Catalogo Prodotti')+'&body='+body;
+      location.href=mailto; setTimeout(function(){ Cart.clear(); }, 400);
+    };
+    var mb=document.getElementById('mailBtn'); if(mb) mb.onclick=openMail;
+    var mb2=document.getElementById('mailBtnBottom'); if(mb2) mb2.onclick=openMail;
+    renderCart(); setTimeout(renderCart,200);
+    if(document.getElementById('miniCount') && Number(document.getElementById('miniCount').textContent||'0')===0){ cart.classList.add('collapsed'); }
+  });
+  window.addEventListener('cart:update', renderCart);
+  window.addEventListener('storage', function(e){ if(e.key===CART_KEY||e.key===META_KEY){ renderCart(); }});
+})();
 </script>
 
 </body>
