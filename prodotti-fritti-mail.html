@@ -1,215 +1,279 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Catalogo Prodotti</title>
-     <!-- Open Graph -->
-<meta property="og:title" content="Offerte Natale 2025 ZANON SEAFISH">
-<meta property="og:description" content="Sfoglia il catalogo delle offerte di Natale 2025 - Zanon Seafish Ingros SRL">
-<meta property="og:url" content="https://zanonseafish.github.io/catalogo/natalizio.html">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catalogo Prodotti ZANON SEAFISH</title>
+ <!-- Open Graph -->
+ 
+<meta property="og:title" content="Catalogo Prodotti ZANON SEAFISH">
+<meta property="og:description" content="Sfoglia il catalogo prodotti Zanon Seafish Ingros SRL">
+<meta property="og:url" content="https://zanonseafish.github.io/catalogo/">
 <meta property="og:type" content="website">
 
-<meta property="og:image" content="https://zanonseafish.github.io/catalogo/images/og-cover2.jpg">
-<meta property="og:image:secure_url" content="https://zanonseafish.github.io/catalogo/images/og-cover2.jpg">
+<meta property="og:image" content="https://zanonseafish.github.io/catalogo/images/og-cover1.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
 <!-- end Open Graph -->
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#fbfbf8;
+      --ink:#111;
+      --muted:#606060;
+      --line:#e7e4dc;
+      --brand:#0b5;
+      --price:#0a6a2b;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink)}
+
+    /* Header */
+    header{background:linear-gradient(180deg,#0b1620 0%, #0e1f2a 60%, #0e1f2a00 100%);color:#fff;padding:20px 12px 18px;text-align:center;position:relative}
+    header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
+    header img.logo{height:60px;width:auto;display:block;margin:0 auto}
+    header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:0 0 2px 0;font-size:24px;line-height:1.15;word-break:break-word;overflow-wrap:anywhere}
+    header .sub{opacity:.85;font-size:11.5px;margin-top:0}
+    .tools{display:flex;justify-content:center;margin-top:8px}
+    .search{max-width:480px;width:100%}
+    .search input{width:100%;padding:10px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;color:var(--brand);outline:none}
+    .count{color:var(--brand);margin-top:8px;font-size:12px}
+
+    /* Container compact */
+    .container{max-width:1100px;margin:6px auto 14px;padding:0 10px}
+
+    /* Slim list */
+    .list{display:flex;flex-direction:column;gap:10px}
+    .item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
+    .item:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.06)}
+    .thumb{width:84px;height:84px;border-radius:12px;overflow:hidden;background:#f1f1ed;border:1px solid var(--line)}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .info{min-width:0;padding-left:8px}
+    .title{font-family:"Playfair Display",serif;font-weight:700;font-size:18px;letter-spacing:.02em;margin:0 0 3px 0;text-transform:uppercase}
+    .desc{color:var(--muted);font-size:12px;line-height:1.3;margin:0 0 4px 0}
+    .divider{height:1px;background:var(--line);margin:3px 0}
+    .price{justify-self:end;align-self:end;color:var(--price);font-weight:700;font-size:16px}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
+    .modal.open{display:flex}
+    .modal-content{
+      background:#fff;border-radius:12px;
+      max-width:860px;width:min(96vw,860px);
+      padding:20px;position:relative;
+      max-height:90vh;overflow:hidden;
+      box-shadow:0 10px 24px rgba(0,0,0,.35);
+      display:flex;flex-direction:column;
+    }
+    .m-title{font-family:"Playfair Display",serif;margin:0 0 10px 0}
+    .modal-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px;flex:0 0 auto}
+    .share-small{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer;background:#111;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.3)}
+    .close-btn{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer;background:#eee;color:#111;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+
+    /* Gallery area grows and scrolls if needed */
+    #mGallery{
+      flex:1 1 auto;
+      overflow:auto;
+      display:grid;
+      gap:12px;
+      align-items:center;
+      justify-items:center;
+    }
+    /* two columns if ci sono almeno 2 immagini */
+    #mGallery:has(img:nth-child(2)){grid-template-columns:1fr 1fr;}
+    #mGallery img{
+      max-width:100%;
+      height:auto;
+      display:block;
+      object-fit:contain;
+    }
+
+    /* Footer */
+    .site-footer{max-width:1100px;margin:18px auto 24px;padding:0 10px;color:#444;font-size:12px}
+    .site-rule{border:none;height:1px;background:#e5e2da;margin:6px 0 10px}
+    .site-footer-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .footer-logo{height:20px;width:auto}
+    .foot-text{flex:1;min-width:240px}
+    .foot-mail{font-size:12px;color:#0b5;text-decoration:none}
+
+    /* Print-only footer (senza numeri pagina) */
+    
+
+    /* Responsive */
+    @media (max-width:820px){
+      header{padding:16px 10px 16px}
+      header h1{font-size:22px}
+      .item{grid-template-columns:76px 1fr 74px}
+      .thumb{width:76px;height:76px;border-radius:10px}
+      .title{font-size:16px}
+      .price{font-size:15px}
+    }
+    @media (max-width:560px){
+      header{padding:14px 8px 14px}
+      header h1{font-size:20px}
+      .item{grid-template-columns:66px 1fr;grid-template-rows:auto auto;gap:8px}
+      .price{grid-column:2;justify-self:end}
+    }
+
+    /* Print */
+    @media print{
+      @page{size:A4;margin:14mm 12mm}
+      body{background:#fff}
+      header{background:none!important;color:#000!important;border-bottom:1px solid #ddd!important;padding:0 0 6mm}
+      .sub{display:none!important}
+      .tools, #count{display:none!important} /* Nascondi ricerca e contatore */
+      .item{break-inside:avoid-page;page-break-inside:avoid;box-shadow:none;border-color:#ddd}
+      .modal{display:none!important}
+      .site-rule{background:#000;height:1px}
+      .site-footer{color:#000}
+      .foot-mail{color:#000;text-decoration:underline}
+
+      /* Piè di pagina fisso su ogni pagina, senza numerazione */
+      
+      .print-footer .line{
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+      }
+      .print-footer img{
+        height:12px;
+        width:auto;
+        vertical-align:middle;
+      }
+      .print-footer .text{font-weight:600;}
+    }
+
+    .search input::placeholder{color:rgba(11,85,0,.7)}
+  
+/* Nascondi sempre il piè pagina a video */
+.print-footer {
+  display: none !important;
+}
+
+/* Mostra e posiziona solo in stampa */
+@media print {
+  .print-footer {
+    display: block !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    color: #000;
+    opacity: .95;
+  }
+  .print-footer .line {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .print-footer img {
+    height: 12px;
+    width: auto;
+    vertical-align: middle;
+  }
+  .print-footer .text {
+    font-weight: 600;
+  }
+}
+
+</style>
+
+
+
+
+<!-- cart+qty styles (single) -->
 <style>
-/* SOLO ALBERI LATERALI, SEMPRE DIETRO */
-html::before,html::after{
-  content:"";position:fixed;bottom:0;width:120px;height:50vh;
-  background-repeat:no-repeat;background-size:contain;pointer-events:none;z-index:-3 !important;
-}
-html::before{left:1.2mm;background-image:url("images/latosx.png");background-position:left bottom}
-html::after{right:1.2mm;background-image:url("images/latodx.png");background-position:right bottom}
+.qty{display:inline-flex;align-items:center;gap:6px;border:1px solid #ddd;border-radius:999px;padding:6px 10px;margin-top:6px;user-select:none}
+.qty button{border:none;background:#f6f6f3;padding:4px 10px;border-radius:999px;font-size:16px;cursor:pointer}
+.qty .num{min-width:22px;text-align:center;font-weight:700}
+.iva-note{display:block;font-size:11px;color:#666;margin-top:2px;text-transform:uppercase;letter-spacing:.02em;text-align:right}
+@media print{ .qty{display:none!important} }
+</style>
 
-:root{--bg:#fbfbf8;--ink:#111;--muted:#606060;--line:#e7e4dc;--price:#0a6a2b;--accent:#8b0000}
-*{box-sizing:border-box}html,body{height:100%}
-body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink)}
-/* Header (identico a natalizio) */
-header{background:linear-gradient(180deg,#8b0000 0%, #b30000 70%, #b3000000 100%);color:#fff;padding:20px 12px 18px;text-align:center;position:relative}
-header .top{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:1100px;margin:0 auto}
-header img.logo{height:60px;width:auto;display:block;margin:0 auto}
-header h1{font-family:"Playfair Display",serif;font-weight:600;letter-spacing:.02em;margin:0 0 2px 0;font-size:24px;line-height:1.15}
-header .sub{font-weight:700;color:#fff;font-size:18px;margin-top:0;animation:blink 2s infinite}
-.contatti{font-size:13px;font-weight:500;margin-top:2px}
-.contatti a{color:inherit;text-decoration:underline}
-.tools{display:flex;justify-content:center;margin-top:8px}
-.search{max-width:480px;width:100%}
-.search input{width:100%;padding:10px;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;color:#fff;outline:none}
-.search input::placeholder{color:#fff}
-/* Layout con margini come natalizio */
-header,.container,.site-footer{padding-left:134px;padding-right:134px}
-@media (max-width:900px){header,.container,.site-footer{padding-left:16px;padding-right:16px}}
-.container{max-width:1100px;margin:6px auto 14px}
-/* Lista/card (identiche a natalizio) */
-.list{display:flex;flex-direction:column;gap:10px}
-.item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06)}
-.thumb{width:84px;height:84px;border-radius:12px;overflow:hidden;background:#f1f1ed;border:1px solid var(--line)}
-.thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.info{min-width:0;padding-left:8px}
-.title{font-family:"Playfair Display",serif;font-weight:700;font-size:18px;letter-spacing:.02em;margin:0 0 3px 0;text-transform:uppercase}
-.title .open{background:none;border:none;color:inherit;font:inherit;cursor:pointer;padding:0;text-align:left}
-.desc{color:var(--muted);font-size:12px;line-height:1.3;margin:0 0 4px 0}
-.divider{height:1px;background:var(--line);margin:3px 0}
-.price{color:var(--price);font-weight:700;font-size:16px;text-align:right}
-.iva{display:block;font-size:10px;line-height:1;text-align:right;color:var(--muted);margin-top:2px}
-/* Categoria (senza testo extra) */
-.cat{margin:14px 2px 6px;padding:8px 12px;border-radius:10px;border:1px solid #e5e2da;background:linear-gradient(90deg, rgba(139,0,0,.25) 0%, rgba(179,0,0,.10) 55%, rgba(179,0,0,0) 100%);font-family:"Playfair Display",serif;font-weight:700;font-size:18px;color:#7a0000}
-/* Contatore +/− */
-.qty{display:inline-flex;align-items:center;gap:6px;border:1px solid #ddd;border-radius:999px;padding:4px 6px;margin-top:6px;user-select:none}
-.qty button{border:none;background:#f6f6f3;padding:4px 8px;border-radius:999px;font-size:14px;cursor:pointer}
-.qty .num{min-width:20px;text-align:center;font-weight:700}
-/* Modal */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:5000}
-.modal.open{display:flex}
-.modal-content{background:#fff;border-radius:12px;max-width:860px;width:min(96vw,860px);padding:20px;position:relative;max-height:90vh;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);display:flex;flex-direction:column}
-.m-title{font-family:"Playfair Display",serif;margin:0 0 10px 0}
-#mGallery img{max-width:100%;height:auto;display:block;object-fit:contain;max-height:80vh}
-.modal-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px}
-.share-small, .close-btn{border:none;border-radius:18px;padding:8px 12px;font-size:.9rem;cursor:pointer}
-.share-small{background:#111;color:#fff}
-.close-btn{background:#eee;color:#111}
-/* Carrello fisso (sempre visibile) */
-.cart{position:fixed;left:14px;top:10px;background:rgba(255,255,255,.9);backdrop-filter:blur(2px);border:1px solid #ddd;border-radius:12px;box-shadow:0 6px 16px rgba(0,0,0,.15);padding:10px 12px;max-width:340px;z-index:1500}
-.cart.collapsed{padding:6px 10px;border-radius:999px;cursor:pointer}
-.cart h4{margin:0 0 6px 0;font-size:14px}
-.cart-list{font-size:12px;line-height:1.35;max-height:160px;overflow:auto;margin-bottom:6px}
-.cart-empty{color:#777;font-style:italic}
-.cart-total{display:flex;justify-content:space-between;align-items:center;font-weight:700;margin-top:6px}
-.cart-actions{display:flex;justify-content:space-between;align-items:center;margin-top:6px;gap:8px}
-.cart button{border:none;border-radius:999px;padding:8px 12px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff}
-.cart .toggle{background:#eee;color:#222}
-.cart.collapsed .when-expanded{display:none}
-.cart.collapsed .when-collapsed{display:inline}
-.cart:not(.collapsed) .when-collapsed{display:none}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
-/* Stampa */
-@media print{ .tools,.cart,.qty,.share-small,.actions-bottom{display:none!important} }
-
-/* Footer logo fix: avoid oversized image on mobile */
-.site-footer img {max-width:160px;height:auto;display:inline-block}
-.footer-logo{height:20px;width:auto}
-.site-footer-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-
-@media (max-width:820px){
-  .item{grid-template-columns:76px 1fr 74px}
-  .thumb{width:76px;height:76px;border-radius:10px}
-  .title{font-size:16px}
-  .price{font-size:15px}
-}
-@media (max-width:560px){
-  .item{grid-template-columns:66px 1fr;grid-template-rows:auto auto;gap:8px}
-  .price{grid-column:2;justify-self:end}
-}
-
-/* Actions above footer (same style family as cart) */
-.actions-bottom{display:flex;justify-content:center;gap:10px;margin:16px 0 6px}
-.actions-bottom button{border:none;border-radius:999px;padding:10px 16px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.12)}
-.actions-bottom .ghost{background:#eee;color:#222}
-
-/* Footer identical to natalizio-2: layout + logo sizing */
-.site-footer{max-width:1100px;margin:18px auto 24px;color:#444;font-size:12px;padding-left:134px;padding-right:134px}
-@media (max-width:900px){.site-footer{padding-left:16px;padding-right:16px}}
-.site-rule{border:none;height:1px;background:#e5e2da;margin:6px 0 10px}
-.site-footer-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.site-footer img{max-width:160px;height:auto;display:inline-block}
-.footer-logo{height:20px;width:auto}
-.foot-text{flex:1;min-width:240px}
-.foot-text a{color:#064;text-decoration:underline}
-
-/* Collapsed cart pill fix (avoid circle) */
-.cart{display:inline-flex;align-items:center}
-.cart.collapsed{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;max-width:unset;border-radius:999px;padding:6px 10px}
-.cart.collapsed .when-collapsed{display:inline-flex;gap:6px;align-items:center}
-.cart.collapsed .when-expanded{display:none!important}
-.cart:not(.collapsed) .when-expanded{display:block}
-
-/* === Fix: immagini modal adattate allo schermo === */
-.modal .modal-content{background:#fff;border-radius:12px;max-width:860px;width:min(96vw,860px);padding:20px;position:relative;max-height:90vh;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);display:flex;flex-direction:column}
-#mGallery{flex:1 1 auto;overflow:auto;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:flex-start}
-#mGallery img{max-width:100%;height:auto;display:block;object-fit:contain;max-height:80vh}
+<style>
+/* back floating button */
+#backFab{position:fixed;left:14px;bottom:14px;z-index:1600;border:none;border-radius:999px;padding:10px 14px;
+font-weight:700;cursor:pointer;background:#eee;color:#222;box-shadow:0 4px 10px rgba(0,0,0,.15)}
+#backFab:hover{filter:brightness(0.96)}
+@media print{ #backFab{display:none!important} }
 </style>
 </head>
 <body>
-<header>
-  <div class="top">
-    <img class="logo" src="images/zanonlogonatale.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
-    <h1>Catalogo Natale 2025</h1>
-    <div class="sub">Attendiamo i Vs graditi ordini entro mercoledì 4 dicembre</div>
-    <div class="contatti">
-      📞 041 5382830 &nbsp;|&nbsp;
-      <a href="mailto:amministrazione@zanonseafish.it">✉️ amministrazione@zanonseafish.it</a>
+  <header>
+    <div class="top">
+      <img class="logo" src="images/logo.png" alt="Zanon Seafish Ingros SRL" onerror="this.onerror=null;this.src='images/default1.jpg';">
+      <h1>Catalogo Prodotti ZANON SEAFISH</h1>
+      <div class="sub">Clicca un elemento per i dettagli e la condivisione.</div>
+      <div class="tools">
+        <div class="search"><input id="searchBox" placeholder="Cerca prodotti…"></div>
+      </div>
+      <div id="count" class="count"></div>
     </div>
-    <div class="tools"><div class="search"><input id="searchBox" placeholder="Cerca prodotti…"></div></div>
-  </div>
-</header>
+  </header>
 
-<div class="container">
-  <div class="cat">Affumicati</div>
-  <div id="list" class="list"></div>
+  <!-- Piè di pagina per la stampa (senza numeri) -->
+  <div class="print-footer" aria-hidden="true">
+    <span class="line">
+      <img src="images/logo.png" alt="Zanon Seafish">
+      <span class="text">Zanon Seafish – Catalogo Prodotti</span>
+    </span>
+  </div>
+
+  <div class="container">
+    <div id="list" class="list"></div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content" aria-labelledby="mTitle">
+      <h2 id="mTitle" class="m-title"></h2>
+      <div id="mGallery"></div>
+      <p id="mDesc" class="desc"></p>
+      <p id="mFullDesc"></p>
+      <p id="mPrice" class="price" style="margin-top:0"></p>
+      <div class="qty" aria-label="Quantità"><button id="mMinus">–</button><span id="mNum" class="num">0</span><button id="mPlus">+</button><span class="mini">Quantità</span></div><div class="modal-footer">
+        <button id="shareBtn" class="share-small" title="Condividi" aria-label="Condividi">📤 Condividi</button>
+        <button id="closeBtn" class="close-btn" aria-label="Chiudi">Chiudi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+<div class="actions-bottom" id="final-actions">
+  <button id="backBtnFixed" class="ghost" type="button">Indietro</button>
+  <button id="mailBtnBottom" type="button">Prepara mail</button>
+  <button id="switchBtn" class="ghost" type="button">Vai a tutti i prodotti</button>
 </div>
 
-<!-- Modal -->
-<div id="modal" class="modal" role="dialog" aria-modal="true">
-  <div class="modal-content" aria-labelledby="mTitle">
-    <h2 id="mTitle" class="m-title"></h2>
-    <div id="mGallery"></div>
-    <p id="mDesc" class="desc"></p>
-    <p id="mFullDesc"></p>
-    <p id="mPrice" class="price" style="margin-top:0"></p>
-    <div class="qty" aria-label="Quantità">
-      <button id="mMinus" aria-label="Diminuisci">–</button>
-      <span id="mNum" class="num">0</span>
-      <button id="mPlus" aria-label="Aumenta">+</button>
-      <span class="mini">Quantità</span>
+  <footer class="site-footer">
+    <hr class="site-rule">
+    <div class="site-footer-inner">
+      <img src="images/logo.png" alt="Zanon Seafish Ingros SRL" class="footer-logo" onerror="this.style.display='none'">
+      <div class="foot-text">
+        <strong>Zanon Seafish Ingros SRL</strong> · P.IVA IT01654690278 ·
+        Sede legale: S. Croce 491, 30135 Venezia (VE) ·
+        Sede amm. e magazzini: Via Colombara 115/A, 30176 Marghera (VE) ·
+        Tel: 041 5382830 · 041 3963095 ·
+        <a href="https://www.zanonseafish.it/" target="_blank" rel="noopener">www.zanonseafish.it</a> ·
+        <a href="mailto:info@zanonseafish.it">info@zanonseafish.it</a>
+      </div>
+      <a class="foot-mail" href="mailto:info@zanonseafish.it" title="Scrivi a info@zanonseafish.it">✉️ Contattaci</a>
     </div>
-    <div class="modal-footer">
-      <button id="shareBtn" class="share-small" title="Condividi" aria-label="Condividi">📤 Condividi</button>
-      <button id="closeBtn" class="close-btn" aria-label="Chiudi">Chiudi</button>
-    </div>
-  </div>
-</div>
-
-<!-- Carrello -->
-<div id="cart" class="cart collapsed" aria-live="polite">
-  <span class="when-collapsed">🧾 <strong id="miniCount">0</strong></span>
-  <div class="when-expanded">
-    <h4>Riepilogo</h4>
-    <div id="cartList" class="cart-list cart-empty">Nessun articolo</div>
-    <div class="cart-total"><span>Totale</span><span id="cartTotal">€ 0,00</span></div>
-    <div class="cart-actions">
-      <button id="toggleBtn" class="toggle" type="button">Riduci</button>
-      <button id="clearBtn" class="ghost" type="button">Azzera</button>
-      <button id="mailBtn" type="button">Prepara mail</button>
-    </div>
-  </div>
-</div>
-
-<div class="actions-bottom" id="final-actions"><button id="openCartBtn" class="ghost" type="button" onclick="openCartFromBottom()">Vedi carrello</button><button id="mailBtnBottom" type="button" onclick="openMail()">Prepara mail</button></div>
-
-<footer class="site-footer">
-  <hr class="site-rule">
-  <div class="site-footer-inner">
-    <img src="images/logo.png" alt="Zanon Seafish Ingros SRL" class="footer-logo" onerror="this.style.display='none'">
-    <div class="foot-text">
-      <strong>Zanon Seafish Ingros SRL</strong> · P.IVA IT01654690278 ·
-      Sede legale: S. Croce 491, 30135 Venezia (VE) ·
-      Sede amm. e magazzini: Via Colombara 115/A, 30176 Marghera (VE) ·
-      Tel: 041 5382830 · 041 3963095 ·
-      <a href="https://www.zanonseafish.it/" target="_blank" rel="noopener">www.zanonseafish.it</a> ·
-      <a class="foot-mail" href="mailto:amministrazione@zanonseafish.it">amministrazione@zanonseafish.it</a>
-    </br></br></br>
-    </div>
-  </div>
-</footer>
-
-<script>
-/* === DATI prodotti (prezzi e descrizioni invariati) === */
-const PRODUCTS = [
+  <br>
+  </footer>
+<br>
+ 
+  <script>
+  // === DATI ===
+  const PRODUCTS = [
   {id:"polpette-brasato",name:"Polpette di Brasato",price:14.00,shortDesc:"Conf. 2kg – Polpette di brasato surgelate (40 pz da 50g)",fullDesc:"Polpette di brasato dal gusto autentico, preparate con carne di manzo selezionata. Ideali per secondi o buffet caldi.",images:["img2/polpette-brasato.jpg"]},
   {id:"polpette-baccala",name:"Polpette di Baccalà",price:14.00,shortDesc:"Conf. 2kg – Polpette di baccalà surgelate (40 pz da 50g)",fullDesc:"Polpette morbide a base di baccalà e patate. Perfette fritte o al forno come antipasto di mare.",images:["img2/polpette-baccala.jpg"]},
   {id:"polpette-tonno-cipolla",name:"Polpette di Tonno e Cipolla",price:14.00,shortDesc:"Conf. 2kg – Polpette di tonno e cipolla (40 pz da 50g)",fullDesc:"Polpette di tonno con cipolla dolce e spezie mediterranee. Croccanti e profumate.",images:["img2/polpette-tonno-cipolla.jpg"]},
@@ -234,346 +298,752 @@ const PRODUCTS = [
   {id:"salvia-pastellata",name:"Salvia Pastellata Prefritta",price:11.50,shortDesc:"Conf. 4x1kg – Foglie di salvia pastellate prefritte",fullDesc:"Foglie di salvia immerse in pastella leggera e croccante. Profumate e aromatiche.",images:["img2/salvia-pastellata.png"]},
   {id:"tris-verdure",name:"Tris di Verdure Pastellate Prefritte",price:5.20,shortDesc:"Conf. 5x1kg – Tris di verdure pastellate prefritte",fullDesc:"Mix croccante di zucchine, carote e peperoni in pastella dorata. Perfette per contorni o antipasti.",images:["img2/tris-verdure.png"]}
 ];
-/* ==== STATO ==== */
-const cart={};
-const fmt=new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'});
-function unitLabel(u){return u==='/confezione'?' €/conf.':(u==='/kg'?' €/kg':(u||''));}
-function getQty(id){return cart[id]||0;}
-function setQty(id,q){cart[id]=Math.max(0,q|0); if(cart[id]===0) delete cart[id]; renderCart(); syncRowQty(id); if(currentId===id) updateModalQty();}
-function addQty(id,delta){setQty(id,getQty(id)+delta);}
-function abbr(p){return p.abbr||p.name;}
-/* ==== LISTA ==== */
-const listEl=document.getElementById('list');
-function rowTemplate(p){return `
-<div id="${p.id}" class="item" data-id="${p.id}">
-  <div class="thumb" onclick="openModal('${p.id}')"><img loading="lazy" src="${(p.images&&p.images[0])||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
-  <div class="info">
-    <h3 class="title"><button class="open" onclick="openModal('${p.id}')">${p.name}</button></h3>
-    <p class="desc">${p.shortDesc||""}</p>
-    <div class="divider"></div>
-    <div class="qty" aria-label="Quantità" onclick="event.stopPropagation();">
-      <button onclick="event.stopPropagation();addQty('${p.id}',-1)" aria-label="Diminuisci">–</button>
-      <span id="num-${p.id}" class="num">0</span>
-      <button onclick="event.stopPropagation();addQty('${p.id}',+1)" aria-label="Aumenta">+</button>
-      <span class="mini">Quantità</span>
+  
+  // Ordina alfabeticamente per id
+  PRODUCTS.sort((a,b)=>a.id.localeCompare(b.id));
+
+  const listEl=document.getElementById("list");
+  const fmt=new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR"});
+  const countEl=document.getElementById("count");
+  const q=document.getElementById("searchBox");
+  const modal=document.getElementById("modal");
+  const mTitle=document.getElementById("mTitle");
+  const mDesc=document.getElementById("mDesc");
+  const mFullDesc=document.getElementById("mFullDesc");
+  const mPrice=document.getElementById("mPrice");
+  const mGallery=document.getElementById("mGallery");
+  const shareBtn=document.getElementById("shareBtn");
+  const closeBtn=document.getElementById("closeBtn");
+  let currentId=null;
+
+  function rowTemplate(p){
+    return `
+    <div class="item" onclick="openModal('${p.id}')">
+      <div class="thumb"><img loading="lazy" src="${p.images[0] || 'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
+      <div class="info">
+        <h3 class="title">${p.name}</h3>
+        <p class="desc">${p.shortDesc||""}</p>
+        <div class="divider"></div>
+      </div>
+      <div class="price">${fmt.format(p.price)}${p.unit || ""}</div>
+      <span class="iva-note">IVA ESCLUSA</span>
+    </div>`;
+  }
+
+  function render(list=PRODUCTS){
+    listEl.innerHTML = list.length ? list.map(rowTemplate).join("") : '<div class="item">Nessun risultato</div>';
+    countEl.textContent=list.length===PRODUCTS.length?`${list.length} prodotti`:`${list.length} risultati`;
+  }
+
+  function productAnchorUrl(id){
+    const base=location.origin+location.pathname;
+    return `${base}#${encodeURIComponent(id)}`;
+  }
+
+  async function shareProduct(id){
+    const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
+    const imgUrl=new URL(p.images[0], location.href).href;
+    const text=`${p.name} – ${fmt.format(p.price)}\n${p.shortDesc||""}\n${productAnchorUrl(p.id)}`;
+    try{
+      if(navigator.canShare && window.File && window.Blob){
+        const resp=await fetch(imgUrl,{mode:"cors"});
+        const blob=await resp.blob();
+        const file=new File([blob], `${p.id}.jpg`, {type: blob.type || "image/jpeg"});
+        const data={title:p.name,text,files:[file]};
+        if(navigator.canShare(data)){ await navigator.share(data); return; }
+      }
+      if(navigator.share){ await navigator.share({title:p.name,text:`${p.name} – ${fmt.format(p.price)}\n${p.shortDesc||""}`,url:imgUrl}); return; }
+    }catch(e){}
+    try{ await navigator.clipboard.writeText(productAnchorUrl(p.id)); }catch(e){}
+  }
+
+  function adjustModalImages(){
+    const content = document.querySelector('.modal-content');
+    const gallery = document.getElementById('mGallery');
+    if(!content || !gallery) return;
+    const titleH = document.getElementById('mTitle')?.offsetHeight || 0;
+    const descH  = document.getElementById('mDesc')?.offsetHeight || 0;
+    const fullH  = document.getElementById('mFullDesc')?.offsetHeight || 0;
+    const priceH = document.getElementById('mPrice')?.offsetHeight || 0;
+    const footerH= document.querySelector('.modal-footer')?.offsetHeight || 0;
+    const paddings = 40; // approx top+bottom padding inside modal-content
+    const max = content.clientHeight - (titleH + descH + fullH + priceH + footerH + paddings);
+    const imgs = gallery.querySelectorAll('img');
+    imgs.forEach(img => { img.style.maxHeight = Math.max(120, max) + 'px'; });
+  }
+
+  window.openModal = function(id){
+    const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
+    currentId=id;
+    mTitle.textContent=p.name;
+    mDesc.textContent=p.shortDesc||"";
+    mFullDesc.textContent=p.fullDesc||"";
+    mPrice.textContent=fmt.format(p.price)+(p.unit||"");
+    const imgs=(p.images||[]).slice(0,2);
+    mGallery.innerHTML=imgs.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.png';">`).join("");
+    shareBtn.onclick=()=>shareProduct(currentId);
+    modal.classList.add("open"); document.body.style.overflow="hidden"; closeBtn.focus();
+    if(location.hash!=="#"+id) history.pushState({modal:true,id},"","#"+id);
+    // after rendering, adjust sizes
+    setTimeout(adjustModalImages, 0);
+  }
+
+  function closeModal(){
+    if(!modal.classList.contains("open")) return;
+    modal.classList.remove("open"); document.body.style.overflow="";
+    currentId=null;
+    if(location.hash) history.pushState("",document.title,location.pathname+location.search);
+  }
+
+  closeBtn.onclick=closeModal;
+  modal.addEventListener("click",e=>{ if(e.target===modal) closeModal(); });
+  window.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
+  window.addEventListener("popstate",()=>{
+    if(location.hash){
+      const id=decodeURIComponent(location.hash.slice(1));
+      if(!modal.classList.contains("open")) openModal(id);
+    }else{
+      if(modal.classList.contains("open")) modal.classList.remove("open"); document.body.style.overflow="";
+    }
+  });
+
+  q.addEventListener("input",()=>{
+    const term=q.value.trim().toLowerCase();
+    if(!term){render(PRODUCTS);return;}
+    const res=PRODUCTS.filter(p=>{
+      const hay=[p.name||"",p.shortDesc||"",p.fullDesc||"",...(p.images||[]).map(x=>x.split('/').pop()||"")].join(" ").toLowerCase();
+      return hay.includes(term);
+    });
+    render(res);
+  });
+
+  // Recompute image size on resize while modal open
+  window.addEventListener('resize', ()=>{ if(modal.classList.contains('open')) adjustModalImages(); });
+
+  render();
+  if(location.hash){
+    const id=decodeURIComponent(location.hash.slice(1));
+    if(PRODUCTS.some(p=>p.id===id)) openModal(id);
+  }
+  </script>
+
+   <!-- Pulsante ritorno menu -->
+<a href="index2-mail.html" title="Torna al menu" class="back-btn" aria-label="Torna al menu principale">↩︎ Menu</a>
+
+<style>
+.back-btn{
+  position:fixed;
+  bottom:14px;
+  left:14px;
+  background:rgba(255,255,255,0.75);
+  color:#0a6a2b;
+  font-size:13px;
+  font-weight:600;
+  padding:6px 10px;
+  border-radius:20px;
+  text-decoration:none;
+  box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  z-index:1500;
+  transition:background .15s ease, color .15s ease;
+}
+.back-btn:hover{
+  background:#0a6a2b;
+  color:#fff;
+}
+@media print{
+  .back-btn{display:none!important;}
+}
+</style>
+  
+
+<!-- injected:cart -->
+<div id="cart" class="collapsed" aria-live="polite">
+  <span id="cartPill" class="when-collapsed">🧾 <strong id="miniCount">0</strong></span>
+  <div class="when-expanded">
+    <h4>Riepilogo</h4>
+    <div id="cartList" class="cart-list cart-empty">Nessun articolo</div>
+    <div class="cart-total"><span>Totale</span><span id="cartTotal">€ 0,00</span></div>
+    <div class="cart-actions">
+      <button id="toggleBtn" class="toggle" type="button">Riduci</button>
+      <button id="clearBtn" class="ghost" type="button">Azzera</button>
+      <button id="mailBtn" type="button">Prepara mail</button>
     </div>
   </div>
-  <div class="price">${fmt.format(p.price||0)}${unitLabel(p.unit)}<span class="iva">IVA inclusa</span></div>
-</div>`}
-function renderList(list=PRODUCTS){ listEl.innerHTML=list.map(rowTemplate).join(''); syncAllQty(); }
-/* ==== MODAL ==== */
-const modal=document.getElementById('modal');
-const mTitle=document.getElementById('mTitle');
-const mGallery=document.getElementById('mGallery');
-const mDesc=document.getElementById('mDesc');
-const mFullDesc=document.getElementById('mFullDesc');
-const mPrice=document.getElementById('mPrice');
-const shareBtn=document.getElementById('shareBtn');
-const closeBtn=document.getElementById('closeBtn');
-const mMinus=document.getElementById('mMinus');
-const mPlus=document.getElementById('mPlus');
-const mNum=document.getElementById('mNum');
-let currentId=null;
-function openModal(id){
-  const p=PRODUCTS.find(x=>x.id===id); if(!p) return;
-  currentId=id;
-  document.body.classList.add('hide-cart');
-  mTitle.textContent=p.name||'';
-  mDesc.textContent=p.shortDesc||'';
-  mFullDesc.textContent=p.fullDesc||'';
-  mPrice.innerHTML=fmt.format(p.price||0)+unitLabel(p.unit)+'<br><span class="iva">IVA ESCLUSA</span>';
-  const imgs=(p.images||[]).slice(0,2);
-  mGallery.innerHTML = imgs.map(src=>`<img loading="lazy" src="${src||'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';" onload="adjustModalLayout()">`).join('');
-  updateModalQty();
-  modal.classList.add('open'); document.body.style.overflow='hidden'; resetModalScroll(); adjustModalLayout();
-}
-function updateModalQty(){ mNum.textContent=getQty(currentId); }
-function closeModal(){ modal.classList.remove('open'); document.body.style.overflow=''; document.body.classList.remove('hide-cart'); }
-closeBtn.addEventListener('click',closeModal);
-modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
-window.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
-window.addEventListener('resize', adjustModalLayout);
-window.addEventListener('orientationchange', adjustModalLayout);
-mMinus.addEventListener('click',()=>addQty(currentId,-1));
-mPlus.addEventListener('click',()=>addQty(currentId,+1));
-/* ==== RICERCA ==== */
-const q=document.getElementById('searchBox');
-q.addEventListener('input',()=>{
-  const v=(q?.value||'').trim().toLowerCase();
-  const res=!v?PRODUCTS:PRODUCTS.filter(p => (`${p.name} ${p.shortDesc||''} ${p.fullDesc||''}`).toLowerCase().includes(v));
-  renderList(res);
-});
-/* ==== CART ==== */
-const cartEl=document.getElementById('cart');
-const cartListEl=document.getElementById('cartList');
-const cartTotalEl=document.getElementById('cartTotal');
-const miniCountEl=document.getElementById('miniCount');
-const toggleBtn=document.getElementById('toggleBtn');
-function positionCart(){
-  const cat = document.querySelector('.cat');
-  const header = document.querySelector('header');
-  if(cat){
-    const rect = cat.getBoundingClientRect();
-    const offset = 46;
-    cartEl.style.top = Math.max(6, rect.top - offset) + 'px';
-  }else{
-    const h = header?.offsetHeight || 0;
-    cartEl.style.top = (h + 10) + 'px';
-  }
-}
-function renderCart(){
-  const rows=[]; let total=0; let count=0;
-  for(const id of Object.keys(cart)){
-    const q=cart[id]; const p=PRODUCTS.find(x=>x.id===id);
-    if(!p||q<=0) continue;
-    rows.push(`• ${abbr(p)} × ${q}`);
-    total+=(p.price||0)*q; count+=q;
-  }
-  cartListEl.innerHTML = rows.length?rows.join('<br>'):'Nessun articolo';
-  cartListEl.classList.toggle('cart-empty', rows.length===0);
-  cartTotalEl.textContent=fmt.format(total);
-  miniCountEl.textContent=count;
-  positionCart();
-}
-cartEl.addEventListener('click',()=>{
-  if(cartEl.classList.contains('collapsed')){ cartEl.classList.remove('collapsed'); positionCart(); }
-});
-toggleBtn.addEventListener('click',e=>{ e.stopPropagation(); cartEl.classList.add('collapsed'); positionCart(); });
+</div>
 
-/* === Utility: azzera carrello + conferma === */
-function clearCart(){
-  for(const k of Object.keys(cart)) delete cart[k];
-  renderCart(); syncAllQty();
-}
-function confirmAndClear(){
-  clearCart();
-  alert('Ordine pronto in email. Carrello azzerato.');
-}
 
-/* ==== MAILTO: formato richiesto ==== */
-document.getElementById('mailBtn').addEventListener('click',()=>{
-  const ids=Object.keys(cart);
-  if(!ids.length){ alert('Seleziona almeno un articolo.'); return; }
-  let body='Gentile Zanon Seafish,%0D%0A%0D%0ADesidero inviare il seguente ordine:%0D%0A';
-  body+='Q.tà | Titolo | Short descr | Prezzo unitario | Totale riga%0D%0A';
-  body+='--------------------------------------------------------------%0D%0A';
-  let tot=0, count=0;
-  for(const id of ids){
-    const q=cart[id]; const p=PRODUCTS.find(x=>x.id===id); if(!p) continue;
-    const sub=(p.price||0)*q; tot+=sub; count+=q;
-    const line=`${q} | ${p.name} | ${p.shortDesc||''} | ${fmt.format(p.price||0)}${unitLabel(p.unit)} | ${fmt.format(sub)}`;
-    body+=encodeURIComponent(line)+'%0D%0A';
-  }
-  body+='--------------------------------------------------------------%0D%0A';
-  body+=`Totale articoli: ${count}%0D%0A`;
-  body+=`Totale ordine: ${fmt.format(tot)}%0D%0A%0D%0A`;
-  body+=`Dati per il ritiro/consegna:%0D%0ANome azienda / nominativo:%0D%0AIndirizzo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A`;
-  const subject=encodeURIComponent('Ordine Catalogo Natale 2025');
-  const mailto=`mailto:amministrazione@zanonseafish.it?subject=${subject}&body=${body}`;
-  window.location.href = mailto;
-  setTimeout(confirmAndClear, 400);
-  return;
-});
+<!-- injected:cart js -->
+<script>
+(function(){
+  var CART_KEY='zanonCartV1', META_KEY='zanonCartMetaV1';
+  function load(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return {}}}
+  function save(k,v){localStorage.setItem(k, JSON.stringify(v))}
+  var META=load(META_KEY);
+  var Cart={data:load(CART_KEY),get:function(id){return this.data[id]|0},set:function(id,q){q=Math.max(0,q|0); if(q===0) delete this.data[id]; else this.data[id]=q; save(CART_KEY,this.data); window.dispatchEvent(new Event('cart:update'));},clear:function(){this.data={}; save(CART_KEY,this.data); window.dispatchEvent(new Event('cart:update'))},items:function(){var o=[]; for(var k in this.data)o.push({id:k,qty:this.data[k],meta:META[k]}); return o;}};
+  window.addEventListener('storage',function(e){ if(e.key===CART_KEY||e.key===META_KEY){ Cart.data=load(CART_KEY); META=load(META_KEY); window.dispatchEvent(new Event('cart:update')); } });
 
-/* === Condividi prodotto aperto in MODAL === */
-function productUrl(id){
-  const base = location.origin + location.pathname; // ignora og:url
-  return `${base}#${id}`;
-}
-async function shareCurrent(){
-  const p = PRODUCTS.find(x => x.id === currentId);
-  if(!p){ alert('Apri un prodotto da condividere.'); return; }
+  try{ if(Array.isArray(window.PRODUCTS)){ for(var i=0;i<PRODUCTS.length;i++){ var p=PRODUCTS[i]; var pr=Number(String(p.price||0).replace(',', '.'))||0; META[p.id]={id:p.id,name:(p.name||p.title||p.id),price:pr,unit:(p.unit||''),shortDesc:(p.shortDesc||'')}; } save(META_KEY,META); window.dispatchEvent(new Event('cart:update')); } }catch(e){}
 
-  const url   = productUrl(p.id);
-  const imgRel = (p.images && p.images[0]) || 'images/default1.jpg';
-  // Costruisci URL assoluto dell'immagine
-  const basePath = location.origin + location.pathname.replace(/[^/]*$/, '');
-  const imgUrl = imgRel.startsWith('http') ? imgRel : (imgRel.startsWith('/') ? (location.origin + imgRel) : (basePath + imgRel));
-  const title = p.name || 'Prodotto';
-  const textBare = `${p.name} — ${fmt.format(p.price||0)}${unitLabel(p.unit)}
-${url}`;
-  const textWithImg = `${p.name} — ${fmt.format(p.price||0)}${unitLabel(p.unit)}
-${imgUrl}
-${url}`;
+  function unitLabel(u){u=u||'';return u==='/kg'?' €/kg':(u==='/confezione'?' €/conf.':(u?' '+u:''))}
+  var fmt=new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'});
 
-  // Tentativo Web Share con file (Level 2)
-  try{
-    const resp = await fetch(imgUrl, {mode:'cors'});
-    if(resp.ok){
-      const blob = await resp.blob();
-      const extGuess = (imgUrl.split('.').pop() || 'jpg').toLowerCase();
-      const mime = blob.type || (extGuess==='png' ? 'image/png' : (extGuess==='webp' ? 'image/webp' : 'image/jpeg'));
-      const file = new File([blob], `${p.id}.${extGuess}`, {type:mime});
-      if(navigator.share && (!navigator.canShare || navigator.canShare({ files:[file] }))){
-        await navigator.share({ title, text: textBare, files:[file] });
-        return;
-      }
-    }
-  }catch(_){ /* ignora e usa fallback */ }
+  var currentId=null;
+  document.addEventListener('click', function(ev){ var item = ev.target.closest ? ev.target.closest('.item') : null; if(item && item.id){ currentId=item.id; var n=document.getElementById('mNum'); if(n) n.textContent=(Cart.get(currentId)); } }, true);
+  function addQty(id,delta){ Cart.set(id, Cart.get(id)+delta); renderCart(); if(id===currentId){ var n=document.getElementById('mNum'); if(n) n.textContent=(Cart.get(id)); } }
+  window.addQty = addQty;
+  var mPlus=document.getElementById('mPlus'), mMinus=document.getElementById('mMinus');
+  if(mPlus) mPlus.addEventListener('click', function(e){ e.stopPropagation(); if(currentId) addQty(currentId,+1); });
+  if(mMinus) mMinus.addEventListener('click', function(e){ e.stopPropagation(); if(currentId) addQty(currentId,-1); });
 
-  // Fallback: Web Share senza file con URL immagine nel testo, altrimenti WhatsApp
-  if(navigator.share){
-    try{ await navigator.share({ title, text: textWithImg, url }); return; }catch(_){}
-  }
-  (navigator.clipboard?.writeText(textWithImg).catch(()=>{}));
-  window.open(`https://wa.me/?text=${encodeURIComponent(textWithImg)}`, '_blank');
-}
-shareBtn.addEventListener('click', shareCurrent);
+  var cartEl=document.getElementById('cart'), listEl=document.getElementById('cartList'), totEl=document.getElementById('cartTotal'), mini=document.getElementById('miniCount');
+  function renderCart(){ var rows=[], tot=0, cnt=0; var d=Cart.data; for(var id in d){ var q=d[id]|0; if(q<=0) continue; var m=META[id]||{id:id,name:id,shortDesc:'',price:0,unit:''}; rows.push('• '+m.name+(m.shortDesc?(' – '+m.shortDesc):'')+' × '+q); tot += (m.price||0)*q; cnt += q; } if(listEl) listEl.innerHTML = rows.length? rows.join('<br>') : 'Nessun articolo'; if(totEl) totEl.textContent = fmt.format(tot); if(mini) mini.textContent = cnt; }
+  window.addEventListener('cart:update', renderCart);
+  document.addEventListener('DOMContentLoaded', renderCart);
 
-/* ==== INIT ==== */
-function syncRowQty(id){ const el=document.getElementById('num-'+id); if(el) el.textContent=getQty(id); }
-function syncAllQty(){ PRODUCTS.forEach(p=>syncRowQty(p.id)); }
-window.addEventListener('load',()=>{ renderList(PRODUCTS); renderCart(); positionCart(); });
-window.addEventListener('resize', positionCart);
+  var tgl=document.getElementById('toggleBtn'); if(tgl) tgl.addEventListener('click', function(e){ e.stopPropagation(); cartEl.classList.add('collapsed'); });
+  var open=document.getElementById('openCartBtn'); if(open) open.addEventListener('click', function(){ cartEl.classList.remove('collapsed'); });
+  var pill=document.getElementById('cartPill'); if(pill) pill.addEventListener('click', function(e){ e.stopPropagation(); cartEl.classList.remove('collapsed'); });
+  if(cartEl) cartEl.addEventListener('click', function(){ if(cartEl.classList.contains('collapsed')) cartEl.classList.remove('collapsed'); });
 
-function openMail(){
-  const ids = Object.keys(cart);
-  if(!ids.length){ alert('Seleziona almeno un articolo.'); return; }
-  let body='Gentile Zanon Seafish,%0D%0A%0D%0ADesidero inviare il seguente ordine:%0D%0A';
-  body+='Q.tà | Titolo | Short descr | Prezzo unitario | Totale riga%0D%0A';
-  body+='--------------------------------------------------------------%0D%0A';
-  let tot=0, count=0;
-  for(const id of ids){
-    const q=cart[id]; const p=PRODUCTS.find(x=>x.id===id); if(!p) continue;
-    const sub=(p.price||0)*q; tot+=sub; count+=q;
-    const line=`${q} | ${p.name} | ${p.shortDesc||''} | ${fmt.format(p.price||0)}${unitLabel(p.unit)} | ${fmt.format(sub)}`;
-    body+=encodeURIComponent(line)+'%0D%0A';
-  }
-  body+='--------------------------------------------------------------%0D%0A';
-  body+=`Totale articoli: ${count}%0D%0A`;
-  body+=`Totale ordine: ${fmt.format(tot)}%0D%0A%0D%0A`;
-  body+=`Dati per il ritiro:%0D%0ANome azienda / nominativo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A`;
-  const subject=encodeURIComponent('Ordine Catalogo Natale 2025');
-  const mailto=`mailto:amministrazione@zanonseafish.it?subject=${subject}&body=${body}`;
-  window.location.href = mailto;
-  setTimeout(confirmAndClear, 400);
-  return;
-}
-function openCartFromBottom(){
-  const cartEl = document.getElementById('cart');
-  if(!cartEl) return;
-  cartEl.classList.remove('collapsed');
-  const exp = cartEl.querySelector('.when-expanded');
-  if(exp) exp.style.display='block';
-  window.scrollTo({top:0, behavior:'smooth'});
-}
+  function openMail(){ var items = Cart.items().filter(function(x){return x.qty>0}); if(!items.length){ alert('Seleziona almeno un articolo.'); return; } var body='Gentile Zanon Seafish,%0D%0A%0D%0ADesidero inviare il seguente ordine:%0D%0A'; body+='Q.tà | Titolo | Short descr | Prezzo unitario | Totale riga%0D%0A'; body+='--------------------------------------------------------------%0D%0A'; var tot=0, cnt=0; for(var i=0;i<items.length;i++){ var it=items[i]; var m=it.meta||META[it.id]||{}; var sub=(m.price||0)*it.qty; tot+=sub; cnt+=it.qty; var line = it.qty+' | '+(m.name||it.id)+' | '+(m.shortDesc||'')+' | '+fmt.format(m.price||0)+(m.unit?unitLabel(m.unit):'')+' | '+fmt.format(sub); body+=encodeURIComponent(line)+'%0D%0A'; } body+='--------------------------------------------------------------%0D%0A'; body+='Totale articoli: '+cnt+'%0D%0A'; body+='Totale ordine: '+fmt.format(tot)+'%0D%0A%0D%0A'; body+='Dati per il ritiro/consegna:%0D%0ANome azienda / nominativo:%0D%0AIndirizzo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A'; var subject=encodeURIComponent('Ordine Catalogo Prodotti'); var mailto='mailto:info@zanonseafish.it?subject='+subject+'&body='+body; window.location.href = mailto; setTimeout(function(){ Cart.clear(); renderCart(); alert('Ordine pronto in email. Carrello azzerato.'); }, 400); }
+  var mb=document.getElementById('mailBtn'); if(mb) mb.addEventListener('click', openMail);
+  var mbb=document.getElementById('mailBtnBottom'); if(mbb) mbb.addEventListener('click', openMail);
 
-function adjustModalLayout(){
-  try{
-    const modalEl = document.getElementById('modal');
-    if(!modalEl || !modalEl.classList.contains('open')) return;
-    const content = modalEl.querySelector('.modal-content');
-    const gallery = document.getElementById('mGallery');
-    const title   = document.getElementById('mTitle');
-    const desc    = document.getElementById('mDesc');
-    const full    = document.getElementById('mFullDesc');
-    const price   = document.getElementById('mPrice');
-    const footer  = document.querySelector('.modal-footer');
+  var back=document.getElementById('backBtnFixed'); if(back) back.addEventListener('click', function(){ location.href='/catalogo/index2-mail.html'; });
+  var sw=document.getElementById('switchBtn'); if(sw) sw.addEventListener('click', function(){ location.href='./prodotti-mail.html'; });
 
-    const vh = Math.max(320, Math.floor(window.innerHeight * 0.90));
-    const used = (title?.offsetHeight||0) + (desc?.offsetHeight||0) + (full?.offsetHeight||0) + (price?.offsetHeight||0) + (footer?.offsetHeight||0) + 28;
-    const maxH = Math.max(120, vh - used);
-
-    if(content){ content.style.maxHeight = vh + 'px'; }
-    if(gallery){
-      gallery.style.maxHeight = maxH + 'px';
-      gallery.querySelectorAll('img').forEach(img => { img.style.maxHeight = Math.max(100, maxH - 8) + 'px'; });
-    }
-  }catch(e){}
-}
-
-function resetModalScroll(){
-  const modalEl = document.getElementById('modal');
-  const content = modalEl?.querySelector('.modal-content');
-  const gallery = document.getElementById('mGallery');
-  if(content){ content.scrollTop = 0; }
-  if(gallery){ gallery.scrollTop = 0; }
-  // keep page scroll position
-}
+  var mini=document.getElementById('miniCount'); if(mini && Number(mini.textContent||'0')===0){ document.getElementById('cart').classList.add('collapsed'); }
+})();
 </script>
 
-<style id="modal-fix-patch">
-/* Modal */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:5000}
-.modal.open{display:flex}
 
-/* Adatta sempre a viewport. Parte dal top. */
-.modal-content{
-  background:#fff;border-radius:12px;
-  width:min(96vw,860px);
-  max-height:calc(100svh - 32px);
-  padding:20px;position:relative;overflow:hidden;
-  box-shadow:0 10px 24px rgba(0,0,0,.35);
-  display:flex;flex-direction:column;
-}
-.m-title{font-family:"Playfair Display",serif;margin:0 0 10px 0}
-
-/* Galleria scrollabile dall’alto, immagini contenute */
-#mGallery{
-  flex:1 1 auto;overflow:auto;
-  display:flex;flex-direction:column;gap:12px;
-  align-items:center;justify-content:flex-start;
-}
-#mGallery img{
-  display:block;max-width:100%;height:auto;object-fit:contain;
-}
-.modal-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px;flex:0 0 auto}
-</style>
-
-<script id="modal-fix-script">
+<!-- cart+qty runtime -->
+<script>
 (function(){
-  function resetModalScroll(){
-    const mc=document.querySelector('#modal .modal-content');
-    if(mc) mc.scrollTop=0;
-    const gal=document.getElementById('mGallery');
-    if(gal) gal.scrollTop=0;
-  }
+  var CART_KEY='zanonCartV1', META_KEY='zanonCartMetaV1';
+  function load(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return {}}}
+  function save(k,v){localStorage.setItem(k, JSON.stringify(v))}
+  var META=load(META_KEY);
 
-  function adjustModalLayout(){
-    const mc=document.querySelector('#modal .modal-content');
-    const gal=document.getElementById('mGallery');
-    if(!mc || !gal) return;
-    const vh = Math.min(window.innerHeight, document.documentElement.clientHeight);
-    const maxH = Math.round(vh*0.94);
-    mc.style.maxHeight = maxH+'px';
-    const titleEl=document.getElementById('mTitle');
-    const footerEl=document.querySelector('#modal .modal-footer');
-    const titleH = titleEl ? titleEl.offsetHeight : 0;
-    const footerH = footerEl ? footerEl.offsetHeight : 0;
-    const padd = 40;
-    const galleryMax = Math.max(160, maxH - titleH - footerH - padd);
-    gal.style.maxHeight = galleryMax+'px';
-    gal.querySelectorAll('img').forEach(img=>{
-      img.style.maxHeight = (galleryMax - 12)+'px';
-      img.style.width = '100%';
-      img.style.height = 'auto';
-      img.style.objectFit = 'contain';
+  try{
+    if(Array.isArray(window.PRODUCTS)){
+      for(var i=0;i<PRODUCTS.length;i++){
+        var p=PRODUCTS[i];
+        var pr=Number(String(p.price||0).replace(',', '.'))||0;
+        META[p.id]={id:p.id,name:(p.name||p.title||p.id),price:pr,unit:(p.unit||''),shortDesc:(p.shortDesc||'')};
+      }
+      save(META_KEY,META);
+    }
+  }catch(e){}
+
+  var Cart={
+    data:load(CART_KEY),
+    get:function(id){return this.data[id]|0},
+    set:function(id,q){q=Math.max(0,q|0); if(q===0) delete this.data[id]; else this.data[id]=q; save(CART_KEY,this.data); window.dispatchEvent(new Event('cart:update'));},
+    clear:function(){this.data={}; save(CART_KEY,this.data); window.dispatchEvent(new Event('cart:update'));},
+    items:function(){var o=[]; for(var k in this.data)o.push({id:k,qty:this.data[k],meta:META[k]}); return o;}
+  };
+  window.Cart=Cart;
+
+  var fmt=new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'});
+
+  function injectQtyIntoCards(){
+    var items=document.querySelectorAll('.item');
+    items.forEach(function(card){
+      if(card.querySelector('.qty')) return;
+      var id=card.getAttribute('id')||card.getAttribute('data-id');
+      if(!id){
+        var oc = card.getAttribute('onclick')||'';
+        var m = oc.match(/openModal\(['"]([^'"]+)['"]\)/);
+        if(m) id = m[1];
+      }
+      if(!id) return;
+      var info=card.querySelector('.info')||card;
+      var priceWrap=card.querySelector('.price, .price-wrap');
+      var wrap=document.createElement('div');
+      wrap.className='qty';
+      wrap.setAttribute('aria-label','Quantità');
+      wrap.innerHTML='<button type="button">–</button><span class="num" id="q-'+id+'">'+(Cart.get(id)||0)+'</span><button type="button">+</button><span class="mini">Quantità</span>';
+      wrap.addEventListener('click', function(ev){ ev.stopPropagation(); }, true);
+      var btns=wrap.querySelectorAll('button');
+      if(btns[0]) btns[0].addEventListener('click', function(ev){ ev.stopPropagation(); addQty(id,-1); });
+      if(btns[1]) btns[1].addEventListener('click', function(ev){ ev.stopPropagation(); addQty(id,+1); });
+      if(info) info.appendChild(wrap);
+      if(priceWrap && !card.querySelector('.iva-note')){
+        var note=document.createElement('span');
+        note.className='iva-note';
+        note.textContent='IVA ESCLUSA';
+        priceWrap.parentNode.insertBefore(note, priceWrap.nextSibling);
+      }
     });
   }
 
-  window.addEventListener('resize', adjustModalLayout);
-  window.addEventListener('orientationchange', adjustModalLayout);
+  function syncInlineQty(){
+    document.querySelectorAll('.qty .num[id^="q-"]').forEach(function(span){
+      var id=span.id.slice(2);
+      span.textContent = Cart.get(id)||0;
+    });
+  }
 
-  // Hook apertura modal
+  function renderCart(){
+    var listEl=document.getElementById('cartList');
+    var totEl=document.getElementById('cartTotal');
+    var mini=document.getElementById('miniCount');
+    var rows=[], tot=0, cnt=0;
+    for(var id in Cart.data){
+      var q=Cart.data[id]|0; if(q<=0) continue;
+      var m=META[id]||{id:id,name:id,shortDesc:'',price:0,unit:''};
+      rows.push('• '+m.name+(m.shortDesc?(' – '+m.shortDesc):'')+' × '+q);
+      tot += (m.price||0)*q; cnt += q;
+    }
+    if(listEl) listEl.innerHTML = rows.length? rows.join('<br>') : 'Nessun articolo';
+    if(totEl) totEl.textContent = fmt.format(tot);
+    if(mini) mini.textContent = cnt;
+    syncInlineQty();
+  }
+
+  window.addQty=function(id,delta){ if(!id) return; Cart.set(id, Cart.get(id)+delta); };
+
+  document.addEventListener('DOMContentLoaded', function(){
+    // Ensure cart
+    if(!document.getElementById('cart')){
+      var tmp=document.createElement('div'); tmp.innerHTML=JSON.stringify(' <!-- floating cart --> <div id="cart" class="collapsed" aria-live="polite">   <span id="cartPill" class="when-collapsed">🧾 <strong id="miniCount">0</strong></span>   <div class="when-expanded">     <h4>Riepilogo</h4>     <div id="cartList" class="cart-list cart-empty">Nessun articolo</div>     <div class="cart-total"><span>Totale</span><span id="cartTotal">€ 0,00</span></div>     <div class="cart-actions">       <button id="toggleBtn" class="toggle" type="button">Riduci</button>       <button id="clearBtn" class="ghost" type="button">Azzera</button>       <button id="mailBtn" type="button">Prepara mail</button>     </div>   </div> </div> ');
+      document.body.appendChild(tmp.firstElementChild);
+    }
+    // Ensure actions row
+    if(!document.getElementById('final-actions')){
+      var tmp2=document.createElement('div'); tmp2.innerHTML=JSON.stringify(' <!-- actions row --> <div class="actions-bottom" id="final-actions">   <button id="backBtnFixed" class="ghost" type="button">Indietro</button>   <button id="mailBtnBottom" type="button">Prepara mail</button>   <button id="switchBtn" class="ghost" type="button">Vai a tutti i prodotti</button> </div> ');
+      var footer=document.querySelector('footer'); if(footer && footer.parentNode){ footer.parentNode.insertBefore(tmp2.firstElementChild, footer); }
+    }
+
+    var cartEl=document.getElementById('cart');
+    var tgl=document.getElementById('toggleBtn'); if(tgl) tgl.addEventListener('click', function(e){ e.stopPropagation(); cartEl.classList.add('collapsed'); });
+    var pill=document.getElementById('cartPill'); if(pill) pill.addEventListener('click', function(e){ e.stopPropagation(); cartEl.classList.remove('collapsed'); });
+    var clear=document.getElementById('clearBtn'); if(clear) clear.addEventListener('click', function(e){ e.stopPropagation(); Cart.clear(); });
+
+    var back=document.getElementById('backBtnFixed'); if(back) back.addEventListener('click', function(){ location.href='/catalogo/index2-mail.html'; });
+    var sw=document.getElementById('switchBtn'); if(sw) sw.addEventListener('click', function(){ location.href='./prodotti-mail.html'; });
+
+    // Mail
+    function unitLabel(u){u=u||'';return u==='/kg'?' €/kg':(u==='/confezione'?' €/conf.':(u?' '+u:''))}
+    function openMail(){
+      var items = Cart.items().filter(function(x){return x.qty>0});
+      if(!items.length){ alert('Seleziona almeno un articolo.'); return; }
+      var body='Gentile Zanon Seafish,%0D%0A%0D%0ADesidero inviare il seguente ordine:%0D%0A';
+      body+='Q.tà | Titolo | Short descr | Prezzo unitario | Totale riga%0D%0A';
+      body+='--------------------------------------------------------------%0D%0A';
+      var tot=0, cnt=0;
+      for(var i=0;i<items.length;i++){
+        var it=items[i]; var m=it.meta||META[it.id]||{}; var sub=(m.price||0)*it.qty; tot+=sub; cnt+=it.qty;
+        var line = it.qty+' | '+(m.name||it.id)+' | '+(m.shortDesc||'')+' | '+fmt.format(m.price||0)+(m.unit?unitLabel(m.unit):'')+' | '+fmt.format(sub);
+        body+=encodeURIComponent(line)+'%0D%0A';
+      }
+      body+='--------------------------------------------------------------%0D%0A';
+      body+='Totale articoli: '+cnt+'%0D%0A';
+      body+='Totale ordine: '+fmt.format(tot)+'%0D%0A%0D%0A';
+      body+='Dati per il ritiro/consegna:%0D%0ANome azienda / nominativo:%0D%0AIndirizzo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A';
+      var subject=encodeURIComponent('Ordine Catalogo Prodotti');
+      var mailto='mailto:info@zanonseafish.it?subject='+subject+'&body='+body;
+      window.location.href = mailto;
+      setTimeout(function(){ Cart.clear(); }, 400);
+    }
+    var mb=document.getElementById('mailBtn'); if(mb) mb.addEventListener('click', openMail);
+    var mbb=document.getElementById('mailBtnBottom'); if(mbb) mbb.addEventListener('click', openMail);
+
+    injectQtyIntoCards();
+    renderCart();
+    setTimeout(function(){ injectQtyIntoCards(); renderCart(); }, 200);
+  });
+
+  window.addEventListener('cart:update', renderCart);
+  window.addEventListener('storage', function(e){ if(e.key===CART_KEY||e.key===META_KEY){ renderCart(); }});
+})();
+</script>
+
+
+<!-- cart runtime -->
+<script>
+(function(){
+  var CART_KEY='zanonCartV1', META_KEY='zanonCartMetaV1';
+  function load(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return {}}}
+  function save(k,v){localStorage.setItem(k, JSON.stringify(v))}
+  var META=load(META_KEY);
   try{
-    if(typeof openModal === 'function'){
-      const _openModal = openModal;
-      window.openModal = function(id){
-        _openModal(id);
-        resetModalScroll();
-        adjustModalLayout();
-      };
+    if(Array.isArray(window.PRODUCTS)){
+      for(var i=0;i<PRODUCTS.length;i++){
+        var p=PRODUCTS[i];
+        var pr=Number(String(p.price||0).replace(',', '.'))||0;
+        META[p.id]={id:p.id,name:(p.name||p.title||p.id),price:pr,unit:(p.unit||''),shortDesc:(p.shortDesc||'')};
+      }
+      save(META_KEY,META);
     }
   }catch(e){}
 
-  // Ricalcola quando le immagini caricano
-  document.addEventListener('load', function(e){
-    if(e.target && e.target.closest && e.target.closest('#mGallery')) adjustModalLayout();
-  }, true);
+  var Cart={
+    data:load(CART_KEY),
+    get:function(id){return this.data[id]|0},
+    set:function(id,q){q=Math.max(0,q|0); if(q===0) delete this.data[id]; else this.data[id]=q; save(CART_KEY,this.data); window.dispatchEvent(new Event('cart:update'));},
+    clear:function(){this.data={}; save(CART_KEY,this.data); window.dispatchEvent(new Event('cart:update'));},
+    items:function(){var o=[]; for(var k in this.data)o.push({id:k,qty:this.data[k],meta:META[k]}); return o;}
+  };
+  window.Cart=Cart;
 
-  // Primo calcolo a DOM pronto
-  document.addEventListener('DOMContentLoaded', adjustModalLayout);
+  var fmt=new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'});
+
+  // inline qty inject if template non modificato
+  function getCardId(card){
+    var id = card.getAttribute('id') || card.getAttribute('data-id');
+    if(id) return id;
+    var oc = card.getAttribute('onclick')||'';
+    var m = oc.match(/openModal\(['"]([^'"]+)['"]\)/);
+    return m ? m[1] : null;
+  }
+  function injectQtyIntoCards(){
+    var items=document.querySelectorAll('.item');
+    items.forEach(function(card){
+      if(card.querySelector('.qty')) return;
+      var id=getCardId(card); if(!id) return;
+      var info=card.querySelector('.info')||card;
+      var priceWrap=card.querySelector('.price, .price-wrap');
+      var wrap=document.createElement('div');
+      wrap.className='qty';
+      wrap.setAttribute('aria-label','Quantità');
+      wrap.innerHTML='<button type="button">–</button><span class="num" id="q-'+id+'">'+(Cart.get(id)||0)+'</span><button type="button">+</button><span class="mini">Quantità</span>';
+      wrap.addEventListener('click', function(e){ e.stopPropagation(); }, true);
+      var btns=wrap.querySelectorAll('button');
+      if(btns[0]) btns[0].addEventListener('click', function(e){ e.stopPropagation(); addQty(id,-1); });
+      if(btns[1]) btns[1].addEventListener('click', function(e){ e.stopPropagation(); addQty(id,+1); });
+      if(info) info.appendChild(wrap);
+      if(priceWrap && !card.querySelector('.iva-note')){
+        var note=document.createElement('span');
+        note.className='iva-note'; note.textContent='IVA ESCLUSA';
+        priceWrap.parentNode.insertBefore(note, priceWrap.nextSibling);
+      }
+    });
+  }
+
+  function syncInlineQty(){
+    document.querySelectorAll('.qty .num[id^="q-"]').forEach(function(span){
+      var id=span.id.slice(2);
+      span.textContent = Cart.get(id)||0;
+    });
+  }
+
+  function renderCart(){
+    var listEl=document.getElementById('cartList');
+    var totEl=document.getElementById('cartTotal');
+    var mini=document.getElementById('miniCount');
+    var rows=[], tot=0, cnt=0;
+    for(var id in Cart.data){
+      var q=Cart.data[id]|0; if(q<=0) continue;
+      var m=META[id]||{id:id,name:id,shortDesc:'',price:0,unit:''};
+      rows.push('• '+m.name+(m.shortDesc?(' – '+m.shortDesc):'')+' × '+q);
+      tot += (m.price||0)*q; cnt += q;
+    }
+    if(listEl) listEl.innerHTML = rows.length? rows.join('<br>') : 'Nessun articolo';
+    if(totEl) totEl.textContent = fmt.format(tot);
+    if(mini) mini.textContent = cnt;
+    syncInlineQty();
+  }
+
+  window.addQty=function(id,delta){ if(!id) return; Cart.set(id, Cart.get(id)+delta); };
+
+  document.addEventListener('DOMContentLoaded', function(){
+    // Ensure cart markup
+    if(!document.getElementById('cart')){
+      var tmp=document.createElement('div'); tmp.innerHTML=JSON.stringify(' <!-- floating cart --> <div id="cart" class="collapsed" aria-live="polite">   <span id="cartPill" class="when-collapsed">🧾 <strong id="miniCount">0</strong></span>   <div class="when-expanded">     <h4>Riepilogo</h4>     <div id="cartList" class="cart-list cart-empty">Nessun articolo</div>     <div class="cart-total"><span>Totale</span><span id="cartTotal">€ 0,00</span></div>     <div class="cart-actions">       <button id="toggleBtn" class="toggle" type="button">Riduci</button>       <button id="clearBtn" class="ghost" type="button">Azzera</button>       <button id="mailBtn" type="button">Prepara mail</button>     </div>   </div> </div> ');
+      document.body.appendChild(tmp.firstElementChild);
+    }
+    // Ensure actions row
+    if(!document.getElementById('final-actions')){
+      var tmp2=document.createElement('div'); tmp2.innerHTML=JSON.stringify(' <!-- actions row --> <div class="actions-bottom" id="final-actions">   <button id="backBtnFixed" class="ghost" type="button">Indietro</button>   <button id="mailBtnBottom" type="button">Prepara mail</button>   <button id="switchBtn" class="ghost" type="button">__SWITCH_LABEL__</button> </div> ');
+      var footer=document.querySelector('footer'); if(footer && footer.parentNode){ footer.parentNode.insertBefore(tmp2.firstElementChild, footer); }
+    }
+
+    var cartEl=document.getElementById('cart');
+    var tgl=document.getElementById('toggleBtn'); if(tgl) tgl.addEventListener('click', function(e){ e.stopPropagation(); cartEl.classList.add('collapsed'); });
+    var pill=document.getElementById('cartPill'); if(pill) pill.addEventListener('click', function(e){ e.stopPropagation(); cartEl.classList.remove('collapsed'); });
+    var clear=document.getElementById('clearBtn'); if(clear) clear.addEventListener('click', function(e){ e.stopPropagation(); Cart.clear(); });
+
+    var back=document.getElementById('backBtnFixed'); if(back) back.addEventListener('click', function(){ location.href='/catalogo/index2-mail.html'; });
+    var sw=document.getElementById('switchBtn'); if(sw) sw.addEventListener('click', function(){ location.href='./prodotti-mail.html'; });
+
+    // Mail
+    function unitLabel(u){u=u||'';return u==='/kg'?' €/kg':(u==='/confezione'?' €/conf.':(u?' '+u:''))}
+    function openMail(){
+      var items = Cart.items().filter(function(x){return x.qty>0});
+      if(!items.length){ alert('Seleziona almeno un articolo.'); return; }
+      var body='Gentile Zanon Seafish,%0D%0A%0D%0ADesidero inviare il seguente ordine:%0D%0A';
+      body+='Q.tà | Titolo | Short descr | Prezzo unitario | Totale riga%0D%0A';
+      body+='--------------------------------------------------------------%0D%0A';
+      var tot=0, cnt=0;
+      for(var i=0;i<items.length;i++){
+        var it=items[i]; var m=it.meta||META[it.id]||{}; var sub=(m.price||0)*it.qty; tot+=sub; cnt+=it.qty;
+        var line = it.qty+' | '+(m.name||it.id)+' | '+(m.shortDesc||'')+' | '+fmt.format(m.price||0)+(m.unit?unitLabel(m.unit):'')+' | '+fmt.format(sub);
+        body+=encodeURIComponent(line)+'%0D%0A';
+      }
+      body+='--------------------------------------------------------------%0D%0A';
+      body+='Totale articoli: '+cnt+'%0D%0A';
+      body+='Totale ordine: '+fmt.format(tot)+'%0D%0A%0D%0A';
+      body+='Dati per il ritiro/consegna:%0D%0ANome azienda / nominativo:%0D%0AIndirizzo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A';
+      var subject=encodeURIComponent('Ordine Catalogo Prodotti');
+      var mailto='mailto:info@zanonseafish.it?subject='+subject+'&body='+body;
+      window.location.href = mailto;
+      setTimeout(function(){ Cart.clear(); }, 400);
+    }
+    var mb=document.getElementById('mailBtn'); if(mb) mb.addEventListener('click', openMail);
+    var mbb=document.getElementById('mailBtnBottom'); if(mbb) mbb.addEventListener('click', openMail);
+
+    injectQtyIntoCards();
+    renderCart();
+    setTimeout(function(){ injectQtyIntoCards(); renderCart(); }, 200);
+  });
+
+  window.addEventListener('cart:update', renderCart);
+  window.addEventListener('storage', function(e){ if(e.key===CART_KEY||e.key===META_KEY){ renderCart(); }});
 })();
 </script>
+
+
+<!-- cart+qty runtime -->
+<script>
+(function(){
+  var CART_KEY='zanonCartV1', META_KEY='zanonCartMetaV1';
+  function load(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return {}}}
+  function save(k,v){localStorage.setItem(k, JSON.stringify(v))}
+  var META=load(META_KEY);
+  try{
+    if(Array.isArray(window.PRODUCTS)){
+      for(var i=0;i<PRODUCTS.length;i++){
+        var p=PRODUCTS[i];
+        var pr=Number(String(p.price||0).replace(',', '.'))||0;
+        META[p.id]={id:p.id,name:(p.name||p.title||p.id),price:pr,unit:(p.unit||''),shortDesc:(p.shortDesc||'')};
+      }
+      save(META_KEY,META);
+    }
+  }catch(e){}
+
+  var Cart={
+    data:load(CART_KEY),
+    get:function(id){return this.data[id]|0},
+    set:function(id,q){q=Math.max(0,q|0); if(q===0) delete this.data[id]; else this.data[id]=q; save(CART_KEY,this.data); window.dispatchEvent(new Event('cart:update'));},
+    clear:function(){this.data={}; save(CART_KEY,this.data); window.dispatchEvent(new Event('cart:update'));},
+    items:function(){var o=[]; for(var k in this.data)o.push({id:k,qty:this.data[k],meta:META[k]}); return o;}
+  };
+  window.Cart=Cart;
+
+  var fmt=new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'});
+
+  function getCardId(card){
+    var id=card.getAttribute('id')||card.getAttribute('data-id');
+    if(id) return id;
+    var oc = card.getAttribute('onclick')||'';
+    var m = oc.match(/openModal\(['"]([^'"]+)['"]\)/);
+    return m ? m[1] : null;
+  }
+
+  function injectQtyIntoCards(){
+    var items=document.querySelectorAll('.item');
+    items.forEach(function(card){
+      if(card.querySelector('.qty')) return;
+      var id=getCardId(card); if(!id) return;
+      var info=card.querySelector('.info')||card;
+      var priceWrap=card.querySelector('.price, .price-wrap');
+      var wrap=document.createElement('div');
+      wrap.className='qty';
+      wrap.setAttribute('aria-label','Quantità');
+      wrap.innerHTML='<button type="button">–</button><span class="num" id="q-'+id+'">'+(Cart.get(id)||0)+'</span><button type="button">+</button><span class="mini">Quantità</span>';
+      wrap.addEventListener('click', function(e){ e.stopPropagation(); }, true);
+      var btns=wrap.querySelectorAll('button');
+      if(btns[0]) btns[0].addEventListener('click', function(e){ e.stopPropagation(); addQty(id,-1); });
+      if(btns[1]) btns[1].addEventListener('click', function(e){ e.stopPropagation(); addQty(id,+1); });
+      if(info) info.appendChild(wrap);
+      if(priceWrap && !card.querySelector('.iva-note')){
+        var note=document.createElement('span');
+        note.className='iva-note';
+        note.textContent='IVA ESCLUSA';
+        priceWrap.parentNode.insertBefore(note, priceWrap.nextSibling);
+      }
+    });
+  }
+
+  function syncInlineQty(){
+    document.querySelectorAll('.qty .num[id^="q-"]').forEach(function(span){
+      var id=span.id.slice(2);
+      span.textContent = Cart.get(id)||0;
+    });
+  }
+
+  function renderCart(){
+    var listEl=document.getElementById('cartList');
+    var totEl=document.getElementById('cartTotal');
+    var mini=document.getElementById('miniCount');
+    var rows=[], tot=0, cnt=0;
+    for(var id in Cart.data){
+      var q=Cart.data[id]|0; if(q<=0) continue;
+      var m=META[id]||{id:id,name:id,shortDesc:'',price:0,unit:''};
+      rows.push('• '+m.name+(m.shortDesc?(' – '+m.shortDesc):'')+' × '+q);
+      tot += (m.price||0)*q; cnt += q;
+    }
+    if(listEl) listEl.innerHTML = rows.length? rows.join('<br>') : 'Nessun articolo';
+    if(totEl) totEl.textContent = fmt.format(tot);
+    if(mini) mini.textContent = cnt;
+    syncInlineQty();
+  }
+
+  window.addQty=function(id,delta){ if(!id) return; Cart.set(id, Cart.get(id)+delta); };
+
+  document.addEventListener('DOMContentLoaded', function(){
+    // Ensure cart/events
+    var cartEl=document.getElementById('cart');
+    if(!cartEl){
+      var tmp=document.createElement('div'); tmp.innerHTML=' <!-- floating cart --> <div id="cart" class="collapsed" aria-live="polite">   <span id="cartPill" class="when-collapsed">🧾 <strong id="miniCount">0</strong></span>   <div class="when-expanded">     <h4>Riepilogo</h4>     <div id="cartList" class="cart-list cart-empty">Nessun articolo</div>     <div class="cart-total"><span>Totale</span><span id="cartTotal">€ 0,00</span></div>     <div class="cart-actions">       <button id="toggleBtn" class="toggle" type="button">Riduci</button>       <button id="clearBtn" class="ghost" type="button">Azzera</button>       <button id="mailBtn" type="button">Prepara mail</button>     </div>   </div> </div> ';
+      document.body.appendChild(tmp.firstElementChild);
+      cartEl=document.getElementById('cart');
+    }
+    var tgl=document.getElementById('toggleBtn'); if(tgl) tgl.addEventListener('click', function(e){ e.stopPropagation(); cartEl.classList.add('collapsed'); });
+    var pill=document.getElementById('cartPill'); if(pill) pill.addEventListener('click', function(e){ e.stopPropagation(); cartEl.classList.remove('collapsed'); });
+    var clear=document.getElementById('clearBtn'); if(clear) clear.addEventListener('click', function(e){ e.stopPropagation(); Cart.clear(); });
+
+    // Ensure actions row
+    if(!document.getElementById('final-actions')){
+      var tmp2=document.createElement('div'); tmp2.innerHTML=' <!-- actions row --> <div class="actions-bottom" id="final-actions">   <button id="backBtnFixed" class="ghost" type="button">Indietro</button>   <button id="mailBtnBottom" type="button">Prepara mail</button>   <button id="switchBtn" class="ghost" type="button">Vai a tutti i prodotti</button> </div> ';
+      var footer=document.querySelector('footer'); if(footer && footer.parentNode){ footer.parentNode.insertBefore(tmp2.firstElementChild, footer); }
+    }
+    var back=document.getElementById('backBtnFixed'); if(back) back.addEventListener('click', function(){ location.href='/catalogo/index2-mail.html'; });
+    var sw=document.getElementById('switchBtn'); if(sw) sw.addEventListener('click', function(){ location.href='./prodotti-mail.html'; });
+
+    // Mail
+    function unitLabel(u){u=u||'';return u==='/kg'?' €/kg':(u==='/confezione'?' €/conf.':(u?' '+u:''))}
+    function openMail(){
+      var items = Cart.items().filter(function(x){return x.qty>0});
+      if(!items.length){ alert('Seleziona almeno un articolo.'); return; }
+      var body='Gentile Zanon Seafish,%0D%0A%0D%0ADesidero inviare il seguente ordine:%0D%0A';
+      body+='Q.tà | Titolo | Short descr | Prezzo unitario | Totale riga%0D%0A';
+      body+='--------------------------------------------------------------%0D%0A';
+      var tot=0, cnt=0;
+      for(var i=0;i<items.length;i++){
+        var it=items[i]; var m=it.meta||META[it.id]||{}; var sub=(m.price||0)*it.qty; tot+=sub; cnt+=it.qty;
+        var line = it.qty+' | '+(m.name||it.id)+' | '+(m.shortDesc||'')+' | '+fmt.format(m.price||0)+(m.unit?unitLabel(m.unit):'')+' | '+fmt.format(sub);
+        body+=encodeURIComponent(line)+'%0D%0A';
+      }
+      body+='--------------------------------------------------------------%0D%0A';
+      body+='Totale articoli: '+cnt+'%0D%0A';
+      body+='Totale ordine: '+fmt.format(tot)+'%0D%0A%0D%0A';
+      body+='Dati per il ritiro/consegna:%0D%0ANome azienda / nominativo:%0D%0AIndirizzo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A';
+      var subject=encodeURIComponent('Ordine Catalogo Prodotti');
+      var mailto='mailto:info@zanonseafish.it?subject='+subject+'&body='+body;
+      window.location.href = mailto;
+      setTimeout(function(){ Cart.clear(); }, 400);
+    }
+    var mb=document.getElementById('mailBtn'); if(mb) mb.addEventListener('click', openMail);
+    var mbb=document.getElementById('mailBtnBottom'); if(mbb) mbb.addEventListener('click', openMail);
+
+    // Inject and render
+    injectQtyIntoCards();
+    renderCart();
+    setTimeout(function(){ injectQtyIntoCards(); renderCart(); }, 200);
+    if(document.getElementById('miniCount') && Number(document.getElementById('miniCount').textContent||'0')===0){ cartEl.classList.add('collapsed'); }
+  });
+
+  window.addEventListener('cart:update', renderCart);
+  window.addEventListener('storage', function(e){ if(e.key===CART_KEY||e.key===META_KEY){ renderCart(); }});
+})();
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var b=document.getElementById('backBtnFixed'); if(b) b.onclick=function(){ location.href='/catalogo/index2-mail.html'; };
+  var m=document.getElementById('mailBtnBottom'); if(m && typeof openMail==='function') m.onclick=openMail;
+  var s=document.getElementById('switchBtn'); if(s) s.onclick=function(){ location.href='./prodotti-mail.html'; };
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var b=document.getElementById('backBtnFixed'); if(b) b.onclick=function(){ location.href='/catalogo/index2-mail.html'; };
+  var s=document.getElementById('switchBtn'); if(s) s.onclick=function(){ location.href='./prodotti-mail.html'; };
+  var m=document.getElementById('mailBtnBottom'); if(m && typeof openMail==='function') m.onclick=openMail;
+});
+</script>
+
+
+<script>
+(function(){
+  if(window.__mailCartReady) return; window.__mailCartReady=true;
+  var CART_KEY='zanonCartV1', META_KEY='zanonCartMetaV1';
+  function load(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return {}}}
+  function save(k,v){localStorage.setItem(k, JSON.stringify(v))}
+  var META=load(META_KEY);
+  try{
+    if(Array.isArray(window.PRODUCTS)){
+      for(var i=0;i<PRODUCTS.length;i++){
+        var p=PRODUCTS[i];
+        var pr = Number(String(p.price||0).replace(',','.')) || 0;
+        META[p.id]={id:p.id,name:(p.name||p.id),price:pr,unit:(p.unit||''),shortDesc:(p.shortDesc||'')};
+      }
+      save(META_KEY,META);
+    }
+  }catch(e){}
+  var Cart=window.Cart||{data:load(CART_KEY)};
+  Cart.get=function(id){return Cart.data[id]|0};
+  Cart.set=function(id,q){ q=Math.max(0,q|0); if(q===0) delete Cart.data[id]; else Cart.data[id]=q; save(CART_KEY,Cart.data); window.dispatchEvent(new Event('cart:update')); };
+  Cart.clear=function(){ Cart.data={}; save(CART_KEY,Cart.data); window.dispatchEvent(new Event('cart:update')); };
+  Cart.items=function(){ var o=[]; for(var k in Cart.data)o.push({id:k,qty:Cart.data[k],meta:META[k]}); return o; };
+  window.Cart=Cart;
+  var fmt=new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'});
+  function syncInlineQty(){ document.querySelectorAll('.qty .num[id^="q-"]').forEach(function(s){ var id=s.id.slice(2); s.textContent=Cart.get(id)||0; }); }
+  function renderCart(){
+    var L=document.getElementById('cartList'), T=document.getElementById('cartTotal'), M=document.getElementById('miniCount');
+    var rows=[], tot=0, cnt=0;
+    for(var id in Cart.data){ var q=Cart.data[id]|0; if(q<=0) continue; var m=META[id]||{id:id,name:id,price:0,shortDesc:''}; rows.push('• '+m.name+(m.shortDesc?(' – '+m.shortDesc):'')+' × '+q); tot+=(m.price||0)*q; cnt+=q; }
+    if(L) L.innerHTML=rows.length?rows.join('<br>'):'Nessun articolo';
+    if(T) T.textContent=fmt.format(tot);
+    if(M) M.textContent=cnt;
+    syncInlineQty();
+  }
+  window.addQty=function(id,d){ Cart.set(id, Cart.get(id)+d); };
+  document.addEventListener('DOMContentLoaded', function(){
+    var cart=document.getElementById('cart');
+    var pill=document.getElementById('cartPill'); if(pill) pill.onclick=function(e){e.stopPropagation(); cart.classList.remove('collapsed');};
+    var tgl=document.getElementById('toggleBtn'); if(tgl) tgl.onclick=function(e){e.stopPropagation(); cart.classList.add('collapsed');};
+    var clr=document.getElementById('clearBtn'); if(clr) clr.onclick=function(e){e.stopPropagation(); Cart.clear();};
+    function unitLabel(u){u=u||'';return u==='/kg'?' €/kg':(u==='/confezione'?' €/conf.':(u?' '+u:''))}
+    window.openMail=function(){
+      var items=Cart.items().filter(function(x){return x.qty>0}); if(!items.length){ alert('Seleziona almeno un articolo.'); return; }
+      var body='Gentile Zanon Seafish,%0D%0A%0D%0ADesidero inviare il seguente ordine:%0D%0A';
+      body+='Q.tà | Titolo | Short descr | Prezzo unitario | Totale riga%0D%0A';
+      body+='--------------------------------------------------------------%0D%0A';
+      var tot=0,cnt=0;
+      for(var i=0;i<items.length;i++){ var it=items[i]; var m=it.meta||{}; var sub=(m.price||0)*it.qty; tot+=sub; cnt+=it.qty;
+        var line = it.qty+' | '+(m.name||it.id)+' | '+(m.shortDesc||'')+' | '+fmt.format(m.price||0)+(m.unit?unitLabel(m.unit):'')+' | '+fmt.format(sub);
+        body+=encodeURIComponent(line)+'%0D%0A'; }
+      body+='--------------------------------------------------------------%0D%0A';
+      body+='Totale articoli: '+cnt+'%0D%0A';
+      body+='Totale ordine: '+fmt.format(tot)+'%0D%0A%0D%0A';
+      body+='Dati per il ritiro/consegna:%0D%0ANome azienda / nominativo:%0D%0AIndirizzo:%0D%0ATelefono:%0D%0AData desiderata:%0D%0A%0D%0AGrazie.%0D%0A';
+      var mailto='mailto:info@zanonseafish.it?subject='+encodeURIComponent('Ordine Catalogo Prodotti')+'&body='+body;
+      location.href=mailto; setTimeout(function(){ Cart.clear(); }, 400);
+    };
+    var mb=document.getElementById('mailBtn'); if(mb) mb.onclick=openMail;
+    var mb2=document.getElementById('mailBtnBottom'); if(mb2) mb2.onclick=openMail;
+    renderCart(); setTimeout(renderCart,200);
+    if(document.getElementById('miniCount') && Number(document.getElementById('miniCount').textContent||'0')===0){ cart.classList.add('collapsed'); }
+  });
+  window.addEventListener('cart:update', renderCart);
+  window.addEventListener('storage', function(e){ if(e.key===CART_KEY||e.key===META_KEY){ renderCart(); }});
+})();
+</script>
+
+<button id="backFab" type="button" aria-label="Indietro">← Indietro</button>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var bf=document.getElementById('backFab'); 
+  if(bf){ bf.onclick=function(){ location.href='/catalogo/index2-mail.html'; }; }
+});
+</script>
+
 </body>
 </html>
