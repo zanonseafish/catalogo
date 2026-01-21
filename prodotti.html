@@ -4,9 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Catalogo Prodotti ZANON SEAFISH</title>
- <!-- Open Graph -->
- 
-<meta property="og:title" content="Catalogo Prodotti ZANON SEAFISH">
+ <meta property="og:title" content="Catalogo Prodotti ZANON SEAFISH">
 <meta property="og:description" content="Sfoglia il catalogo prodotti Zanon Seafish Ingros SRL">
 <meta property="og:url" content="https://zanonseafish.github.io/catalogo/">
 <meta property="og:type" content="website">
@@ -16,9 +14,7 @@
 <meta property="og:image:height" content="630">
 
 <meta name="twitter:card" content="summary_large_image">
-<!-- end Open Graph -->
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -49,7 +45,7 @@
 
     /* Slim list */
     .list{display:flex;flex-direction:column;gap:10px}
-    .item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
+    .item{display:grid;grid-template-columns:84px 1fr 86px;gap:14px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:transform .12s ease, box-shadow .12s ease; position: relative;}
     .item:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.06)}
     .thumb{width:84px;height:84px;border-radius:12px;overflow:hidden;background:#f1f1ed;border:1px solid var(--line)}
     .thumb img{width:100%;height:100%;object-fit:cover;display:block}
@@ -58,6 +54,41 @@
     .desc{color:var(--muted);font-size:12px;line-height:1.3;margin:0 0 4px 0}
     .divider{height:1px;background:var(--line);margin:3px 0}
     .price{justify-self:end;align-self:end;color:var(--price);font-weight:700;font-size:16px}
+
+    /* --- STILI OFFERTA LAMPEGGIANTE --- */
+    @keyframes pulse-red {
+      0% { box-shadow: 0 0 0 0 rgba(220, 20, 60, 0.4); border-color: #ffcccc; }
+      50% { box-shadow: 0 0 12px 0 rgba(220, 20, 60, 0.6); border-color: #dc143c; }
+      100% { box-shadow: 0 0 0 0 rgba(220, 20, 60, 0.4); border-color: #ffcccc; }
+    }
+    @keyframes flash-text {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+
+    .item.is-offer {
+      animation: pulse-red 2s infinite ease-in-out;
+      border: 1px solid #dc143c; /* Bordo rosso base */
+      z-index: 5; /* Assicura che stia sopra */
+    }
+
+    .offer-badge {
+      position: absolute;
+      top: -8px;
+      right: 10px; /* Spostato un po' a sinistra per non uscire troppo su mobile */
+      background: #dc143c;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 99px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      animation: flash-text 1.5s infinite ease-in-out;
+      pointer-events: none; /* Il click passa attraverso */
+      z-index: 10;
+    }
+    /* ---------------------------------- */
 
     /* Modal */
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
@@ -128,6 +159,8 @@
       .sub{display:none!important}
       .tools, #count{display:none!important} /* Nascondi ricerca e contatore */
       .item{break-inside:avoid-page;page-break-inside:avoid;box-shadow:none;border-color:#ddd}
+      .item.is-offer { border-color: #000; animation: none; box-shadow: none; } /* Rimuovi animazione in stampa */
+      .offer-badge { display: none; } /* Nascondi badge in stampa */
       .modal{display:none!important}
       .site-rule{background:#000;height:1px}
       .site-footer{color:#000}
@@ -199,7 +232,6 @@
     </div>
   </header>
 
-  <!-- Piè di pagina per la stampa (senza numeri) -->
   <div class="print-footer" aria-hidden="true">
     <span class="line">
       <img src="images/logo.png" alt="Zanon Seafish">
@@ -211,7 +243,6 @@
     <div id="list" class="list"></div>
   </div>
 
-  <!-- Modal -->
   <div id="modal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content" aria-labelledby="mTitle">
       <h2 id="mTitle" class="m-title"></h2>
@@ -226,7 +257,6 @@
     </div>
   </div>
 
-  <!-- Footer -->
   <footer class="site-footer">
     <hr class="site-rule">
     <div class="site-footer-inner">
@@ -253,7 +283,10 @@
     {id:"32-spada-affumicato",name:"Pesce spada affumicato",price:36.50,unit:"/kg",shortDesc:"Pesce spada affumicato in trancio da 1 kg circa",fullDesc:"Pesce spada affumicato in tranci da 1 kg circa",images:["images/spada-affumicato.jpg"]},
     {id:"05-bocconcini-alici-arrotolate",name:"Bocconcini di alici e olive spinate arrotolate",price:13.70,shortDesc:"Alici e olive spinate ed arrotolate, confezione da 1 kg",fullDesc:"Bocconcini di alici e olive spinate, ideali per crostini e antipasti",images:["images/alici-bocconcini.jpg", "images/alici-bocconcini-back.jpg"]},
     {id:"01-acciughe-filetti-riunione",name:"Filetti di alici del Cantabrico",price:2.80,shortDesc:"Filetti di alici del Cantabrico in olio d'oliva, confezione da 48 gr",fullDesc:"Filetti di alici Riunione selezionati e sott’olio. Ideali per antipasti, pizze e insalate.",images:["images/acciughe-filetti-riunione.jpg"]},
-    {id:"04-alici-filetti-acciughe",name:"Filetti di alici Corallo",price:9.90,shortDesc:"Alici in filetto in olio di girasole, confezione da 720 gr",fullDesc:"Filetti di alici lavorati a regola d’arte, gusto intenso e pulito.",images:["images/acciughe-filetti.jpg"]},
+    
+    // MODIFICATO PREZZO E AGGIUNTO FLAG OFFERTA
+    {id:"04-alici-filetti-acciughe",name:"Filetti di alici Corallo",price:9.90, isOffer:true, shortDesc:"Alici in filetto in olio di girasole, confezione da 720 gr",fullDesc:"Filetti di alici lavorati a regola d’arte, gusto intenso e pulito.",images:["images/acciughe-filetti.jpg"]},
+    
     {id:"02-alici-colatura",name:"Alici Colatura",price:6.20,shortDesc:"Alici colatura, confezione da 100 ml",fullDesc:"Condimento tradizionale a base di alici. Perfetto su spaghetti, verdure e crostini.",images:["images/alici-colatura.jpg"]},
     {id:"03-alici-filetti",name:"Filetti di alici Albatros",price:12.50,shortDesc:"Alici in filetto in olio di girasole, confezione da 720 gr",fullDesc:"Filetti di alici dal sapore equilibrato. Ottimi per ricette fredde e calde.",images:["images/alici-filetti.jpg"]},
     {id:"07-alici-filetto",name:"Filetto di alici marinate",price:12.20,shortDesc:"Filetto di alici al pepe rosa in olio di semi di girasole, confezione da 1 kg",fullDesc:"Filetto singolo di alici, comodo per porzioni precise e guarnizioni.",images:["images/alici-filetto.jpg"]},
@@ -312,8 +345,13 @@
   let currentId=null;
 
   function rowTemplate(p){
+    // Gestione visuale offerta
+    const offerClass = p.isOffer ? ' is-offer' : '';
+    const offerBadge = p.isOffer ? '<div class="offer-badge">OFFERTA</div>' : '';
+
     return `
-    <div class="item" onclick="openModal('${p.id}')">
+    <div class="item${offerClass}" onclick="openModal('${p.id}')">
+      ${offerBadge}
       <div class="thumb"><img loading="lazy" src="${p.images[0] || 'images/default1.jpg'}" alt="${p.name}" onerror="this.onerror=null;this.src='images/default1.jpg';"></div>
       <div class="info">
         <h3 class="title">${p.name}</h3>
@@ -421,8 +459,7 @@
   }
   </script>
 
-   <!-- Pulsante ritorno menu -->
-<a href="index2.html" title="Torna al menu" class="back-btn" aria-label="Torna al menu principale">↩︎ Menu</a>
+   <a href="index2.html" title="Torna al menu" class="back-btn" aria-label="Torna al menu principale">↩︎ Menu</a>
 
 <style>
 .back-btn{
