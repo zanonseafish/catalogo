@@ -53,7 +53,7 @@
     .title{font-family:"Playfair Display",serif;font-weight:700;font-size:18px;letter-spacing:.02em;margin:0 0 3px 0;text-transform:uppercase}
     .desc{color:var(--muted);font-size:12px;line-height:1.3;margin:0 0 4px 0}
     .divider{height:1px;background:var(--line);margin:3px 0}
-    .price{justify-self:end;align-self:end;color:var(--price);font-weight:700;font-size:16px}
+    .price{justify-self:end;align-self:end;color:var(--price);font-weight:700;font-size:16px;text-align:right;}
 
     /* --- STILI OFFERTA LAMPEGGIANTE --- */
     @keyframes pulse-red {
@@ -284,8 +284,8 @@
     {id:"05-bocconcini-alici-arrotolate",name:"Bocconcini di alici e olive spinate arrotolate",price:13.70,shortDesc:"Alici e olive spinate ed arrotolate, confezione da 1 kg",fullDesc:"Bocconcini di alici e olive spinate, ideali per crostini e antipasti",images:["images/alici-bocconcini.jpg", "images/alici-bocconcini-back.jpg"]},
     {id:"01-acciughe-filetti-riunione",name:"Filetti di alici del Cantabrico",price:2.80,shortDesc:"Filetti di alici del Cantabrico in olio d'oliva, confezione da 48 gr",fullDesc:"Filetti di alici Riunione selezionati e sott’olio. Ideali per antipasti, pizze e insalate.",images:["images/acciughe-filetti-riunione.jpg"]},
     
-    // MODIFICATO PREZZO E AGGIUNTO FLAG OFFERTA
-    {id:"04-alici-filetti-acciughe",name:"Filetti di alici Corallo",price:9.90, isOffer:true, shortDesc:"Alici in filetto in olio di girasole, confezione da 720 gr",fullDesc:"Filetti di alici lavorati a regola d’arte, gusto intenso e pulito.",images:["images/acciughe-filetti.jpg"]},
+    // MODIFICATO: aggiunto oldPrice
+    {id:"04-alici-filetti-acciughe",name:"Filetti di alici Corallo",price:9.90, oldPrice:11.60, isOffer:true, shortDesc:"Alici in filetto in olio di girasole, confezione da 720 gr",fullDesc:"Filetti di alici lavorati a regola d’arte, gusto intenso e pulito.",images:["images/acciughe-filetti.jpg"]},
     
     {id:"02-alici-colatura",name:"Alici Colatura",price:6.20,shortDesc:"Alici colatura, confezione da 100 ml",fullDesc:"Condimento tradizionale a base di alici. Perfetto su spaghetti, verdure e crostini.",images:["images/alici-colatura.jpg"]},
     {id:"03-alici-filetti",name:"Filetti di alici Albatros",price:12.50,shortDesc:"Alici in filetto in olio di girasole, confezione da 720 gr",fullDesc:"Filetti di alici dal sapore equilibrato. Ottimi per ricette fredde e calde.",images:["images/alici-filetti.jpg"]},
@@ -349,6 +349,16 @@
     const offerClass = p.isOffer ? ' is-offer' : '';
     const offerBadge = p.isOffer ? '<div class="offer-badge">OFFERTA</div>' : '';
 
+    // Gestione visualizzazione prezzo con eventuale sconto
+    let priceContent = `${fmt.format(p.price)}${p.unit || ""}`;
+    if(p.oldPrice && p.price < p.oldPrice) {
+        const discount = Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100);
+        priceContent = `
+            <div style="font-size:11px;color:#888;text-decoration:line-through;font-weight:400;line-height:1.2">${fmt.format(p.oldPrice)}</div>
+            ${fmt.format(p.price)}${p.unit || ""} <span style="font-size:11px;color:#dc143c;font-weight:600">(-${discount}%)</span>
+        `;
+    }
+
     return `
     <div class="item${offerClass}" onclick="openModal('${p.id}')">
       ${offerBadge}
@@ -358,7 +368,7 @@
         <p class="desc">${p.shortDesc||""}</p>
         <div class="divider"></div>
       </div>
-      <div class="price">${fmt.format(p.price)}${p.unit || ""}</div>
+      <div class="price">${priceContent}</div>
     </div>`;
   }
 
