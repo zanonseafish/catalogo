@@ -228,6 +228,7 @@ function renderCart() {
   count.textContent = units;
   count.classList.remove('bump'); void count.offsetWidth; if (units) count.classList.add('bump');
   document.querySelector('#cartEmpty').hidden = lines.length > 0;
+  document.querySelector('#clearCart').hidden = lines.length === 0;
   document.querySelector('#cartContent').hidden = lines.length === 0;
   document.querySelector('#cartFooter').hidden = lines.length === 0;
   document.querySelector('#cartUnits').textContent = `${lines.length} ${lines.length === 1 ? 'prodotto' : 'prodotti'} · ${units} unità`;
