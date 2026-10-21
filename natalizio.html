@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="catalogo-2026.css?v=4">
+  <link rel="stylesheet" href="catalogo-2026.css?v=5">
 </head>
 <body>
   <a class="skip-link" href="#catalogo">Vai al catalogo</a>
@@ -236,7 +236,7 @@
         <button class="button button-primary full" id="prepareOrder" type="button">Prepara l'email dell'ordine <span>→</span></button>
         <a class="button button-whatsapp full" id="sendWhatsApp" href="https://wa.me/393289092666" target="_blank" rel="noopener noreferrer">Invia su WhatsApp <span aria-hidden="true">→</span></a>
         <button class="button button-outline full continue-shopping" id="continueShopping" type="button">Continua gli acquisti</button>
-        <small class="order-send-note">Conferma l'invio in WhatsApp o nella tua app email: il sito prepara il messaggio, senza spedirlo automaticamente.</small>
+        <small class="order-send-note">Dopo l'invio, torna qui e conferma: il carrello verrà svuotato.</small>
         <button class="text-button" id="copyOrder" type="button">Copia il riepilogo</button>
       </div>
     </div>
@@ -247,8 +247,18 @@
     <div id="dialogContent"></div>
   </dialog>
 
+  <dialog class="send-confirm-dialog" id="sendConfirmDialog" aria-labelledby="sendConfirmTitle" aria-describedby="sendConfirmDescription">
+    <div class="send-confirm-content">
+      <p class="eyebrow dark"><span></span> Verifica dell'invio</p>
+      <h2 id="sendConfirmTitle">Hai inviato l'ordine?</h2>
+      <p id="sendConfirmDescription">Controlla di aver premuto <strong>Invia</strong> <span id="sendConfirmChannel"></span>. Il catalogo non può verificarlo nell'altra app.</p>
+      <button class="button button-primary full" id="confirmOrderSent" type="button">Sì, l'ho inviato · svuota il carrello</button>
+      <button class="button button-outline full" id="keepOrder" type="button" autofocus>Non ancora · conserva l'ordine</button>
+    </div>
+  </dialog>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="catalogo-2026.js?v=4" defer></script>
+  <script src="catalogo-2026.js?v=5" defer></script>
 </body>
 </html>

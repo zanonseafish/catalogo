@@ -84,10 +84,12 @@ const resultCount = document.querySelector('#resultCount');
 const emptyState = document.querySelector('#emptyState');
 const drawer = document.querySelector('#cartDrawer');
 const dialog = document.querySelector('#productDialog');
+const sendConfirmDialog = document.querySelector('#sendConfirmDialog');
 let toastTimer;
 let productObserver;
 let returnFocus;
 let orderPrepared = false;
+let pendingOrderChannel = null;
 let productDialogScrollY = 0;
 let productDialogLocked = false;
 
@@ -355,7 +357,7 @@ function prepareWhatsApp() {
   persistCustomer();
   orderPrepared = true;
   updateProgress();
-  showToast('Ordine pronto: conferma l’invio su WhatsApp');
+  beginOrderHandoff('WhatsApp');
 }
 
 function prepareEmail() {
@@ -364,8 +366,36 @@ function prepareEmail() {
   orderPrepared = true;
   updateProgress();
   const subject = `Richiesta ordine Natale 2026${state.customer.name ? ` - ${state.customer.name}` : ''}`;
-  showToast('Email preparata: conferma l’invio nella tua app email');
+  beginOrderHandoff('email');
   window.location.href = `mailto:amministrazione@zanonseafish.it?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(buildOrderText())}`;
+}
+
+function beginOrderHandoff(channel) {
+  pendingOrderChannel = channel;
+  writeStorage('zanon-pending-order', channel);
+  // Lascia prima aprire l'app esterna; al ritorno chiedi se l'invio è avvenuto.
+  setTimeout(showPendingOrderDialog, 0);
+}
+
+function showPendingOrderDialog() {
+  const channel = pendingOrderChannel || readStorage('zanon-pending-order', null);
+  if (!channel || !cartLines().length || sendConfirmDialog.open) return;
+  document.querySelector('#sendConfirmChannel').textContent = channel === 'WhatsApp' ? 'su WhatsApp' : 'nella tua app email';
+  sendConfirmDialog.showModal();
+}
+
+function resolvePendingOrder(sent) {
+  pendingOrderChannel = null;
+  try { localStorage.removeItem('zanon-pending-order'); } catch {}
+  sendConfirmDialog.close();
+  if (sent) {
+    state.cart = {};
+    persistCart();
+    if (drawer.classList.contains('open')) closeCart();
+    showToast('Ordine confermato da te · carrello svuotato');
+  } else {
+    showToast('Ordine conservato nel carrello');
+  }
 }
 
 async function copyOrder() {
@@ -606,6 +636,9 @@ document.querySelector('#closeCartBackdrop').addEventListener('click', closeCart
 document.querySelector('#shopNow').addEventListener('click', () => { closeCart(); document.querySelector('#catalogo').scrollIntoView(); });
 document.querySelector('#prepareOrder').addEventListener('click', prepareEmail);
 document.querySelector('#sendWhatsApp').addEventListener('click', prepareWhatsApp);
+document.querySelector('#confirmOrderSent').addEventListener('click', () => resolvePendingOrder(true));
+document.querySelector('#keepOrder').addEventListener('click', () => resolvePendingOrder(false));
+sendConfirmDialog.addEventListener('cancel', event => event.preventDefault());
 document.querySelector('#copyOrder').addEventListener('click', copyOrder);
 document.querySelector('#clearCart').addEventListener('click', () => {
   if (window.confirm('Vuoi rimuovere tutti i prodotti dal carrello?')) { state.cart = {}; persistCart(); showToast('Carrello svuotato'); }
@@ -639,5 +672,6 @@ document.addEventListener('keydown', event => {
 renderFilters();
 renderProducts();
 renderCart();
+showPendingOrderDialog();
 initReveal();
 initShowcase();
