@@ -386,6 +386,9 @@ function showPendingOrderDialog() {
   const channel = pendingOrderChannel || readStorage('zanon-pending-order', null);
   if (!channel || !cartLines().length || sendConfirmDialog.open) return;
   document.querySelector('#sendConfirmChannel').textContent = channel === 'WhatsApp' ? 'su WhatsApp' : 'nella tua app email';
+  document.querySelector('#sendConfirmFollowup').textContent = channel === 'WhatsApp'
+    ? "Dopo l'invio, attendi la conferma di ricezione da Zanon Seafish entro 48 ore lavorative su WhatsApp."
+    : "Dopo l'invio, attendi la conferma di ricezione da Zanon Seafish entro 48 ore lavorative via email.";
   sendConfirmDialog.showModal();
 }
 

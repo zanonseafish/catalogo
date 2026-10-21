@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="catalogo-2026.css?v=6">
+  <link rel="stylesheet" href="catalogo-2026.css?v=7">
 </head>
 <body>
   <a class="skip-link" href="#catalogo">Vai al catalogo</a>
@@ -247,11 +247,12 @@
     <div id="dialogContent"></div>
   </dialog>
 
-  <dialog class="send-confirm-dialog" id="sendConfirmDialog" aria-labelledby="sendConfirmTitle" aria-describedby="sendConfirmDescription">
+  <dialog class="send-confirm-dialog" id="sendConfirmDialog" aria-labelledby="sendConfirmTitle" aria-describedby="sendConfirmDescription sendConfirmFollowup">
     <div class="send-confirm-content">
       <p class="eyebrow dark"><span></span> Verifica dell'invio</p>
       <h2 id="sendConfirmTitle">Hai inviato l'ordine?</h2>
-      <p id="sendConfirmDescription">Controlla di aver premuto <strong>Invia</strong> <span id="sendConfirmChannel"></span>. Il catalogo non può verificarlo nell'altra app.</p>
+      <p id="sendConfirmDescription">Controlla di aver premuto <strong>Invia</strong> <span id="sendConfirmChannel"></span>.</p>
+      <p class="send-followup" id="sendConfirmFollowup"></p>
       <button class="button button-primary full" id="confirmOrderSent" type="button">Sì, l'ho inviato · svuota il carrello</button>
       <button class="button button-outline full" id="keepOrder" type="button" autofocus>Non ancora · conserva l'ordine</button>
     </div>
@@ -259,6 +260,6 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="catalogo-2026.js?v=6" defer></script>
+  <script src="catalogo-2026.js?v=7" defer></script>
 </body>
 </html>
