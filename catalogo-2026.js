@@ -357,8 +357,20 @@ function persistCustomer() {
   if (orderPrepared) { orderPrepared = false; updateProgress(); }
 }
 
-function prepareWhatsApp() {
-  if (!cartLines().length) return;
+function validateCustomerName(focusOnError = true) {
+  const input = document.querySelector('#customerName');
+  const valid = /^\S+(?:\s+\S+)+$/.test(input.value.trim());
+  input.setAttribute('aria-invalid', String(!valid));
+  document.querySelector('#customerNameError').hidden = valid;
+  if (!valid && focusOnError) {
+    input.focus({preventScroll:true});
+    input.scrollIntoView({block:'center'});
+  }
+  return valid;
+}
+
+function prepareWhatsApp(event) {
+  if (!cartLines().length || !validateCustomerName()) { event.preventDefault(); return; }
   persistCustomer();
   orderPrepared = true;
   updateProgress();
@@ -366,7 +378,7 @@ function prepareWhatsApp() {
 }
 
 function prepareEmail() {
-  if (!cartLines().length) return;
+  if (!cartLines().length || !validateCustomerName()) return;
   persistCustomer();
   orderPrepared = true;
   updateProgress();
@@ -676,6 +688,9 @@ document.addEventListener('keydown', event => {
   const key = id.replace('customer','').toLowerCase();
   element.value = state.customer[key] || '';
   element.addEventListener('input', persistCustomer);
+});
+document.querySelector('#customerName').addEventListener('input', event => {
+  if (event.target.hasAttribute('aria-invalid')) validateCustomerName(false);
 });
 
 renderFilters();
