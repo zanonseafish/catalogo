@@ -234,12 +234,45 @@ img { max-width: 100%; display: block; }
 .how-copy { align-self: center; }
 .how-copy h2 { font-size: clamp(36px, 4vw, 58px); }
 .how-copy p:not(.eyebrow) { max-width: 500px; margin: 20px 0; color: rgba(255,255,255,.74); font-size: 15px; line-height: 1.6; }
+.how-faq-link { display: flex; align-items: center; justify-content: space-between; gap: 22px; width: fit-content; margin-top: 18px; padding: 12px 18px; border: 1px solid rgba(233,189,112,.65); border-radius: 999px; color: var(--gold-2); font-size: 14px; font-weight: 700; }
+.how-faq-link:hover { background: rgba(233,189,112,.1); }
+.how-faq-link span { font-size: 19px; }
 .steps { list-style: none; margin: 0; padding: 0; }
 .steps li { display: grid; grid-template-columns: 42px 1fr; gap: 16px; padding: 22px 0; border-top: 1px solid rgba(255,255,255,.15); }
 .steps li:last-child { border-bottom: 1px solid rgba(255,255,255,.15); }
 .steps li > span { color: var(--gold); font: 600 15px "Playfair Display", serif; }
 .steps h3 { margin: 0 0 7px; font: 600 28px "Playfair Display", serif; }
 .steps p { max-width: 470px; margin: 0; color: rgba(255,255,255,.72); font-size: 14px; line-height: 1.6; }
+
+.faq-section { display: grid; grid-template-columns: minmax(240px, .76fr) minmax(0, 1.24fr); gap: clamp(36px, 7vw, 110px); padding: clamp(66px, 8vw, 112px) max(8vw, 32px); background: linear-gradient(145deg, #fbf8f1, #f0e8d8); }
+.faq-intro h2 { margin: 0; font: 600 clamp(42px, 5vw, 70px)/1.03 "Playfair Display", Georgia, serif; letter-spacing: -.03em; }
+.faq-intro h2 em { color: #985061; }
+.faq-intro > p:not(.eyebrow) { max-width: 320px; margin: 22px 0 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
+.faq-list { border-top: 1px solid rgba(7,63,57,.17); }
+.faq-item { border-bottom: 1px solid rgba(7,63,57,.17); }
+.faq-item summary { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 23px 0; color: var(--green-950); cursor: pointer; font-size: clamp(16px, 1.6vw, 20px); font-weight: 700; line-height: 1.35; list-style: none; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: "+"; display: grid; flex: none; place-items: center; width: 32px; height: 32px; border: 1px solid rgba(7,63,57,.2); border-radius: 50%; color: var(--green-800); font-size: 22px; font-weight: 400; line-height: 1; transition: transform .2s, background .2s; }
+.faq-item[open] summary::after { transform: rotate(45deg); color: white; background: var(--green-900); }
+.faq-item summary:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; border-radius: 4px; }
+.faq-item p { max-width: 650px; margin: -2px 46px 25px 0; color: #52615d; font-size: 15px; line-height: 1.7; }
+.faq-item p strong { color: var(--green-900); }
+
+.faq-page { min-height: 100vh; padding-bottom: 0; background: #f8f3e9; }
+.faq-page-header { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 20px max(8vw, 32px); color: white; background: var(--green-950); }
+.faq-page-brand { display: inline-flex; align-items: center; gap: 12px; min-width: 0; }
+.faq-page-brand .original-fish { width: 72px; }
+.faq-page-return { flex: none; padding: 10px 0; color: var(--gold-2); font-size: 14px; font-weight: 700; }
+.faq-page-return:hover { text-decoration: underline; text-underline-offset: 4px; }
+.faq-page .faq-section { min-height: 480px; }
+.faq-page .faq-intro h1 { margin: 0; font: 600 clamp(42px, 5vw, 70px)/1.03 "Playfair Display", Georgia, serif; letter-spacing: -.03em; }
+.faq-page .faq-intro h1 em { color: #985061; }
+.faq-page-cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 32px max(8vw, 32px) 58px; background: #f4ebdb; }
+.faq-page-cta p { margin: 0; color: var(--green-950); font: 600 clamp(22px, 2.5vw, 32px)/1.2 "Playfair Display", Georgia, serif; }
+.faq-page-footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 30px max(8vw, 32px); color: #f5e9d4; background: var(--green-950); font-size: 13px; }
+.faq-page-footer strong { display: grid; gap: 3px; color: var(--gold-2); font: 700 18px "Playfair Display", Georgia, serif; }
+.faq-page-footer small { color: #f5e9d4; font: 700 9px "DM Sans", system-ui, sans-serif; letter-spacing: .22em; }
+.faq-page-footer a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
 .festive-footer { position: relative; padding: 0 32px; color: #482730; background: #f4ebdb; }
 .footer-ribbon { display: flex; align-items: center; justify-content: center; gap: 20px; width: calc(100% + 64px); margin-left: -32px; padding: 10px 16px; background: #762b3b; color: #f3d4a0; font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
@@ -378,6 +411,21 @@ img { max-width: 100%; display: block; }
 }
 
 @media (max-width: 780px) {
+  .faq-page-header { padding: 14px 22px; }
+  .faq-page-brand { gap: 8px; }
+  .faq-page-brand .original-fish { width: 56px; }
+  .faq-page-brand .brand-wordmark strong { font-size: clamp(13px, 3.7vw, 17px); }
+  .faq-page-brand .brand-wordmark small { font-size: 7px; letter-spacing: .14em; }
+  .faq-page-return { font-size: 12px; }
+  .faq-page-cta { flex-direction: column; align-items: stretch; padding: 30px 22px 48px; }
+  .faq-page-cta .button { justify-content: space-between; }
+  .faq-page-footer { padding: 25px 22px; }
+  .faq-section { grid-template-columns: 1fr; gap: 30px; padding: 64px 22px 82px; }
+  .faq-intro h2 { font-size: clamp(42px, 11vw, 56px); }
+  .faq-page .faq-intro h1 { font-size: clamp(42px, 11vw, 56px); }
+  .faq-intro > p:not(.eyebrow) { margin-top: 14px; font-size: 14px; }
+  .faq-item summary { padding: 19px 0; font-size: 16px; }
+  .faq-item p { margin: -2px 42px 22px 0; font-size: 14px; }
   .preview-bar { font-size: 10px; }
   .site-header { top: 34px; width: calc(100% - 32px); padding: 17px 0; }
   .brand { gap: 9px; }
