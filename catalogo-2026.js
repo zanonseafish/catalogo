@@ -430,6 +430,56 @@ async function copyOrder() {
   }
 }
 
+function printOrder() {
+  const lines = cartLines();
+  if (!lines.length) return;
+
+  const sheet = document.querySelector('#printOrder');
+  sheet.replaceChildren();
+  const addText = (parent, tag, value, className) => {
+    const element = document.createElement(tag);
+    element.textContent = value;
+    if (className) element.className = className;
+    parent.append(element);
+    return element;
+  };
+
+  addText(sheet, 'h1', 'ZANON SEAFISH INGROS SRL');
+  addText(sheet, 'h2', 'Riepilogo ordine Natale 2026');
+  addText(sheet, 'p', `Data: ${new Date().toLocaleDateString('it-IT')}`, 'print-date');
+
+  const customer = document.createElement('div');
+  customer.className = 'print-customer';
+  addText(customer, 'p', `Nome e cognome: ${document.querySelector('#customerName').value.trim() || '—'}`);
+  const phone = document.querySelector('#customerPhone').value.trim();
+  if (phone) addText(customer, 'p', `Telefono: ${phone}`);
+  const notes = document.querySelector('#customerNotes').value.trim();
+  if (notes) addText(customer, 'p', `Note: ${notes}`);
+  sheet.append(customer);
+
+  const table = document.createElement('table');
+  const header = table.createTHead().insertRow();
+  for (const label of ['Prodotto', 'Qtà', 'Prezzo unitario', 'Importo']) addText(header, 'th', label);
+  const body = table.createTBody();
+  for (const {product, qty} of lines) {
+    const row = body.insertRow();
+    for (const value of [
+      `${product.code} · ${product.name}`,
+      String(qty),
+      `${euro.format(product.price)} / ${product.unit}`,
+      euro.format(product.price * qty)
+    ]) addText(row, 'td', value);
+  }
+  sheet.append(table);
+
+  const total = lines.reduce((sum, {product, qty}) => sum + product.price * qty, 0);
+  addText(sheet, 'p', `Totale indicativo: ${euro.format(total)}`, 'print-total');
+  addText(sheet, 'p', 'Prezzi 2025 IVA inclusa, da confermare per il Natale 2026.', 'print-disclaimer');
+  addText(sheet, 'p', "Questo riepilogo è una copia per il cliente e non invia l'ordine all'azienda.", 'print-footnote');
+
+  window.print();
+}
+
 function showToast(message) {
   const toast = document.querySelector('#toast');
   toast.textContent = message;
@@ -662,6 +712,7 @@ document.querySelector('#confirmOrderSent').addEventListener('click', () => reso
 document.querySelector('#keepOrder').addEventListener('click', () => resolvePendingOrder(false));
 sendConfirmDialog.addEventListener('cancel', event => event.preventDefault());
 document.querySelector('#copyOrder').addEventListener('click', copyOrder);
+document.querySelector('#printOrderButton').addEventListener('click', printOrder);
 document.querySelector('#clearCart').addEventListener('click', () => {
   if (window.confirm('Vuoi rimuovere tutti i prodotti dal carrello?')) { state.cart = {}; persistCart(); showToast('Carrello svuotato'); }
 });
