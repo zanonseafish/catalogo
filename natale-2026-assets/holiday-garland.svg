@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 180" fill="none">
+  <defs>
+    <g id="pine">
+      <path d="M0 15C80 30 145 50 220 100" stroke="#a48846" stroke-width="3"/>
+      <path d="M24 20L4 55M45 27L25 71M68 33L42 86M94 42L62 104M120 54L86 120M147 65L115 136M175 80L149 151M201 94L181 163M24 20L47 0M45 27L74 2M68 33L105 6M94 42L133 14M120 54L160 27M147 65L188 40M175 80L214 56M201 94L238 74" stroke="#2c6f58" stroke-width="6" stroke-linecap="round"/>
+      <path d="M13 21L1 41M34 23L16 59M57 30L35 76M82 38L52 93M107 49L75 112M134 60L99 131M161 72L132 144M187 87L165 156M34 23L60 0M57 30L90 4M82 38L120 10M107 49L148 23M134 60L174 36M161 72L201 49M187 87L227 65" stroke="#4d8964" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="102" cy="50" r="7" fill="#b23e3a"/><circle cx="115" cy="48" r="6" fill="#c35542"/><circle cx="110" cy="61" r="5" fill="#9c3331"/>
+    </g>
+    <filter id="glow"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+  <use href="#pine" transform="translate(0 -2)"/>
+  <use href="#pine" transform="translate(145 -13) rotate(-13)"/>
+  <use href="#pine" transform="translate(1440 -2) scale(-1 1)"/>
+  <use href="#pine" transform="translate(1295 -13) scale(-1 1) rotate(-13)"/>
+  <path d="M310 0Q720 130 1130 0" stroke="#d9b36a" stroke-opacity=".45" stroke-width="1.5"/>
+  <g fill="#ffd99a" filter="url(#glow)" opacity=".65"><circle cx="370" cy="17" r="7"/><circle cx="480" cy="44" r="7"/><circle cx="600" cy="60" r="7"/><circle cx="720" cy="65" r="7"/><circle cx="840" cy="60" r="7"/><circle cx="960" cy="44" r="7"/><circle cx="1070" cy="17" r="7"/></g>
+  <g fill="#f9d798"><circle cx="370" cy="17" r="3"/><circle cx="480" cy="44" r="3"/><circle cx="600" cy="60" r="3"/><circle cx="720" cy="65" r="3"/><circle cx="840" cy="60" r="3"/><circle cx="960" cy="44" r="3"/><circle cx="1070" cy="17" r="3"/></g>
+</svg>
