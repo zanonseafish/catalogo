@@ -85,11 +85,16 @@ const emptyState = document.querySelector('#emptyState');
 const drawer = document.querySelector('#cartDrawer');
 const dialog = document.querySelector('#productDialog');
 const sendConfirmDialog = document.querySelector('#sendConfirmDialog');
+const exitCartDialog = document.querySelector('#exitCartDialog');
 let toastTimer;
 let productObserver;
 let returnFocus;
 let orderPrepared = false;
 let pendingOrderChannel = null;
+let pendingExit = null;
+let suppressExitPrompt = false;
+let exitGuardUrl = window.location.href;
+let currentEntryIsExitGuard = Boolean(history.state?.zanonExitGuard);
 let productDialogScrollY = 0;
 let productDialogLocked = false;
 
@@ -385,7 +390,10 @@ function prepareEmail() {
   updateProgress();
   const subject = `Richiesta ordine Natale 2026${state.customer.name ? ` - ${state.customer.name}` : ''}`;
   beginOrderHandoff('email');
+  // L'app email fa parte dell'invio: l'avviso di uscita non deve interromperla.
+  suppressExitPrompt = true;
   window.location.href = `mailto:amministrazione@zanonseafish.it?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(buildOrderText())}`;
+  setTimeout(() => { suppressExitPrompt = false; }, 1500);
 }
 
 function beginOrderHandoff(channel) {
@@ -418,6 +426,53 @@ function resolvePendingOrder(sent) {
   } else {
     showToast('Ordine conservato nel carrello');
   }
+}
+
+function armExitGuard() {
+  if (currentEntryIsExitGuard) return;
+  try {
+    history.pushState({...(history.state && typeof history.state === 'object' ? history.state : {}), zanonExitGuard: true}, '', window.location.href);
+    exitGuardUrl = window.location.href;
+    currentEntryIsExitGuard = true;
+  } catch { /* L'avviso standard del browser resta disponibile. */ }
+}
+
+function restoreExitGuard() {
+  try {
+    history.pushState({...(history.state && typeof history.state === 'object' ? history.state : {}), zanonExitGuard: true}, '', window.location.href);
+    exitGuardUrl = window.location.href;
+    currentEntryIsExitGuard = true;
+  } catch {}
+}
+
+function closeExitWarning() {
+  if (pendingExit?.type === 'back') restoreExitGuard();
+  pendingExit = null;
+  exitCartDialog.close();
+}
+
+function showExitWarning(action) {
+  if (exitCartDialog.open) return;
+  pendingExit = action;
+  exitCartDialog.showModal();
+  document.querySelector('#closeExitCart').focus();
+}
+
+function leaveCatalog(clearCart) {
+  const action = pendingExit;
+  if (!action) return;
+  pendingExit = null;
+  if (clearCart) {
+    state.cart = {};
+    pendingOrderChannel = null;
+    try { localStorage.removeItem('zanon-pending-order'); } catch {}
+    persistCart();
+  }
+  exitCartDialog.close();
+  suppressExitPrompt = true;
+  if (action.type === 'back') history.back();
+  else window.location.assign(action.url);
+  setTimeout(() => { suppressExitPrompt = false; }, 1500);
 }
 
 async function copyOrder() {
@@ -711,6 +766,39 @@ document.querySelector('#sendWhatsApp').addEventListener('click', prepareWhatsAp
 document.querySelector('#confirmOrderSent').addEventListener('click', () => resolvePendingOrder(true));
 document.querySelector('#keepOrder').addEventListener('click', () => resolvePendingOrder(false));
 sendConfirmDialog.addEventListener('cancel', event => event.preventDefault());
+document.querySelector('#closeExitCart').addEventListener('click', closeExitWarning);
+document.querySelector('#leaveKeepCart').addEventListener('click', () => leaveCatalog(false));
+document.querySelector('#leaveClearCart').addEventListener('click', () => leaveCatalog(true));
+exitCartDialog.addEventListener('cancel', event => { event.preventDefault(); closeExitWarning(); });
+document.addEventListener('click', event => {
+  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const anchor = event.target instanceof Element ? event.target.closest('a[href]') : null;
+  if (!anchor || anchor.hasAttribute('download') || (anchor.target && anchor.target.toLowerCase() !== '_self')) return;
+  const destination = new URL(anchor.href, window.location.href);
+  if (!['http:', 'https:'].includes(destination.protocol)) return;
+  const samePage = destination.origin === location.origin && destination.pathname === location.pathname && destination.search === location.search;
+  if (samePage || !cartLines().length) return;
+  event.preventDefault();
+  showExitWarning({type:'link', url:destination.href});
+}, true);
+window.addEventListener('beforeunload', event => {
+  if (suppressExitPrompt || !cartLines().length) return;
+  event.preventDefault();
+  event.returnValue = '';
+});
+window.addEventListener('popstate', event => {
+  const landedOnGuard = Boolean(event.state?.zanonExitGuard) && location.href === exitGuardUrl;
+  if (currentEntryIsExitGuard && !landedOnGuard && location.href === exitGuardUrl) {
+    currentEntryIsExitGuard = false;
+    if (cartLines().length) showExitWarning({type:'back'});
+    else history.back();
+    return;
+  }
+  currentEntryIsExitGuard = landedOnGuard;
+});
+window.addEventListener('hashchange', () => {
+  currentEntryIsExitGuard = Boolean(history.state?.zanonExitGuard) && location.href === exitGuardUrl;
+});
 document.querySelector('#copyOrder').addEventListener('click', copyOrder);
 document.querySelector('#printOrderButton').addEventListener('click', printOrder);
 document.querySelector('#clearCart').addEventListener('click', () => {
@@ -751,8 +839,9 @@ document.querySelector('#customerName').addEventListener('input', event => {
 renderFilters();
 renderProducts();
 renderCart();
+armExitGuard();
 showPendingOrderDialog();
-window.addEventListener('pageshow', showPendingOrderDialog);
+window.addEventListener('pageshow', () => { suppressExitPrompt = false; showPendingOrderDialog(); });
 document.addEventListener('visibilitychange', () => { if (!document.hidden) showPendingOrderDialog(); });
 initReveal();
 initShowcase();
