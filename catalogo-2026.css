@@ -358,7 +358,12 @@ img { max-width: 100%; display: block; }
 .text-button { width: 100%; padding: 11px; border: 0; color: var(--green-700); background: transparent; cursor: pointer; font-size: 12px; font-weight: 700; }
 .clear-cart { display: inline-flex; align-items: center; width: auto; min-height: 34px; margin-top: 8px; padding: 0 12px; border: 1px solid rgba(167,60,54,.35); border-radius: 999px; color: #96362f; background: #fff4f0; cursor: pointer; font-size: 12px; font-weight: 700; }
 .clear-cart:hover { background: #fce5dc; }
-.copy-order { margin: 0 0 12px; text-align: left; }
+.order-utilities { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 12px; }
+.order-utilities .text-button { width: auto; padding: 11px 0; text-align: left; line-height: 1.35; }
+.order-utilities .text-button:last-child { text-align: right; }
+.order-utilities .text-button:hover { text-decoration: underline; text-underline-offset: 4px; }
+.order-utilities .text-button:focus-visible { outline: 2px solid var(--green-700); outline-offset: 3px; border-radius: 2px; }
+.print-order { display: none; }
 .order-send-note { display: block; margin-top: 2px; color: var(--muted); text-align: center; font-size: 10px; line-height: 1.45; }
 .order-progress { display: flex; justify-content: space-between; list-style: none; gap: 8px; margin: 0; padding: 10px 22px; border-bottom: 1px solid var(--line); }
 .order-progress li { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 10px; font-weight: 700; }
@@ -533,4 +538,28 @@ img { max-width: 100%; display: block; }
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .reveal, .product-card { opacity: 1; transform: none; }
   .showcase-ready .product-float, .showcase-ready .showcase-media { animation: none; }
+}
+
+@media print {
+  @page { size: A4; margin: 15mm; }
+  html, body { width: auto !important; min-height: 0 !important; background: #fff !important; }
+  body { padding: 0 !important; color: #182a27 !important; font: 11pt Arial, sans-serif !important; }
+  body > *:not(#printOrder) { display: none !important; }
+  #printOrder { display: block !important; }
+  .print-order h1 { margin: 0 0 4mm; font-size: 19pt; }
+  .print-order h2 { margin: 0 0 8mm; font-size: 14pt; font-weight: 500; }
+  .print-order .print-date { margin: 0 0 7mm; font-size: 9pt; }
+  .print-order .print-customer { margin: 0 0 8mm; line-height: 1.6; }
+  .print-order .print-customer p { margin: 0 0 2mm; overflow-wrap: anywhere; white-space: pre-wrap; }
+  .print-order table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .print-order th, .print-order td { padding: 3mm 2mm; border-bottom: 1px solid #ccc; vertical-align: top; overflow-wrap: anywhere; }
+  .print-order th { border-bottom: 2px solid #182a27; text-align: left; font-size: 9pt; }
+  .print-order th:nth-child(1) { width: 46%; }
+  .print-order th:nth-child(2) { width: 10%; }
+  .print-order th:nth-child(3), .print-order th:nth-child(4) { width: 22%; }
+  .print-order th:nth-child(n+2), .print-order td:nth-child(n+2) { text-align: right; }
+  .print-order tr { break-inside: avoid; }
+  .print-order .print-total { margin: 6mm 0 3mm; text-align: right; font-size: 15pt; font-weight: 700; }
+  .print-order .print-disclaimer { margin: 0 0 7mm; font-size: 9pt; }
+  .print-order .print-footnote { padding-top: 5mm; border-top: 1px solid #ccc; font-size: 9pt; }
 }
