@@ -308,6 +308,8 @@ img { max-width: 100%; display: block; }
 .customer-fields label { display: grid; gap: 7px; margin: 14px 0; color: var(--muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
 .customer-fields input, .customer-fields textarea { width: 100%; padding: 13px 14px; border: 1px solid var(--line); border-radius: 11px; outline: 0; color: var(--ink); background: white; font-size: 14px; text-transform: none; letter-spacing: 0; resize: vertical; }
 .customer-fields input:focus, .customer-fields textarea:focus { border-color: var(--green-700); box-shadow: 0 0 0 3px rgba(19,112,100,.1); }
+.customer-fields input[aria-invalid="true"] { border-color: var(--red); box-shadow: 0 0 0 3px rgba(167,60,54,.1); }
+.customer-fields .customer-error { color: var(--red); font-size: 12px; font-weight: 600; letter-spacing: 0; line-height: 1.4; text-transform: none; }
 .drawer-footer { padding: 16px 28px max(18px, env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: var(--paper); }
 .continue-shopping { margin-top: 10px; min-height: 46px; }
 .text-button { width: 100%; padding: 11px; border: 0; color: var(--green-700); background: transparent; cursor: pointer; font-size: 12px; font-weight: 700; }
