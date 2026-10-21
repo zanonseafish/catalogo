@@ -166,7 +166,7 @@ function renderProducts() {
   observeProductCards();
 }
 
-function addToCart(id) {
+function addToCart(id, confirmation) {
   const product = productById(id);
   if (!product) return;
   try { sessionStorage.removeItem('zanon-order-confirmed'); } catch {}
@@ -174,7 +174,7 @@ function addToCart(id) {
   persistCart();
   const button = document.querySelector(`[data-add="${id}"]`);
   if (button) { button.classList.remove('added'); void button.offsetWidth; button.classList.add('added'); }
-  showToast(`${product.name} aggiunto`);
+  showToast(confirmation || `${product.name} aggiunto`);
 }
 
 function changeQuantity(id, delta) {
@@ -669,7 +669,10 @@ dialog.addEventListener('close', unlockProductDialogScroll);
 dialog.addEventListener('click', event => { if (event.target === dialog) closeProduct(); });
 dialog.addEventListener('click', event => {
   const button = event.target.closest('[data-dialog-add]');
-  if (button) { addToCart(button.dataset.dialogAdd); closeProduct(); openCart(); }
+  if (button) {
+    addToCart(button.dataset.dialogAdd, "Articolo aggiunto all'ordine");
+    closeProduct();
+  }
 });
 document.addEventListener('keydown', event => {
   if (!drawer.classList.contains('open')) return;
