@@ -202,7 +202,12 @@ function syncProductCounts() {
     const id = status.dataset.cartStatus;
     const product = productById(id);
     const qty = Number(state.cart[id]) || 0;
-    status.textContent = qty ? `✓ Nel carrello: ${qty} ${product.unit}` : '';
+    status.replaceChildren();
+    if (qty) {
+      const amount = document.createElement('strong');
+      amount.textContent = product.unit === 'kg' ? `${qty} kg` : `${qty} ${qty === 1 ? 'confezione' : 'confezioni'}`;
+      status.append('✓ Nel tuo ordine: ', amount);
+    }
     const card = status.closest('.product-card');
     if (card) card.classList.toggle('selected', qty > 0);
   });
