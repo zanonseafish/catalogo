@@ -75,7 +75,7 @@ const state = {
 };
 
 const euro = new Intl.NumberFormat('it-IT', {style:'currency', currency:'EUR'});
-const whatsappOrderNumber = '393289092666'; // Numero di prova: sostituire qui quando cambia il destinatario.
+const whatsappOrderNumber = '393515070330';
 const grid = document.querySelector('#productGrid');
 const filters = document.querySelector('#categoryFilters');
 const search = document.querySelector('#searchInput');
@@ -399,8 +399,8 @@ function showPendingOrderDialog() {
   if (!channel || !cartLines().length || sendConfirmDialog.open) return;
   document.querySelector('#sendConfirmChannel').textContent = channel === 'WhatsApp' ? 'su WhatsApp' : 'nella tua app email';
   document.querySelector('#sendConfirmFollowup').textContent = channel === 'WhatsApp'
-    ? "Dopo l'invio, attendi la conferma di ricezione da Zanon Seafish entro 48 ore lavorative su WhatsApp."
-    : "Dopo l'invio, attendi la conferma di ricezione da Zanon Seafish entro 48 ore lavorative via email.";
+    ? "Dopo l'invio, attendi la conferma di ricezione da Zanon Seafish entro due giorni lavorativi su WhatsApp."
+    : "Dopo l'invio, attendi la conferma di ricezione da Zanon Seafish entro due giorni lavorativi via email.";
   sendConfirmDialog.showModal();
 }
 
