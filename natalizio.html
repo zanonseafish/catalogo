@@ -35,6 +35,18 @@
     .order-utilities .text-button:hover { text-decoration: underline; text-underline-offset: 4px; }
     .order-utilities .text-button:focus-visible { outline: 2px solid var(--green-700); outline-offset: 3px; border-radius: 2px; }
     .print-order { display: none; }
+    .exit-cart-dialog { width: min(480px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 0; border-radius: 24px; color: var(--ink); background: var(--paper); box-shadow: var(--shadow); }
+    .exit-cart-dialog::backdrop { background: rgba(1,22,20,.74); backdrop-filter: blur(4px); }
+    .exit-cart-content { position: relative; padding: 34px clamp(22px, 6vw, 36px); }
+    .exit-cart-close { position: absolute; top: 16px; right: 16px; display: grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); background: white; cursor: pointer; font-size: 24px; line-height: 1; }
+    .exit-cart-content h2 { max-width: calc(100% - 40px); margin: 0 0 18px; color: var(--ink); font: 600 clamp(29px, 7vw, 38px)/1.15 "Playfair Display", serif; }
+    .exit-cart-content p { margin: 0 0 22px; color: var(--muted); line-height: 1.55; }
+    .exit-cart-content .exit-cart-note { margin-top: -8px; font-size: 13px; }
+    .exit-cart-actions { display: grid; gap: 10px; }
+    .exit-cart-actions .button { width: 100%; min-height: 48px; }
+    .exit-cart-actions .exit-cart-clear { border-color: rgba(167,60,54,.45); color: #96362f; background: #fff4f0; }
+    .exit-cart-actions .exit-cart-clear:hover { background: #fce5dc; }
+    .exit-cart-close:focus-visible, .exit-cart-actions .button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
     @media print {
       @page { size: A4; margin: 15mm; }
       html, body { width: auto !important; min-height: 0 !important; background: #fff !important; }
@@ -294,9 +306,22 @@
     </div>
   </dialog>
 
+  <dialog class="exit-cart-dialog" id="exitCartDialog" aria-labelledby="exitCartTitle" aria-describedby="exitCartDescription exitCartNote">
+    <div class="exit-cart-content">
+      <button class="exit-cart-close" id="closeExitCart" type="button" aria-label="Chiudi l'avviso e resta nella pagina">×</button>
+      <h2 id="exitCartTitle">Attenzione, il carrello è pieno</h2>
+      <p id="exitCartDescription">Stai lasciando la pagina con il carrello pieno e non hai completato l'ordine. Vuoi uscire comunque mantenendo il carrello pieno o svuotando il carrello?</p>
+      <p class="exit-cart-note" id="exitCartNote">Se lo mantieni, ritroverai i prodotti quando torni su questo dispositivo.</p>
+      <div class="exit-cart-actions">
+        <button class="button button-dark" id="leaveKeepCart" type="button">Esci e mantieni il carrello</button>
+        <button class="button button-outline exit-cart-clear" id="leaveClearCart" type="button">Esci e svuota il carrello</button>
+      </div>
+    </div>
+  </dialog>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <section class="print-order" id="printOrder" aria-hidden="true"></section>
 
-  <script src="catalogo-2026.js?v=13" defer></script>
+  <script src="catalogo-2026.js?v=14" defer></script>
 </body>
 </html>
