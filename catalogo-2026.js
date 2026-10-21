@@ -87,6 +87,8 @@ let toastTimer;
 let productObserver;
 let returnFocus;
 let orderPrepared = false;
+let productDialogScrollY = 0;
+let productDialogLocked = false;
 
 function sanitizeCart(value) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
@@ -269,6 +271,7 @@ function closeCart() {
 function openProduct(id) {
   const product = productById(id);
   if (!product) return;
+  productDialogScrollY = window.scrollY;
   document.querySelector('#dialogContent').innerHTML = `
     <div class="dialog-layout">
       <img src="${product.image}" alt="${product.name}">
@@ -280,7 +283,31 @@ function openProduct(id) {
         <button class="button button-dark" type="button" data-dialog-add="${product.id}">Aggiungi all'ordine <span>＋</span></button>
       </div>
     </div>`;
+  document.body.style.top = `-${productDialogScrollY}px`;
+  document.body.classList.add('product-dialog-open');
+  productDialogLocked = true;
   dialog.showModal();
+}
+
+function unlockProductDialogScroll() {
+  if (!productDialogLocked) return;
+  productDialogLocked = false;
+  document.body.classList.remove('product-dialog-open');
+  document.body.style.top = '';
+  const root = document.documentElement;
+  const previousBehavior = root.style.scrollBehavior;
+  root.style.scrollBehavior = 'auto';
+  window.scrollTo(0, productDialogScrollY);
+  requestAnimationFrame(() => {
+    window.scrollTo(0, productDialogScrollY);
+    root.style.scrollBehavior = previousBehavior;
+  });
+}
+
+function closeProduct() {
+  if (!dialog.open) return;
+  dialog.close();
+  unlockProductDialogScroll();
 }
 
 function buildOrderText() {
@@ -566,11 +593,12 @@ document.querySelector('#copyOrder').addEventListener('click', copyOrder);
 document.querySelector('#clearCart').addEventListener('click', () => {
   if (window.confirm('Vuoi rimuovere tutti i prodotti dal carrello?')) { state.cart = {}; persistCart(); showToast('Carrello svuotato'); }
 });
-document.querySelector('#closeDialog').addEventListener('click', () => dialog.close());
-dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+document.querySelector('#closeDialog').addEventListener('click', closeProduct);
+dialog.addEventListener('close', unlockProductDialogScroll);
+dialog.addEventListener('click', event => { if (event.target === dialog) closeProduct(); });
 dialog.addEventListener('click', event => {
   const button = event.target.closest('[data-dialog-add]');
-  if (button) { addToCart(button.dataset.dialogAdd); dialog.close(); openCart(); }
+  if (button) { addToCart(button.dataset.dialogAdd); closeProduct(); openCart(); }
 });
 document.addEventListener('keydown', event => {
   if (!drawer.classList.contains('open')) return;

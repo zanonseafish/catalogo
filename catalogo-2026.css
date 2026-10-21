@@ -28,6 +28,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 body.no-scroll { overflow: hidden; }
+body.product-dialog-open { position: fixed; width: 100%; overflow: hidden; }
 button, input, textarea { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 button:focus-visible, a:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
@@ -423,9 +424,10 @@ img { max-width: 100%; display: block; }
   .footer-contact strong { font-size: 13px; }
   .footer-contact small { margin-bottom: 3px; }
   .footer-bottom { gap: 12px; padding: 24px 0 18px; }
-  .dialog-layout { grid-template-columns: 1fr; max-height: calc(100vh - 30px); overflow-y: auto; }
+  .product-dialog { max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); overflow: hidden; }
+  .dialog-layout { grid-template-columns: 1fr; max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); overflow-y: auto; overscroll-behavior: contain; }
   .dialog-layout > img { min-height: 0; aspect-ratio: 1.25; }
-  .dialog-copy { padding: 26px; }
+  .dialog-copy { padding: 26px 26px calc(115px + env(safe-area-inset-bottom)); }
   .dialog-copy h2 { font-size: 30px; }
   .order-bar { padding: 12px; gap: 10px; }
   .order-bar-info > div { gap: 8px; }
