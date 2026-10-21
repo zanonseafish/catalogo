@@ -75,6 +75,7 @@ const state = {
 };
 
 const euro = new Intl.NumberFormat('it-IT', {style:'currency', currency:'EUR'});
+const whatsappOrderNumber = '393289092666'; // Numero di prova: sostituire qui quando cambia il destinatario.
 const grid = document.querySelector('#productGrid');
 const filters = document.querySelector('#categoryFilters');
 const search = document.querySelector('#searchInput');
@@ -246,6 +247,7 @@ function renderCart() {
   `).join('');
   syncProductCounts();
   updateProgress();
+  updateWhatsAppLink();
 }
 
 function openCart() {
@@ -333,6 +335,10 @@ function buildOrderText() {
   ].join('\n');
 }
 
+function updateWhatsAppLink() {
+  document.querySelector('#sendWhatsApp').href = `https://wa.me/${whatsappOrderNumber}?text=${encodeURIComponent(buildOrderText())}`;
+}
+
 function persistCustomer() {
   state.customer = {
     name: document.querySelector('#customerName').value,
@@ -340,7 +346,16 @@ function persistCustomer() {
     notes: document.querySelector('#customerNotes').value
   };
   writeStorage('zanon-customer', state.customer);
+  updateWhatsAppLink();
   if (orderPrepared) { orderPrepared = false; updateProgress(); }
+}
+
+function prepareWhatsApp() {
+  if (!cartLines().length) return;
+  persistCustomer();
+  orderPrepared = true;
+  updateProgress();
+  showToast('Ordine pronto: conferma l’invio su WhatsApp');
 }
 
 function prepareEmail() {
@@ -590,6 +605,7 @@ document.querySelector('#continueShopping').addEventListener('click', closeCart)
 document.querySelector('#closeCartBackdrop').addEventListener('click', closeCart);
 document.querySelector('#shopNow').addEventListener('click', () => { closeCart(); document.querySelector('#catalogo').scrollIntoView(); });
 document.querySelector('#prepareOrder').addEventListener('click', prepareEmail);
+document.querySelector('#sendWhatsApp').addEventListener('click', prepareWhatsApp);
 document.querySelector('#copyOrder').addEventListener('click', copyOrder);
 document.querySelector('#clearCart').addEventListener('click', () => {
   if (window.confirm('Vuoi rimuovere tutti i prodotti dal carrello?')) { state.cart = {}; persistCart(); showToast('Carrello svuotato'); }

@@ -132,6 +132,8 @@ img { max-width: 100%; display: block; }
 .button-cream { color: var(--green-950); background: var(--cream); }
 .button-outline { border: 1px solid var(--green-800); color: var(--green-900); background: transparent; }
 .button-outline:hover { background: var(--cream-2); }
+.button-whatsapp { margin-top: 10px; color: white; background: #147a55; }
+.button-whatsapp:hover { background: #0d6445; }
 .button.full { width: 100%; }
 .hero-notes { display: flex; gap: 40px; margin-top: 56px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,.12); }
 .hero-notes div { display: grid; gap: 4px; }
