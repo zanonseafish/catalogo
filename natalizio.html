@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="catalogo-2026.css?v=9">
+  <link rel="stylesheet" href="catalogo-2026.css?v=10">
 </head>
 <body>
   <a class="skip-link" href="#catalogo">Vai al catalogo</a>
@@ -202,7 +202,7 @@
     <div class="drawer-backdrop" id="closeCartBackdrop"></div>
     <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
       <div class="drawer-header">
-        <div><p class="eyebrow dark"><span></span> Riepilogo</p><h2 id="cartTitle">Il tuo ordine</h2></div>
+        <div class="drawer-heading"><p class="eyebrow dark"><span></span> Riepilogo</p><h2 id="cartTitle">Il tuo ordine</h2><button class="clear-cart" id="clearCart" type="button" hidden>Svuota carrello</button></div>
         <button class="icon-button" id="closeCart" type="button" aria-label="Chiudi il carrello"><span class="close-symbol" aria-hidden="true">×</span><span>Chiudi</span></button>
       </div>
       <ol class="order-progress" aria-label="Fasi dell'ordine">
@@ -219,7 +219,6 @@
         </div>
         <div id="cartContent" hidden>
           <div class="cart-items" id="cartItems"></div>
-          <button class="text-button clear-cart" id="clearCart" type="button">Svuota carrello</button>
           <div class="cart-summary">
             <div><span>Quantità selezionate</span><strong id="cartUnits">0 articoli</strong></div>
             <div class="cart-total"><span>Totale indicativo</span><strong id="cartTotal">0,00 €</strong></div>
@@ -231,14 +230,16 @@
             <label>Telefono<input id="customerPhone" type="tel" autocomplete="tel" placeholder="Inserisci il numero"></label>
             <label>Note<textarea id="customerNotes" rows="3" placeholder="Richieste o informazioni utili"></textarea></label>
           </div>
+          <button class="text-button copy-order" id="copyOrder" type="button">Copia il riepilogo</button>
         </div>
       </div>
       <div class="drawer-footer" id="cartFooter" hidden>
-        <button class="button button-primary full" id="prepareOrder" type="button">Prepara l'email dell'ordine <span>→</span></button>
-        <a class="button button-whatsapp full" id="sendWhatsApp" href="https://wa.me/393515070330" target="_blank" rel="noopener noreferrer">Invia su WhatsApp <span aria-hidden="true">→</span></a>
+        <div class="drawer-actions">
+          <button class="button button-primary full" id="prepareOrder" type="button"><span class="action-label-long">Prepara l'email dell'ordine</span><span class="action-label-short">Prepara email</span><span aria-hidden="true">→</span></button>
+          <a class="button button-whatsapp full" id="sendWhatsApp" href="https://wa.me/393515070330" target="_blank" rel="noopener noreferrer"><span class="action-label-long">Invia su WhatsApp</span><span class="action-label-short">WhatsApp</span><span aria-hidden="true">→</span></a>
+        </div>
         <button class="button button-outline full continue-shopping" id="continueShopping" type="button">Continua gli acquisti</button>
         <small class="order-send-note">Dopo l'invio, torna qui e conferma: il carrello verrà svuotato.</small>
-        <button class="text-button" id="copyOrder" type="button">Copia il riepilogo</button>
       </div>
     </div>
   </aside>
@@ -261,6 +262,6 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="catalogo-2026.js?v=11" defer></script>
+  <script src="catalogo-2026.js?v=12" defer></script>
 </body>
 </html>
