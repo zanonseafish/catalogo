@@ -586,6 +586,7 @@ document.querySelector('#cartItems').addEventListener('click', event => {
 document.querySelector('#openCart').addEventListener('click', openCart);
 document.querySelector('#openCartBottom').addEventListener('click', openCart);
 document.querySelector('#closeCart').addEventListener('click', closeCart);
+document.querySelector('#continueShopping').addEventListener('click', closeCart);
 document.querySelector('#closeCartBackdrop').addEventListener('click', closeCart);
 document.querySelector('#shopNow').addEventListener('click', () => { closeCart(); document.querySelector('#catalogo').scrollIntoView(); });
 document.querySelector('#prepareOrder').addEventListener('click', prepareEmail);

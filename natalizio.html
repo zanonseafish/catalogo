@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="catalogo-2026.css?v=2">
+  <link rel="stylesheet" href="catalogo-2026.css?v=3">
 </head>
 <body>
   <a class="skip-link" href="#catalogo">Vai al catalogo</a>
@@ -202,7 +202,7 @@
     <div class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
       <div class="drawer-header">
         <div><p class="eyebrow dark"><span></span> Riepilogo</p><h2 id="cartTitle">Il tuo ordine</h2></div>
-        <button class="icon-button" id="closeCart" type="button" aria-label="Chiudi il carrello">×</button>
+        <button class="icon-button" id="closeCart" type="button" aria-label="Chiudi il carrello"><span class="close-symbol" aria-hidden="true">×</span><span>Chiudi</span></button>
       </div>
       <ol class="order-progress" aria-label="Fasi dell'ordine">
         <li class="active" id="progressSelection"><span>1</span>Scegli</li>
@@ -234,6 +234,7 @@
       </div>
       <div class="drawer-footer" id="cartFooter" hidden>
         <button class="button button-primary full" id="prepareOrder" type="button">Prepara l'email dell'ordine <span>→</span></button>
+        <button class="button button-outline full continue-shopping" id="continueShopping" type="button">Continua gli acquisti</button>
         <small class="order-send-note">L'ordine non viene inviato automaticamente: conferma l'invio nella tua app email.</small>
         <button class="text-button" id="copyOrder" type="button">Copia il riepilogo</button>
       </div>
@@ -241,12 +242,12 @@
   </aside>
 
   <dialog class="product-dialog" id="productDialog">
-    <button class="dialog-close" id="closeDialog" type="button" aria-label="Chiudi dettaglio">×</button>
+    <button class="dialog-close" id="closeDialog" type="button" aria-label="Chiudi la scheda prodotto"><span class="close-symbol" aria-hidden="true">×</span><span>Chiudi</span></button>
     <div id="dialogContent"></div>
   </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="catalogo-2026.js?v=2" defer></script>
+  <script src="catalogo-2026.js?v=3" defer></script>
 </body>
 </html>
