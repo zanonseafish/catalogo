@@ -169,6 +169,7 @@ function renderProducts() {
 function addToCart(id) {
   const product = productById(id);
   if (!product) return;
+  try { sessionStorage.removeItem('zanon-order-confirmed'); } catch {}
   state.cart[id] = Math.min(9999, (Number(state.cart[id]) || 0) + 1);
   persistCart();
   const button = document.querySelector(`[data-add="${id}"]`);
@@ -217,6 +218,10 @@ function cartLines() {
 
 function renderCart() {
   const lines = cartLines();
+  let orderConfirmed = false;
+  try { orderConfirmed = sessionStorage.getItem('zanon-order-confirmed') === 'yes'; } catch {}
+  document.querySelector('#cartEmpty h3').textContent = orderConfirmed ? 'Ordine segnato come inviato' : 'Il carrello è ancora vuoto';
+  document.querySelector('#cartEmpty p').textContent = orderConfirmed ? "Hai confermato l'invio. Il carrello è stato svuotato." : 'Aggiungi le specialità che vuoi ordinare.';
   const units = lines.reduce((sum, line) => sum + line.qty, 0);
   const total = lines.reduce((sum, line) => sum + line.product.price * line.qty, 0);
   const count = document.querySelector('#cartCount');
@@ -389,6 +394,7 @@ function resolvePendingOrder(sent) {
   try { localStorage.removeItem('zanon-pending-order'); } catch {}
   sendConfirmDialog.close();
   if (sent) {
+    try { sessionStorage.setItem('zanon-order-confirmed', 'yes'); } catch {}
     state.cart = {};
     persistCart();
     if (drawer.classList.contains('open')) closeCart();
@@ -673,5 +679,7 @@ renderFilters();
 renderProducts();
 renderCart();
 showPendingOrderDialog();
+window.addEventListener('pageshow', showPendingOrderDialog);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) showPendingOrderDialog(); });
 initReveal();
 initShowcase();
