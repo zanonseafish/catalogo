@@ -257,6 +257,7 @@ img { max-width: 100%; display: block; }
 .faq-item summary:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; border-radius: 4px; }
 .faq-item p { max-width: 650px; margin: -2px 46px 25px 0; color: #52615d; font-size: 15px; line-height: 1.7; }
 .faq-item p strong { color: var(--green-900); }
+.faq-item p .faq-important { display: block; margin-top: 12px; padding: 10px 12px; color: #a51b21; background: #fff0ec; border-left: 4px solid #b5232a; border-radius: 0 5px 5px 0; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 
 .faq-page { min-height: 100vh; padding-bottom: 0; background: #f8f3e9; }
 .faq-page-header { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 20px max(8vw, 32px); color: white; background: var(--green-950); }
