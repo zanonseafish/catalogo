@@ -319,7 +319,7 @@ function closeProduct() {
   unlockProductDialogScroll();
 }
 
-function buildOrderText() {
+function buildOrderText(channel = 'email') {
   const lines = cartLines();
   const total = lines.reduce((sum, line) => sum + line.product.price * line.qty, 0);
   const name = document.querySelector('#customerName').value.trim();
@@ -329,8 +329,8 @@ function buildOrderText() {
     'RICHIESTA ORDINE NATALE 2026',
     'ZANON SEAFISH INGROS SRL',
     '',
-    `Cliente: ${name || '—'}`,
-    `Telefono: ${phone || '—'}`,
+    `Cliente: ${name || (channel === 'WhatsApp' ? '*_scrivi il tuo nome e cognome qui_*' : '—')}`,
+    ...(channel === 'WhatsApp' ? [] : [`Telefono: ${phone || '—'}`]),
     '',
     'PRODOTTI:',
     ...lines.map(({product, qty}) => `${qty} × ${product.code} | ${product.name} | ${euro.format(product.price)} / ${product.unit} | ${euro.format(product.price * qty)}`),
@@ -343,7 +343,7 @@ function buildOrderText() {
 }
 
 function updateWhatsAppLink() {
-  document.querySelector('#sendWhatsApp').href = `https://wa.me/${whatsappOrderNumber}?text=${encodeURIComponent(buildOrderText())}`;
+  document.querySelector('#sendWhatsApp').href = `https://wa.me/${whatsappOrderNumber}?text=${encodeURIComponent(buildOrderText('WhatsApp'))}`;
 }
 
 function persistCustomer() {
