@@ -63,7 +63,7 @@ const productImages = [
   'images/alici-filetti.jpg',
   'images/tonno-filetto-albatros.jpg',
   'images/tonno-filetti-acantilado.jpg',
-  'images/stoccafisso-secco-sottovuoto.png'
+  'images/stoccafisso-ragno-secco-2026-v2.jpg'
 ];
 products.forEach(product => { product.image = productImages[product.id - 1]; });
 
