@@ -41,13 +41,13 @@ img { max-width: 100%; display: block; }
 }
 .skip-link:focus { top: 16px; }
 
-.order-deadline-bar {
-  min-height: 34px; display: flex; align-items: center; justify-content: center;
-  padding: 7px 16px; color: #a12330; background: #fff7ec; font-size: 13px;
-  font-weight: 700; letter-spacing: .015em; line-height: 1.35; text-align: center;
+.order-deadline-message {
+  position: absolute; z-index: 10; top: 124px; left: 50%; width: min(620px, calc(100% - 190px));
+  margin: 0; transform: translateX(-50%); color: #ff8588; font-size: 13px; font-weight: 700;
+  line-height: 1.3; letter-spacing: .025em; text-align: center;
+  text-shadow: 0 0 10px rgba(255,91,101,.3); animation: orderDeadlineBlink 1.7s ease-in-out infinite;
 }
-.order-deadline-bar span { animation: orderDeadlineBlink 1.25s ease-in-out infinite; }
-@keyframes orderDeadlineBlink { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+@keyframes orderDeadlineBlink { 0%, 100% { opacity: 1; } 50% { opacity: .24; } }
 
 .site-header {
   position: absolute; z-index: 20; top: 34px; left: 0; right: 0;
@@ -458,6 +458,7 @@ img { max-width: 100%; display: block; }
   .cart-trigger { padding-left: 11px; }
   .cart-label { display: none; }
   .hero { grid-template-columns: 1fr; min-height: auto; padding: 132px 24px 150px; }
+  .order-deadline-message { top: 78px; left: 22px; right: 72px; width: auto; transform: none; font-size: 11px; }
   .hero-copy { position: relative; z-index: 2; }
   .hero h1 { font-size: clamp(62px, 21vw, 92px); }
   .hero-lead { margin: 26px 0; font-size: 16px; }
