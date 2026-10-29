@@ -294,9 +294,9 @@ function openProduct(id) {
   productDialogScrollY = window.scrollY;
   document.querySelector('#dialogContent').innerHTML = `
     <div class="dialog-layout">
-      <div class="dialog-photo" role="group" aria-label="Foto prodotto trascinabile">
+      <div class="dialog-photo" role="group" aria-label="Foto prodotto zoomabile e trascinabile">
         <img src="${product.image}" alt="${product.name}" draggable="false">
-        <span class="dialog-photo-hint">Trascina la foto per spostare l’inquadratura</span>
+        <span class="dialog-photo-hint">Pizzica per zoom · trascina per spostare</span>
       </div>
       <div class="dialog-copy">
         <span class="product-category">${product.category} · ${product.code}</span>
@@ -815,32 +815,122 @@ document.querySelector('#clearCart').addEventListener('click', () => {
 document.querySelector('#closeDialog').addEventListener('click', closeProduct);
 dialog.addEventListener('close', unlockProductDialogScroll);
 dialog.addEventListener('click', event => { if (event.target === dialog) closeProduct(); });
-let photoDrag = null;
+const photoPointers = new Map();
+let photoGesture = null;
+
+function photoZoomLimits(frame) {
+  const image = frame.querySelector('img');
+  const style = getComputedStyle(image);
+  const base = Number.parseFloat(style.getPropertyValue('--base-zoom')) || 1.06;
+  const naturalWidth = image.naturalWidth || 1;
+  const naturalHeight = image.naturalHeight || 1;
+  const fitScale = Math.max(frame.clientWidth / naturalWidth, frame.clientHeight / naturalHeight);
+  const max = Math.max(base, Math.min(3, 1 / fitScale));
+  return { base, max, fitScale, naturalWidth, naturalHeight };
+}
+
+function photoView(frame) {
+  const image = frame.querySelector('img');
+  const limits = photoZoomLimits(frame);
+  return {
+    ...limits,
+    zoom: Math.max(limits.base, Math.min(limits.max, Number(frame.dataset.zoom) || limits.base)),
+    panX: Number(frame.dataset.panX || 0),
+    panY: Number(frame.dataset.panY || 0)
+  };
+}
+
+function applyPhotoView(frame, zoom, panX, panY) {
+  const view = photoView(frame);
+  const scale = Math.max(view.base, Math.min(view.max, zoom));
+  const renderedWidth = view.naturalWidth * view.fitScale * scale;
+  const renderedHeight = view.naturalHeight * view.fitScale * scale;
+  const maxX = Math.max(0, (renderedWidth - frame.clientWidth) / 2);
+  const maxY = Math.max(0, (renderedHeight - frame.clientHeight) / 2);
+  const x = Math.max(-maxX, Math.min(maxX, panX));
+  const y = Math.max(-maxY, Math.min(maxY, panY));
+  frame.querySelector('img').style.setProperty('--zoom', scale);
+  frame.style.setProperty('--pan-x', `${x}px`);
+  frame.style.setProperty('--pan-y', `${y}px`);
+  frame.dataset.zoom = scale;
+  frame.dataset.panX = x;
+  frame.dataset.panY = y;
+  frame.dataset.maxZoom = view.max;
+}
+
+function photoPoints(frame) {
+  return [...photoPointers.values()].filter(point => point.frame === frame);
+}
+
+function beginPhotoGesture(frame) {
+  const points = photoPoints(frame);
+  if (points.length >= 2) {
+    const [a, b] = points;
+    const view = photoView(frame);
+    const rect = frame.getBoundingClientRect();
+    photoGesture = {
+      type: 'pinch', frame,
+      startDistance: Math.hypot(b.x - a.x, b.y - a.y) || 1,
+      startMidX: (a.x + b.x) / 2,
+      startMidY: (a.y + b.y) / 2,
+      startZoom: view.zoom, startPanX: view.panX, startPanY: view.panY,
+      centerX: rect.left + rect.width / 2, centerY: rect.top + rect.height / 2
+    };
+  } else if (points.length === 1) {
+    const point = points[0], view = photoView(frame);
+    photoGesture = {
+      type: 'pan', frame, startX: point.x, startY: point.y,
+      startPanX: view.panX, startPanY: view.panY
+    };
+  } else {
+    photoGesture = null;
+  }
+}
+
 dialog.addEventListener('pointerdown', event => {
   const frame = event.target.closest('.dialog-photo');
   if (!frame || event.button > 0) return;
-  photoDrag = { frame, pointerId: event.pointerId, x: event.clientX, y: event.clientY, panX: Number(frame.dataset.panX || 0), panY: Number(frame.dataset.panY || 0) };
-  frame.classList.add('is-dragging');
+  photoPointers.set(event.pointerId, { frame, x: event.clientX, y: event.clientY });
   frame.setPointerCapture(event.pointerId);
+  frame.classList.add('is-dragging');
+  beginPhotoGesture(frame);
 });
 dialog.addEventListener('pointermove', event => {
-  if (!photoDrag || event.pointerId !== photoDrag.pointerId) return;
-  const rect = photoDrag.frame.getBoundingClientRect();
-  const maxX = Math.max(24, rect.width * .14), maxY = Math.max(24, rect.height * .12);
-  const x = Math.max(-maxX, Math.min(maxX, photoDrag.panX + event.clientX - photoDrag.x));
-  const y = Math.max(-maxY, Math.min(maxY, photoDrag.panY + event.clientY - photoDrag.y));
-  photoDrag.frame.style.setProperty('--pan-x', `${x}px`);
-  photoDrag.frame.style.setProperty('--pan-y', `${y}px`);
-  photoDrag.frame.dataset.panX = x;
-  photoDrag.frame.dataset.panY = y;
+  const pointer = photoPointers.get(event.pointerId);
+  if (!pointer || !photoGesture || pointer.frame !== photoGesture.frame) return;
+  pointer.x = event.clientX;
+  pointer.y = event.clientY;
+  const points = photoPoints(pointer.frame);
+  if (photoGesture.type === 'pinch' && points.length >= 2) {
+    const [a, b] = points;
+    const distance = Math.hypot(b.x - a.x, b.y - a.y);
+    const midX = (a.x + b.x) / 2, midY = (a.y + b.y) / 2;
+    const view = photoView(pointer.frame);
+    const zoom = Math.max(view.base, Math.min(view.max, photoGesture.startZoom * distance / photoGesture.startDistance));
+    const ratio = zoom / photoGesture.startZoom;
+    const panX = midX - photoGesture.centerX - (photoGesture.startMidX - photoGesture.centerX - photoGesture.startPanX) * ratio;
+    const panY = midY - photoGesture.centerY - (photoGesture.startMidY - photoGesture.centerY - photoGesture.startPanY) * ratio;
+    applyPhotoView(pointer.frame, zoom, panX, panY);
+  } else if (photoGesture.type === 'pan' && points.length === 1) {
+    applyPhotoView(pointer.frame, photoGesture.startZoom || photoView(pointer.frame).zoom,
+      photoGesture.startPanX + event.clientX - photoGesture.startX,
+      photoGesture.startPanY + event.clientY - photoGesture.startY);
+  }
 });
-function endPhotoDrag(event) {
-  if (!photoDrag || event.pointerId !== photoDrag.pointerId) return;
-  photoDrag.frame.classList.remove('is-dragging');
-  photoDrag = null;
+function endPhotoGesture(event) {
+  const pointer = photoPointers.get(event.pointerId);
+  if (!pointer) return;
+  const frame = pointer.frame;
+  photoPointers.delete(event.pointerId);
+  const remaining = photoPoints(frame);
+  if (remaining.length) beginPhotoGesture(frame);
+  else {
+    photoGesture = null;
+    frame.classList.remove('is-dragging');
+  }
 }
-dialog.addEventListener('pointerup', endPhotoDrag);
-dialog.addEventListener('pointercancel', endPhotoDrag);
+dialog.addEventListener('pointerup', endPhotoGesture);
+dialog.addEventListener('pointercancel', endPhotoGesture);
 dialog.addEventListener('click', event => {
   const button = event.target.closest('[data-dialog-add]');
   if (button) {
