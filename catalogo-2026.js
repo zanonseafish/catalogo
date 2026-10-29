@@ -6,7 +6,7 @@ const products = [
   {id:5, code:'AFF05', category:'Affumicati', name:"Filettino di salmone ‘Ti Amo’ Norvegia", description:"Filettino ‘cuore’ Norvegia ‘Ti Amo’ da 120 g.", price:7.00, unit:'conf.'},
   {id:6, code:'AFF06', category:'Affumicati', name:'Pesce spada a fettine 80 g', description:'Busta da 80 g in astuccio.', price:5.50, unit:'conf.'},
   {id:7, code:'AFF07', category:'Affumicati', name:'Tonno a fettine 80 g', description:'Busta da 80 g in astuccio.', price:4.80, unit:'conf.'},
-  {id:8, code:'AFF08', category:'Affumicati', name:'Salmone preaffettato Re Salmone 180 g', description:'Preaffettato. Confezione da 180 g.', price:6.50, unit:'conf.'},
+  {id:8, code:'AFF08', category:'Affumicati', name:'Salmone preaffettato Re Salmone 180 g', description:'Preaffettato. Confezione da 180 g. Norvegia.', price:6.50, unit:'conf.'},
   {id:9, code:'AFF09', category:'Affumicati', name:'Filetto di sgombro al pepe 200 g', description:'Sgombro affumicato al pepe. Confezione da 200 g.', price:6.00, unit:'conf.'},
   {id:10, code:'BAC01', category:'Baccalà', name:'Baccalà mantecato 200 g', description:'Vaschetta da 200 g.', price:5.50, unit:'conf.'},
   {id:11, code:'BAC02', category:'Baccalà', name:'Baccalà mantecato 1 kg', description:'Vaschetta da 1 kg.', price:22.50, unit:'conf.'},
