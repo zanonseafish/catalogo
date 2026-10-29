@@ -341,6 +341,7 @@ function renderProductDialog(id) {
   photoSwipe = null;
   const index = dialogProductIds.indexOf(product.id);
   const canNavigate = dialogProductIds.length > 1;
+  const quantity = Number(state.cart[product.id]) || 0;
   document.querySelector('#dialogContent').innerHTML = `
     <div class="dialog-layout">
       <div class="dialog-photo" data-can-navigate="${canNavigate}" role="group" aria-label="Foto prodotto zoomabile e trascinabile">
@@ -363,6 +364,7 @@ function renderProductDialog(id) {
       <div class="dialog-purchase">
         <div class="dialog-price">${euro.format(product.price)}<small>€/${product.unit} · IVA inclusa</small></div>
         <button class="button button-dark" type="button" data-dialog-add="${product.id}">Aggiungi all'ordine <span>＋</span></button>
+        <p class="dialog-cart-status" id="dialogAddStatus" role="status" aria-live="polite" aria-atomic="true" ${quantity ? '' : 'hidden'}>${quantity ? `Quantità nel tuo ordine: ${quantity}` : ''}</p>
       </div>
       </div>
     </div>`;
@@ -1045,7 +1047,9 @@ dialog.addEventListener('click', event => {
   const button = event.target.closest('[data-dialog-add]');
   if (button) {
     addToCart(button.dataset.dialogAdd, "Articolo aggiunto all'ordine");
-    closeProduct();
+    const status = dialog.querySelector('#dialogAddStatus');
+    status.hidden = false;
+    status.textContent = `Articolo aggiunto all'ordine · Quantità: ${state.cart[button.dataset.dialogAdd]}`;
   }
 });
 document.addEventListener('keydown', event => {
