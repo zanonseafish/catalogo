@@ -302,7 +302,7 @@ function openProduct(id) {
         <span class="product-category">${product.category} · ${product.code}</span>
         <h2>${product.name}</h2>
         <p>${product.description}</p>
-        <div class="dialog-price">${euro.format(product.price)}<small>€/${product.unit} · IVA inclusa · prezzo 2025</small></div>
+        <div class="dialog-price">${euro.format(product.price)}<small>€/${product.unit} · IVA inclusa</small></div>
         <button class="button button-dark" type="button" data-dialog-add="${product.id}">Aggiungi all'ordine <span>＋</span></button>
       </div>
     </div>`;
@@ -350,7 +350,6 @@ function buildOrderText(channel = 'email') {
     ...lines.map(({product, qty}) => `${qty} × ${product.code} | ${product.name} | ${euro.format(product.price)} / ${product.unit} | ${euro.format(product.price * qty)}`),
     '',
     `TOTALE INDICATIVO: ${euro.format(total)}`,
-    'Prezzi 2025 IVA inclusa, da confermare per il Natale 2026.',
     '',
     `Note: ${notes || '—'}`
   ].join('\n');
@@ -537,7 +536,6 @@ function printOrder() {
 
   const total = lines.reduce((sum, {product, qty}) => sum + product.price * qty, 0);
   addText(sheet, 'p', `Totale indicativo: ${euro.format(total)}`, 'print-total');
-  addText(sheet, 'p', 'Prezzi 2025 IVA inclusa, da confermare per il Natale 2026.', 'print-disclaimer');
   addText(sheet, 'p', "Questo riepilogo è una copia per il cliente e non invia l'ordine all'azienda.", 'print-footnote');
 
   window.print();

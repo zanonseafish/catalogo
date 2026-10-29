@@ -41,12 +41,13 @@ img { max-width: 100%; display: block; }
 }
 .skip-link:focus { top: 16px; }
 
-.preview-bar {
-  min-height: 34px; display: flex; align-items: center; justify-content: center; gap: 9px;
-  padding: 7px 16px; color: #fff; background: var(--green-950); font-size: 12px;
-  letter-spacing: .035em; text-align: center;
+.order-deadline-bar {
+  min-height: 34px; display: flex; align-items: center; justify-content: center;
+  padding: 7px 16px; color: #a12330; background: #fff7ec; font-size: 13px;
+  font-weight: 700; letter-spacing: .015em; line-height: 1.35; text-align: center;
 }
-.preview-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(233,189,112,.12); }
+.order-deadline-bar span { animation: orderDeadlineBlink 1.25s ease-in-out infinite; }
+@keyframes orderDeadlineBlink { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
 
 .site-header {
   position: absolute; z-index: 20; top: 34px; left: 0; right: 0;
