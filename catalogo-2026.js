@@ -76,8 +76,8 @@ const state = {
 
 const euro = new Intl.NumberFormat('it-IT', {style:'currency', currency:'EUR'});
 const whatsappOrderNumber = '393515070330';
-const directEmailEndpoint = 'https://api.web3forms.com/submit';
-// Chiave pubblica associata a amministrazione@zanonseafish.it, da inserire dopo la verifica della casella.
+const directEmailEndpoint = 'https://silentforms.com/api/submit';
+// Chiave pubblica SilentForms associata a amministrazione@zanonseafish.it, da inserire dopo la verifica della casella.
 const directEmailAccessKey = '';
 const grid = document.querySelector('#productGrid');
 const filters = document.querySelector('#categoryFilters');
