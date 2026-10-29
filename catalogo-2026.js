@@ -171,6 +171,35 @@ function renderProducts() {
   observeProductCards();
 }
 
+function renderPrintCatalog() {
+  const section = document.querySelector('#printCatalog');
+  if (!section) return;
+  const title = document.createElement('h1');
+  title.textContent = 'Catalogo Natale 2026 · Zanon Seafish';
+  const grid = document.createElement('div');
+  grid.className = 'print-catalog-grid';
+  products.forEach(product => {
+    const card = document.createElement('article');
+    card.className = 'print-product';
+    const image = document.createElement('img');
+    image.src = product.image;
+    image.alt = '';
+    image.loading = 'eager';
+    image.decoding = 'async';
+    const details = document.createElement('div');
+    const name = document.createElement('h2');
+    name.textContent = product.name;
+    const description = document.createElement('p');
+    description.textContent = product.description;
+    const price = document.createElement('strong');
+    price.textContent = `${euro.format(product.price)} / ${product.unit} · IVA inclusa`;
+    details.append(name, description, price);
+    card.append(image, details);
+    grid.append(card);
+  });
+  section.replaceChildren(title, grid);
+}
+
 function addToCart(id, confirmation) {
   const product = productById(id);
   if (!product) return;
@@ -538,6 +567,9 @@ function printOrder() {
   addText(sheet, 'p', `Totale indicativo: ${euro.format(total)}`, 'print-total');
   addText(sheet, 'p', "Questo riepilogo è una copia per il cliente e non invia l'ordine all'azienda.", 'print-footnote');
 
+  document.body.classList.add('printing-order');
+  const restorePrintMode = () => document.body.classList.remove('printing-order');
+  window.addEventListener('afterprint', restorePrintMode, {once:true});
   window.print();
 }
 
@@ -960,6 +992,7 @@ document.querySelector('#customerName').addEventListener('input', event => {
 
 renderFilters();
 renderProducts();
+renderPrintCatalog();
 renderCart();
 armExitGuard();
 showPendingOrderDialog();

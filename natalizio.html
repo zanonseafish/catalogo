@@ -27,14 +27,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="catalogo-2026.css?v=22">
+  <link rel="stylesheet" href="catalogo-2026.css?v=23">
   <style>
     .order-utilities { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 12px; }
     .order-utilities .text-button { width: auto; padding: 11px 0; text-align: left; line-height: 1.35; }
     .order-utilities .text-button:last-child { text-align: right; }
     .order-utilities .text-button:hover { text-decoration: underline; text-underline-offset: 4px; }
     .order-utilities .text-button:focus-visible { outline: 2px solid var(--green-700); outline-offset: 3px; border-radius: 2px; }
-    .print-order { display: none; }
+    .print-order, .print-catalog { display: none; }
     .exit-cart-dialog { width: min(480px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 0; border-radius: 24px; color: var(--ink); background: var(--paper); box-shadow: var(--shadow); }
     .exit-cart-dialog::backdrop { background: rgba(1,22,20,.74); backdrop-filter: blur(4px); }
     .exit-cart-content { position: relative; padding: 34px clamp(22px, 6vw, 36px); }
@@ -47,29 +47,6 @@
     .exit-cart-actions .exit-cart-clear { border-color: rgba(167,60,54,.45); color: #96362f; background: #fff4f0; }
     .exit-cart-actions .exit-cart-clear:hover { background: #fce5dc; }
     .exit-cart-close:focus-visible, .exit-cart-actions .button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
-    @media print {
-      @page { size: A4; margin: 15mm; }
-      html, body { width: auto !important; min-height: 0 !important; background: #fff !important; }
-      body { padding: 0 !important; color: #182a27 !important; font: 11pt Arial, sans-serif !important; }
-      body > *:not(#printOrder) { display: none !important; }
-      #printOrder { display: block !important; }
-      .print-order h1 { margin: 0 0 4mm; font-size: 19pt; }
-      .print-order h2 { margin: 0 0 8mm; font-size: 14pt; font-weight: 500; }
-      .print-order .print-date { margin: 0 0 7mm; font-size: 9pt; }
-      .print-order .print-customer { margin: 0 0 8mm; line-height: 1.6; }
-      .print-order .print-customer p { margin: 0 0 2mm; overflow-wrap: anywhere; white-space: pre-wrap; }
-      .print-order table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-      .print-order th, .print-order td { padding: 3mm 2mm; border-bottom: 1px solid #ccc; vertical-align: top; overflow-wrap: anywhere; }
-      .print-order th { border-bottom: 2px solid #182a27; text-align: left; font-size: 9pt; }
-      .print-order th:nth-child(1) { width: 46%; }
-      .print-order th:nth-child(2) { width: 10%; }
-      .print-order th:nth-child(3), .print-order th:nth-child(4) { width: 22%; }
-      .print-order th:nth-child(n+2), .print-order td:nth-child(n+2) { text-align: right; }
-      .print-order tr { break-inside: avoid; }
-      .print-order .print-total { margin: 6mm 0 3mm; text-align: right; font-size: 15pt; font-weight: 700; }
-      .print-order .print-disclaimer { margin: 0 0 7mm; font-size: 9pt; }
-      .print-order .print-footnote { padding-top: 5mm; border-top: 1px solid #ccc; font-size: 9pt; }
-    }
   </style>
 </head>
 <body>
@@ -317,8 +294,9 @@
   </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <section class="print-catalog" id="printCatalog" aria-hidden="true"></section>
   <section class="print-order" id="printOrder" aria-hidden="true"></section>
 
-  <script src="catalogo-2026.js?v=25" defer></script>
+  <script src="catalogo-2026.js?v=26" defer></script>
 </body>
 </html>
