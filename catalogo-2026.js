@@ -53,7 +53,7 @@ const productImages = [
   'images/dentice-crema-200.jpg',
   'images/dentice-crema-500.jpg',
   'images/saor-gamberi.png',
-  'images/saor-gamberi.png',
+  'images/saor-gamberi-1kg-2026.png',
   'images/saor-sarde.png',
   'images/polpa-riccio.jpg',
   'images/polpa-granchio.jpg',
