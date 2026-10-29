@@ -583,4 +583,6 @@ img { max-width: 100%; display: block; }
 }
 
 .product-image img[src*="baccala-umido-200g-2026"],
-.product-image img[src*="baccala-umido-1kg-2026-v3"] { object-fit: contain; padding: 8px 12px; background: var(--cream); }
+.product-image img[src*="baccala-umido-1kg-2026-v3"],
+.product-image img[src*="salmone-scozia-coda-nera-600g-2026-v2"],
+.product-image img[src*="re-salmone-ti-amo-180g-2026-v2"] { object-fit: contain; padding: 8px 12px; background: var(--cream); }
