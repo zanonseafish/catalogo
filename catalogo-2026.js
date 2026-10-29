@@ -328,11 +328,15 @@ function openProduct(id) {
         <span class="dialog-photo-hint">Pizzica per zoom · trascina per spostare</span>
       </div>
       <div class="dialog-copy">
-        <span class="product-category">${product.category} · ${product.code}</span>
-        <h2>${product.name}</h2>
-        <p>${product.description}</p>
-        <div class="dialog-price">${euro.format(product.price)}<small>€/${product.unit} · IVA inclusa</small></div>
-        <button class="button button-dark" type="button" data-dialog-add="${product.id}">Aggiungi all'ordine <span>＋</span></button>
+        <div class="dialog-details" tabindex="0" role="region" aria-label="Dettagli del prodotto">
+          <span class="product-category">${product.category} · ${product.code}</span>
+          <h2 id="productDialogTitle">${product.name}</h2>
+          <p>${product.description}</p>
+        </div>
+        <div class="dialog-purchase">
+          <div class="dialog-price">${euro.format(product.price)}<small>€/${product.unit} · IVA inclusa</small></div>
+          <button class="button button-dark" type="button" data-dialog-add="${product.id}">Aggiungi all'ordine <span>＋</span></button>
+        </div>
       </div>
     </div>`;
   document.body.style.top = `-${productDialogScrollY}px`;
@@ -987,4 +991,5 @@ window.addEventListener('pageshow', () => {
 document.addEventListener('visibilitychange', () => { if (!document.hidden) showPendingOrderDialog(); });
 initReveal();
 initShowcase();
+
 

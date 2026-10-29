@@ -383,6 +383,8 @@ img { max-width: 100%; display: block; }
 
 .product-dialog { width: min(1000px, calc(100% - 30px)); height: min(680px, calc(100vh - 30px)); height: min(680px, calc(100dvh - 30px)); max-height: none; padding: 0; overflow: hidden; border: 0; border-radius: 28px; background: var(--paper); box-shadow: var(--shadow); }
 .product-dialog::backdrop { background: rgba(1,22,20,.72); backdrop-filter: blur(5px); }
+/* Constrain every level: an auto-height wrapper used to clip the purchase button. */
+#dialogContent { height: 100%; min-height: 0; overflow: hidden; }
 .dialog-close { position: absolute; z-index: 2; right: 16px; top: 16px; }
 .send-confirm-dialog { width: min(440px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 0; border-radius: 24px; background: var(--paper); box-shadow: var(--shadow); }
 .send-confirm-dialog::backdrop { background: rgba(1,22,20,.72); backdrop-filter: blur(4px); }
@@ -397,7 +399,10 @@ img { max-width: 100%; display: block; }
 .dialog-photo.is-dragging { cursor: grabbing; }
 .dialog-photo img { width: 100%; height: 100%; object-fit: cover; --base-zoom: 1.12; --zoom: var(--base-zoom); transform: translate3d(var(--pan-x, 0px), var(--pan-y, 0px), 0) scale(var(--zoom)); transform-origin: center; pointer-events: none; user-select: none; }
 .dialog-photo-hint { position: absolute; left: 16px; bottom: 16px; padding: 8px 12px; border-radius: 999px; color: white; background: rgba(4,47,43,.78); font-size: 11px; font-weight: 600; pointer-events: none; }
-.dialog-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(28px, 4vw, 48px); }
+.dialog-copy { display: flex; flex-direction: column; justify-content: center; min-width: 0; min-height: 0; overflow: hidden; padding: 72px clamp(28px, 4vw, 48px) 32px; }
+.dialog-details { min-height: 0; overflow-y: auto; overscroll-behavior-y: contain; touch-action: pan-y pinch-zoom; -webkit-overflow-scrolling: touch; }
+.dialog-purchase { flex: 0 0 auto; background: var(--paper); }
+.dialog-purchase > .button { width: 100%; min-height: 48px; }
 .dialog-copy .product-category { font-size: 11px; }
 .dialog-copy h2 { margin: 8px 0 15px; font: 600 38px/1.08 "Playfair Display", serif; }
 .dialog-copy p { color: var(--muted); line-height: 1.65; }
@@ -511,12 +516,15 @@ img { max-width: 100%; display: block; }
   .footer-contact strong { font-size: 13px; }
   .footer-contact small { margin-bottom: 3px; }
   .footer-bottom { gap: 12px; padding: 24px 0 18px; }
-  .product-dialog { width: calc(100% - 20px); height: calc(100vh - 24px); height: calc(100dvh - 24px); max-height: none; overflow: hidden; }
-  .dialog-layout { grid-template-columns: 1fr; grid-template-rows: minmax(0, 43dvh) auto; height: 100%; overflow-y: auto; overscroll-behavior: contain; }
-  .dialog-photo { height: 43dvh; min-height: 250px; }
+  /* The small viewport keeps the card stable when browser toolbars reappear. */
+  .product-dialog { width: calc(100% - 20px); height: calc(100vh - 24px); height: calc(100dvh - 24px); height: calc(100svh - 24px); max-height: none; overflow: hidden; }
+  .dialog-layout { grid-template-columns: 1fr; grid-template-rows: minmax(0, 38%) minmax(0, 1fr); height: 100%; }
+  .dialog-photo { height: 100%; min-height: 0; }
   .dialog-photo img { --base-zoom: 1.06; --zoom: var(--base-zoom); }
   .dialog-photo-hint { left: 12px; bottom: 12px; font-size: 10px; }
-  .dialog-copy { justify-content: flex-start; padding: 22px 24px 28px; }
+  .dialog-copy { justify-content: flex-start; padding: 18px 24px max(18px, env(safe-area-inset-bottom)); }
+  .dialog-details { flex: 1 1 auto; }
+  .dialog-price { margin: 14px 0 12px; }
   .dialog-copy h2 { font-size: 30px; }
   .order-bar { padding: 12px; gap: 10px; }
   .order-bar-info > div { gap: 8px; }
@@ -524,15 +532,15 @@ img { max-width: 100%; display: block; }
 }
 
 @media (max-height: 520px) and (orientation: landscape) {
-  .product-dialog { width: calc(100% - 24px); height: calc(100dvh - 16px); }
-  .dialog-layout { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); grid-template-rows: minmax(0, 1fr); overflow-y: auto; }
-  .dialog-photo { height: calc(100dvh - 16px); min-height: 0; }
+  .product-dialog { width: calc(100% - 24px); height: calc(100dvh - 16px); height: calc(100svh - 16px); }
+  .dialog-layout { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); grid-template-rows: minmax(0, 1fr); }
+  .dialog-photo { height: 100%; min-height: 0; }
   .dialog-photo img { --base-zoom: 1.04; --zoom: var(--base-zoom); }
   .dialog-copy { justify-content: flex-start; padding: 62px 24px 22px; }
+  .dialog-details { flex: 1 1 auto; }
   .dialog-copy h2 { font-size: clamp(22px, 5vh, 30px); margin-bottom: 8px; }
   .dialog-copy p { margin: 5px 0; line-height: 1.4; }
   .dialog-price { margin: 10px 0 14px; }
-  .dialog-copy > .button { min-height: 48px; }
 }
 @media (max-width: 420px) {
   .hero-actions .button { width: 100%; }
@@ -584,4 +592,5 @@ img { max-width: 100%; display: block; }
 .product-image img[src*="salmone-scozia-coda-nera-600g-2026-v2"],
 .product-image img[src*="re-salmone-ti-amo-180g-2026-v2"],
 .product-image img[src*="stoccafisso-ragno-secco-2026-v2"] { object-fit: contain; padding: 8px 12px; background: var(--cream); }
+
 
