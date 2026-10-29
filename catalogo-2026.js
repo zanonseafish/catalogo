@@ -325,8 +325,9 @@ function openProduct(id) {
     <div class="dialog-layout">
       <div class="dialog-photo" role="group" aria-label="Foto prodotto zoomabile e trascinabile">
         <img src="${product.image}" alt="${product.name}" draggable="false">
-        <span class="dialog-photo-hint">Pizzica per zoom · scorri per i dettagli</span>
+        <span class="dialog-photo-hint">Pizzica per ingrandire</span>
       </div>
+      <div class="dialog-info">
       <div class="dialog-copy">
         <div class="dialog-details" tabindex="0" role="region" aria-label="Dettagli del prodotto">
           <span class="product-category">${product.category} · ${product.code}</span>
@@ -337,6 +338,7 @@ function openProduct(id) {
       <div class="dialog-purchase">
         <div class="dialog-price">${euro.format(product.price)}<small>€/${product.unit} · IVA inclusa</small></div>
         <button class="button button-dark" type="button" data-dialog-add="${product.id}">Aggiungi all'ordine <span>＋</span></button>
+      </div>
       </div>
     </div>`;
   document.body.style.top = `-${productDialogScrollY}px`;
@@ -872,7 +874,7 @@ function applyPhotoView(frame, zoom, panX, panY) {
   frame.dataset.maxZoom = view.max;
   const zoomed = scale > view.base + .01;
   frame.classList.toggle('is-zoomed', zoomed);
-  frame.querySelector('.dialog-photo-hint').textContent = zoomed ? 'Trascina la foto · pizzica per ridurre' : 'Pizzica per zoom · scorri per i dettagli';
+  frame.querySelector('.dialog-photo-hint').textContent = zoomed ? 'Trascina la foto · pizzica per ridurre' : 'Pizzica per ingrandire';
 }
 
 function photoPoints(frame) {
