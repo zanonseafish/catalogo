@@ -568,8 +568,10 @@ function printOrder() {
   addText(sheet, 'p', "Questo riepilogo è una copia per il cliente e non invia l'ordine all'azienda.", 'print-footnote');
 
   document.body.classList.add('printing-order');
-  const restorePrintMode = () => document.body.classList.remove('printing-order');
+  const restorePrintMode = () => window.setTimeout(() => document.body.classList.remove('printing-order'), 1200);
   window.addEventListener('afterprint', restorePrintMode, {once:true});
+  // Force the browser to apply the order-only print layout before opening print preview.
+  void sheet.offsetHeight;
   window.print();
 }
 
