@@ -20,6 +20,28 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="catalogo-2026.css?v=12">
+  <style>
+    .faq-example { max-width: 650px; margin: 0 0 28px; }
+    .faq-item .faq-example summary { display: inline-flex; justify-content: flex-start; gap: 12px; margin: 0 0 14px; padding: 9px 0; color: #126052; font-size: 15px; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+    .faq-item .faq-example summary::after { content: "↓"; display: inline; width: auto; height: auto; border: 0; border-radius: 0; background: none; color: inherit; font-size: 18px; transform: none; }
+    .faq-item .faq-example[open] summary::after { content: "↑"; background: none; color: inherit; transform: none; }
+    .faq-example figure { margin: 0; }
+    .faq-choice-window { overflow: hidden; border: 1px solid #d9dedb; border-radius: 17px; background: #fff; box-shadow: 0 14px 30px rgba(15,49,45,.12); }
+    .faq-choice-bar { display: flex; align-items: center; gap: 13px; padding: 16px 18px; background: #edf3f1; color: #183b34; font-size: 14px; line-height: 1.35; }
+    .faq-choice-dots { display: flex; gap: 4px; flex: none; }
+    .faq-choice-dots i { width: 7px; height: 7px; border-radius: 50%; background: #a5bdb4; }
+    .faq-choice-body { padding: 8px 18px 16px; }
+    .faq-choice-option { display: flex; align-items: center; gap: 13px; padding: 13px 0; border-bottom: 1px solid #edf0ee; color: #203e38; }
+    .faq-choice-option > span:last-child { min-width: 0; }
+    .faq-choice-option strong, .faq-choice-option small { display: block; }
+    .faq-choice-option strong { font-size: 15px; line-height: 1.35; }
+    .faq-choice-option small { margin-top: 3px; color: #5b6d66; font-size: 12px; line-height: 1.45; }
+    .faq-choice-icon { display: grid; flex: none; place-items: center; width: 36px; height: 36px; border-radius: 9px; font-size: 19px; font-weight: 700; }
+    .faq-choice-icon.app { background: #dceee8; color: #126052; }
+    .faq-choice-icon.browser { background: #e9e7f5; color: #5b4a8c; }
+    .faq-choice-other { padding-top: 14px; color: #5b6d66; font-size: 12px; }
+    .faq-example figcaption { margin-top: 12px; color: #596c65; font-size: 12px; line-height: 1.55; }
+  </style>
 </head>
 <body class="faq-page">
   <a class="skip-link" href="#domande">Vai alle domande</a>
@@ -46,8 +68,24 @@
           <p>Scegli i prodotti e le quantità, apri il carrello e inserisci nome e cognome. Poi scegli <strong>Prepara l'email dell'ordine</strong> o <strong>Invia su WhatsApp</strong>. Il catalogo prepara il messaggio. <strong class="faq-important">Per completare l'invio, premi Invia nella tua app email o in WhatsApp.</strong></p>
         </details>
         <details class="faq-item">
-          <summary>Ho problemi a inviare l'email: si aprono più applicazioni. Cosa devo fare?</summary>
-          <p>Quando premi <strong>Prepara l'email dell'ordine</strong>, il telefono può chiederti quale app usare. Scegli quella con cui usi già la tua posta, per esempio Gmail o Outlook. Controlla il messaggio preparato e premi <strong>Invia</strong> nell'app. Se l'app chiede una password che non conosci o l'invio non riesce, torna al catalogo e, alla domanda sull'invio, indica che <strong>non hai inviato l'ordine</strong>: il carrello rimane pieno. Puoi quindi scegliere <strong>Invia su WhatsApp</strong>. Considera l'email inviata solo se la trovi nella cartella <strong>Posta inviata</strong>.</p>
+          <summary>Dal PC si aprono molti programmi o browser per l'email: cosa scelgo?</summary>
+          <p>Il pulsante <strong>Prepara l'email dell'ordine</strong> non invia ancora il messaggio: chiede al computer di aprire la posta. Potresti vedere molte scelte, anche dieci, fra programmi email e browser. <strong>Scegli l'app di posta che usi già</strong> e in cui sei già entrato, per esempio Outlook o Thunderbird. Se scegli un browser come Chrome o Edge, potrebbe aprirsi una webmail o esserti chiesto di accedere: <strong>il browser da solo non invia l'ordine</strong>. Controlla il messaggio preparato e premi <strong>Invia</strong> nella posta.</p>
+          <p>Se non riesci ad accedere o a inviare, torna al catalogo e, quando ti chiede se l'ordine è partito, rispondi <strong>No</strong>: il carrello resta pieno. Puoi poi scegliere <strong>Invia su WhatsApp</strong>. La stessa indicazione vale sul telefono. Considera l'email inviata solo se la trovi nella cartella <strong>Posta inviata</strong>.</p>
+          <details class="faq-example">
+            <summary>Guarda un esempio della finestra sul PC</summary>
+            <figure>
+              <div class="faq-choice-window">
+                <div class="faq-choice-bar"><span class="faq-choice-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>Con quale applicazione vuoi aprire il link email?</strong></div>
+                <div class="faq-choice-body">
+                  <div class="faq-choice-option"><span class="faq-choice-icon app" aria-hidden="true">@</span><span><strong>Outlook</strong><small>Programma di posta · usalo se è già configurato</small></span></div>
+                  <div class="faq-choice-option"><span class="faq-choice-icon app" aria-hidden="true">@</span><span><strong>Thunderbird</strong><small>Programma di posta · usalo se è già configurato</small></span></div>
+                  <div class="faq-choice-option"><span class="faq-choice-icon browser" aria-hidden="true">◎</span><span><strong>Chrome, Edge, Firefox…</strong><small>Browser · potrebbero chiederti di accedere alla posta</small></span></div>
+                  <div class="faq-choice-other">Potrebbero comparire anche altre applicazioni.</div>
+                </div>
+              </div>
+              <figcaption>Esempio illustrativo: nomi e aspetto della finestra cambiano in base al computer. Scegli la posta che usi già; se non funziona, torna al carrello e usa WhatsApp.</figcaption>
+            </figure>
+          </details>
         </details>
         <details class="faq-item">
           <summary>Come faccio a capire se ho inviato l'ordine?</summary>
