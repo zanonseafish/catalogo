@@ -294,7 +294,10 @@ function openProduct(id) {
   productDialogScrollY = window.scrollY;
   document.querySelector('#dialogContent').innerHTML = `
     <div class="dialog-layout">
-      <img src="${product.image}" alt="${product.name}">
+      <div class="dialog-photo" role="group" aria-label="Foto prodotto trascinabile">
+        <img src="${product.image}" alt="${product.name}" draggable="false">
+        <span class="dialog-photo-hint">Trascina la foto per spostare l’inquadratura</span>
+      </div>
       <div class="dialog-copy">
         <span class="product-category">${product.category} · ${product.code}</span>
         <h2>${product.name}</h2>
@@ -812,6 +815,32 @@ document.querySelector('#clearCart').addEventListener('click', () => {
 document.querySelector('#closeDialog').addEventListener('click', closeProduct);
 dialog.addEventListener('close', unlockProductDialogScroll);
 dialog.addEventListener('click', event => { if (event.target === dialog) closeProduct(); });
+let photoDrag = null;
+dialog.addEventListener('pointerdown', event => {
+  const frame = event.target.closest('.dialog-photo');
+  if (!frame || event.button > 0) return;
+  photoDrag = { frame, pointerId: event.pointerId, x: event.clientX, y: event.clientY, panX: Number(frame.dataset.panX || 0), panY: Number(frame.dataset.panY || 0) };
+  frame.classList.add('is-dragging');
+  frame.setPointerCapture(event.pointerId);
+});
+dialog.addEventListener('pointermove', event => {
+  if (!photoDrag || event.pointerId !== photoDrag.pointerId) return;
+  const rect = photoDrag.frame.getBoundingClientRect();
+  const maxX = Math.max(24, rect.width * .14), maxY = Math.max(24, rect.height * .12);
+  const x = Math.max(-maxX, Math.min(maxX, photoDrag.panX + event.clientX - photoDrag.x));
+  const y = Math.max(-maxY, Math.min(maxY, photoDrag.panY + event.clientY - photoDrag.y));
+  photoDrag.frame.style.setProperty('--pan-x', `${x}px`);
+  photoDrag.frame.style.setProperty('--pan-y', `${y}px`);
+  photoDrag.frame.dataset.panX = x;
+  photoDrag.frame.dataset.panY = y;
+});
+function endPhotoDrag(event) {
+  if (!photoDrag || event.pointerId !== photoDrag.pointerId) return;
+  photoDrag.frame.classList.remove('is-dragging');
+  photoDrag = null;
+}
+dialog.addEventListener('pointerup', endPhotoDrag);
+dialog.addEventListener('pointercancel', endPhotoDrag);
 dialog.addEventListener('click', event => {
   const button = event.target.closest('[data-dialog-add]');
   if (button) {
