@@ -325,7 +325,7 @@ function openProduct(id) {
     <div class="dialog-layout">
       <div class="dialog-photo" role="group" aria-label="Foto prodotto zoomabile e trascinabile">
         <img src="${product.image}" alt="${product.name}" draggable="false">
-        <span class="dialog-photo-hint">Pizzica per zoom · trascina per spostare</span>
+        <span class="dialog-photo-hint">Pizzica per zoom · scorri per i dettagli</span>
       </div>
       <div class="dialog-copy">
         <div class="dialog-details" tabindex="0" role="region" aria-label="Dettagli del prodotto">
@@ -333,10 +333,10 @@ function openProduct(id) {
           <h2 id="productDialogTitle">${product.name}</h2>
           <p>${product.description}</p>
         </div>
-        <div class="dialog-purchase">
-          <div class="dialog-price">${euro.format(product.price)}<small>€/${product.unit} · IVA inclusa</small></div>
-          <button class="button button-dark" type="button" data-dialog-add="${product.id}">Aggiungi all'ordine <span>＋</span></button>
-        </div>
+      </div>
+      <div class="dialog-purchase">
+        <div class="dialog-price">${euro.format(product.price)}<small>€/${product.unit} · IVA inclusa</small></div>
+        <button class="button button-dark" type="button" data-dialog-add="${product.id}">Aggiungi all'ordine <span>＋</span></button>
       </div>
     </div>`;
   document.body.style.top = `-${productDialogScrollY}px`;
@@ -348,6 +348,8 @@ function openProduct(id) {
 function unlockProductDialogScroll() {
   if (!productDialogLocked) return;
   productDialogLocked = false;
+  photoPointers.clear();
+  photoGesture = null;
   document.body.classList.remove('product-dialog-open');
   document.body.style.top = '';
   const root = document.documentElement;
@@ -833,10 +835,10 @@ let photoGesture = null;
 function photoZoomLimits(frame) {
   const image = frame.querySelector('img');
   const style = getComputedStyle(image);
-  const base = Number.parseFloat(style.getPropertyValue('--base-zoom')) || 1.06;
+  const base = Number.parseFloat(style.getPropertyValue('--base-zoom')) || 1;
   const naturalWidth = image.naturalWidth || 1;
   const naturalHeight = image.naturalHeight || 1;
-  const fitScale = Math.max(frame.clientWidth / naturalWidth, frame.clientHeight / naturalHeight);
+  const fitScale = Math.min(frame.clientWidth / naturalWidth, frame.clientHeight / naturalHeight);
   const max = Math.max(base, Math.min(3, 1 / fitScale));
   return { base, max, fitScale, naturalWidth, naturalHeight };
 }
@@ -868,6 +870,9 @@ function applyPhotoView(frame, zoom, panX, panY) {
   frame.dataset.panX = x;
   frame.dataset.panY = y;
   frame.dataset.maxZoom = view.max;
+  const zoomed = scale > view.base + .01;
+  frame.classList.toggle('is-zoomed', zoomed);
+  frame.querySelector('.dialog-photo-hint').textContent = zoomed ? 'Trascina la foto · pizzica per ridurre' : 'Pizzica per zoom · scorri per i dettagli';
 }
 
 function photoPoints(frame) {
@@ -903,8 +908,10 @@ dialog.addEventListener('pointerdown', event => {
   const frame = event.target.closest('.dialog-photo');
   if (!frame || event.button > 0) return;
   photoPointers.set(event.pointerId, { frame, x: event.clientX, y: event.clientY });
-  frame.setPointerCapture(event.pointerId);
-  frame.classList.add('is-dragging');
+  if (event.pointerType !== 'touch' || frame.classList.contains('is-zoomed') || photoPoints(frame).length > 1) {
+    frame.setPointerCapture(event.pointerId);
+    frame.classList.add('is-dragging');
+  }
   beginPhotoGesture(frame);
 });
 dialog.addEventListener('pointermove', event => {
@@ -913,6 +920,7 @@ dialog.addEventListener('pointermove', event => {
   pointer.x = event.clientX;
   pointer.y = event.clientY;
   const points = photoPoints(pointer.frame);
+  if (event.pointerType === 'touch' && points.length === 1 && !pointer.frame.classList.contains('is-zoomed')) return;
   if (photoGesture.type === 'pinch' && points.length >= 2) {
     const [a, b] = points;
     const distance = Math.hypot(b.x - a.x, b.y - a.y);
