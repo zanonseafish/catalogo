@@ -392,7 +392,7 @@ img { max-width: 100%; display: block; }
 .send-confirm-content #sendConfirmDescription { margin-bottom: 14px; }
 .send-confirm-content .send-followup { margin-bottom: 24px; padding: 14px 16px; border-left: 3px solid var(--gold); border-radius: 8px; color: var(--ink); background: var(--cream); font-size: 14px; }
 .send-confirm-content .button + .button { margin-top: 10px; }
-.dialog-layout { display: grid; grid-template-columns: 1fr 1fr; height: 100%; overflow: hidden; border-radius: 28px; }
+.dialog-layout { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); grid-template-rows: minmax(0, 1fr); height: 100%; min-height: 0; overflow: hidden; border-radius: 28px; }
 .dialog-photo { position: relative; min-width: 0; height: 100%; overflow: hidden; background: var(--cream); cursor: grab; touch-action: none; user-select: none; }
 .dialog-photo.is-dragging { cursor: grabbing; }
 .dialog-photo img { width: 100%; height: 100%; object-fit: cover; transform: translate3d(var(--pan-x, 0px), var(--pan-y, 0px), 0) scale(1.12); transform-origin: center; pointer-events: none; user-select: none; }
@@ -524,7 +524,7 @@ img { max-width: 100%; display: block; }
 
 @media (max-height: 520px) and (orientation: landscape) {
   .product-dialog { width: calc(100% - 24px); height: calc(100dvh - 16px); }
-  .dialog-layout { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); grid-template-rows: 1fr; overflow-y: auto; }
+  .dialog-layout { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); grid-template-rows: minmax(0, 1fr); overflow-y: auto; }
   .dialog-photo { height: calc(100dvh - 16px); min-height: 0; }
   .dialog-photo img { transform: translate3d(var(--pan-x, 0px), var(--pan-y, 0px), 0) scale(1.04); }
   .dialog-copy { justify-content: flex-start; padding: 62px 24px 22px; }
