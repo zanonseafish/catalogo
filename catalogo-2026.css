@@ -565,3 +565,6 @@ img { max-width: 100%; display: block; }
   .print-order .print-disclaimer { margin: 0 0 7mm; font-size: 9pt; }
   .print-order .print-footnote { padding-top: 5mm; border-top: 1px solid #ccc; font-size: 9pt; }
 }
+
+.product-image img[src*="baccala-umido-200g-2026"],
+.product-image img[src*="baccala-umido-1kg-2026-v2"] { object-fit: contain; padding: 8px 12px; background: var(--cream); }
