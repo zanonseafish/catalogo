@@ -366,7 +366,6 @@ img { max-width: 100%; display: block; }
 .order-utilities .text-button:last-child { text-align: right; }
 .order-utilities .text-button:hover { text-decoration: underline; text-underline-offset: 4px; }
 .order-utilities .text-button:focus-visible { outline: 2px solid var(--green-700); outline-offset: 3px; border-radius: 2px; }
-.print-order { display: none; }
 .order-send-note { display: block; margin-top: 2px; color: var(--muted); text-align: center; font-size: 10px; line-height: 1.45; }
 .order-progress { display: flex; justify-content: space-between; list-style: none; gap: 8px; margin: 0; padding: 10px 22px; border-bottom: 1px solid var(--line); }
 .order-progress li { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 10px; font-weight: 700; }
@@ -567,10 +566,8 @@ img { max-width: 100%; display: block; }
   html, body { width: auto !important; min-height: 0 !important; background: #fff !important; }
   body { padding: 0 !important; color: #182a27 !important; font: 9pt Arial, sans-serif !important; }
 
-  body:not(.printing-order) > *:not(#printCatalog) { display: none !important; }
-  body:not(.printing-order) > #printCatalog { display: block !important; }
-  body.printing-order > *:not(#printOrder) { display: none !important; }
-  body.printing-order > #printOrder { display: block !important; }
+  body > *:not(#printCatalog) { display: none !important; }
+  body > #printCatalog { display: block !important; }
 
   .print-catalog h1 { margin: 0 0 5mm; font: 700 17pt/1.1 Arial, sans-serif; }
   .print-catalog-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5mm 3mm; }
@@ -580,21 +577,6 @@ img { max-width: 100%; display: block; }
   .print-product p { margin: 0 0 1mm; color: #4d5553; font: 6.5pt/1.2 Arial, sans-serif; }
   .print-product strong { font: 700 8pt/1.2 Arial, sans-serif; }
 
-  .print-order h1 { margin: 0 0 4mm; font-size: 19pt; }
-  .print-order h2 { margin: 0 0 8mm; font-size: 14pt; font-weight: 500; }
-  .print-order .print-date { margin: 0 0 7mm; font-size: 9pt; }
-  .print-order .print-customer { margin: 0 0 8mm; line-height: 1.6; }
-  .print-order .print-customer p { margin: 0 0 2mm; overflow-wrap: anywhere; white-space: pre-wrap; }
-  .print-order table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-  .print-order th, .print-order td { padding: 3mm 2mm; border-bottom: 1px solid #ccc; vertical-align: top; overflow-wrap: anywhere; }
-  .print-order th { border-bottom: 2px solid #182a27; text-align: left; font-size: 9pt; }
-  .print-order th:nth-child(1) { width: 46%; }
-  .print-order th:nth-child(2) { width: 10%; }
-  .print-order th:nth-child(3), .print-order th:nth-child(4) { width: 22%; }
-  .print-order th:nth-child(n+2), .print-order td:nth-child(n+2) { text-align: right; }
-  .print-order tr { break-inside: avoid; }
-  .print-order .print-total { margin: 6mm 0 3mm; text-align: right; font-size: 15pt; font-weight: 700; }
-  .print-order .print-footnote { padding-top: 5mm; border-top: 1px solid #ccc; font-size: 9pt; }
 }
 
 .product-image img[src*="baccala-umido-200g-2026"],
@@ -602,3 +584,4 @@ img { max-width: 100%; display: block; }
 .product-image img[src*="salmone-scozia-coda-nera-600g-2026-v2"],
 .product-image img[src*="re-salmone-ti-amo-180g-2026-v2"],
 .product-image img[src*="stoccafisso-ragno-secco-2026-v2"] { object-fit: contain; padding: 8px 12px; background: var(--cream); }
+

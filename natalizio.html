@@ -27,14 +27,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="catalogo-2026.css?v=27">
+  <link rel="stylesheet" href="catalogo-2026.css?v=28">
   <style>
     .order-utilities { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 12px; }
     .order-utilities .text-button { width: auto; padding: 11px 0; text-align: left; line-height: 1.35; }
     .order-utilities .text-button:last-child { text-align: right; }
     .order-utilities .text-button:hover { text-decoration: underline; text-underline-offset: 4px; }
     .order-utilities .text-button:focus-visible { outline: 2px solid var(--green-700); outline-offset: 3px; border-radius: 2px; }
-    .print-order, .print-catalog { display: none; }
+    .print-catalog { display: none; }
     .exit-cart-dialog { width: min(480px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 0; border-radius: 24px; color: var(--ink); background: var(--paper); box-shadow: var(--shadow); }
     .exit-cart-dialog::backdrop { background: rgba(1,22,20,.74); backdrop-filter: blur(4px); }
     .exit-cart-content { position: relative; padding: 34px clamp(22px, 6vw, 36px); }
@@ -295,8 +295,8 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <section class="print-catalog" id="printCatalog" aria-hidden="true"></section>
-  <section class="print-order" id="printOrder" aria-hidden="true"></section>
 
-  <script src="catalogo-2026.js?v=27" defer></script>
+  <script src="catalogo-2026.js?v=28" defer></script>
 </body>
 </html>
+

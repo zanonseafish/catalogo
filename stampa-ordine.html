@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#073f39">
+  <title>Stampa ordine · Zanon Seafish</title>
+  <style>
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin: 0; padding: 24px; background: #f3f5f2; color: #17312e; font: 16px/1.5 Arial, sans-serif; }
+    .toolbar, .sheet, .error { width: min(900px, 100%); margin: 0 auto; }
+    .toolbar { margin-bottom: 24px; }
+    .actions { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+    a { color: #075b4b; font-weight: 700; text-underline-offset: 4px; }
+    button { border: 0; border-radius: 999px; padding: 14px 22px; background: #073f39; color: white; font: 700 16px Arial, sans-serif; cursor: pointer; }
+    button:focus-visible, a:focus-visible { outline: 3px solid #d8a54a; outline-offset: 4px; }
+    .help { margin: 14px 0 0; color: #52635d; font-size: 14px; }
+    .sheet, .error { background: white; border: 1px solid #dce3dd; border-radius: 12px; padding: clamp(18px, 4vw, 44px); }
+    h1 { margin: 0; font-size: clamp(20px, 4vw, 28px); line-height: 1.2; }
+    h2 { margin: 12px 0 6px; font-size: 22px; line-height: 1.3; }
+    .date { margin: 0 0 24px; font-size: 14px; color: #52635d; }
+    .customer { margin-bottom: 24px; overflow-wrap: anywhere; }
+    .customer p { margin: 6px 0; white-space: pre-wrap; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 14px; }
+    th, td { padding: 12px 6px; border-bottom: 1px solid #dce3dd; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+    th { border-bottom: 2px solid #17312e; font-size: 12px; }
+    th:first-child { width: 46%; }
+    th:nth-child(2) { width: 10%; }
+    th:nth-child(3), th:nth-child(4) { width: 22%; }
+    th:not(:first-child), td:not(:first-child) { text-align: right; }
+    td small { display: block; margin-bottom: 3px; font-size: 11px; color: #52635d; }
+    .total { margin: 24px 0 6px; text-align: right; font-size: 21px; font-weight: 700; break-inside: avoid; }
+    .tax { margin: 0; text-align: right; font-size: 13px; }
+    .footnote { margin: 28px 0 0; padding-top: 16px; border-top: 1px solid #dce3dd; font-size: 13px; color: #52635d; }
+    @media (max-width: 480px) {
+      body { padding: 16px 10px; }
+      .sheet { padding: 20px 12px; }
+      table { font-size: 12px; }
+      th { font-size: 10px; }
+      th, td { padding: 10px 4px; }
+      .total { font-size: 19px; }
+    }
+    @media print {
+      @page { size: A4 portrait; margin: 12mm; }
+      body { margin: 0; padding: 0; background: white; color: black; font-size: 10pt; }
+      .screen-only { display: none !important; }
+      .sheet { width: 100%; margin: 0; padding: 0; border: 0; border-radius: 0; }
+      h1 { font-size: 18pt; }
+      h2 { font-size: 14pt; }
+      .date, .tax, .footnote { font-size: 9pt; }
+      table { font-size: 9pt; }
+      th { font-size: 8pt; }
+      th, td { padding: 3mm 2mm; }
+      thead { display: table-header-group; }
+      tr { break-inside: avoid; page-break-inside: avoid; }
+      .total { font-size: 14pt; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="toolbar screen-only" aria-label="Azioni del riepilogo">
+    <div class="actions">
+      <a id="returnToCart" href="natalizio.html">← Torna al carrello</a>
+      <button id="printButton" type="button" hidden>Stampa / Salva PDF</button>
+    </div>
+    <p class="help" id="printHelp" hidden>Scegli una stampante oppure “Salva come PDF” nella finestra di stampa. Se non si apre dall’app, apri questa pagina nel tuo browser e premi “Stampa / Salva PDF”.</p>
+  </nav>
+  <main class="sheet" id="orderSheet" hidden>
+    <h1>ZANON SEAFISH INGROS SRL</h1>
+    <h2>Riepilogo ordine Natale 2026</h2>
+    <p class="date" id="orderDate"></p>
+    <div class="customer" id="customerDetails"></div>
+    <table aria-label="Prodotti selezionati per l’ordine">
+      <thead><tr><th scope="col">Prodotto</th><th scope="col">Qtà</th><th scope="col">Prezzo unitario</th><th scope="col">Importo</th></tr></thead>
+      <tbody id="orderLines"></tbody>
+    </table>
+    <p class="total" id="orderTotal"></p>
+    <p class="tax">IVA inclusa</p>
+    <p class="footnote">Questo riepilogo è una copia per il cliente. La stampa non invia l’ordine all’azienda e non svuota il carrello.</p>
+  </main>
+  <section class="error screen-only" id="emptyOrder" hidden>
+    <h1>Riepilogo non disponibile</h1>
+    <p>Torna al carrello e premi nuovamente “Stampa l’ordine”.</p>
+  </section>
+  <script>
+    (() => {
+      const storageKey = 'zanon-print-order';
+      const requestedId = new URL(location.href).searchParams.get('ordine');
+      let snapshot = null;
+      for (const storageName of ['sessionStorage', 'localStorage']) {
+        try {
+          const candidate = JSON.parse(window[storageName].getItem(storageKey));
+          if (candidate && candidate.id === requestedId) { snapshot = candidate; break; }
+        } catch {}
+      }
+      const valid = snapshot && snapshot.version === 1 && snapshot.customer &&
+        typeof snapshot.createdAt === 'string' && Number.isFinite(Date.parse(snapshot.createdAt)) &&
+        Date.now() - Date.parse(snapshot.createdAt) < 24 * 60 * 60 * 1000 &&
+        Array.isArray(snapshot.lines) && snapshot.lines.length > 0 &&
+        snapshot.lines.every(line => typeof line.code === 'string' && typeof line.name === 'string' &&
+          typeof line.unit === 'string' && Number.isFinite(line.price) && line.price >= 0 &&
+          Number.isFinite(line.qty) && line.qty > 0);
+      if (!valid) { document.querySelector('#emptyOrder').hidden = false; return; }
+
+      const back = document.querySelector('#returnToCart');
+      try {
+        const returnUrl = new URL(snapshot.returnUrl);
+        const catalogUrl = new URL('natalizio.html', location.href);
+        if (returnUrl.origin === catalogUrl.origin && returnUrl.pathname === catalogUrl.pathname) {
+          back.href = returnUrl.href;
+          back.addEventListener('click', event => {
+            if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+            try { sessionStorage.setItem('zanon-return-to-cart', 'yes'); } catch {}
+            try {
+              const referrer = new URL(document.referrer);
+              if (referrer.origin === returnUrl.origin && referrer.pathname === returnUrl.pathname && history.length > 1) {
+                event.preventDefault();
+                history.back();
+              }
+            } catch {}
+          });
+        }
+      } catch {}
+
+      const euro = new Intl.NumberFormat('it-IT', {style: 'currency', currency: 'EUR'});
+      document.querySelector('#orderDate').textContent = 'Data: ' + new Date(snapshot.createdAt).toLocaleDateString('it-IT');
+      const customer = document.querySelector('#customerDetails');
+      const details = [['Nome e cognome', snapshot.customer.name || '—'], ['Telefono', snapshot.customer.phone], ['Note', snapshot.customer.notes]];
+      for (const [label, value] of details) {
+        if (!value) continue;
+        const paragraph = document.createElement('p');
+        const caption = document.createElement('strong');
+        caption.textContent = label + ': ';
+        paragraph.append(caption, String(value));
+        customer.append(paragraph);
+      }
+      const rows = document.querySelector('#orderLines');
+      let total = 0;
+      snapshot.lines.forEach(line => {
+        const row = rows.insertRow();
+        const product = row.insertCell();
+        const code = document.createElement('small');
+        code.textContent = line.code;
+        product.append(code, line.name);
+        const amount = line.qty * line.price;
+        for (const text of [String(line.qty), euro.format(line.price) + ' / ' + line.unit, euro.format(amount)]) {
+          row.insertCell().textContent = text;
+        }
+        total += amount;
+      });
+      document.querySelector('#orderTotal').textContent = 'Totale indicativo: ' + euro.format(total);
+      document.querySelector('#orderSheet').hidden = false;
+      document.querySelector('#printButton').hidden = false;
+      document.querySelector('#printHelp').hidden = false;
+      document.title = 'Ordine Natale 2026 · Zanon Seafish';
+      const openPrintDialog = () => {
+        try {
+          if (typeof window.print !== 'function') throw new Error('Stampa non disponibile');
+          window.print();
+        } catch {
+          document.querySelector('#printHelp').textContent = 'Questa app non apre la stampa. Apri questa pagina nel tuo browser e scegli Stampa o Salva come PDF.';
+        }
+      };
+      document.querySelector('#printButton').addEventListener('click', openPrintDialog);
+      window.addEventListener('load', () => requestAnimationFrame(() => requestAnimationFrame(openPrintDialog)), {once: true});
+    })();
+  </script>
+</body>
+</html>
