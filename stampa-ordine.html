@@ -13,8 +13,11 @@
     .toolbar, .sheet, .error { width: min(900px, 100%); margin: 0 auto; }
     .toolbar { margin-bottom: 24px; }
     .actions { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .print-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .download-button { background: #e9bd70; color: #17312e; }
     a { color: #075b4b; font-weight: 700; text-underline-offset: 4px; }
-    button { border: 0; border-radius: 999px; padding: 14px 22px; background: #073f39; color: white; font: 700 16px Arial, sans-serif; cursor: pointer; }
+    button, .download-button { display: inline-flex; align-items: center; justify-content: center; border: 0; border-radius: 999px; padding: 14px 22px; background: #073f39; color: white; font: 700 16px Arial, sans-serif; cursor: pointer; text-decoration: none; }
+    .print-actions .download-button { background: #e9bd70; color: #17312e; }
     button:focus-visible, a:focus-visible { outline: 3px solid #d8a54a; outline-offset: 4px; }
     .help { margin: 14px 0 0; color: #52635d; font-size: 14px; }
     .sheet, .error { background: white; border: 1px solid #dce3dd; border-radius: 12px; padding: clamp(18px, 4vw, 44px); }
@@ -63,9 +66,12 @@
   <nav class="toolbar screen-only" aria-label="Azioni del riepilogo">
     <div class="actions">
       <a id="returnToCart" href="natalizio.html">← Torna al carrello</a>
-      <button id="printButton" type="button" hidden>Stampa / Salva PDF</button>
+      <div class="print-actions">
+        <a class="download-button" id="downloadPdf" download="Ordine-Zanon-Natale-2026.pdf" hidden>Scarica PDF</a>
+        <button id="printButton" type="button" hidden>Stampa / Salva PDF</button>
+      </div>
     </div>
-    <p class="help" id="printHelp" hidden>Scegli una stampante oppure “Salva come PDF” nella finestra di stampa. Se non si apre dall’app, apri questa pagina nel tuo browser e premi “Stampa / Salva PDF”.</p>
+    <p class="help" id="printHelp" hidden>Scegli una stampante oppure “Salva come PDF” nella finestra di stampa. Se la finestra non si apre, premi “Scarica PDF”: potrai salvare o stampare il file.</p>
   </nav>
   <main class="sheet" id="orderSheet" hidden>
     <h1>ZANON SEAFISH INGROS SRL</h1>
@@ -84,6 +90,8 @@
     <h1>Riepilogo non disponibile</h1>
     <p>Torna al carrello e premi nuovamente “Stampa l’ordine”.</p>
   </section>
+  <script src="vendor/jspdf-4.2.1.umd.min.js"></script>
+  <script src="ordine-pdf.js?v=2"></script>
   <script>
     (() => {
       const storageKey = 'zanon-print-order';
@@ -160,10 +168,18 @@
           if (typeof window.print !== 'function') throw new Error('Stampa non disponibile');
           window.print();
         } catch {
-          document.querySelector('#printHelp').textContent = 'Questa app non apre la stampa. Apri questa pagina nel tuo browser e scegli Stampa o Salva come PDF.';
+          document.querySelector('#printHelp').textContent = 'Questa app non apre la stampa. Premi Scarica PDF per salvare il riepilogo e stamparlo dal file.';
         }
       };
       document.querySelector('#printButton').addEventListener('click', openPrintDialog);
+      try {
+        const pdf = window.createZanonOrderPdf(snapshot);
+        const download = document.querySelector('#downloadPdf');
+        download.href = URL.createObjectURL(pdf);
+        download.hidden = false;
+      } catch {
+        document.querySelector('#printHelp').textContent = 'Il PDF non è disponibile. Ricarica questa pagina oppure usa Stampa / Salva PDF dal browser.';
+      }
       window.addEventListener('load', () => requestAnimationFrame(() => requestAnimationFrame(openPrintDialog)), {once: true});
     })();
   </script>
