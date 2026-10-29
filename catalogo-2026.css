@@ -381,7 +381,7 @@ img { max-width: 100%; display: block; }
 .order-bar .button { min-height: 48px; }
 .order-bar.updated { animation: barFeedback .35s ease; }
 
-.product-dialog { width: min(1000px, calc(100% - 30px)); height: min(760px, calc(100vh - 30px)); height: min(760px, calc(100dvh - 30px)); max-height: none; padding: 0; overflow: hidden; border: 0; border-radius: 28px; background: var(--paper); box-shadow: var(--shadow); }
+.product-dialog { width: min(1000px, calc(100% - 30px)); height: min(680px, calc(100vh - 30px)); height: min(680px, calc(100dvh - 30px)); max-height: none; padding: 0; overflow: hidden; border: 0; border-radius: 28px; background: var(--paper); box-shadow: var(--shadow); }
 .product-dialog::backdrop { background: rgba(1,22,20,.72); backdrop-filter: blur(5px); }
 .dialog-close { position: absolute; z-index: 2; right: 16px; top: 16px; }
 .send-confirm-dialog { width: min(440px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 0; border-radius: 24px; background: var(--paper); box-shadow: var(--shadow); }
