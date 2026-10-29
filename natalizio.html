@@ -270,6 +270,7 @@
           <div class="customer-fields">
             <h3>I tuoi dati</h3>
             <label>Nome e cognome<input id="customerName" type="text" autocomplete="name" placeholder="Inserisci nome e cognome" aria-describedby="customerNameError" required><span class="customer-error" id="customerNameError" role="alert" hidden>Inserisci il tuo nome e cognome per proseguire.</span></label>
+            <label>Email per la risposta<input id="customerEmail" type="email" autocomplete="email" inputmode="email" placeholder="Inserisci la tua email" aria-describedby="customerEmailError"><span class="customer-error" id="customerEmailError" role="alert" hidden>Inserisci un indirizzo email valido.</span></label>
             <label>Telefono<input id="customerPhone" type="tel" autocomplete="tel" placeholder="Inserisci il numero"></label>
             <label>Note<textarea id="customerNotes" rows="3" placeholder="Richieste o informazioni utili"></textarea></label>
           </div>
@@ -281,11 +282,11 @@
       </div>
       <div class="drawer-footer" id="cartFooter" hidden>
         <div class="drawer-actions">
-          <button class="button button-primary full" id="prepareOrder" type="button"><span class="action-label-long">Prepara l'email dell'ordine</span><span class="action-label-short">Prepara email</span><span aria-hidden="true">→</span></button>
+          <button class="button button-primary full" id="prepareOrder" type="button"><span class="action-label-long">Invia l'ordine via email</span><span class="action-label-short">Invia email</span><span aria-hidden="true">→</span></button>
           <a class="button button-whatsapp full" id="sendWhatsApp" href="https://wa.me/393515070330" target="_blank" rel="noopener noreferrer"><span class="action-label-long">Invia su WhatsApp</span><span class="action-label-short">WhatsApp</span><span aria-hidden="true">→</span></a>
         </div>
         <button class="button button-outline full continue-shopping" id="continueShopping" type="button">Continua gli acquisti</button>
-        <small class="order-send-note">Dopo l'invio, torna qui e conferma: il carrello verrà svuotato.</small>
+        <small class="order-send-note" id="orderSendNote">L'email parte direttamente dal sito. Per WhatsApp conferma l'invio nell'app.</small>
       </div>
     </div>
   </aside>
@@ -293,6 +294,15 @@
   <dialog class="product-dialog" id="productDialog">
     <button class="dialog-close" id="closeDialog" type="button" aria-label="Chiudi la scheda prodotto"><span class="close-symbol" aria-hidden="true">×</span><span>Chiudi</span></button>
     <div id="dialogContent"></div>
+  </dialog>
+
+  <dialog class="send-confirm-dialog" id="directEmailDialog" aria-labelledby="directEmailTitle" aria-describedby="directEmailDescription">
+    <div class="send-confirm-content">
+      <p class="eyebrow dark"><span></span> Richiesta inoltrata</p>
+      <h2 id="directEmailTitle">Ordine inviato.</h2>
+      <p id="directEmailDescription">Il servizio di invio ha ricevuto la richiesta. Attendi la conferma di Zanon Seafish via email entro due giorni lavorativi.</p>
+      <button class="button button-primary full" id="closeDirectEmailDialog" type="button">Chiudi</button>
+    </div>
   </dialog>
 
   <dialog class="send-confirm-dialog" id="sendConfirmDialog" aria-labelledby="sendConfirmTitle" aria-describedby="sendConfirmDescription sendConfirmFollowup">
@@ -322,6 +332,7 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <section class="print-order" id="printOrder" aria-hidden="true"></section>
 
-  <script src="catalogo-2026.js?v=15" defer></script>
+  <script src="catalogo-2026.js?v=16" defer></script>
 </body>
 </html>
+
