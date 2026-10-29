@@ -76,6 +76,7 @@ const state = {
 
 const euro = new Intl.NumberFormat('it-IT', {style:'currency', currency:'EUR'});
 const whatsappOrderNumber = '393515070330';
+const directEmailEndpoint = 'https://formsubmit.co/ajax/amministrazione@zanonseafish.it';
 const grid = document.querySelector('#productGrid');
 const filters = document.querySelector('#categoryFilters');
 const search = document.querySelector('#searchInput');
@@ -106,7 +107,7 @@ function sanitizeCart(value) {
 }
 
 function sanitizeCustomer(value) {
-  const result = {name:'', phone:'', notes:''};
+  const result = {name:'', email:'', phone:'', notes:''};
   if (value && typeof value === 'object') {
     Object.keys(result).forEach(key => { if (typeof value[key] === 'string') result[key] = value[key]; });
   }
@@ -334,6 +335,7 @@ function buildOrderText(channel = 'email') {
   const lines = cartLines();
   const total = lines.reduce((sum, line) => sum + line.product.price * line.qty, 0);
   const name = document.querySelector('#customerName').value.trim();
+  const email = document.querySelector('#customerEmail').value.trim();
   const phone = document.querySelector('#customerPhone').value.trim();
   const notes = document.querySelector('#customerNotes').value.trim();
   return [
@@ -341,7 +343,7 @@ function buildOrderText(channel = 'email') {
     'ZANON SEAFISH INGROS SRL',
     '',
     `Cliente: ${name || (channel === 'WhatsApp' ? '*_scrivi il tuo nome e cognome qui_*' : '—')}`,
-    ...(channel === 'WhatsApp' ? [] : [`Telefono: ${phone || '—'}`]),
+    ...(channel === 'WhatsApp' ? [] : [`Email: ${email || '—'}`, `Telefono: ${phone || '—'}`]),
     '',
     'PRODOTTI:',
     ...lines.map(({product, qty}) => `${qty} × ${product.code} | ${product.name} | ${euro.format(product.price)} / ${product.unit} | ${euro.format(product.price * qty)}`),
@@ -360,6 +362,7 @@ function updateWhatsAppLink() {
 function persistCustomer() {
   state.customer = {
     name: document.querySelector('#customerName').value,
+    email: document.querySelector('#customerEmail').value,
     phone: document.querySelector('#customerPhone').value,
     notes: document.querySelector('#customerNotes').value
   };
@@ -380,6 +383,18 @@ function validateCustomerName(focusOnError = true) {
   return valid;
 }
 
+function validateCustomerEmail(focusOnError = true) {
+  const input = document.querySelector('#customerEmail');
+  const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+  input.setAttribute('aria-invalid', String(!valid));
+  document.querySelector('#customerEmailError').hidden = valid;
+  if (!valid && focusOnError) {
+    input.focus({preventScroll:true});
+    input.scrollIntoView({block:'center'});
+  }
+  return valid;
+}
+
 function prepareWhatsApp(event) {
   if (!cartLines().length || !validateCustomerName()) { event.preventDefault(); return; }
   persistCustomer();
@@ -388,17 +403,52 @@ function prepareWhatsApp(event) {
   beginOrderHandoff('WhatsApp');
 }
 
-function prepareEmail() {
-  if (!cartLines().length || !validateCustomerName()) return;
+async function prepareEmail() {
+  if (!cartLines().length || !validateCustomerName() || !validateCustomerEmail()) return;
   persistCustomer();
-  orderPrepared = true;
-  updateProgress();
-  const subject = `Richiesta ordine Natale 2026${state.customer.name ? ` - ${state.customer.name}` : ''}`;
-  beginOrderHandoff('email');
-  // L'app email fa parte dell'invio: l'avviso di uscita non deve interromperla.
-  suppressExitPrompt = true;
-  window.location.href = `mailto:amministrazione@zanonseafish.it?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(buildOrderText())}`;
-  setTimeout(() => { suppressExitPrompt = false; }, 1500);
+  const button = document.querySelector('#prepareOrder');
+  if (button.disabled) return;
+  const labels = Array.from(button.querySelectorAll('span:not([aria-hidden])'));
+  const previousLabels = labels.map(label => label.textContent);
+  button.disabled = true;
+  labels.forEach(label => { label.textContent = 'Invio in corso…'; });
+  try {
+    const response = await fetch(directEmailEndpoint, {
+      method:'POST',
+      headers:{'Content-Type':'application/json', 'Accept':'application/json'},
+      body:JSON.stringify({
+        _subject:`Richiesta ordine Natale 2026 - ${state.customer.name.trim()}`,
+        _template:'table',
+        _captcha:'false',
+        _url:'https://zanonseafish.github.io/catalogo/natalizio.html',
+        name:state.customer.name.trim(),
+        email:state.customer.email.trim(),
+        telefono:state.customer.phone.trim() || 'Non indicato',
+        ordine:buildOrderText('email'),
+        note:state.customer.notes.trim() || 'Nessuna nota'
+      })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Il servizio non risponde');
+    // FormSubmit può restituire HTTP 200 anche per errori, con success: "false".
+    if (String(data.success) !== 'true') throw new Error(data.message || 'Invio non confermato dal servizio');
+    orderPrepared = true;
+    updateProgress();
+    state.cart = {};
+    persistCart();
+    if (drawer.classList.contains('open')) closeCart();
+    document.querySelector('#directEmailDialog').showModal();
+  } catch (error) {
+    console.error('Invio email:', error);
+    const pending = /activat|confirm/i.test(error.message || '');
+    document.querySelector('#orderSendNote').textContent = pending
+      ? "Attivazione del servizio in corso: l'ordine resta nel carrello. Puoi usare WhatsApp."
+      : "Invio non riuscito: l'ordine resta nel carrello. Riprova o usa WhatsApp.";
+    showToast(pending ? "Servizio email da attivare · ordine conservato" : "Invio non riuscito · ordine conservato");
+  } finally {
+    button.disabled = false;
+    labels.forEach((label, index) => { label.textContent = previousLabels[index]; });
+  }
 }
 
 function beginOrderHandoff(channel) {
@@ -410,11 +460,14 @@ function beginOrderHandoff(channel) {
 
 function showPendingOrderDialog() {
   const channel = pendingOrderChannel || readStorage('zanon-pending-order', null);
+  if (channel === 'email') {
+    pendingOrderChannel = null;
+    try { localStorage.removeItem('zanon-pending-order'); } catch {}
+    return;
+  }
   if (!channel || !cartLines().length || sendConfirmDialog.open) return;
-  document.querySelector('#sendConfirmChannel').textContent = channel === 'WhatsApp' ? 'su WhatsApp' : 'nella tua app email';
-  document.querySelector('#sendConfirmFollowup').textContent = channel === 'WhatsApp'
-    ? "Dopo l'invio, attendi la conferma di ricezione da Zanon Seafish entro due giorni lavorativi su WhatsApp."
-    : "Dopo l'invio, attendi la conferma di ricezione da Zanon Seafish entro due giorni lavorativi via email.";
+  document.querySelector('#sendConfirmChannel').textContent = 'su WhatsApp';
+  document.querySelector('#sendConfirmFollowup').textContent = "Dopo l'invio, attendi la conferma di ricezione da Zanon Seafish entro due giorni lavorativi su WhatsApp.";
   sendConfirmDialog.showModal();
 }
 
@@ -770,6 +823,7 @@ document.querySelector('#prepareOrder').addEventListener('click', prepareEmail);
 document.querySelector('#sendWhatsApp').addEventListener('click', prepareWhatsApp);
 document.querySelector('#confirmOrderSent').addEventListener('click', () => resolvePendingOrder(true));
 document.querySelector('#keepOrder').addEventListener('click', () => resolvePendingOrder(false));
+document.querySelector('#closeDirectEmailDialog').addEventListener('click', () => document.querySelector('#directEmailDialog').close());
 sendConfirmDialog.addEventListener('cancel', event => event.preventDefault());
 document.querySelector('#closeExitCart').addEventListener('click', closeExitWarning);
 document.querySelector('#leaveKeepCart').addEventListener('click', () => leaveCatalog(false));
@@ -831,7 +885,7 @@ document.addEventListener('keydown', event => {
   }
 });
 
-['customerName','customerPhone','customerNotes'].forEach(id => {
+['customerName','customerEmail','customerPhone','customerNotes'].forEach(id => {
   const element = document.querySelector(`#${id}`);
   const key = id.replace('customer','').toLowerCase();
   element.value = state.customer[key] || '';
@@ -839,6 +893,9 @@ document.addEventListener('keydown', event => {
 });
 document.querySelector('#customerName').addEventListener('input', event => {
   if (event.target.hasAttribute('aria-invalid')) validateCustomerName(false);
+});
+document.querySelector('#customerEmail').addEventListener('input', event => {
+  if (event.target.hasAttribute('aria-invalid')) validateCustomerEmail(false);
 });
 
 renderFilters();
@@ -850,3 +907,4 @@ window.addEventListener('pageshow', () => { suppressExitPrompt = false; showPend
 document.addEventListener('visibilitychange', () => { if (!document.hidden) showPendingOrderDialog(); });
 initReveal();
 initShowcase();
+
