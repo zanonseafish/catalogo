@@ -383,6 +383,7 @@ img { max-width: 100%; display: block; }
 
 .product-dialog { width: min(1100px, calc(100% - 24px)); max-width: none; height: min(760px, calc(100vh - 24px)); height: min(760px, calc(100svh - 24px)); min-height: 0; max-height: calc(100vh - 24px); max-height: calc(100svh - 24px); padding: 0; overflow: hidden; border: 0; border-radius: 24px; background: var(--paper); box-shadow: var(--shadow); }
 .product-dialog #dialogContent { height: 100%; min-height: 0; }
+.product-dialog { touch-action: pan-x pan-y; }
 .product-dialog::backdrop { background: rgba(1,22,20,.72); backdrop-filter: blur(5px); }
 .dialog-close { position: absolute; z-index: 4; right: 12px; top: 12px; }
 .send-confirm-dialog { width: min(440px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 0; border-radius: 24px; background: var(--paper); box-shadow: var(--shadow); }
@@ -394,8 +395,7 @@ img { max-width: 100%; display: block; }
 .send-confirm-content .send-followup { margin-bottom: 24px; padding: 14px 16px; border-left: 3px solid var(--gold); border-radius: 8px; color: var(--ink); background: var(--cream); font-size: 14px; }
 .send-confirm-content .button + .button { margin-top: 10px; }
 .dialog-layout { display: grid; grid-template-columns: minmax(0, 7fr) minmax(290px, 3fr); grid-template-rows: minmax(0, 1fr); height: 100%; min-height: 0; overflow: hidden; }
-.dialog-photo { position: relative; min-width: 0; min-height: 0; height: 100%; overflow: hidden; background: var(--cream); cursor: grab; touch-action: pan-y; user-select: none; }
-.dialog-photo.is-zoomed { touch-action: none; }
+.dialog-photo { position: relative; min-width: 0; min-height: 0; height: 100%; overflow: hidden; background: var(--cream); cursor: grab; touch-action: none; overscroll-behavior: contain; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
 .dialog-photo.is-dragging { cursor: grabbing; }
 .dialog-photo img { width: 100%; height: 100%; object-fit: contain; --base-zoom: 1; --zoom: var(--base-zoom); transform: translate3d(var(--pan-x, 0px), var(--pan-y, 0px), 0) scale(var(--zoom)); transform-origin: center; pointer-events: none; user-select: none; }
 .dialog-photo-hint { position: absolute; left: 16px; bottom: 16px; padding: 8px 12px; border-radius: 999px; color: white; background: rgba(4,47,43,.78); font-size: 11px; font-weight: 600; pointer-events: none; }

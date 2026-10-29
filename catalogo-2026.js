@@ -834,6 +834,22 @@ dialog.addEventListener('click', event => { if (event.target === dialog) closePr
 const photoPointers = new Map();
 let photoGesture = null;
 
+// Il browser non deve trasformare un pizzico sulla foto nello zoom della pagina.
+// I dettagli conservano lo scorrimento con un dito; fuori dalla scheda lo zoom
+// del browser resta disponibile. I Touch/Gesture Events coprono anche WebKit
+// e i browser mobili che avviano il gesto nativo prima dei Pointer Events.
+function preventNativeProductZoom(event) {
+  const onPhoto = event.target.closest?.('.dialog-photo');
+  if (event.cancelable && (onPhoto || event.touches?.length > 1 || event.type.startsWith('gesture'))) {
+    event.preventDefault();
+  }
+}
+dialog.addEventListener('touchstart', preventNativeProductZoom, {passive: false});
+dialog.addEventListener('touchmove', preventNativeProductZoom, {passive: false});
+dialog.addEventListener('gesturestart', preventNativeProductZoom, {passive: false});
+dialog.addEventListener('gesturechange', preventNativeProductZoom, {passive: false});
+dialog.addEventListener('gestureend', preventNativeProductZoom, {passive: false});
+
 function photoZoomLimits(frame) {
   const image = frame.querySelector('img');
   const style = getComputedStyle(image);
@@ -910,10 +926,8 @@ dialog.addEventListener('pointerdown', event => {
   const frame = event.target.closest('.dialog-photo');
   if (!frame || event.button > 0) return;
   photoPointers.set(event.pointerId, { frame, x: event.clientX, y: event.clientY });
-  if (event.pointerType !== 'touch' || frame.classList.contains('is-zoomed') || photoPoints(frame).length > 1) {
-    frame.setPointerCapture(event.pointerId);
-    frame.classList.add('is-dragging');
-  }
+  frame.setPointerCapture(event.pointerId);
+  frame.classList.add('is-dragging');
   beginPhotoGesture(frame);
 });
 dialog.addEventListener('pointermove', event => {
@@ -953,6 +967,7 @@ function endPhotoGesture(event) {
 }
 dialog.addEventListener('pointerup', endPhotoGesture);
 dialog.addEventListener('pointercancel', endPhotoGesture);
+dialog.addEventListener('lostpointercapture', endPhotoGesture);
 dialog.addEventListener('click', event => {
   const button = event.target.closest('[data-dialog-add]');
   if (button) {
