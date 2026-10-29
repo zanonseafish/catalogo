@@ -76,7 +76,9 @@ const state = {
 
 const euro = new Intl.NumberFormat('it-IT', {style:'currency', currency:'EUR'});
 const whatsappOrderNumber = '393515070330';
-const directEmailEndpoint = 'https://formsubmit.co/ajax/amministrazione@zanonseafish.it';
+const directEmailEndpoint = 'https://api.web3forms.com/submit';
+// Chiave pubblica associata a amministrazione@zanonseafish.it, da inserire dopo la verifica della casella.
+const directEmailAccessKey = '';
 const grid = document.querySelector('#productGrid');
 const filters = document.querySelector('#categoryFilters');
 const search = document.querySelector('#searchInput');
@@ -405,6 +407,11 @@ function prepareWhatsApp(event) {
 
 async function prepareEmail() {
   if (!cartLines().length || !validateCustomerName() || !validateCustomerEmail()) return;
+  if (!directEmailAccessKey) {
+    document.querySelector('#orderSendNote').textContent = "Invio email in attivazione. Per ora usa WhatsApp.";
+    showToast('Invio email non ancora attivo');
+    return;
+  }
   persistCustomer();
   const button = document.querySelector('#prepareOrder');
   if (button.disabled) return;
@@ -417,21 +424,20 @@ async function prepareEmail() {
       method:'POST',
       headers:{'Content-Type':'application/json', 'Accept':'application/json'},
       body:JSON.stringify({
-        _subject:`Richiesta ordine Natale 2026 - ${state.customer.name.trim()}`,
-        _template:'table',
-        _captcha:'false',
-        _url:'https://zanonseafish.github.io/catalogo/natalizio.html',
+        access_key:directEmailAccessKey,
+        subject:`Richiesta ordine Natale 2026 - ${state.customer.name.trim()}`,
+        from_name:'Catalogo Natale Zanon Seafish',
+        botcheck:false,
         name:state.customer.name.trim(),
         email:state.customer.email.trim(),
         telefono:state.customer.phone.trim() || 'Non indicato',
-        ordine:buildOrderText('email'),
-        note:state.customer.notes.trim() || 'Nessuna nota'
+        message:buildOrderText('email'),
+        catalogo:'https://zanonseafish.github.io/catalogo/natalizio.html'
       })
     });
-    const data = await response.json();
+    const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.message || 'Il servizio non risponde');
-    // FormSubmit può restituire HTTP 200 anche per errori, con success: "false".
-    if (String(data.success) !== 'true') throw new Error(data.message || 'Invio non confermato dal servizio');
+    if (data.success !== true) throw new Error(data.message || 'Invio non confermato dal servizio');
     orderPrepared = true;
     updateProgress();
     state.cart = {};
@@ -440,11 +446,8 @@ async function prepareEmail() {
     document.querySelector('#directEmailDialog').showModal();
   } catch (error) {
     console.error('Invio email:', error);
-    const pending = /activat|confirm/i.test(error.message || '');
-    document.querySelector('#orderSendNote').textContent = pending
-      ? "Attivazione del servizio in corso: l'ordine resta nel carrello. Puoi usare WhatsApp."
-      : "Invio non riuscito: l'ordine resta nel carrello. Riprova o usa WhatsApp.";
-    showToast(pending ? "Servizio email da attivare · ordine conservato" : "Invio non riuscito · ordine conservato");
+    document.querySelector('#orderSendNote').textContent = "Invio non confermato: l'ordine resta nel carrello. Verifica con Zanon prima di riprovare oppure usa WhatsApp.";
+    showToast('Invio non confermato · ordine conservato');
   } finally {
     button.disabled = false;
     labels.forEach((label, index) => { label.textContent = previousLabels[index]; });
