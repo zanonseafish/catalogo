@@ -97,6 +97,8 @@ let exitGuardUrl = window.location.href;
 let currentEntryIsExitGuard = Boolean(history.state?.zanonExitGuard);
 let productDialogScrollY = 0;
 let productDialogLocked = false;
+let dialogProductIds = [];
+let dialogProductId = null;
 
 function sanitizeCart(value) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
@@ -320,12 +322,35 @@ function closeCart() {
 function openProduct(id) {
   const product = productById(id);
   if (!product) return;
-  productDialogScrollY = window.scrollY;
+  dialogProductIds = getFilteredProducts().map(item => item.id);
+  if (!dialogProductIds.includes(product.id)) dialogProductIds = [product.id];
+  if (!dialog.open) productDialogScrollY = window.scrollY;
+  renderProductDialog(product.id);
+  document.body.style.top = `-${productDialogScrollY}px`;
+  document.body.classList.add('product-dialog-open');
+  productDialogLocked = true;
+  if (!dialog.open) dialog.showModal();
+}
+
+function renderProductDialog(id) {
+  const product = productById(id);
+  if (!product) return;
+  dialogProductId = product.id;
+  photoPointers.clear();
+  photoGesture = null;
+  photoSwipe = null;
+  const index = dialogProductIds.indexOf(product.id);
+  const canNavigate = dialogProductIds.length > 1;
   document.querySelector('#dialogContent').innerHTML = `
     <div class="dialog-layout">
-      <div class="dialog-photo" role="group" aria-label="Foto prodotto zoomabile e trascinabile">
+      <div class="dialog-photo" data-can-navigate="${canNavigate}" role="group" aria-label="Foto prodotto zoomabile e trascinabile">
         <img src="${product.image}" alt="${product.name}" draggable="false">
-        <span class="dialog-photo-hint">Pizzica per ingrandire</span>
+        ${canNavigate ? `
+          <span class="dialog-product-position" role="status" aria-label="Articolo ${index + 1} di ${dialogProductIds.length}">${index + 1} / ${dialogProductIds.length}</span>
+          <button class="dialog-product-arrow dialog-product-previous" type="button" data-product-step="-1" aria-label="Articolo precedente" ${index === 0 ? 'disabled' : ''}><span aria-hidden="true">‹</span></button>
+          <button class="dialog-product-arrow dialog-product-next" type="button" data-product-step="1" aria-label="Articolo successivo" ${index === dialogProductIds.length - 1 ? 'disabled' : ''}><span aria-hidden="true">›</span></button>
+        ` : ''}
+        <span class="dialog-photo-hint">${canNavigate ? 'Scorri per cambiare · pizzica per zoom' : 'Pizzica per ingrandire'}</span>
       </div>
       <div class="dialog-info">
       <div class="dialog-copy">
@@ -341,10 +366,19 @@ function openProduct(id) {
       </div>
       </div>
     </div>`;
-  document.body.style.top = `-${productDialogScrollY}px`;
-  document.body.classList.add('product-dialog-open');
-  productDialogLocked = true;
-  dialog.showModal();
+}
+
+function navigateProduct(step) {
+  const index = dialogProductIds.indexOf(dialogProductId);
+  const nextId = dialogProductIds[index + step];
+  if (!dialog.open || index < 0 || nextId === undefined) return false;
+  const focusedStep = document.activeElement?.closest('[data-product-step]')?.dataset.productStep;
+  renderProductDialog(nextId);
+  if (focusedStep) {
+    const preferred = dialog.querySelector(`[data-product-step="${focusedStep}"]:not(:disabled)`);
+    (preferred || dialog.querySelector('[data-product-step]:not(:disabled)'))?.focus({preventScroll: true});
+  }
+  return true;
 }
 
 function unlockProductDialogScroll() {
@@ -352,6 +386,9 @@ function unlockProductDialogScroll() {
   productDialogLocked = false;
   photoPointers.clear();
   photoGesture = null;
+  photoSwipe = null;
+  dialogProductIds = [];
+  dialogProductId = null;
   document.body.classList.remove('product-dialog-open');
   document.body.style.top = '';
   const root = document.documentElement;
@@ -829,17 +866,34 @@ document.querySelector('#clearCart').addEventListener('click', () => {
   if (window.confirm('Vuoi rimuovere tutti i prodotti dal carrello?')) { state.cart = {}; persistCart(); showToast('Carrello svuotato'); }
 });
 document.querySelector('#closeDialog').addEventListener('click', closeProduct);
-dialog.addEventListener('close', unlockProductDialogScroll);
+dialog.addEventListener('close', () => { if (!dialog.open) unlockProductDialogScroll(); });
 dialog.addEventListener('click', event => { if (event.target === dialog) closeProduct(); });
 const photoPointers = new Map();
 let photoGesture = null;
+let photoSwipe = null;
+let suppressPhotoClickUntil = 0;
+
+// Il click generato dal rilascio dopo uno swipe non deve chiudere il dialogo.
+dialog.addEventListener('click', event => {
+  if (Date.now() < suppressPhotoClickUntil && (event.target === dialog || event.target.closest('.dialog-photo'))) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
+}, true);
+dialog.addEventListener('keydown', event => {
+  if (!dialog.open || event.altKey || event.ctrlKey || event.metaKey || event.target.closest('input, textarea, [contenteditable="true"]')) return;
+  if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+    event.preventDefault();
+    navigateProduct(event.key === 'ArrowRight' ? 1 : -1);
+  }
+});
 
 // Il browser non deve trasformare un pizzico sulla foto nello zoom della pagina.
 // I dettagli conservano lo scorrimento con un dito; fuori dalla scheda lo zoom
 // del browser resta disponibile. I Touch/Gesture Events coprono anche WebKit
 // e i browser mobili che avviano il gesto nativo prima dei Pointer Events.
 function preventNativeProductZoom(event) {
-  const onPhoto = event.target.closest?.('.dialog-photo');
+  const onPhoto = event.target.closest?.('.dialog-photo') && !event.target.closest?.('button');
   if (event.cancelable && (onPhoto || event.touches?.length > 1 || event.type.startsWith('gesture'))) {
     event.preventDefault();
   }
@@ -890,7 +944,9 @@ function applyPhotoView(frame, zoom, panX, panY) {
   frame.dataset.maxZoom = view.max;
   const zoomed = scale > view.base + .01;
   frame.classList.toggle('is-zoomed', zoomed);
-  frame.querySelector('.dialog-photo-hint').textContent = zoomed ? 'Trascina la foto · pizzica per ridurre' : 'Pizzica per ingrandire';
+  frame.querySelector('.dialog-photo-hint').textContent = zoomed
+    ? 'Trascina la foto · pizzica per ridurre'
+    : frame.dataset.canNavigate === 'true' ? 'Scorri per cambiare · pizzica per zoom' : 'Pizzica per ingrandire';
 }
 
 function photoPoints(frame) {
@@ -924,7 +980,11 @@ function beginPhotoGesture(frame) {
 
 dialog.addEventListener('pointerdown', event => {
   const frame = event.target.closest('.dialog-photo');
-  if (!frame || event.button > 0) return;
+  if (!frame || event.button > 0 || event.target.closest('button')) return;
+  const view = photoView(frame);
+  photoSwipe = photoPointers.size === 0 && view.zoom <= view.base + .01
+    ? {pointerId: event.pointerId, frame, startX: event.clientX, startY: event.clientY}
+    : null;
   photoPointers.set(event.pointerId, { frame, x: event.clientX, y: event.clientY });
   frame.setPointerCapture(event.pointerId);
   frame.classList.add('is-dragging');
@@ -957,18 +1017,31 @@ function endPhotoGesture(event) {
   const pointer = photoPointers.get(event.pointerId);
   if (!pointer) return;
   const frame = pointer.frame;
+  const swipe = photoSwipe;
   photoPointers.delete(event.pointerId);
   const remaining = photoPoints(frame);
+  if (!remaining.length || swipe?.pointerId === event.pointerId) photoSwipe = null;
   if (remaining.length) beginPhotoGesture(frame);
   else {
     photoGesture = null;
     frame.classList.remove('is-dragging');
+  }
+  if (event.type === 'pointerup' && !remaining.length && swipe?.pointerId === event.pointerId && !frame.classList.contains('is-zoomed')) {
+    const dx = event.clientX - swipe.startX;
+    const dy = event.clientY - swipe.startY;
+    const threshold = Math.max(44, Math.min(90, frame.clientWidth * .16));
+    if (Math.abs(dx) >= threshold && Math.abs(dx) > Math.abs(dy) * 1.3) {
+      suppressPhotoClickUntil = Date.now() + 350;
+      navigateProduct(dx < 0 ? 1 : -1);
+    }
   }
 }
 dialog.addEventListener('pointerup', endPhotoGesture);
 dialog.addEventListener('pointercancel', endPhotoGesture);
 dialog.addEventListener('lostpointercapture', endPhotoGesture);
 dialog.addEventListener('click', event => {
+  const arrow = event.target.closest('[data-product-step]');
+  if (arrow) { navigateProduct(Number(arrow.dataset.productStep)); return; }
   const button = event.target.closest('[data-dialog-add]');
   if (button) {
     addToCart(button.dataset.dialogAdd, "Articolo aggiunto all'ordine");
