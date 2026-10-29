@@ -49,7 +49,7 @@ const productImages = [
   'images/baccala-condito-200.jpg',
   'images/baccala-condito-200.jpg',
   'images/baccala-umido-200g-2026.jpg',
-  'images/baccala-umido-1kg-2026-v2.jpg',
+  'images/baccala-umido-1kg-2026-v3.jpg',
   'images/dentice-crema-200.jpg',
   'images/dentice-crema-500.jpg',
   'images/saor-gamberi.png',
