@@ -246,7 +246,7 @@ function syncProductCounts() {
     status.replaceChildren();
     if (qty) {
       const amount = document.createElement('strong');
-      amount.textContent = product.unit === 'kg' ? `${qty} kg` : `${qty} ${qty === 1 ? 'confezione' : 'confezioni'}`;
+      amount.textContent = product.unit === 'kg' ? `${qty} kg` : product.unit === 'pezzo' ? `${qty} ${qty === 1 ? 'pezzo' : 'pezzi'}` : `${qty} ${qty === 1 ? 'confezione' : 'confezioni'}`;
       status.append('✓ Nel tuo ordine: ', amount);
     }
     const card = status.closest('.product-card');
