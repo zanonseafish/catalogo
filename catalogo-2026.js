@@ -29,7 +29,8 @@ const products = [
   {id:28, code:'SPE06', category:'Specialità', name:'Alici Sicilia EVO 720 g', description:'Filetti in vaso di vetro da 720 g.', price:14.50, unit:'conf.'},
   {id:29, code:'SPE07', category:'Specialità', name:'Filetti di tonno in olio 180 g', description:'Vaso di vetro da 180 g.', price:4.50, unit:'conf.'},
   {id:30, code:'SPE08', category:'Specialità', name:'Filetti di tonno in olio 850 g', description:'Latta richiudibile da 850 g.', price:20.00, unit:'conf.'},
-  {id:31, code:'SPE09', category:'Specialità', name:'Stoccafisso secco qualità Ragno', description:'Stoccafisso secco, vendita a peso.', price:74.80, unit:'kg'}
+  {id:31, code:'SPE09', category:'Specialità', name:'Stoccafisso secco qualità Ragno', description:'Stoccafisso secco, vendita a peso.', price:74.80, unit:'kg'},
+  {id:32, code:'SPE10', category:'Specialità', name:'Bottarga di muggine', description:'Bottarga di muggine in tranci da 60/70 g. Prezzo: 65,00 €/kg. Importo finale in base al peso effettivo.', price:4.23, unit:'conf.', estimated:true, pricePerKg:65.00, averageWeightGrams:65}
 ];
 
 const productImages = [
@@ -63,7 +64,8 @@ const productImages = [
   'images/alici-filetti.jpg',
   'images/tonno-filetto-albatros.jpg',
   'images/tonno-filetti-acantilado.jpg',
-  'images/stoccafisso-ragno-secco-2026-v2.jpg'
+  'images/stoccafisso-ragno-secco-2026-v2.jpg',
+  'images/bottarga-muggine-2026.jpg'
 ];
 products.forEach(product => { product.image = productImages[product.id - 1]; });
 
@@ -130,6 +132,14 @@ function normalize(value) {
 
 function productById(id) { return products.find(product => product.id === Number(id)); }
 
+function productPriceLabel(product, amount = product.price) {
+  return `${product.estimated ? '≈ ' : ''}${euro.format(amount)}`;
+}
+
+function productOrderName(product) {
+  return product.estimated ? `${product.name} (60/70 g; ${euro.format(product.pricePerKg)}/kg; importo da confermare al peso effettivo)` : product.name;
+}
+
 function renderFilters() {
   const categories = ['Tutti', ...new Set(products.map(product => product.category))];
   filters.innerHTML = categories.map(category => `
@@ -160,7 +170,7 @@ function renderProducts() {
         <h3>${product.name}</h3>
         <p class="product-description">${product.description}</p>
         <div class="product-bottom">
-          <div class="price"><strong>${euro.format(product.price)}</strong><small>€/${product.unit} · IVA inclusa</small></div>
+          <div class="price"><strong>${productPriceLabel(product)}</strong><small>€/${product.unit}${product.estimated ? ' indicativo' : ''} · IVA inclusa</small>${product.estimated ? `<small>${euro.format(product.pricePerKg)}/kg · media ${product.averageWeightGrams} g</small>` : ''}</div>
           <button class="add-button" type="button" data-add="${product.id}" aria-label="Aggiungi ${product.name} all'ordine"><span aria-hidden="true">＋</span>Aggiungi</button>
         </div>
         <span class="product-cart-status" data-cart-status="${product.id}"></span>
@@ -194,7 +204,7 @@ function renderPrintCatalog() {
     const description = document.createElement('p');
     description.textContent = product.description;
     const price = document.createElement('strong');
-    price.textContent = `${euro.format(product.price)} / ${product.unit} · IVA inclusa`;
+    price.textContent = `${productPriceLabel(product)} / ${product.unit}${product.estimated ? ' (indicativo)' : ''} · IVA inclusa`;
     details.append(name, description, price);
     card.append(image, details);
     grid.append(card);
@@ -283,8 +293,8 @@ function renderCart() {
       <img src="${product.image}" alt="" width="76" height="76">
       <div>
         <h4>${product.name}</h4>
-        <span class="cart-item-price">${euro.format(product.price)} / ${product.unit}</span>
-        <strong class="cart-line-total">${euro.format(product.price * qty)}</strong>
+        <span class="cart-item-price">${productPriceLabel(product)} / ${product.unit}${product.estimated ? ` · indicativo (${euro.format(product.pricePerKg)}/kg)` : ''}</span>
+        <strong class="cart-line-total">${productPriceLabel(product, product.price * qty)}</strong>
         <button class="remove-item" type="button" data-remove="${product.id}">Rimuovi</button>
       </div>
       <div class="qty-control" aria-label="Quantità ${product.name}">
@@ -362,7 +372,7 @@ function renderProductDialog(id) {
         </div>
       </div>
       <div class="dialog-purchase">
-        <div class="dialog-price">${euro.format(product.price)}<small>€/${product.unit} · IVA inclusa</small></div>
+        <div class="dialog-price">${productPriceLabel(product)}<small>€/${product.unit}${product.estimated ? ' indicativo' : ''} · IVA inclusa</small>${product.estimated ? `<small>${euro.format(product.pricePerKg)}/kg · media ${product.averageWeightGrams} g</small>` : ''}</div>
         <button class="button button-dark" type="button" data-dialog-add="${product.id}">Aggiungi all'ordine <span>＋</span></button>
         <p class="dialog-cart-status" id="dialogAddStatus" role="status" aria-live="polite" aria-atomic="true" ${quantity ? '' : 'hidden'}>${quantity ? `Quantità nel tuo ordine: ${quantity}` : ''}</p>
       </div>
@@ -423,7 +433,7 @@ function buildOrderText(channel = 'email') {
     ...(channel === 'WhatsApp' ? [] : [`Telefono: ${phone || '—'}`]),
     '',
     'PRODOTTI:',
-    ...lines.map(({product, qty}) => `${qty} × ${product.code} | ${product.name} | ${euro.format(product.price)} / ${product.unit} | ${euro.format(product.price * qty)}`),
+    ...lines.map(({product, qty}) => `${qty} × ${product.code} | ${productOrderName(product)} | ${productPriceLabel(product)} / ${product.unit} | ${productPriceLabel(product, product.price * qty)}`),
     '',
     `TOTALE INDICATIVO: ${euro.format(total)}`,
     '',
@@ -582,7 +592,7 @@ function openOrderPrintPage() {
       phone: document.querySelector('#customerPhone').value.trim(),
       notes: document.querySelector('#customerNotes').value.trim()
     },
-    lines: lines.map(({product, qty}) => ({code: product.code, name: product.name, price: product.price, unit: product.unit, qty}))
+    lines: lines.map(({product, qty}) => ({code: product.code, name: productOrderName(product), price: product.price, unit: product.estimated ? `${product.unit} (indicativo)` : product.unit, qty}))
   };
   const serialized = JSON.stringify(snapshot);
   try {
