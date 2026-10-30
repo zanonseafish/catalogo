@@ -43,7 +43,7 @@ img { max-width: 100%; display: block; }
 
 .order-deadline-message {
   position: absolute; z-index: 10; top: 210px; left: 50%; width: max-content; max-width: calc(100% - 40px);
-  margin: 0; transform: translateX(-50%); color: #ff8588; font-size: 15px; font-weight: 700;
+  margin: 0; transform: translateX(-50%); color: var(--red); font-size: 15px; font-weight: 700;
   line-height: 1.3; letter-spacing: .025em; text-align: center;
   text-shadow: 0 1px 2px rgba(4,47,43,.58), 0 0 10px rgba(255,91,101,.38);
   isolation: isolate; padding: 8px 18px; border-radius: 999px;
@@ -54,7 +54,7 @@ img { max-width: 100%; display: block; }
   background: radial-gradient(ellipse at center, rgba(255,250,241,.72) 0%, rgba(255,250,241,.48) 62%, rgba(255,250,241,.12) 84%, rgba(255,250,241,0) 100%);
   filter: blur(6px); pointer-events: none;
 }
-@keyframes orderDeadlineBlink { 0%, 100% { opacity: 1; } 50% { opacity: .72; } }
+@keyframes orderDeadlineBlink { 0%, 100% { opacity: 1; } 50% { opacity: .86; } }
 
 .site-header {
   position: absolute; z-index: 20; top: 34px; left: 0; right: 0;
