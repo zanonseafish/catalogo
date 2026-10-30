@@ -42,19 +42,19 @@ img { max-width: 100%; display: block; }
 .skip-link:focus { top: 16px; }
 
 .order-deadline-message {
-  position: absolute; z-index: 10; top: 210px; left: 50%; width: min(760px, calc(100% - 40px));
+  position: absolute; z-index: 10; top: 210px; left: 50%; width: max-content; max-width: calc(100% - 40px);
   margin: 0; transform: translateX(-50%); color: #ff8588; font-size: 15px; font-weight: 700;
   line-height: 1.3; letter-spacing: .025em; text-align: center;
   text-shadow: 0 1px 2px rgba(4,47,43,.58), 0 0 10px rgba(255,91,101,.38);
-  isolation: isolate; padding: 9px 20px; border-radius: 999px;
+  isolation: isolate; padding: 8px 18px; border-radius: 999px;
   animation: orderDeadlineBlink 1.7s ease-in-out infinite;
 }
 .order-deadline-message::before {
-  content: ""; position: absolute; z-index: -1; inset: -8px -16px; border-radius: inherit;
-  background: radial-gradient(ellipse at center, rgba(255,250,241,.82) 0%, rgba(255,250,241,.62) 58%, rgba(255,250,241,.24) 82%, rgba(255,250,241,0) 100%);
-  filter: blur(9px); pointer-events: none;
+  content: ""; position: absolute; z-index: -1; inset: -5px -10px; border-radius: inherit;
+  background: radial-gradient(ellipse at center, rgba(255,250,241,.72) 0%, rgba(255,250,241,.48) 62%, rgba(255,250,241,.12) 84%, rgba(255,250,241,0) 100%);
+  filter: blur(6px); pointer-events: none;
 }
-@keyframes orderDeadlineBlink { 0%, 100% { opacity: 1; } 50% { opacity: .24; } }
+@keyframes orderDeadlineBlink { 0%, 100% { opacity: 1; } 50% { opacity: .72; } }
 
 .site-header {
   position: absolute; z-index: 20; top: 34px; left: 0; right: 0;
@@ -477,7 +477,7 @@ img { max-width: 100%; display: block; }
   .cart-trigger { padding-left: 11px; }
   .cart-label { display: none; }
   .hero { grid-template-columns: 1fr; min-height: auto; padding: 184px 24px 150px; }
-  .order-deadline-message { top: 140px; left: 22px; right: 22px; width: auto; transform: none; font-size: clamp(11px, 2.9vw, 13px); }
+  .order-deadline-message { top: 140px; left: 50%; right: auto; width: max-content; max-width: calc(100% - 36px); transform: translateX(-50%); padding: 7px 12px; font-size: clamp(11px, 2.9vw, 13px); }
   .hero-copy { position: relative; z-index: 2; }
   .hero h1 { font-size: clamp(62px, 21vw, 92px); }
   .hero-lead { margin: 26px 0; font-size: 16px; }
