@@ -42,10 +42,17 @@ img { max-width: 100%; display: block; }
 .skip-link:focus { top: 16px; }
 
 .order-deadline-message {
-  position: absolute; z-index: 10; top: 210px; left: 50%; width: min(620px, calc(100% - 48px));
-  margin: 0; transform: translateX(-50%); color: #ff8588; font-size: 13px; font-weight: 700;
+  position: absolute; z-index: 10; top: 210px; left: 50%; width: min(760px, calc(100% - 40px));
+  margin: 0; transform: translateX(-50%); color: #ff8588; font-size: 15px; font-weight: 700;
   line-height: 1.3; letter-spacing: .025em; text-align: center;
-  text-shadow: 0 0 10px rgba(255,91,101,.3); animation: orderDeadlineBlink 1.7s ease-in-out infinite;
+  text-shadow: 0 1px 2px rgba(4,47,43,.58), 0 0 10px rgba(255,91,101,.38);
+  isolation: isolate; padding: 9px 20px; border-radius: 999px;
+  animation: orderDeadlineBlink 1.7s ease-in-out infinite;
+}
+.order-deadline-message::before {
+  content: ""; position: absolute; z-index: -1; inset: -8px -16px; border-radius: inherit;
+  background: radial-gradient(ellipse at center, rgba(255,250,241,.82) 0%, rgba(255,250,241,.62) 58%, rgba(255,250,241,.24) 82%, rgba(255,250,241,0) 100%);
+  filter: blur(9px); pointer-events: none;
 }
 @keyframes orderDeadlineBlink { 0%, 100% { opacity: 1; } 50% { opacity: .24; } }
 
@@ -588,7 +595,12 @@ img { max-width: 100%; display: block; }
   body > *:not(#printCatalog) { display: none !important; }
   body > #printCatalog { display: block !important; }
 
-  .print-catalog h1 { margin: 0 0 5mm; font: 700 17pt/1.1 Arial, sans-serif; }
+  .print-catalog h1 { margin: 0 0 2mm; font: 700 17pt/1.1 Arial, sans-serif; }
+  .print-order-deadline {
+    margin: 0 0 5mm; padding: 2mm 3mm; border-left: 1.5mm solid #a73c36;
+    color: #a73c36; background: #fff5ea; font: 700 10pt/1.25 Arial, sans-serif;
+    break-inside: avoid; page-break-inside: avoid;
+  }
   .print-catalog-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5mm 3mm; }
   .print-product { display: grid; grid-template-columns: 18mm minmax(0, 1fr); align-items: center; gap: 2mm; min-height: 21mm; padding: 1.2mm 0; border-bottom: .25mm solid #d8d8d8; break-inside: avoid; page-break-inside: avoid; }
   .print-product img { width: 18mm; height: 18mm; object-fit: contain; background: #fff; }

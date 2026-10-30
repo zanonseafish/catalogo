@@ -188,6 +188,9 @@ function renderPrintCatalog() {
   if (!section) return;
   const title = document.createElement('h1');
   title.textContent = 'Catalogo Natale 2026 · Zanon Seafish';
+  const deadline = document.createElement('p');
+  deadline.className = 'print-order-deadline';
+  deadline.textContent = 'Attendiamo i Vs graditi ordini entro mercoledì 2 dicembre';
   const grid = document.createElement('div');
   grid.className = 'print-catalog-grid';
   products.forEach(product => {
@@ -209,7 +212,7 @@ function renderPrintCatalog() {
     card.append(image, details);
     grid.append(card);
   });
-  section.replaceChildren(title, grid);
+  section.replaceChildren(title, deadline, grid);
 }
 
 function addToCart(id, confirmation) {
