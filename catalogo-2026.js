@@ -191,6 +191,9 @@ function renderPrintCatalog() {
   const deadline = document.createElement('p');
   deadline.className = 'print-order-deadline';
   deadline.textContent = 'ATTENDIAMO I VS GRADITI ORDINI ENTRO MERCOLEDÌ 2 DICEMBRE';
+  const heading = document.createElement('div');
+  heading.className = 'print-catalog-heading';
+  heading.append(title, deadline);
   const grid = document.createElement('div');
   grid.className = 'print-catalog-grid';
   products.forEach(product => {
@@ -212,7 +215,7 @@ function renderPrintCatalog() {
     card.append(image, details);
     grid.append(card);
   });
-  section.replaceChildren(title, deadline, grid);
+  section.replaceChildren(heading, grid);
 }
 
 function addToCart(id, confirmation) {
