@@ -29,8 +29,8 @@ const products = [
   {id:28, code:'SPE06', category:'Specialità', name:'Alici Sicilia EVO 720 g', description:'Filetti in vaso di vetro da 720 g.', price:14.50, unit:'conf.'},
   {id:29, code:'SPE07', category:'Specialità', name:'Filetti di tonno in olio 180 g', description:'Vaso di vetro da 180 g.', price:4.50, unit:'conf.'},
   {id:30, code:'SPE08', category:'Specialità', name:'Filetti di tonno in olio 850 g', description:'Latta richiudibile da 850 g.', price:20.00, unit:'conf.'},
-  {id:31, code:'SPE09', category:'Specialità', name:'Stoccafisso secco qualità Ragno', description:'Stoccafisso secco, vendita a peso.', price:74.80, unit:'kg'},
-  {id:32, code:'SPE10', category:'Specialità', name:'Bottarga di muggine', description:'Bottarga di muggine in tranci da 60/70 g. Prezzo: 65,00 €/kg. Importo finale in base al peso effettivo.', price:4.23, unit:'conf.', estimated:true, pricePerKg:65.00, averageWeightGrams:65}
+  {id:31, code:'SPE09', category:'Specialità', name:'Stoccafisso secco qualità Ragno', description:'Vendita a peso. Peso medio indicativo 800 g; prezzo 74,80 €/kg. Importo finale in base al peso effettivo.', price:59.84, unit:'pezzo', estimated:true, pricePerKg:74.80, averageWeightGrams:800, estimatedOrderNote:'peso medio 800 g; prezzo 74,80 €/kg; importo da confermare al peso effettivo'},
+  {id:32, code:'SPE10', category:'Specialità', name:'Bottarga di muggine', description:'Bottarga di muggine in tranci da 60/70 g. Prezzo: 65,00 €/kg. Importo finale in base al peso effettivo.', price:4.23, unit:'conf.', estimated:true, pricePerKg:65.00, averageWeightGrams:65, estimatedOrderNote:'tranci da 60/70 g; prezzo 65,00 €/kg; importo da confermare al peso effettivo'}
 ];
 
 const productImages = [
@@ -137,7 +137,7 @@ function productPriceLabel(product, amount = product.price) {
 }
 
 function productOrderName(product) {
-  return product.estimated ? `${product.name} (60/70 g; ${euro.format(product.pricePerKg)}/kg; importo da confermare al peso effettivo)` : product.name;
+  return product.estimated ? `${product.name} (${product.estimatedOrderNote})` : product.name;
 }
 
 function renderFilters() {
