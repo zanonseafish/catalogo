@@ -34,7 +34,7 @@ const products = [
 ];
 
 const productImages = [
-  'images/salmone-tiamo-norvegia-600.jpg',
+  'images/salmone-tiamo-norvegia-600.jpg?v=20261031-salmone',
   'images/Re-Salmone-1000.png',
   'images/salmone-scozia-coda-nera-600g-2026-v2.jpg',
   'images/salmone-affumicato-codanera.jpg',
