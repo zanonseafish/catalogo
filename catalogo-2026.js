@@ -48,7 +48,7 @@ const productImages = [
   'images/baccala-vicentina-200.jpg',
   'images/baccala-vicentina-1.jpg',
   'images/baccala-condito-200.jpg',
-  'images/baccala-condito-1kg.jpg?v=20261031-bac1kg',
+  'images/baccala-condito-1kg.jpg?v=20261031-bac1kg-v2',
   'images/baccala-umido-200g-2026.jpg',
   'images/baccala-umido-1kg-2026-v3.jpg',
   'images/dentice-crema-200.jpg',
